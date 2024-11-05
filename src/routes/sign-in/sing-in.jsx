@@ -1,4 +1,4 @@
-import HeaderPage from '../../layouts/header-pages/header_page.jsx';
+import HeaderPage from '../../layouts/header/header.jsx';
 import './sing-in.css';
 
 export default function SingIn() {
