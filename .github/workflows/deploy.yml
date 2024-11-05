@@ -1,0 +1,42 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.repository == 'd10sport/front-academy-d10-sport'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.VPS_KEY }}
+
+      - name: Deploy to VPS
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_IP }} << 'EOF'
+            # Navega al directorio del proyecto
+            cd /var/www/frontend
+
+            # Elimina todos los archivos, incluyendo ocultos
+            rm -rf /var/www/frontend/* /var/www/frontend/.*
+
+            # Clona el repositorio
+            git clone https://github.com/d10sport/front-academy-d10-sport.git .
+
+            # Verifica que el clon haya sido exitoso
+            if [ ! -f package.json ]; then
+              echo "Error: El clon del repositorio falló o no contiene package.json"
+              exit 1
+            fi
+
+            # Instala las dependencias y construye el proyecto
+            npm install
+            npm run build
+          EOF
