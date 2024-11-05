@@ -1,0 +1,128 @@
+/* Seccion nav */
+
+.nav {
+  position: fixed;
+  display: flex;
+  width: 100%;
+  height: 4rem;
+  background-color: transparent;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 40px;
+  z-index: 31;
+  top: 0;
+  left: 0;
+
+  animation: scroll-animation linear both;
+  animation-timeline: scroll(root block);
+  animation-range: 0 292px;
+}
+
+@keyframes scroll-animation {
+  to {
+    background: url(../../assets/img/fondo_home_d10_academy.png), #000;
+  }
+}
+
+.logo {
+  max-width: 40px;
+}
+
+.list__nav {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  gap: 4rem;
+}
+
+.login__nav {
+  color: #000;
+  font-weight: 800;
+  width: 80px;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 2px solid #000;
+  background-color: rgba(255, 255, 255, 0);
+  transition: 2.s all ease;
+
+  animation: scroll-animation-login linear both;
+  animation-timeline: scroll(root block);
+  animation-range: 0 100px;
+}
+
+@keyframes scroll-animation-login {
+  to {
+    border: 2px solid #fff;
+    color: #fff;
+  }
+}
+
+
+.login__nav:hover {
+  cursor: pointer;
+  color: #fff;
+  background-color: #000;
+  border: 2px solid #000;
+  transition: 0.4s;
+
+  animation: scroll-animation-login-hover linear both;
+  animation-timeline: scroll(root block);
+  animation-range: 0 100px;
+}
+
+@keyframes scroll-animation-login-hover {
+  to {
+    color: #000;
+    border: 2px solid #ffc702;
+    background-color: #ffc702;
+  }
+}
+
+
+.a-linear__nav {
+  position: relative;
+  text-decoration: none;
+  color: #000;
+  font-weight: 800;
+
+  animation: scroll-animation-a linear both;
+  animation-timeline: scroll(root block);
+  animation-range: 0 100px;
+}
+
+@keyframes scroll-animation-a {
+  to {
+    color: #fff;
+  }
+}
+
+.a-linear__nav::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #000;
+  font-weight: 800;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+
+  animation: scroll-animation-a-after linear both;
+  animation-timeline: scroll(root block);
+  animation-range: 0 100px;
+}
+
+@keyframes scroll-animation-a-after {
+  to {
+    background: #fff;
+  }
+}
+
+.a-linear__nav:hover::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
