@@ -1,68 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  --text-100: #FFFFFF;
+  --text-200: #000000;
+  --text-300: #FFC702;
+  --text-400: #5A5A5A;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --bg-100: #1A1A1A;
+  --bg-200: #5A5A5A;
+  --bg-300: #FFFFFF;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+#root {
+  height: 100%;
 }
-a:hover {
-  color: #535bf2;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Urbanist", sans-serif;
+}
+
+html {
+  height: 100vh;
 }
 
 body {
-  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.text_100 {
+  color: var(--text-100);
+}
+
+.text_200 {
+  color: var(--text-200);
+}
+
+.text_300 {
+  color: var(--text-300);
+}
+
+.text_400 {
+  color: var(--text-400);
+}
+
+.bg_100 {
+  background: var(--bg-100);
+}
+
+.bg_200 {
+  background: var(--bg-200);
+}
+
+.bg_300 {
+  background: var(--bg-300);
+}
+
+.btn_yellow {
+  text-align: center;
+  font-weight: 800;
+  border: 2px solid #fff;
+  color: #fff;
+  width: 80px;
+  padding: 0.5rem 1rem;
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
+  justify-content: center;
   border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  background-color: rgba(255, 255, 255, 0);
+  transition: 2s all ease;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.btn_yellow:hover {
+  cursor: pointer;
+  transition: 0.4s;
+  color: #000;
+  border: 2px solid #FFC702;
+  background-color: #FFC702;
 }
+
+.btn_yellow_active {
+  text-align: center;
+  font-weight: 800;
+  border: 2px solid #000000;
+  color: #000000;
+  width: 80px;
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: center;
+  border-radius: 8px;
+  background: #FFC702;
+  transition: 1s all ease;
+}
+
+.btn_yellow_active:hover {
+  cursor: pointer;
+  opacity: 0.5;
+  transform: scale(1.1);
+}
+
