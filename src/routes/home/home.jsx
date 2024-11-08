@@ -1,11 +1,15 @@
-/* eslint-disable react/no-unescaped-entities */
 import Header from "../../layouts/header/header.jsx";
 import './home.css';
 
 export default function Home() {
-
   if (!localStorage.getItem('token')) {
-    window.location.href = '/#/signin';
+    if (window.location.hostname === 'localhost') {
+      window.location.href = "http://localhost:5173/#/signin"
+      window.location.reload();
+      return
+    }
+    window.location.href = 'https://academia.d10plus.com/#/signin';
+    window.location.reload();
   }
 
   return (
