@@ -4,6 +4,10 @@ import './home.css';
 
 export default function Home() {
 
+  if (!localStorage.getItem('token')) {
+    window.location.href = '/#/signin';
+  }
+
   return (
     <>
       <Header />

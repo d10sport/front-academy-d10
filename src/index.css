@@ -11,10 +11,7 @@
   --bg-100: #1A1A1A;
   --bg-200: #5A5A5A;
   --bg-300: #FFFFFF;
-}
-
-#root {
-  height: 100%;
+  --bg-400: #000000;
 }
 
 * {
@@ -25,12 +22,18 @@
 }
 
 html {
-  height: 100vh;
+  height: 100%;
 }
 
 body {
+  color: var(--text-100);
+  background: var(--bg-400);
   height: 100%;
   width: 100%;
+}
+
+#root {
+  height: 100%;
 }
 
 .text_100 {
