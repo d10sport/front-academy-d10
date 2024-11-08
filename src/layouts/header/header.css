@@ -12,16 +12,7 @@
   z-index: 31;
   top: 0;
   left: 0;
-
-  animation: scroll-animation linear both;
-  animation-timeline: scroll(root block);
-  animation-range: 0 292px;
-}
-
-@keyframes scroll-animation {
-  to {
-    background: url(../../assets/img/fondo_nav.png), #000;
-  }
+  background: url(../../assets/img/fondo_nav.png), #000;
 }
 
 .logo {

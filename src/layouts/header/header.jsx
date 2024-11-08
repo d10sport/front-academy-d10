@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { LogoHeader } from "../../utils/icons/icons";
 import './header.css';
 
