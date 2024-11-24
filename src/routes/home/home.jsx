@@ -8,7 +8,7 @@ export default function Home() {
       window.location.reload();
       return
     }
-    window.location.href = 'https://academia.d10plus.com/#/signin';
+    window.location.href = 'https://academia.d10mas.com/#/signin';
     window.location.reload();
   }
 
