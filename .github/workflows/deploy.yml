@@ -22,10 +22,10 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_IP }} << 'EOF'
             # Navega al directorio del proyecto
-            cd /var/www/academy
+            cd /var/www/html/d10/academy
 
             # Elimina todos los archivos, incluyendo ocultos
-            rm -rf /var/www/academy/* /var/www/academy/.*
+            rm -rf /var/www/html/d10/academy/* /var/www/html/d10/academy/.*
 
             # Clona el repositorio
             git clone https://github.com/d10sport/front-academy-d10-sport.git .
