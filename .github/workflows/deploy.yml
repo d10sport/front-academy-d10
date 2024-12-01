@@ -31,7 +31,7 @@ jobs:
             git clone https://github.com/d10sport/front-academy-d10-sport.git .
 
             #Importar variables de entorno
-            cp /var/www/html/params/env_d10_landing/.env /var/www/html/d10/academy
+            cp /var/www/html/params/env_d10_academy/.env /var/www/html/d10/academy
 
             # Verifica que el clon haya sido exitoso
             if [ ! -f package.json ]; then
