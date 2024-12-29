@@ -1,8 +1,8 @@
 // import fondoHomeD10Academy from "../../assets/img/fondo_home_d10_academy.png";
 // import { Link } from "react-router-dom";
-import "./new-form-2.css";
+import "./log-form-2.css";
 
-export default function NewForm2() {
+export default function Form2() {
   return (
     <>
       <section className="section__login">

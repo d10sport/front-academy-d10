@@ -1,8 +1,8 @@
 // import fondoHomeD10Academy from "../../assets/img/fondo_home_d10_academy.png";
 // import { Link } from "react-router-dom";
-import "./new-register.css";
+import "./register.css";
 
-export default function NewRegister() {
+export default function Register() {
   return (
     <>
       <section className="section__login">

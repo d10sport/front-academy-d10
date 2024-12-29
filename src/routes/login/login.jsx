@@ -1,8 +1,8 @@
 // import fondoHomeD10Academy from "../../assets/img/fondo_home_d10_academy.png";
 // import { Link } from "react-router-dom";
-import "./new-login.css";
+import "./login.css";
 
-export default function NewLogin() {
+export default function Login() {
   return (
     <>
       <section className="section__login">
