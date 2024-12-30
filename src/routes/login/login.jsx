@@ -1,5 +1,5 @@
 // import fondoHomeD10Academy from "../../assets/img/fondo_home_d10_academy.png";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 // import "./login.css";
 import "../../css/loginStyles.css";
 
@@ -30,16 +30,16 @@ export default function Login() {
             className="input__login"
             placeholder="Password"
           />
-          <a href="" className="link__login margin-top__login">
+          <Link to="/forgot" className="link__login margin-top__login">
             Forgot Password?
-          </a>
+          </Link>
           <button className="button__login">Iniciar Sesión</button>
 
           <p className="text__login">
-            ¿No tienes una cuenta?
-            <a href="" className="link__login link--color__login">
+            ¿No tienes una cuenta? &nbsp;
+            <Link to="/register" className="link__login link--color__login">
               Regístrate ahora
-            </a>
+            </Link>
           </p>
         </form>
       </section>

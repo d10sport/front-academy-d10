@@ -1,5 +1,5 @@
 // import fondoHomeD10Academy from "../../assets/img/fondo_home_d10_academy.png";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 // import "./register.css";
 import "../../css/loginStyles.css";
 
@@ -50,12 +50,12 @@ export default function Register() {
           <p className="text__login margin-general__login">
             ¿Ya tienes una cuenta?
           </p>
-          <a
-            href=""
+          <Link
+            to="/login"
             className="link__login link--color__login center-text__login"
           >
             Iniciar Sesión
-          </a>
+          </Link>
         </form>
       </section>
     </>
