@@ -4,7 +4,7 @@
 import { useState } from "react";
 import "../../css/loginStyles.css";
 
-export default function Sport1() {
+export default function Athlete1() {
   const [genero, setGenero] = useState("");
 
   return (

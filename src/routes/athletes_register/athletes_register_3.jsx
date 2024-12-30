@@ -3,7 +3,7 @@
 // import "./log-form-3.css";
 import "../../css/loginStyles.css";
 
-export default function Sport3() {
+export default function Athlete3() {
   return (
     <>
       <section className="section__login">
