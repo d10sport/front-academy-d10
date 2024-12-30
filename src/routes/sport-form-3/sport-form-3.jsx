@@ -13,13 +13,33 @@ export default function Sport3() {
             Regístrate como deportista
           </h2>
 
-          <label className="label__login">Nombres del Padre o Madre</label>
-          <input type="text" className="input__login" placeholder="Nombres" />
-          <label className="label__login">Apellidos del Padre o Madre</label>
-          <input type="text" className="input__login" placeholder="Apellidos" />
-          <label className="label__login">Contacto del Padre o Madre</label>
+          <label htmlFor="nombre-familia" className="label__login">
+            Nombres del Padre o Madre
+          </label>
           <input
             type="text"
+            id="nombre-familia"
+            name="nombreFamilia"
+            className="input__login"
+            placeholder="Nombres"
+          />
+          <label htmlFor="apellido-familia" className="label__login">
+            Apellidos del Padre o Madre
+          </label>
+          <input
+            type="text"
+            id="apellido-familia"
+            name="apellidoFamilia"
+            className="input__login"
+            placeholder="Apellidos"
+          />
+          <label htmlFor="contacto-familia" className="label__login">
+            Contacto del Padre o Madre
+          </label>
+          <input
+            type="tel"
+            id="contacto-familia"
+            name="contactoFamilia"
             className="input__login"
             placeholder="Numero de celular"
           />

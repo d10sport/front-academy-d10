@@ -13,27 +13,63 @@ export default function Coach2() {
             Regístrate como entrenador
           </h2>
 
-          <label className="label__login">País</label>
-          <input type="text" className="input__login" placeholder="País" />
-          <label className="label__login">Ciudad</label>
-          <input type="text" className="input__login" placeholder="Ciudad" />
-          <label className="label__login">Club Actual</label>
+          <label htmlFor="pais" className="label__login">
+            País
+          </label>
           <input
             type="text"
+            id="pais"
+            name="pais"
+            className="input__login"
+            placeholder="País"
+          />
+          <label htmlFor="ciudad" className="label__login">
+            Ciudad
+          </label>
+          <input
+            type="text"
+            id="ciudad"
+            name="ciudad"
+            className="input__login"
+            placeholder="Ciudad"
+          />
+          <label htmlFor="club-actual" className="label__login">
+            Club Actual
+          </label>
+          <input
+            type="text"
+            id="club-actual"
+            name="clubActual"
             className="input__login"
             placeholder="Club Actual"
           />
-          <label className="label__login">Email</label>
-          <input type="email" className="input__login" placeholder="Nombre" />
-          <label className="label__login">Numero celular</label>
+          <label htmlFor="email" className="label__login">
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            className="input__login"
+            placeholder="Nombre"
+          />
+          <label htmlFor="numero-celular" className="label__login">
+            Numero celular
+          </label>
           <input
             type="tel"
+            id="numero-celular"
+            name="numeroCelular"
             className="input__login"
             placeholder="Numero celular"
           />
-          <label className="label__login">Usuario Instagram</label>
+          <label htmlFor="usuario-instagram" className="label__login">
+            Usuario Instagram
+          </label>
           <input
             type="text"
+            id="usuario-instagram"
+            name="usuarioInstagram"
             className="input__login"
             placeholder="Usuario_Instagram"
           />

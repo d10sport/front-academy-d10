@@ -13,39 +13,83 @@ export default function Sport2() {
             Regístrate como deportista
           </h2>
 
-          <label className="label__login">País</label>
-          <input type="text" className="input__login" placeholder="País" />
-          <label className="label__login">Ciudad</label>
-          <input type="text" className="input__login" placeholder="Ciudad" />
-          <label className="label__login">Club</label>
+          <label htmlFor="pais" className="label__login">
+            País
+          </label>
           <input
             type="text"
+            id="pais"
+            name="pais"
+            className="input__login"
+            placeholder="País"
+          />
+          <label htmlFor="ciudad" className="label__login">
+            Ciudad
+          </label>
+          <input
+            type="text"
+            id="ciudad"
+            name="ciudad"
+            className="input__login"
+            placeholder="Ciudad"
+          />
+          <label htmlFor="club" className="label__login">
+            Club
+          </label>
+          <input
+            type="text"
+            id="club"
+            name="club"
             className="input__login"
             placeholder="Club Actual"
           />
-          <label className="label__login">Entrenador</label>
+          <label htmlFor="entrenador" className="label__login">
+            Entrenador
+          </label>
           <input
             type="text"
+            id="entrenador"
+            name="entrenador"
             className="input__login"
             placeholder="Entrenador"
           />
-          <label className="label__login">Email</label>
-          <input type="email" className="input__login" placeholder="Nombre" />
-          <label className="label__login">Numero celular</label>
+          <label htmlFor="email" className="label__login">
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            className="input__login"
+            placeholder="Nombre"
+          />
+          <label htmlFor="numero-celular" className="label__login">
+            Numero celular
+          </label>
           <input
             type="tel"
+            id="numero-celular"
+            name="numeroCelular"
             className="input__login"
             placeholder="Numero celular"
           />
-          <label className="label__login">Grado Académico</label>
+          <label htmlFor="grado-academico" className="label__login">
+            Grado Académico
+          </label>
           <input
-            type="tel"
+            type="text"
+            id="grado-academico"
+            name="gradoAcademico"
             className="input__login"
             placeholder="Grado Académico"
           />
-          <label className="label__login">Usuario Instagram</label>
+          <label htmlFor="usuario-instagram" className="label__login">
+            Usuario Instagram
+          </label>
           <input
             type="text"
+            id="usuario-instagram"
+            name="usuarioInstagram"
             className="input__login"
             placeholder="Usuario_Instagram"
           />

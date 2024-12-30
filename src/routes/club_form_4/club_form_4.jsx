@@ -13,14 +13,46 @@ export default function Club4() {
             Regístrate como Club
           </h2>
 
-          <label className="label__login">Ayudantes</label>
-          <input type="text" className="input__login" placeholder="Ayudantes" />
-          <label className="label__login">Pasantes</label>
-          <input type="text" className="input__login" placeholder="Pasantes" />
-          <label className="label__login">Sedes</label>
-          <input type="text" className="input__login" placeholder="Sedes" />
-          <label className="label__login">Sitios</label>
-          <input type="text" className="input__login" placeholder="Sitios" />
+          <label htmlFor="ayudantes" className="label__login">
+            Ayudantes
+          </label>
+          <input
+            type="text"
+            id="ayudantes"
+            name="ayudantes"
+            className="input__login"
+            placeholder="Ayudantes"
+          />
+          <label htmlFor="pasantes" className="label__login">
+            Pasantes
+          </label>
+          <input
+            type="text"
+            id="pasantes"
+            name="pasantes"
+            className="input__login"
+            placeholder="Pasantes"
+          />
+          <label htmlFor="sedes" className="label__login">
+            Sedes
+          </label>
+          <input
+            type="text"
+            id="sedes"
+            name="sedes"
+            className="input__login"
+            placeholder="Sedes"
+          />
+          <label htmlFor="sitios" className="label__login">
+            Sitios
+          </label>
+          <input
+            type="text"
+            id="sitios"
+            name="sitios"
+            className="input__login"
+            placeholder="Sitios"
+          />
 
           <button className="button-three__login">Siguiente</button>
           <a

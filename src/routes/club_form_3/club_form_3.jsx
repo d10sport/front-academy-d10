@@ -1,9 +1,12 @@
 // import fondoHomeD10Academy from "../../assets/img/fondo_home_d10_academy.png";
 // import { Link } from "react-router-dom";
 // import "./log-form-1.css";
+import { useState } from "react";
 import "../../css/loginStyles.css";
 
 export default function Club3() {
+  const [categoria, setCategoria] = useState("");
+
   return (
     <>
       <section className="section__login">
@@ -13,21 +16,39 @@ export default function Club3() {
             Regístrate como Club
           </h2>
 
-          <label className="label__login">Cantidad de Entrenadores</label>
+          <label htmlFor="cantidad-entrenadores" className="label__login">
+            Cantidad de Entrenadores
+          </label>
           <input
-            type="text"
+            type="number"
+            id="cantidad-entrenadores"
+            name="cantidadEntrenadores"
             className="input__login"
             placeholder="Cantidad de Entrenadores"
           />
-          <label className="label__login">Cantidad de Deportistas</label>
+          <label htmlFor="cantidad-deportistas" className="label__login">
+            Cantidad de Deportistas
+          </label>
           <input
-            type="text"
+            type="number"
+            id="cantidad-deportistas"
+            name="cantidadDeportistas"
             className="input__login"
             placeholder="Cantidad de Deportistas"
           />
-          <label className="label__login">Categorías</label>
-          <select name="" id="" className="input__login">
-            <option value="seleccionar">Seleccionar...</option>
+          <label id="categoria" className="label__login">
+            Categorías
+          </label>
+          <select
+            name="categoria"
+            id="categoria"
+            className="input__login"
+            value={categoria}
+            onChange={(e) => setCategoria(e.target.value)}
+          >
+            <option value="" disabled>
+              Seleccionar...
+            </option>
             <option value="u13">U13</option>
             <option value="u15">U15</option>
             <option value="u17">U17</option>
@@ -40,7 +61,7 @@ export default function Club3() {
                 Sí
                 <input
                   type="radio"
-                  name="liga_local"
+                  name="liga-local"
                   className="radio-input__login"
                   value="si"
                 />
@@ -49,7 +70,7 @@ export default function Club3() {
                 No
                 <input
                   type="radio"
-                  name="liga_local"
+                  name="liga-local"
                   className="radio-input__login"
                   value="no"
                 />
@@ -63,7 +84,7 @@ export default function Club3() {
                 Sí
                 <input
                   type="radio"
-                  name="toreo_nacional"
+                  name="torneo-nacional"
                   className="radio-input__login"
                   value="si"
                 />
@@ -72,7 +93,7 @@ export default function Club3() {
                 No
                 <input
                   type="radio"
-                  name="toreo_nacional"
+                  name="torneo-nacional"
                   className="radio-input__login"
                   value="no"
                 />

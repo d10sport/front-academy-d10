@@ -13,17 +13,53 @@ export default function Club2() {
             Regístrate como Club
           </h2>
 
-          <label className="label__login">País</label>
-          <input type="text" className="input__login" placeholder="País" />
-          <label className="label__login">Ciudad</label>
-          <input type="text" className="input__login" placeholder="Ciudad" />
-          <label className="label__login">Contacto</label>
-          <input type="text" className="input__login" placeholder="Contacto" />
-          <label className="label__login">Email</label>
-          <input type="email" className="input__login" placeholder="Email" />
-          <label className="label__login">Usuario Instagram</label>
+          <label htmlFor="pais" className="label__login">
+            País
+          </label>
           <input
             type="text"
+            id="pais"
+            name="pais"
+            className="input__login"
+            placeholder="País"
+          />
+          <label htmlFor="ciudad" className="label__login">
+            Ciudad
+          </label>
+          <input
+            type="text"
+            id="ciudad"
+            name="ciudad"
+            className="input__login"
+            placeholder="Ciudad"
+          />
+          <label htmlFor="contacto" className="label__login">
+            Contacto
+          </label>
+          <input
+            type="tel"
+            id="contacto"
+            name="contacto"
+            className="input__login"
+            placeholder="Contacto"
+          />
+          <label htmlFor="email" className="label__login">
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            className="input__login"
+            placeholder="Email"
+          />
+          <label htmlFor="usuario-instagram" className="label__login">
+            Usuario Instagram
+          </label>
+          <input
+            type="text"
+            id="usuario-instagram"
+            name="usuarioInstagram"
             className="input__login"
             placeholder="Usuario_Instagram"
           />

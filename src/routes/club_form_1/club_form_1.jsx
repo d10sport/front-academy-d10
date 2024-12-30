@@ -21,19 +21,42 @@ export default function Club1() {
             />
           </div>
           <button className="button-two__login">Cambiar</button>
-          <label className="label__login">Nombre club</label>
+          <label htmlFor="nombre-club" className="label__login">
+            Nombre club
+          </label>
           <input
             type="text"
+            id="nombre-club"
+            name="nombreClub"
             className="input__login"
             placeholder="Nombre del club"
           />
-          <label className="label__login">Fecha de fundado</label>
-          <input type="date" className="input__login" />
-          <label className="label__login">Comet</label>
-          <input type="text" className="input__login" placeholder="Comet" />
-          <label className="label__login">Presidente</label>
+          <label htmlFor="fecha-fundador" className="label__login">
+            Fecha de fundador
+          </label>
+          <input
+            type="date"
+            id="fecha-fundador"
+            name="fechaFundador"
+            className="input__login"
+          />
+          <label htmlFor="comet" className="label__login">
+            Comet
+          </label>
           <input
             type="text"
+            id="comet"
+            name="comet"
+            className="input__login"
+            placeholder="Comet"
+          />
+          <label htmlFor="presidente" className="label__login">
+            Presidente
+          </label>
+          <input
+            type="text"
+            id="presidente"
+            name="presidente"
             className="input__login"
             placeholder="Nombre del presidente del club"
           />

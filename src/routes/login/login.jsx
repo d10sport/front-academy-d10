@@ -10,15 +10,23 @@ export default function Login() {
         <h1 className="title__login">D10+ Academy</h1>
         <form action="" className="form__login">
           <h2 className="subtitle__login">Iniciar Sesión</h2>
-          <label className="label__login">Correo</label>
+          <label htmlFor="email" className="label__login">
+            Correo
+          </label>
           <input
             type="email"
+            id="email"
+            name="email"
             className="input__login"
             placeholder="username@gmail.com"
           />
-          <label className="label__login">Contraseña</label>
+          <label htmlFor="password" className="label__login">
+            Contraseña
+          </label>
           <input
             type="password"
+            id="password"
+            name="password"
             className="input__login"
             placeholder="Password"
           />
