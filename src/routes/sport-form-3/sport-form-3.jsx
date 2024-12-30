@@ -1,8 +1,9 @@
 // import fondoHomeD10Academy from "../../assets/img/fondo_home_d10_academy.png";
 // import { Link } from "react-router-dom";
-import "./log-form-3.css";
+// import "./log-form-3.css";
+import "../../css/loginStyles.css";
 
-export default function Form3() {
+export default function Sport3() {
   return (
     <>
       <section className="section__login">

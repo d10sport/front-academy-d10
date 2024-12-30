@@ -1,14 +1,15 @@
 // import fondoHomeD10Academy from "../../assets/img/fondo_home_d10_academy.png";
 // import { Link } from "react-router-dom";
-import "./log-form-1.css";
+// import "./log-form-1.css";
+import "../../css/loginStyles.css";
 
-export default function Form1() {
+export default function Coach1() {
   return (
     <>
       <section className="section__login">
         <h1 className="title__login">D10+ Academy</h1>
         <form action="" className="form__login">
-          <h2 className="subtitle__login">Regístrate como deportista</h2>
+          <h2 className="subtitle__login">Regístrate como entrenador</h2>
           <p className="text__login link--color__login margin-general__login">
             Foto de perfil
           </p>

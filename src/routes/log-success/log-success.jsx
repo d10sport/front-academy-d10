@@ -1,6 +1,7 @@
 // import fondoHomeD10Academy from "../../assets/img/fondo_home_d10_academy.png";
 // import { Link } from "react-router-dom";
-import "./log-success.css";
+// import "./log-success.css";
+import "../../css/loginStyles.css";
 
 export default function NewSuccess() {
   return (
