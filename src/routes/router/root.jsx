@@ -1,13 +1,21 @@
 import { Route, Routes } from "react-router-dom"
-import SignIn from '../sign-in/sing-in.jsx'
-import SignUp from '../sign-up/sign-up.jsx'
 import Forgot from '../forgot/forgot.jsx'
-import NewForm1 from '../new-form-1/new-form-1.jsx'
-import NewForm2 from '../new-form-2/new-form-2.jsx'
-import NewForm3 from '../new-form-3/new-form-3.jsx'
-import NewLogin from '../new-login/new-login.jsx'
-import NewRegister from '../new-register/new-register.jsx'
-import NewSuccess from '../new-success/new-success.jsx'
+
+import Club1 from '../club_form_1/club_form_1.jsx'
+import Club2 from '../club_form_2/club_form_2.jsx'
+import Club3 from '../club_form_3/club_form_3.jsx'
+import Club4 from '../club_form_4/club_form_4.jsx'
+
+import Coach1 from '../coach-form-1/coach-form-1.jsx'
+import Coach2 from '../coach-form-2/coach-form-2.jsx'
+
+import Sport1 from '../sport-form-1/sport-form-1.jsx'
+import Sport2 from '../sport-form-2/sport-form-2.jsx'
+import Sport3 from '../sport-form-3/sport-form-3.jsx'
+
+import Login from '../login/login.jsx'
+import Register from '../register/register.jsx'
+import Success from '../log-success/log-success.jsx'
 
 import ErrorPage from './error.jsx'
 import Home from "../home/home.jsx"
@@ -16,15 +24,23 @@ export default function Router() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/signin" element={<SignIn />} />
-      <Route path="/signup" element={<SignUp />} />
       <Route path="/forgot" element={<Forgot />} />
-      <Route path="/form1" element={<NewForm1 />} />
-      <Route path="/form2" element={<NewForm2 />} />
-      <Route path="/form3" element={<NewForm3 />} />
-      <Route path="/login" element={<NewLogin />} />
-      <Route path="/register" element={<NewRegister />} />
-      <Route path="/success" element={<NewSuccess />} />
+
+      <Route path="/club1" element={<Club1 />} />
+      <Route path="/club2" element={<Club2 />} />
+      <Route path="/club3" element={<Club3 />} />
+      <Route path="/club4" element={<Club4 />} />
+
+      <Route path="/coach1" element={<Coach1 />} />
+      <Route path="/coach2" element={<Coach2 />} />
+
+      <Route path="/sport1" element={<Sport1 />} />
+      <Route path="/sport2" element={<Sport2 />} />
+      <Route path="/sport3" element={<Sport3 />} />
+
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/success" element={<Success />} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>
   )
