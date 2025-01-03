@@ -1,11 +1,13 @@
 // import fondoHomeD10Academy from "../../assets/img/fondo_home_d10_academy.png";
 import { Link } from "react-router-dom";
+// import Header from "../../layouts/header/header.jsx";
 // import "./login.css";
 import "../../css/loginStyles.css";
 
 export default function Login() {
   return (
     <>
+      {/* <Header /> */}
       <section className="section__login">
         <h1 className="title__login">D10+ Academy</h1>
         <form action="" className="form__login">
