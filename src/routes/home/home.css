@@ -1,5 +1,119 @@
 .section__home {
   display: flex;
+  width: 100%;
+  height: fit-content;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.title__home {
+  width: 90%;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.title-center__home {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.title--color__home {
+  color: #ffc702;
+}
+
+.subtitle__home {
+  width: 90%;
+  font-size: 22px;
+}
+
+.cntr-big-img__home {
+  width: 90%;
+  height: 300px;
+  background: rgb(24, 24, 24);
+  background: linear-gradient(
+    135deg,
+    rgba(24, 24, 24, 1) 0%,
+    rgba(61, 61, 61, 1) 100%
+  );
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.img__home {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cntr-course__home {
+  display: grid;
+  width: 100%;
+  height: auto;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 4rem;
+}
+
+.link__home {
+  display: flex;
+  width: 84px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  color: #ffc702;
+  font-weight: bold;
+  border: 2px solid #ffc702;
+}
+
+.item__home {
+  display: flex;
+  width: 60%;
+  height: fit-content;
+  justify-self: center;
+  flex-direction: column;
+}
+
+.cntr-info__home {
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  background: rgb(24, 24, 24);
+  background: linear-gradient(
+    225deg,
+    rgba(24, 24, 24, 1) 0%,
+    rgba(61, 61, 61, 1) 100%
+  );
+}
+
+.cntr-small-img__home {
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+  border-radius: 8px 8px 0px 0px;
+}
+
+.subcntr-info__home {
+  display: flex;
+  width: 100%;
+  height: 60px;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.text__home {
+  font-size: 18px;
+}
+
+.margin--space{
+  margin: 2rem 0;
+}
+
+/* .section__home {
+  display: flex;
   width: 250px;
   height: fit-content;
   padding: 20px 20px;
@@ -27,4 +141,4 @@
   background-color: #ffc702;
   border-radius: 6px;
   margin: 5px 0px;
-}
+} */
