@@ -1,16 +1,12 @@
-// import fondoHomeD10Academy from "../../assets/img/fondo_home_d10_academy.png";
-// import { Link } from "react-router-dom";
-// import "./log-form-2.css";
-import "../../css/loginStyles.css";
 
-export default function Athlete2() {
+export default function Club2() {
   return (
     <>
       <section className="section__login">
         <h2 className="title__login">D10+ Academy</h2>
         <form action="" className="form__login">
           <h2 className="subtitle__login margin-general__login">
-            Regístrate como deportista
+            Regístrate como Club
           </h2>
 
           <label htmlFor="pais" className="label__login">
@@ -33,25 +29,15 @@ export default function Athlete2() {
             className="input__login"
             placeholder="Ciudad"
           />
-          <label htmlFor="club" className="label__login">
-            Club
+          <label htmlFor="contacto" className="label__login">
+            Contacto
           </label>
           <input
-            type="text"
-            id="club"
-            name="club"
+            type="tel"
+            id="contacto"
+            name="contacto"
             className="input__login"
-            placeholder="Club Actual"
-          />
-          <label htmlFor="entrenador" className="label__login">
-            Entrenador
-          </label>
-          <input
-            type="text"
-            id="entrenador"
-            name="entrenador"
-            className="input__login"
-            placeholder="Entrenador"
+            placeholder="Contacto"
           />
           <label htmlFor="email" className="label__login">
             Email
@@ -61,27 +47,7 @@ export default function Athlete2() {
             id="email"
             name="email"
             className="input__login"
-            placeholder="Nombre"
-          />
-          <label htmlFor="numero-celular" className="label__login">
-            Numero celular
-          </label>
-          <input
-            type="tel"
-            id="numero-celular"
-            name="numeroCelular"
-            className="input__login"
-            placeholder="Numero celular"
-          />
-          <label htmlFor="grado-academico" className="label__login">
-            Grado Académico
-          </label>
-          <input
-            type="text"
-            id="grado-academico"
-            name="gradoAcademico"
-            className="input__login"
-            placeholder="Grado Académico"
+            placeholder="Email"
           />
           <label htmlFor="usuario-instagram" className="label__login">
             Usuario Instagram

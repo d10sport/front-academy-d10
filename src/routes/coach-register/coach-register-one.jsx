@@ -1,8 +1,4 @@
-// import fondoHomeD10Academy from "../../assets/img/fondo_home_d10_academy.png";
-// import { Link } from "react-router-dom";
-// import "./log-form-1.css";
 import { useState } from "react";
-import "../../css/loginStyles.css";
 
 export default function Coach1() {
   const [genero, setGenero] = useState("");
