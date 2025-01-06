@@ -1,46 +1,39 @@
+import AthleteRegisterOne from "@routes/athletes-register/athletes-register-one.jsx";
+import AthleteThree from "@routes/athletes-register/athletes-register-three.jsx";
+import AthleteTwo from "@routes/athletes-register/athletes-register-two.jsx";
+import ClubRegisterThree from "@routes/club-register/club-register-three.jsx";
+import ClubRegisterFour from "@routes/club-register/club-register-four.jsx";
+import ClubRegisterTwo from "@routes/club-register/club-register-two.jsx";
+import ClubRegisterOne from "@routes/club-register/club-register-one.jsx";
+import CoachRegisterOne from "@routes/coach-register/coach-register-one.jsx";
+import CoachregisterTwo from "@routes/coach-register/coach-register-two.jsx";
+import Success from "@routes/success-login/success-login.jsx";
+import LoginUser from "@routes/login-user/login-user.jsx";
+import Register from "@routes/register/register.jsx";
 import { Route, Routes } from "react-router-dom";
-import Forgot from "../forgot/forgot.jsx";
-
-import Club1 from "../club_register/club_register_1.jsx";
-import Club2 from "../club_register/club_register_2.jsx";
-import Club3 from "../club_register/club_register_3.jsx";
-import Club4 from "../club_register/club_register_4.jsx";
-
-import Coach1 from "../coach_register/coach_register_1.jsx";
-import Coach2 from "../coach_register/coach_register_2.jsx";
-
-import Athlete1 from "../athletes_register/athletes_register_1.jsx";
-import Athlete2 from "../athletes_register/athletes_register_2.jsx";
-import Athlete3 from "../athletes_register/athletes_register_3.jsx";
-
-import Login from "../login/login.jsx";
-import Register from "../register/register.jsx";
-import Success from "../success_login/success_login.jsx";
-
-import ErrorPage from "./error.jsx";
-import Home from "../home/home.jsx";
+import ErrorPage from "@routes/router/error.jsx";
+import Forgot from "@routes/forgot/forgot.jsx";
+import Login from "@routes/login/login.jsx";
+import Home from "@routes/home/home.jsx";
 
 export default function Router() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/forgot" element={<Forgot />} />
-
-      <Route path="/club-form/step-1" element={<Club1 />} />
-      <Route path="/club-form/step-2" element={<Club2 />} />
-      <Route path="/club-form/step-3" element={<Club3 />} />
-      <Route path="/club-form/step-4" element={<Club4 />} />
-
-      <Route path="/coach-form/step-1" element={<Coach1 />} />
-      <Route path="/coach-form/step-2" element={<Coach2 />} />
-
-      <Route path="/athlete-form/step-1" element={<Athlete1 />} />
-      <Route path="/athlete-form/step-2" element={<Athlete2 />} />
-      <Route path="/athlete-form/step-3" element={<Athlete3 />} />
-
-      <Route path="/login" element={<Login />} />
+      <Route path="/club-form/step-one" element={<ClubRegisterOne />} />
+      <Route path="/club-form/step-two" element={<ClubRegisterTwo />} />
+      <Route path="/club-form/step-three" element={<ClubRegisterThree />} />
+      <Route path="/club-form/step-four" element={<ClubRegisterFour />} />
+      <Route path="/coach-form/step-one" element={<CoachRegisterOne />} />
+      <Route path="/coach-form/step-two" element={<CoachregisterTwo />} />
+      <Route path="/athlete-form/step-one" element={<AthleteRegisterOne />} />
+      <Route path="/athlete-form/step-two" element={<AthleteTwo />} />
+      <Route path="/athlete-form/step-three" element={<AthleteThree />} />
+      <Route path="/login-user" element={<LoginUser />} />
       <Route path="/register" element={<Register />} />
       <Route path="/success" element={<Success />} />
+      <Route path="/login" element={<Login />} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>
   );

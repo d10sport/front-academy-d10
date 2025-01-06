@@ -10,10 +10,12 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src'),
       '@assets': path.resolve(__dirname, 'src/assets'),
       '@components': path.resolve(__dirname, 'src/components'),
-      '@pages': path.resolve(__dirname, 'src/routes'),
+      '@routes': path.resolve(__dirname, 'src/routes'),
       '@layouts': path.resolve(__dirname, 'src/layouts'),
       '@utils': path.resolve(__dirname, 'src/utils'),
-      '@routes': path.resolve(__dirname, 'src/routes'),
+      '@context': path.resolve(__dirname, 'src/context'),
+      '@lib': path.resolve(__dirname, 'src/lib'),
+      '@ui': path.resolve(__dirname, 'src/ui')
     },
   },
 })
