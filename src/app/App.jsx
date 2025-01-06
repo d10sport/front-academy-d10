@@ -6,7 +6,6 @@ import { Toaster } from 'sonner'
 import './App.css'
 
 function App() {
-
   return (
     <>
       <LoaderAuth />
