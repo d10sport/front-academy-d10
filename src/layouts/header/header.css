@@ -1,7 +1,7 @@
 /* Seccion nav */
 
 .nav {
-  position: fixed;
+  position: relative;
   display: flex;
   width: 100%;
   height: 4rem;

@@ -1,11 +1,19 @@
-import Inicio from '../routes/home/home.jsx'
+import LoaderAuth from '@ui/loaders/auth/loader.auth'
+import Header from '@layouts/header/header'
+import Footer from '@layouts/footer/footer'
+import Router  from '@routes/router/root'
+import { Toaster } from 'sonner'
 import './App.css'
 
 function App() {
 
   return (
     <>
-      <Inicio />
+      <LoaderAuth />
+      <Header />
+      <Router />
+      <Footer />
+      <Toaster richColors />
     </>
   )
 }
