@@ -2,7 +2,7 @@ import Example from "../../assets/img/example-img.png";
 import AppContext from "@context/app/app-context";
 import { useEffect, useContext, useState } from "react";
 import axios from "axios";
-import "./test.css";
+import "./home.css";
 
 export default function Test() {
   const context = useContext(AppContext);
