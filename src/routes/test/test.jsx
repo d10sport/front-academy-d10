@@ -1,11 +1,13 @@
 import Example from "../../assets/img/example-img.png";
-import { useEffect, useState } from "react";
+import AppContext from "@context/app/app-context";
+import { useEffect, useContext, useState } from "react";
 import axios from "axios";
 import "./test.css";
 
 export default function Test() {
-  const urlApi = import.meta.env.VITE_API_URL;
-  const apiKey = import.meta.env.VITE_API_KEY;
+  const context = useContext(AppContext);
+  const urlApi = context.urlApi;
+  const apiKey = context.apiKey;
 
   const [courses, setCourses] = useState([]);
 
@@ -18,16 +20,24 @@ export default function Test() {
         },
       })
       .then((response) => {
+        if (!response.data || response.data.length === 0 || !response.data[0]) {
+          console.warn("No se encontraron cursos.");
+          return;
+        }
         setCourses(response.data);
       })
       .catch((error) => {
-        console.error(error);
+        console.error("Error al obtener los cursos:", error);
       });
   }
 
   useEffect(() => {
-    getDateTest();
-  }, []);
+    if (!context.token) {
+      context.fetchToken();
+    } else {
+      getDateTest();
+    }
+  }, [context.token]);
 
   return (
     <>
