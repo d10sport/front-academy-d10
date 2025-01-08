@@ -1,10 +1,38 @@
 import Example from "../../assets/img/example-img.png";
 import AppContext from "@context/app/app-context";
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
+import axios from 'axios';
 import "./home.css";
 
 export default function Home() {
   const context = useContext(AppContext);
+  const urlApi = context.urlApi;
+  const apiKey = context.apiKey;
+
+  const [sectionOne, setSectionOne] = useState({
+    testColumn: ''
+  })
+
+  function getDateHome() {
+    axios.get(`${urlApi}academy/g/courses`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'api-key': apiKey
+      }
+    })
+      .then((response) => {
+        if (response.data?.length == 0 || response.data[0] == undefined) return;
+        setSectionOne(response.data[0].section_one);
+
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  useEffect(() => {
+    getDateHome();
+  });
 
   const course = [
     {
@@ -37,7 +65,8 @@ export default function Home() {
     <>
       {/* <Header /> */}
       <section className="section__home">
-        <h1 className="title__home margin--space">Bienvenido Daniel</h1>
+        {/* <h1 className="title__home margin--space">Bienvenido Daniel</h1> */}
+        <h1 className="title__home margin--space"> {sectionOne.testColumn} </h1>
         <div className="cntr-big-img__home">
           <img src={Example} alt="" className="img__home" />
         </div>
