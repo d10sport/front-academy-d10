@@ -3,6 +3,7 @@ import AppContext from "@context/app/app-context";
 import { useEffect, useContext, useState } from "react";
 import axios from "axios";
 import "./home.css";
+import { Link } from "react-router-dom";
 
 export default function Test() {
   const context = useContext(AppContext);
@@ -54,6 +55,33 @@ export default function Test() {
           formación perfecta en todo tipo de ámbito deportivo
         </h2>
         <div className="cntr-course__home">
+          {courses.map((course, courseIndex) => (
+            <div key={courseIndex} className="item__home">
+              <h1 className="title__home title--color__home title-center__home margin--space">
+                {course.course_title}
+              </h1>
+              <div className="cntr-info__home">
+                <div className="cntr-small-img__home">
+                  <img src={course.main_photo?.url} alt="Imagen del curso" />
+                </div>
+                <div className="subcntr-info__home">
+                  <p className="text__home">{course.main_photo?.description}</p>
+                  {course.class.map((classItem, classIndex) => (
+                    <Link
+                      key={classIndex}
+                      to={`/class/${classItem.class_id}`}
+                      className="link__home"
+                    >
+                      {classItem.class_title}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* <div className="cntr-course__home">
           {courses.map((course, index) => (
             <div key={index} className="item__home">
               <h1 className="title__home title--color__home title-center__home margin--space">
@@ -65,14 +93,14 @@ export default function Test() {
                 </div>
                 <div className="subcntr-info__home">
                   <p className="text__home">{course.main_photo?.description}</p>
-                  <a href="#" className="link__home">
+                  <Link to="/class" className="link__home">
                     Ver más
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
           ))}
-        </div>
+        </div> */}
       </section>
     </>
   );
