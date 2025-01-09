@@ -1,6 +1,27 @@
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import "./video-class.css";
 
-export default function LoginUser() {
+export default function VideoClass() {
+  const { classId } = useParams();
+  const [classData, setClassData] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get(`/api/class/${classId}`)
+      .then((response) => {
+        setClassData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error al cargar los datos de la clase:", error);
+      });
+  }, [classId]);
+
+  if (!classData) {
+    return <div>Cargando datos de la clase...</div>;
+  }
+
   return (
     <>
       <section className="class">
