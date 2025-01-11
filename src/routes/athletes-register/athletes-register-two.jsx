@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import "./athletes-register-two.css";
 
 export default function Athlete2() {
   const urlApi = import.meta.env.VITE_API_URL_RAPIDAPI;
@@ -14,7 +15,7 @@ export default function Athlete2() {
     const value = e.target.value;
     setQuery(value);
 
-    if (value.length > 2) {
+    if (value.length > 4) {
       setLoading(true);
       try {
         const options = {
@@ -29,7 +30,7 @@ export default function Athlete2() {
 
         const response = await axios.request(options);
         const results = response.data.data.items || [];
-        setSuggestions(results);
+        setSuggestions(results.slice(0, 5));
       } catch (error) {
         console.error("Error fetching suggestions:", error);
       } finally {
@@ -38,6 +39,11 @@ export default function Athlete2() {
     } else {
       setSuggestions([]);
     }
+  };
+
+  const handleSuggestionClick = (username) => {
+    setQuery(username);
+    setSuggestions([]);
   };
 
   return (
@@ -138,7 +144,11 @@ export default function Athlete2() {
           {suggestions.length > 0 && (
             <ul className="suggestions-list">
               {suggestions.map((user) => (
-                <li key={user.id} className="suggestion-item">
+                <li
+                  key={user.id}
+                  className="suggestion-item"
+                  onClick={() => handleSuggestionClick(user.username)}
+                >
                   {/* <img
                     src={user.profile_pic_url}
                     alt={user.username}
