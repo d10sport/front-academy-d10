@@ -16,10 +16,15 @@ import Forgot from "@routes/forgot/forgot.jsx";
 import Login from "@routes/login/login.jsx";
 import Home from "@routes/home/home.jsx";
 
+import ClassDetail from "../../components/video-class/video-class.jsx";
+
 export default function Router() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+
+      <Route path="/class/:classId" element={<ClassDetail />} />
+
       <Route path="/forgot" element={<Forgot />} />
       <Route path="/club-form/step-one" element={<ClubRegisterOne />} />
       <Route path="/club-form/step-two" element={<ClubRegisterTwo />} />
