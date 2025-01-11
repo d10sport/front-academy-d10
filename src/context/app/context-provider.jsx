@@ -18,6 +18,48 @@ const AppProvider = ({ children }) => {
   const [token, setToken] = useState(getToken());
   const [loadingAuth, setLoadingAuth] = useState(false);
 
+  const [registerAthlete, setRegisterAthlete] = useState({
+    first_names: '',
+    last_names: '',
+    email: '',
+    gender: '',
+    date_birth: '',
+    country: '',
+    countryID: 0,
+    city: '',
+    cityID: 0,
+    current_club: '',
+    contact: 0,
+    mail: '',
+    social_networks: '',
+    academic_level: '',
+    first_names_family: '',
+    last_names_family: '',
+    contact_family: 0,
+    coach: '',
+    id_coach: 0
+  })
+
+  const [registerCoach, setRegisterCoach] = useState({
+    first_names: '',
+    last_names: '',
+    email: '',
+    gender: '',
+    date_birth: '',
+    country: '',
+    countryID: 0,
+    city: '',
+    cityID: 0,
+    current_club: '',
+    contact: 0,
+    mail: '',
+    social_networks: '',
+    academic_level: '',
+    first_names_family: '',
+    last_names_family: '',
+    contact_family: 0
+  })
+
   const [dataHeader, setDataHeader] = useState({
     logo: '',
     bg_photo: '',
@@ -28,6 +70,76 @@ const AppProvider = ({ children }) => {
     logo: '',
     bg_photo: ''
   });
+
+  function clearRegisterAthlete(){
+    setRegisterAthlete({
+      first_names: '',
+      last_names: '',
+      email: '',
+      gender: '',
+      date_birth: '',
+      country: '',
+      countryID: 0,
+      city: '',
+      cityID: 0,
+      current_club: '',
+      contact: 0,
+      mail: '',
+      social_networks: '',
+      academic_level: '',
+      first_names_family: '',
+      last_names_family: '',
+      contact_family: 0,
+      coach: '',
+      id_coach: 0
+    })
+  }
+
+  async function validateEmptyAthlete() {
+    if (registerAthlete.first_names != '' &&
+      registerAthlete.last_names != '' &&
+      registerAthlete.mail != '' &&
+      registerAthlete.gender != '' &&
+      registerAthlete.date_birth != '' &&
+      registerAthlete.country != '' &&
+      registerAthlete.countryID != 0 &&
+      registerAthlete.city != '' &&
+      registerAthlete.contact != 0 &&
+      registerAthlete.mail != '' &&
+      registerAthlete.social_networks != '' &&
+      registerAthlete.academic_level != '' &&
+      registerAthlete.first_names_family != '' &&
+      registerAthlete.last_names_family != '' &&
+      registerAthlete.contact_family != 0 &&
+      registerAthlete.coach != '' &&
+      registerAthlete.id_coach != 0) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  async function validateEmptyCoach() {
+    if (registerCoach.first_names != '' &&
+      registerCoach.last_names != '' &&
+      registerCoach.email != '' &&
+      registerCoach.gender != '' &&
+      registerCoach.date_birth != '' &&
+      registerCoach.country != '' &&
+      registerCoach.countryID != 0 &&
+      registerCoach.city != '' &&
+      registerCoach.contact != 0 &&
+      registerCoach.mail != '' &&
+      registerCoach.social_networks != '' &&
+      registerCoach.academic_level != '' &&
+      registerCoach.first_names_family != '' &&
+      registerCoach.last_names_family != '' &&
+      registerCoach.contact_family != 0) {
+      return true
+    } else {
+      return false
+    }
+  }
 
   async function fetchToken() {
     const token = await getToken();
@@ -45,7 +157,7 @@ const AppProvider = ({ children }) => {
     }
   }
 
-  async function fetchDeleteToken(){
+  async function fetchDeleteToken() {
     const deleteT = deleteToken();
     setToken(null);
     if (!deleteT) {
@@ -62,7 +174,7 @@ const AppProvider = ({ children }) => {
   async function closeSession() {
     setUser([]);
     fetchDeleteToken();
-    navigate("/login-user");
+    navigate('/login-user');
   }
 
   useEffect(() => {
@@ -89,7 +201,14 @@ const AppProvider = ({ children }) => {
       loadingAuth,
       setLoadingAuth,
       typeUser,
-      setTypeUser
+      setTypeUser,
+      registerAthlete,
+      setRegisterAthlete,
+      validateEmptyAthlete,
+      clearRegisterAthlete,
+      registerCoach,
+      setRegisterCoach,
+      validateEmptyCoach
     }}>
       {children}
     </AppContext.Provider>
