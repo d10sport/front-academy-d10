@@ -1,4 +1,16 @@
+import imageAthlete from "@assets/img/deportista.png"
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+
 export default function NewSuccess() {
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    setTimeout(() => {
+      navigate('/login-user')
+    }, 5000)
+  }, []);
+
   return (
     <>
       <section className="section__login">
@@ -13,7 +25,7 @@ export default function NewSuccess() {
           </p>
           <div className="cntr-img__login">
             <img
-              src="assets/background-img.png"
+              src={imageAthlete}
               alt="img"
               className="img__login"
             />
