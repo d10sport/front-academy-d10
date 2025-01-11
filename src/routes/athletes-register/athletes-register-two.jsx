@@ -1,5 +1,45 @@
+import { useState } from "react";
+import axios from "axios";
 
 export default function Athlete2() {
+  const urlApi = import.meta.env.VITE_API_URL_RAPIDAPI;
+  const apiKey = import.meta.env.VITE_API_KEY_RAPIDAPI;
+  const apiHost = import.meta.env.VITE_API_HOST_RAPIDAPI;
+
+  const [query, setQuery] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const handleInputChange = async (e) => {
+    const value = e.target.value;
+    setQuery(value);
+
+    if (value.length > 2) {
+      setLoading(true);
+      try {
+        const options = {
+          method: "GET",
+          url: urlApi,
+          params: { search_query: value },
+          headers: {
+            "x-rapidapi-key": apiKey,
+            "x-rapidapi-host": apiHost,
+          },
+        };
+
+        const response = await axios.request(options);
+        const results = response.data.data.items || [];
+        setSuggestions(results);
+      } catch (error) {
+        console.error("Error fetching suggestions:", error);
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      setSuggestions([]);
+    }
+  };
+
   return (
     <>
       <section className="section__login">
@@ -79,6 +119,7 @@ export default function Athlete2() {
             className="input__login"
             placeholder="Grado Académico"
           />
+
           <label htmlFor="usuario-instagram" className="label__login">
             Usuario Instagram
           </label>
@@ -88,7 +129,40 @@ export default function Athlete2() {
             name="usuarioInstagram"
             className="input__login"
             placeholder="Usuario_Instagram"
+            value={query}
+            onChange={handleInputChange}
           />
+
+          {loading && <div className="loading">Cargando...</div>}
+
+          {suggestions.length > 0 && (
+            <ul className="suggestions-list">
+              {suggestions.map((user) => (
+                <li key={user.id} className="suggestion-item">
+                  {/* <img
+                    src={user.profile_pic_url}
+                    alt={user.username}
+                    className="suggestion-avatar"
+                  /> */}
+                  <div className="suggestion-info">
+                    <p className="suggestion-username">@{user.username}</p>
+                    {/* <p className="suggestion-fullname">{user.full_name}</p> */}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          {/* <label htmlFor="usuario-instagram" className="label__login">
+            Usuario Instagram
+          </label>
+          <input
+            type="text"
+            id="usuario-instagram"
+            name="usuarioInstagram"
+            className="input__login"
+            placeholder="Usuario_Instagram"
+          /> */}
 
           <button className="button-three__login">Siguiente</button>
           <a
