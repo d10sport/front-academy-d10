@@ -24,7 +24,6 @@ export default function Router() {
       <Route path="/" element={<Home />} />
 
       <Route path="/class/:classId" element={<ClassDetail />} />
-
       <Route path="/forgot" element={<Forgot />} />
       <Route path="/register/club/step-one" element={<ClubRegisterOne />} />
       <Route path="/register/club/step-two" element={<ClubRegisterTwo />} />
