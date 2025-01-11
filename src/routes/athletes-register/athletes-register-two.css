@@ -1,0 +1,19 @@
+.suggestions-list {
+  width: 100%;
+  color: black;
+  background-color: white;
+  border-radius: 4px;
+  border: 1px solid rgb(136, 136, 136);
+  padding: 4px;
+}
+
+.suggestion-username {
+  border-bottom: 1px solid rgb(136, 136, 136);
+  padding: 4px;
+}
+
+.suggestion-username:hover {
+  cursor: pointer;
+  background-color: rgb(204, 204, 204);
+  transition: 250ms;
+}
