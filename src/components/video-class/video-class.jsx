@@ -34,10 +34,22 @@ export default function VideoClass() {
         },
       })
       .then((response) => {
-        console.log("Datos recibidos:", response.data); // Verifica los datos
-        const classData = response.data[0]?.class;
-        if (classData) {
-          setClass(classData); // Actualiza el estado con los datos de la API
+        // console.log("Datos recibidos:", response.data); // Verifica la estructura
+        const courseData = response.data.find(
+          (course) =>
+            course.class &&
+            course.class.some((c) => c.class_id === parseInt(classId))
+        );
+
+        if (courseData) {
+          const classData = courseData.class.find(
+            (c) => c.class_id === parseInt(classId)
+          );
+          if (classData) {
+            setClass(classData);
+          }
+        } else {
+          console.error("Clase no encontrada.");
         }
       })
       .catch((error) => {
@@ -49,7 +61,7 @@ export default function VideoClass() {
     getDateVideo();
   }, []);
 
-  console.log(Class.class_title);
+  // console.log(Class.class_title);
   // ---------------------------------------------------------
 
   const { classId } = useParams();
@@ -101,7 +113,10 @@ export default function VideoClass() {
               {Class.class_content?.[0]?.title || "Título no disponible"}
             </h2>
 
-            <p className="text__class">Descripción del Video</p>
+            <p className="text__class">
+              {Class.class_content?.[0]?.description ||
+                "Descripción no disponible"}
+            </p>
             <div className="profile__class">
               <img className="profile-img__class" src="" alt="Profile" />
               <p className="text__class">Prof. Juan Pérez</p>
