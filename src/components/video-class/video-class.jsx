@@ -4,6 +4,54 @@ import axios from "axios";
 import "./video-class.css";
 
 export default function VideoClass() {
+  // ---------------------------------------------------------
+
+  const urlApi = import.meta.env.VITE_API_URL;
+  const apiKey = import.meta.env.VITE_API_KEY;
+
+  const [Class, setClass] = useState({
+    class_id: null,
+    class_photo: "",
+    class_title: "",
+    class_content: [
+      {
+        url: "",
+        title: "",
+        comments: [],
+        video_id: null,
+        description: "",
+      },
+    ],
+    class_description: "",
+  });
+
+  function getDateVideo() {
+    axios
+      .get(`${urlApi}academy/g/courses`, {
+        headers: {
+          "Content-Type": "application/json",
+          "api-key": apiKey,
+        },
+      })
+      .then((response) => {
+        console.log("Datos recibidos:", response.data); // Verifica los datos
+        const classData = response.data[0]?.class;
+        if (classData) {
+          setClass(classData); // Actualiza el estado con los datos de la API
+        }
+      })
+      .catch((error) => {
+        console.error("Error al cargar los datos de la clase:", error);
+      });
+  }
+
+  useEffect(() => {
+    getDateVideo();
+  }, []);
+
+  console.log(Class.class_title);
+  // ---------------------------------------------------------
+
   const { classId } = useParams();
   const [classData, setClassData] = useState(null);
 
@@ -48,7 +96,11 @@ export default function VideoClass() {
           </div>
 
           <div className="description__class">
-            <h2 className="subtitle__class">Titulo del Video: Introducción</h2>
+            {/* <h2 className="subtitle__class">Titulo del Video: Introducción</h2> */}
+            <h2 className="subtitle__class">
+              {Class.class_content?.[0]?.title || "Título no disponible"}
+            </h2>
+
             <p className="text__class">Descripción del Video</p>
             <div className="profile__class">
               <img className="profile-img__class" src="" alt="Profile" />

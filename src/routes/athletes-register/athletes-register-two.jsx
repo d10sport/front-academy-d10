@@ -155,8 +155,8 @@ export default function Athlete2() {
                     className="suggestion-avatar"
                   /> */}
                   <div className="suggestion-info">
+                    <p className="suggestion-fullname">{user.full_name}</p>
                     <p className="suggestion-username">@{user.username}</p>
-                    {/* <p className="suggestion-fullname">{user.full_name}</p> */}
                   </div>
                 </li>
               ))}
