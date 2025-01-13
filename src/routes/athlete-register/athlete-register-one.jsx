@@ -1,16 +1,16 @@
-import imageCoach from "@assets/img/entrenador.png"
+import imageAthlete from "@assets/img/deportista.png"
 import AppContext from "@context/app/app-context";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { toast } from 'sonner';
-import './coach-register.css'
+import './athlete-register.css'
 
-export default function CoachOne() {
+export default function AthleteRegisterOne() {
   const context = useContext(AppContext);
   const navigate = useNavigate()
 
   function handleName(event) {
-    context.setRegisterCoach((prev) => ({
+    context.setRegisterAthlete((prev) => ({
       ...prev,
       first_names: event.target.value,
     })
@@ -18,7 +18,7 @@ export default function CoachOne() {
   }
 
   function handleLastName(event) {
-    context.setRegisterCoach((prev) => ({
+    context.setRegisterAthlete((prev) => ({
       ...prev,
       last_names: event.target.value,
     })
@@ -26,7 +26,7 @@ export default function CoachOne() {
   }
 
   function handleGender(event) {
-    context.setRegisterCoach((prev) => ({
+    context.setRegisterAthlete((prev) => ({
       ...prev,
       gender: event.target.value,
     })
@@ -34,7 +34,7 @@ export default function CoachOne() {
   }
 
   function handleDateBirth(event) {
-    context.setRegisterCoach((prev) => ({
+    context.setRegisterAthlete((prev) => ({
       ...prev,
       date_birth: event.target.value,
     })
@@ -42,11 +42,11 @@ export default function CoachOne() {
   }
 
   function nextStep() {
-    if (!context.registerCoach.first_names || !context.registerCoach.last_names || !context.registerCoach.gender || !context.registerCoach.date_birth) {
+    if (!context.registerAthlete.first_names || !context.registerAthlete.last_names || !context.registerAthlete.gender || !context.registerAthlete.date_birth) {
       toast.error('Por favor, complete todos los campos');
       return
     }
-    navigate('/register/coach/step-two')
+    navigate('/register/athlete/step-two')
   }
 
   return (
@@ -54,20 +54,20 @@ export default function CoachOne() {
       <section className="section__login">
         <h1 className="title__login">D10+ Academy</h1>
         <div className="form__login">
-          <h2 className="subtitle__login">Regístrate como entrenador</h2>
+          <h2 className="subtitle__login">Regístrate como deportista</h2>
           <p className="text__login link--color__login margin-general__login">
             Foto de perfil
           </p>
           <div className="cntr-img__login">
             <img
-              src={imageCoach}
+              src={imageAthlete}
               alt="img"
               className="img__login"
             />
           </div>
           <button className="button-two__login">Cambiar</button>
 
-          <label htmlFor="nombre" className="label__login">
+          <label htmlFor="name" className="label__login cursor-pointer">
             Nombres
           </label>
           <input
@@ -77,11 +77,11 @@ export default function CoachOne() {
             autoComplete="off"
             className="input__login"
             placeholder="Nombre"
-            defaultValue={context.registerCoach.first_names}
+            value={context.registerAthlete.first_names}
             onChange={(e) => handleName(e)}
           />
 
-          <label htmlFor="apellido" className="label__login">
+          <label htmlFor="lastname" className="label__login cursor-pointer">
             Apellidos
           </label>
           <input
@@ -91,18 +91,18 @@ export default function CoachOne() {
             autoComplete="off"
             className="input__login"
             placeholder="Apellido"
-            defaultValue={context.registerCoach.last_names}
+            value={context.registerAthlete.last_names}
             onChange={(e) => handleLastName(e)}
           />
 
-          <label htmlFor="genero" className="label__login">
+          <label htmlFor="gender" className="label__login cursor-pointer">
             Genero
           </label>
           <select
             id="gender"
             name="gender"
             className="input__login cursor-pointer"
-            defaultValue={context.registerCoach.gender}
+            defaultValue={context.registerAthlete.gender}
             onChange={(e) => handleGender(e)}
           >
             <option value="" selected disabled>
@@ -112,7 +112,7 @@ export default function CoachOne() {
             <option value="F">Mujer</option>
           </select>
 
-          <label htmlFor="fecha-nacimiento" className="label__login">
+          <label htmlFor="date_birth" className="label__login cursor-pointer">
             Fecha de Nacimiento:
           </label>
           <input
@@ -123,7 +123,7 @@ export default function CoachOne() {
             className="input__login"
             min="1900-01-01"
             max="2099-12-31"
-            value={context.registerCoach.date_birth}
+            value={context.registerAthlete.date_birth}
             onChange={handleDateBirth}
           />
 

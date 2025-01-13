@@ -57,15 +57,15 @@ export default function LoginUser() {
             </div>
           </div>
 
-          {/* <p className="text__login margin-general__login">
+          <p className="text__login margin-general__login">
             ¿No tienes una cuenta?
           </p>
           <Link
-            to="/login"
+            to="/register"
             className="link__login link--color__login center-text__login"
           >
             Registrate
-          </Link> */}
+          </Link>
         </div>
       </section>
     </>

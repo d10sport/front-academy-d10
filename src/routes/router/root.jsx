@@ -1,6 +1,6 @@
-import AthleteRegisterOne from "@routes/athletes-register/athletes-register-one.jsx";
-import AthleteThree from "@routes/athletes-register/athletes-register-three.jsx";
-import AthleteTwo from "@routes/athletes-register/athletes-register-two.jsx";
+import AthleteRegisterOne from "@routes/athlete-register/athlete-register-one.jsx";
+import AthleteThree from "@routes/athlete-register/athlete-register-three.jsx";
+import AthleteTwo from "@routes/athlete-register/athlete-register-two.jsx";
 import ClubRegisterThree from "@routes/club-register/club-register-three.jsx";
 import ClubRegisterFour from "@routes/club-register/club-register-four.jsx";
 import ClubRegisterTwo from "@routes/club-register/club-register-two.jsx";
@@ -24,20 +24,19 @@ export default function Router() {
       <Route path="/" element={<Home />} />
 
       <Route path="/class/:classId" element={<ClassDetail />} />
-
       <Route path="/forgot" element={<Forgot />} />
-      <Route path="/club-form/step-one" element={<ClubRegisterOne />} />
-      <Route path="/club-form/step-two" element={<ClubRegisterTwo />} />
-      <Route path="/club-form/step-three" element={<ClubRegisterThree />} />
-      <Route path="/club-form/step-four" element={<ClubRegisterFour />} />
-      <Route path="/coach-form/step-one" element={<CoachRegisterOne />} />
-      <Route path="/coach-form/step-two" element={<CoachregisterTwo />} />
-      <Route path="/athlete-form/step-one" element={<AthleteRegisterOne />} />
-      <Route path="/athlete-form/step-two" element={<AthleteTwo />} />
-      <Route path="/athlete-form/step-three" element={<AthleteThree />} />
+      <Route path="/register/club/step-one" element={<ClubRegisterOne />} />
+      <Route path="/register/club/step-two" element={<ClubRegisterTwo />} />
+      <Route path="/register/club/step-three" element={<ClubRegisterThree />} />
+      <Route path="/register/club/step-four" element={<ClubRegisterFour />} />
+      <Route path="/register/coach/step-one" element={<CoachRegisterOne />} />
+      <Route path="/register/coach/step-two" element={<CoachregisterTwo />} />
+      <Route path="/register/athlete/step-one" element={<AthleteRegisterOne />} />
+      <Route path="/register/athlete/step-two" element={<AthleteTwo />} />
+      <Route path="/register/athlete/step-three" element={<AthleteThree />} />
+      <Route path="/success-register" element={<Success />} />
       <Route path="/login-user" element={<LoginUser />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/success" element={<Success />} />
       <Route path="/login" element={<Login />} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>

@@ -1,6 +1,21 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import imageAthlete from "@assets/img/deportista.png"
+import imageCoach from "@assets/img/entrenador.png"
+import AppContext from "@context/app/app-context";
+import imageClub from "@assets/img/club.png"
+import { useContext } from "react";
 
 export default function Register() {
+  const { setTypeUser } = useContext(AppContext);
+  const navigate = useNavigate();
+
+  function selectTypeUser(event) {
+    setTypeUser(event.currentTarget.id);
+    if (event.currentTarget.id === "athlete") return navigate("/register/athlete/step-one");
+    if (event.currentTarget.id === "coach") return navigate("/register/coach/step-one");
+    if (event.currentTarget.id === "club") return navigate("/register/club/step-one");
+  }
+
   return (
     <>
       <section className="section__login">
@@ -14,9 +29,9 @@ export default function Register() {
           <div className="cntr-choosen__login">
             <div className="choosen__login">
               <p className="text__login margin-general__login">Deportista</p>
-              <button className="cntr-img__login">
+              <button id="athlete" onClick={(event) => selectTypeUser(event)} className="cntr-img__login">
                 <img
-                  src="assets/background-img.png"
+                  src={imageAthlete}
                   alt="Img"
                   className="img__login"
                 />
@@ -24,9 +39,9 @@ export default function Register() {
             </div>
             <div className="choosen__login">
               <p className="text__login margin-general__login">Entrenador</p>
-              <button className="cntr-img__login">
+              <button id="coach" onClick={(event) => selectTypeUser(event)} className="cntr-img__login">
                 <img
-                  src="assets/background-img.png"
+                  src={imageCoach}
                   alt="Img"
                   className="img__login"
                 />
@@ -34,9 +49,9 @@ export default function Register() {
             </div>
             <div className="choosen__login">
               <p className="text__login margin-general__login">Club</p>
-              <button className="cntr-img__login">
+              <button id="club" onClick={(event) => selectTypeUser(event)} className="cntr-img__login">
                 <img
-                  src="assets/background-img.png"
+                  src={imageClub}
                   alt="Img"
                   className="img__login"
                 />
@@ -48,7 +63,7 @@ export default function Register() {
             ¿Ya tienes una cuenta?
           </p>
           <Link
-            to="/login"
+            to="/login-user"
             className="link__login link--color__login center-text__login"
           >
             Iniciar Sesión
