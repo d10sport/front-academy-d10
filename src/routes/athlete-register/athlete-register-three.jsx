@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { toast } from 'sonner';
 import axios from "axios";
+import './athlete-register.css'
 
 export default function AthleteRegisterThree() {
   const context = useContext(AppContext);
@@ -62,7 +63,6 @@ export default function AthleteRegisterThree() {
       toast.error('Por favor, complete todos los campos');
       return
     }
-    // const register = await saveRegisterAthlete(context.registerAthlete);
     toast.promise(saveRegisterAthlete(context.registerAthlete), {
       loading: 'Cargando...',
       success: (data) => {
@@ -94,6 +94,7 @@ export default function AthleteRegisterThree() {
             type="text"
             id="firstname_family"
             name="firstname_family"
+            autoComplete="off"
             className="input__login"
             placeholder="Nombres"
             value={context.registerAthlete.first_names_family}
@@ -107,6 +108,7 @@ export default function AthleteRegisterThree() {
             type="text"
             id="lastname_family"
             name="lastname_family"
+            autoComplete="off"
             className="input__login"
             placeholder="Apellidos"
             value={context.registerAthlete.last_names_family}
@@ -120,6 +122,7 @@ export default function AthleteRegisterThree() {
             type="tel"
             id="contac_family"
             name="contac_family"
+            autoComplete="off"
             className="input__login"
             placeholder="Numero de celular"
             value={context.registerAthlete.contact_family == 0 ? '' : context.registerAthlete.contact_family}

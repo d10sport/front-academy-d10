@@ -7,6 +7,12 @@
   padding: 4px;
 }
 
+.suggestion-item {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+}
+
 .suggestion-username {
   border-bottom: 1px solid rgb(136, 136, 136);
   padding: 4px;
@@ -16,4 +22,9 @@
   cursor: pointer;
   background-color: rgb(204, 204, 204);
   transition: 250ms;
+}
+
+.suggestion-avatar {
+  position: absolute;
+  right: 0;
 }

@@ -11,6 +11,8 @@ const AppProvider = ({ children }) => {
 
   const urlApi = import.meta.env.VITE_API_URL;
   const apiKey = import.meta.env.VITE_API_KEY;
+  const apiKeyRapidApi = import.meta.env.VITE_RAPIDAPI_API_KEY;
+  const apiHostRapidIntagram = import.meta.env.VITE_API_HOST_RAPID_INSTAGRAM;
   const navigate = useNavigate();
 
   const [user, setUser] = useState([]);
@@ -21,13 +23,12 @@ const AppProvider = ({ children }) => {
   const [registerAthlete, setRegisterAthlete] = useState({
     first_names: '',
     last_names: '',
-    email: '',
     gender: '',
     date_birth: '',
     country: '',
-    countryID: 0,
+    countryID: '',
     city: '',
-    cityID: 0,
+    cityID: '',
     current_club: '',
     contact: 0,
     mail: '',
@@ -43,21 +44,20 @@ const AppProvider = ({ children }) => {
   const [registerCoach, setRegisterCoach] = useState({
     first_names: '',
     last_names: '',
-    email: '',
     gender: '',
     date_birth: '',
     country: '',
-    countryID: 0,
+    countryID: '',
     city: '',
-    cityID: 0,
+    cityID: '',
+    id_club: 0,
     current_club: '',
     contact: 0,
     mail: '',
     social_networks: '',
     academic_level: '',
-    first_names_family: '',
-    last_names_family: '',
-    contact_family: 0
+    licenses_obtained: '',
+    other: ''
   })
 
   const [dataHeader, setDataHeader] = useState({
@@ -71,17 +71,16 @@ const AppProvider = ({ children }) => {
     bg_photo: ''
   });
 
-  function clearRegisterAthlete(){
+  function clearRegisterAthlete() {
     setRegisterAthlete({
       first_names: '',
       last_names: '',
-      email: '',
       gender: '',
       date_birth: '',
       country: '',
-      countryID: 0,
+      countryID: '',
       city: '',
-      cityID: 0,
+      cityID: '',
       current_club: '',
       contact: 0,
       mail: '',
@@ -95,6 +94,27 @@ const AppProvider = ({ children }) => {
     })
   }
 
+  function clearRegisterCoach() {
+    setRegisterCoach({
+      first_names: '',
+      last_names: '',
+      gender: '',
+      date_birth: '',
+      country: '',
+      countryID: '',
+      city: '',
+      cityID: '',
+      id_club: 0,
+      current_club: '',
+      contact: 0,
+      mail: '',
+      social_networks: '',
+      academic_level: '',
+      licenses_obtained: '',
+      other: ''
+    })
+  }
+
   async function validateEmptyAthlete() {
     if (registerAthlete.first_names != '' &&
       registerAthlete.last_names != '' &&
@@ -102,10 +122,10 @@ const AppProvider = ({ children }) => {
       registerAthlete.gender != '' &&
       registerAthlete.date_birth != '' &&
       registerAthlete.country != '' &&
-      registerAthlete.countryID != 0 &&
+      registerAthlete.countryID != '' &&
       registerAthlete.city != '' &&
+      registerAthlete.cityID != '' &&
       registerAthlete.contact != 0 &&
-      registerAthlete.mail != '' &&
       registerAthlete.social_networks != '' &&
       registerAthlete.academic_level != '' &&
       registerAthlete.first_names_family != '' &&
@@ -122,19 +142,20 @@ const AppProvider = ({ children }) => {
   async function validateEmptyCoach() {
     if (registerCoach.first_names != '' &&
       registerCoach.last_names != '' &&
-      registerCoach.email != '' &&
+      registerCoach.mail != '' &&
       registerCoach.gender != '' &&
       registerCoach.date_birth != '' &&
       registerCoach.country != '' &&
-      registerCoach.countryID != 0 &&
+      registerCoach.countryID != '' &&
+      registerCoach.current_club != '' &&
+      registerCoach.id_club != 0 &&
       registerCoach.city != '' &&
+      registerCoach.cityID != '' &&
       registerCoach.contact != 0 &&
-      registerCoach.mail != '' &&
       registerCoach.social_networks != '' &&
       registerCoach.academic_level != '' &&
-      registerCoach.first_names_family != '' &&
-      registerCoach.last_names_family != '' &&
-      registerCoach.contact_family != 0) {
+      registerCoach.licenses_obtained != '' &&
+      registerCoach.other != '') {
       return true
     } else {
       return false
@@ -208,7 +229,10 @@ const AppProvider = ({ children }) => {
       clearRegisterAthlete,
       registerCoach,
       setRegisterCoach,
-      validateEmptyCoach
+      validateEmptyCoach,
+      clearRegisterCoach,
+      apiKeyRapidApi,
+      apiHostRapidIntagram
     }}>
       {children}
     </AppContext.Provider>

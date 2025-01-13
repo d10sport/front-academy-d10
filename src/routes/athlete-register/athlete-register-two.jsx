@@ -1,9 +1,9 @@
+import { useEffect, useContext, useState } from "react";
 import AppContext from "@context/app/app-context";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useContext } from "react";
 import { toast } from 'sonner';
 import axios from "axios";
-import { useState } from "react";
+import './athlete-register.css'
 
 export default function AthleteRegisterTwo() {
   const context = useContext(AppContext);
@@ -25,7 +25,7 @@ export default function AthleteRegisterTwo() {
     context.setRegisterAthlete((prev) => ({
       ...prev,
       city: '',
-      cityID: 0
+      cityID: ''
     }))
     context.setRegisterAthlete((prev) => ({
       ...prev,
@@ -33,7 +33,7 @@ export default function AthleteRegisterTwo() {
       countryID: countryId
     })
     )
-    if (countryId != 0) {
+    if (countryId != '') {
       fetchCities(event.target.selectedOptions[0].id);
     }
   }
@@ -62,7 +62,7 @@ export default function AthleteRegisterTwo() {
   function handleCellPhone(event) {
     context.setRegisterAthlete((prev) => ({
       ...prev,
-      contact: event.target.value,
+      contact: parseInt(event.target.value),
     })
     )
   }
@@ -229,7 +229,7 @@ export default function AthleteRegisterTwo() {
             Regístrate como deportista
           </h2>
 
-          <label htmlFor="pais" className="label__login">
+          <label htmlFor="pais" className="label__login cursor-pointer">
             País
           </label>
           {countries.length === 0 ?
@@ -238,6 +238,7 @@ export default function AthleteRegisterTwo() {
                 type="text"
                 id="country"
                 name="country"
+                autoComplete="off"
                 className="input__login"
                 placeholder="País"
                 value={context.registerAthlete.country}
@@ -263,7 +264,7 @@ export default function AthleteRegisterTwo() {
               </select>
             )}
 
-          <label htmlFor="ciudad" className="label__login">
+          <label htmlFor="ciudad" className="label__login cursor-pointer">
             Ciudad
           </label>
           {cities.length === 0 && countries.length === 0 ||
@@ -273,6 +274,7 @@ export default function AthleteRegisterTwo() {
                 type="text"
                 id="city"
                 name="city"
+                autoComplete="off"
                 className="input__login cursor-no-drop outline-none"
                 placeholder="Ciudad"
                 disabled
@@ -298,7 +300,7 @@ export default function AthleteRegisterTwo() {
               </select>
             )}
 
-          <label htmlFor="entrenador" className="label__login">
+          <label htmlFor="entrenador" className="label__login cursor-pointer">
             Entrenador
           </label>
           <div className="input-container">
@@ -307,14 +309,15 @@ export default function AthleteRegisterTwo() {
                 type="text"
                 id="entrenador"
                 name="entrenador"
+                autoComplete="off"
                 className="input__login"
                 placeholder="Buscar entrenador"
                 value={filterCoach || context.registerAthlete.coach}
                 onChange={(e) => handleCoachSearch(e)}
               />
-              <button onClick={clearSelectCoach}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" ><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+              <button className="input-btn" onClick={clearSelectCoach}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" ><path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
                 </svg>
               </button>
             </div>
@@ -323,7 +326,6 @@ export default function AthleteRegisterTwo() {
               <>
                 <p>Resultados</p>
                 <select
-                  size={coachResults.length > 5 ? 5 : coachResults.length}
                   className="select__login input__login"
                   onChange={(e) => handleOnChangeCoach(e)}
                   defaultValue={context.registerAthlete.coach}
@@ -339,38 +341,40 @@ export default function AthleteRegisterTwo() {
             )}
           </div>
 
-          <label htmlFor="email" className="label__login">
+          <label htmlFor="email" className="label__login ">
             Email
           </label>
           <input
             type="email"
             id="email"
             name="email"
+            autoComplete="off"
             className="input__login"
             placeholder="Nombre"
             value={context.registerAthlete.mail}
             onChange={(e) => handleEmail(e)}
           />
 
-          <label htmlFor="numero-celular" className="label__login">
+          <label htmlFor="numero-celular" className="label__login cursor-pointer">
             Numero celular
           </label>
           <input
             type="text"
             id="number_phone"
             name="number_phone"
+            autoComplete="off"
             className="input__login"
             placeholder="Numero celular"
             value={context.registerAthlete.contact == 0 ? '' : context.registerAthlete.contact}
             onChange={(e) => handleCellPhone(e)}
           />
 
-          <label htmlFor="grado-academico" className="label__login">
+          <label htmlFor="academic_level" className="label__login cursor-pointer">
             Grado Académico
           </label>
           <select
-            name="academic_level"
             id="academic_level"
+            name="academic_level"
             className="input__login"
             defaultValue={context.registerAthlete.academic_level}
             onChange={(e) => handleAcademicLevel(e)}
@@ -385,13 +389,14 @@ export default function AthleteRegisterTwo() {
             <option value="doctorado">Doctorado</option>
           </select>
 
-          <label htmlFor="usuario-instagram" className="label__login">
+          <label htmlFor="user_instagram" className="label__login cursor-pointer">
             Usuario Instagram
           </label>
           <input
             type="text"
             id="user_instagram"
             name="user_instagram"
+            autoComplete="off"
             className="input__login"
             placeholder="Usuario_Instagram"
             value={context.registerAthlete.social_networks}
