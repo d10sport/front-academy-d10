@@ -3,6 +3,7 @@ import AppContext from "@context/app/app-context";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { toast } from 'sonner';
+import './athlete-register.css'
 
 export default function AthleteRegisterOne() {
   const context = useContext(AppContext);
@@ -66,38 +67,40 @@ export default function AthleteRegisterOne() {
           </div>
           <button className="button-two__login">Cambiar</button>
 
-          <label htmlFor="nombre" className="label__login">
+          <label htmlFor="name" className="label__login cursor-pointer">
             Nombres
           </label>
           <input
             type="text"
-            id="nombre"
-            name="nombre"
+            id="name"
+            name="name"
+            autoComplete="off"
             className="input__login"
             placeholder="Nombre"
             value={context.registerAthlete.first_names}
             onChange={(e) => handleName(e)}
           />
 
-          <label htmlFor="apellido" className="label__login">
+          <label htmlFor="lastname" className="label__login cursor-pointer">
             Apellidos
           </label>
           <input
             type="text"
-            id="apellido"
-            name="apellido"
+            id="lastname"
+            name="lastname"
+            autoComplete="off"
             className="input__login"
             placeholder="Apellido"
             value={context.registerAthlete.last_names}
             onChange={(e) => handleLastName(e)}
           />
 
-          <label htmlFor="genero" className="label__login">
+          <label htmlFor="gender" className="label__login cursor-pointer">
             Genero
           </label>
           <select
-            name="genero"
-            id="genero"
+            id="gender"
+            name="gender"
             className="input__login cursor-pointer"
             defaultValue={context.registerAthlete.gender}
             onChange={(e) => handleGender(e)}
@@ -109,13 +112,14 @@ export default function AthleteRegisterOne() {
             <option value="F">Mujer</option>
           </select>
 
-          <label htmlFor="fecha-nacimiento" className="label__login">
+          <label htmlFor="date_birth" className="label__login cursor-pointer">
             Fecha de Nacimiento:
           </label>
           <input
             type="date"
-            id="fecha-nacimiento"
-            name="fechaNacimiento"
+            id="date_birth"
+            name="date_birth"
+            autoComplete="off"
             className="input__login"
             min="1900-01-01"
             max="2099-12-31"
