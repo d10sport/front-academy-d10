@@ -86,8 +86,9 @@
   .cntr-text__register {
     display: flex;
     width: 10%;
-    height: 60px;
+    height: fit-content;
     color: white;
+    text-align: center;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -96,6 +97,7 @@
       rgba(24, 24, 24, 1) 0%,
       rgba(61, 61, 61, 1) 100%
     );
+    padding: 10px 10px;
     border-radius: 8px;
     pointer-events: auto;
   }
