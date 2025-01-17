@@ -200,8 +200,8 @@ export default function CoachRegisterTwo() {
   }
 
   const handleInstagramSearch = () => {
-    if (userIntagram.length >= 2) {
-      toast.promise(fetFilterInstragram(userIntagram), {
+    if (userIntagram.length >= 1) {
+      toast.promise(fetchFilterInstragram(userIntagram), {
         loading: 'Cargando...',
         success: (data) => {
           if (data.length > 0) {
@@ -210,10 +210,10 @@ export default function CoachRegisterTwo() {
             return 'No se encontraron resultados'
           }
         },
-        error: 'Error al filtrar entrenadores',
+        error: 'Error al filtrar',
       });
     } else {
-      setClubResults([]);
+      setSuggestions([]);
     }
   };
 
@@ -223,7 +223,7 @@ export default function CoachRegisterTwo() {
     handleClubSelect(selectedOption.id, selectedOption.name_club);
   }
 
-  async function fetFilterInstragram() {
+  async function fetchFilterInstragram() {
     setIsLoading(true);
     try {
       const response = await axios.get(`https://${apiHostRapidIntagram}/v1/info?username_or_id_or_url=${userIntagram}`, {
@@ -233,7 +233,7 @@ export default function CoachRegisterTwo() {
         },
       });
       if (!response?.data?.data) {
-        setClubResults([]);
+        setSuggestions([]);
         return []
       } else {
         setSuggestions([response.data.data]);
@@ -329,7 +329,7 @@ export default function CoachRegisterTwo() {
         if (data) {
           context.clearRegisterCoach();
           navigate('/success-register')
-          return 'Registro realizado'
+          return 'Solicitud de Registro realizada'
         } else {
           return 'Error al registrarte'
         }
@@ -347,7 +347,6 @@ export default function CoachRegisterTwo() {
       setClubResults([]);
     }
   }, [filterClub]);
-
 
   return (
     <>
