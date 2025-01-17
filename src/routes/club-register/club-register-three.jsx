@@ -91,7 +91,9 @@ export default function ClubRegisterThree() {
             className="input__login"
             autoComplete="off"
             placeholder="255"
-            min={0}
+            min={1}
+            max={100}
+            step={1}
             onChange={(e) => handleCountCoaches(e)}
             value={context.registerClub.number_coaches == 0 ? '' : context.registerClub.number_coaches}
           />
@@ -106,7 +108,9 @@ export default function ClubRegisterThree() {
             autoComplete="off"
             className="input__login"
             placeholder="700"
-            min={0}
+            min={1}
+            max={100}
+            step={1}
             onChange={(e) => handleCountAthletes(e)}
             value={context.registerClub.number_athletes == 0 ? '' : context.registerClub.number_athletes}
           />
