@@ -56,7 +56,7 @@ export default function AthleteRegisterOne() {
         <div className="form__login">
           <h2 className="subtitle__login">Regístrate como deportista</h2>
           <p className="text__login link--color__login margin-general__login">
-            Foto de perfil
+            {context.registerClub.first_names != '' ? context.registerClub.first_names : 'Nombre'}
           </p>
           <div className="cntr-img__login">
             <img
@@ -65,7 +65,6 @@ export default function AthleteRegisterOne() {
               className="img__login"
             />
           </div>
-          <button className="button-two__login">Cambiar</button>
 
           <label htmlFor="name" className="label__login cursor-pointer">
             Nombres

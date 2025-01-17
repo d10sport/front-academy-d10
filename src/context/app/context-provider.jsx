@@ -30,6 +30,7 @@ const AppProvider = ({ children }) => {
     city: '',
     cityID: '',
     current_club: '',
+    id_club: 0,
     contact: 0,
     mail: '',
     social_networks: '',
@@ -38,7 +39,6 @@ const AppProvider = ({ children }) => {
     last_names_family: '',
     contact_family: 0,
     coach: '',
-    id_coach: 0
   })
 
   const [registerCoach, setRegisterCoach] = useState({
@@ -58,6 +58,31 @@ const AppProvider = ({ children }) => {
     academic_level: '',
     licenses_obtained: '',
     other: ''
+  })
+
+  const [registerClub, setRegisterClub] = useState({
+    name_club: '',
+    date_founded: '',
+    country: '',
+    countryID: '',
+    city: '',
+    cityID: '',
+    president: '',
+    comet: 0,
+    contact: 0,
+    mail: '',
+    social_networks: '',
+    website: '',
+    number_athletes: '',
+    categories: '',
+    local_league: '',
+    national_tournament: '',
+    u13_u15_u17_u20: '',
+    number_coaches: 0,
+    assistants: 0,
+    interns: 0,
+    venues: 0,
+    sites: 0
   })
 
   const [dataHeader, setDataHeader] = useState({
@@ -89,8 +114,7 @@ const AppProvider = ({ children }) => {
       first_names_family: '',
       last_names_family: '',
       contact_family: 0,
-      coach: '',
-      id_coach: 0
+      id_club: 0
     })
   }
 
@@ -115,6 +139,33 @@ const AppProvider = ({ children }) => {
     })
   }
 
+  function clearRegisterClub() {
+    setRegisterClub({
+      name_club: '',
+      date_founded: '',
+      country: '',
+      countryID: '',
+      city: '',
+      cityID: '',
+      president: '',
+      comet: 0,
+      contact: 0,
+      mail: '',
+      social_networks: '',
+      website: '',
+      number_athletes: '',
+      categories: '',
+      local_league: '',
+      national_tournament: '',
+      u13_u15_u17_u20: '',
+      number_coaches: 0,
+      assistants: 0,
+      interns: 0,
+      venues: 0,
+      sites: 0
+    })
+  }
+
   async function validateEmptyAthlete() {
     if (registerAthlete.first_names != '' &&
       registerAthlete.last_names != '' &&
@@ -131,8 +182,8 @@ const AppProvider = ({ children }) => {
       registerAthlete.first_names_family != '' &&
       registerAthlete.last_names_family != '' &&
       registerAthlete.contact_family != 0 &&
-      registerAthlete.coach != '' &&
-      registerAthlete.id_coach != 0) {
+      registerAthlete.current_club != '' &&
+      registerAthlete.id_club != 0) {
       return true
     } else {
       return false
@@ -156,6 +207,35 @@ const AppProvider = ({ children }) => {
       registerCoach.academic_level != '' &&
       registerCoach.licenses_obtained != '' &&
       registerCoach.other != '') {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  async function validateEmptyClub(){
+    if (registerClub.name_club != '' &&
+      registerClub.date_founded != '' &&
+      registerClub.country != '' &&
+      registerClub.countryID != '' &&
+      registerClub.city != '' &&
+      registerClub.cityID != '' &&
+      registerClub.president != '' &&
+      registerClub.comet != 0 &&
+      registerClub.contact != 0 &&
+      registerClub.mail != '' &&
+      registerClub.social_networks != '' &&
+      registerClub.website != '' &&
+      registerClub.number_athletes != 0 &&
+      registerClub.categories != '' &&
+      registerClub.local_league !== '' &&
+      registerClub.national_tournament !== '' &&
+      registerClub.u13_u15_u17_u20 != '' &&
+      registerClub.number_coaches != 0 &&
+      registerClub.assistants != 0 &&
+      registerClub.interns != 0 &&
+      registerClub.venues != 0 &&
+      registerClub.sites != 0) {
       return true
     } else {
       return false
@@ -231,6 +311,10 @@ const AppProvider = ({ children }) => {
       setRegisterCoach,
       validateEmptyCoach,
       clearRegisterCoach,
+      registerClub,
+      setRegisterClub,
+      validateEmptyClub,
+      clearRegisterClub,
       apiKeyRapidApi,
       apiHostRapidIntagram
     }}>

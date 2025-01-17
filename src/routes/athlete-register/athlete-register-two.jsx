@@ -13,9 +13,9 @@ export default function AthleteRegisterTwo() {
 
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
-  const [filterCoach, setFilterCoach] = useState("");
-  const [coachResults, setCoachResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [filterClub, setFilterClub] = useState("");
+  const [clubResults, setClubResults] = useState([]);
 
   function handleCountry(event) {
     let countryId = context.registerAthlete.countryID;
@@ -83,6 +83,15 @@ export default function AthleteRegisterTwo() {
     )
   }
 
+  const handleClubSelect = (id, clubName) => {
+    setFilterClub(clubName);
+    setClubResults([]);
+    context.setRegisterAthlete((prev) => ({
+      ...prev,
+      current_club: clubName,
+      id_club: id,
+    }));
+  };
 
   async function fetchCountries() {
     axios.get(`${urlApi}external/g/rest/countries/america`,
@@ -124,10 +133,20 @@ export default function AthleteRegisterTwo() {
       });
   }
 
-  const fetchFilterCoach = async (filter) => {
+  const clearSelectClub = () => {
+    setFilterClub("");
+    context.setRegisterAthlete((prev) => ({
+      ...prev,
+      current_club: "",
+      id_club: 0,
+    })
+    )
+  }
+
+  const fetchFilterClub = async (filter) => {
     setIsLoading(true);
     try {
-      const response = await axios.get(`${urlApi}academy/g/search/coach/${filter}`, {
+      const response = await axios.get(`${urlApi}academy/g/search/club/${filter}`, {
         headers: {
           "Content-Type": "application/json",
           "api-key": apiKey,
@@ -135,10 +154,10 @@ export default function AthleteRegisterTwo() {
       });
 
       if (!response.data.success || response.data.data.length === 0) {
-        setCoachResults([]);
+        setClubResults([]);
         return []
       } else {
-        setCoachResults(response.data.data);
+        setClubResults(response.data.data);
         return [response.data.data];
       }
     } catch (error) {
@@ -149,27 +168,17 @@ export default function AthleteRegisterTwo() {
     }
   };
 
-  const clearSelectCoach = () => {
-    setFilterCoach("");
-    context.setRegisterAthlete((prev) => ({
-      ...prev,
-      coach: "",
-      id_coach: 0,
-    })
-    )
-  }
-
-  const handleCoachSearch = (e) => {
+  const handleClubSearch = (e) => {
     let value = e.target.value;
     if (context.registerAthlete.coach != "") {
       const newValue = e.target.value.replace(context.registerAthlete.coach, "").trim();
       value = newValue;
-      clearSelectCoach();
+      clearSelectClub();
     }
-    setFilterCoach(value);
+    setFilterClub(value);
 
     if (value.length >= 2) {
-      toast.promise(fetchFilterCoach(value), {
+      toast.promise(fetchFilterClub(value), {
         loading: 'Cargando...',
         success: (data) => {
           if (data.length > 0) {
@@ -181,28 +190,18 @@ export default function AthleteRegisterTwo() {
         error: 'Error al filtrar entrenadores',
       });
     } else {
-      setCoachResults([]);
+      setClubResults([]);
     }
   };
 
-  const handleOnChangeCoach = (e) => {
+  const handleOnChangeClub = (e) => {
     const selectedIndex = e.target.selectedIndex - 1;
-    const selectedOption = coachResults[selectedIndex];
-    handleCoachSelect(selectedOption.id, `${selectedOption.first_names} ${selectedOption.last_names}`);
+    const selectedOption = clubResults[selectedIndex];
+    handleClubSelect(selectedOption.id, selectedOption.name_club);
   }
 
-  const handleCoachSelect = (id, fullName) => {
-    setFilterCoach(fullName);
-    setCoachResults([]);
-    context.setRegisterAthlete((prev) => ({
-      ...prev,
-      coach: fullName,
-      id_coach: id,
-    }));
-  };
-
   function nextStep() {
-    if (!context.registerAthlete.country || !context.registerAthlete.city || !context.registerAthlete.coach || !context.registerAthlete.mail || !context.registerAthlete.contact || !context.registerAthlete.academic_level || !context.registerAthlete.social_networks) {
+    if (!context.registerAthlete.country || !context.registerAthlete.city || !context.registerAthlete.id_club || !context.registerAthlete.current_club || !context.registerAthlete.mail || !context.registerAthlete.contact || !context.registerAthlete.academic_level || !context.registerAthlete.social_networks) {
       toast.error('Por favor, complete todos los campos');
       return
     }
@@ -214,10 +213,10 @@ export default function AthleteRegisterTwo() {
   }, [])
 
   useEffect(() => {
-    if (filterCoach === "") {
-      setCoachResults([]);
+    if (filterClub === "") {
+      setClubResults([]);
     }
-  }, [filterCoach]);
+  }, [filterClub]);
 
 
   return (
@@ -300,40 +299,41 @@ export default function AthleteRegisterTwo() {
               </select>
             )}
 
-          <label htmlFor="entrenador" className="label__login cursor-pointer">
-            Entrenador
+
+          <label htmlFor="club" className="label__login">
+            Club Actual
           </label>
           <div className="input-container">
             <div className="w-full flex justify-between gap-2">
               <input
                 type="text"
-                id="entrenador"
-                name="entrenador"
+                id="club"
+                name="club"
                 autoComplete="off"
                 className="input__login"
-                placeholder="Buscar entrenador"
-                value={filterCoach || context.registerAthlete.coach}
-                onChange={(e) => handleCoachSearch(e)}
+                placeholder="Buscar club"
+                value={filterClub || context.registerAthlete.current_club}
+                onChange={(e) => handleClubSearch(e)}
               />
-              <button className="input-btn" onClick={clearSelectCoach}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" ><path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+              <button className="input-btn" onClick={clearSelectClub}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" ><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
                 </svg>
               </button>
             </div>
             {isLoading && <p>Cargando...</p>}
-            {coachResults.length > 0 && (
+            {clubResults.length > 0 && (
               <>
                 <p>Resultados</p>
                 <select
                   className="select__login input__login"
-                  onChange={(e) => handleOnChangeCoach(e)}
-                  defaultValue={context.registerAthlete.coach}
+                  onChange={(e) => handleOnChangeClub(e)}
+                  defaultValue={context.registerAthlete.current_club}
                 >
-                  <option value="" selected disabled >Seleccione un entrenador...</option>
-                  {coachResults.map((coach) => (
+                  <option value="" selected disabled >Seleccione un club...</option>
+                  {clubResults.map((coach) => (
                     <option key={coach.id} value={coach.id}>
-                      {`${coach.first_names} ${coach.last_names}`}
+                      {coach.name_club}
                     </option>
                   ))}
                 </select>

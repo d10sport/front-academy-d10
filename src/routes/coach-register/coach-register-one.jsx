@@ -56,7 +56,7 @@ export default function CoachOne() {
         <div className="form__login">
           <h2 className="subtitle__login">Regístrate como entrenador</h2>
           <p className="text__login link--color__login margin-general__login">
-            Foto de perfil
+            {context.registerCoach.first_names}
           </p>
           <div className="cntr-img__login">
             <img
@@ -65,7 +65,6 @@ export default function CoachOne() {
               className="img__login"
             />
           </div>
-          <button className="button-two__login">Cambiar</button>
 
           <label htmlFor="nombre" className="label__login">
             Nombres
