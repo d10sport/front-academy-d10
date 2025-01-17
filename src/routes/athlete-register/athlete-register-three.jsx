@@ -69,7 +69,7 @@ export default function AthleteRegisterThree() {
         if (data) {
           context.clearRegisterAthlete();
           navigate('/success-register')
-          return 'Registro realizado'
+          return 'Solicitud de Registro realizada'
         } else {
           return 'Error al registrarte'
         }

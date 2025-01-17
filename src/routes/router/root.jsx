@@ -7,7 +7,7 @@ import ClubRegisterTwo from "@routes/club-register/club-register-two.jsx";
 import ClubRegisterOne from "@routes/club-register/club-register-one.jsx";
 import CoachRegisterOne from "@routes/coach-register/coach-register-one.jsx";
 import CoachregisterTwo from "@routes/coach-register/coach-register-two.jsx";
-import Success from "@routes/success-login/success-login.jsx";
+import Success from "@routes/success-register/success-register.jsx";
 import LoginUser from "@routes/login-user/login-user.jsx";
 import Register from "@routes/register/register.jsx";
 import { Route, Routes } from "react-router-dom";
