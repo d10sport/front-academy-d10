@@ -34,12 +34,24 @@ export default function ClubRegisterOne() {
   }
 
   function handleComet(event) {
-    context.setRegisterClub((prev) => ({
-      ...prev,
-      comet: parseInt(event.target.value),
-    })
-    )
+    const maxLength = 4;
+    const inputValue = event.target.value;
+
+    if (inputValue.length <= maxLength) {
+      context.setRegisterClub((prev) => ({
+        ...prev,
+        contact_family: inputValue,
+      }));
+    }
   }
+
+  // function handleComet(event) {
+  //   context.setRegisterClub((prev) => ({
+  //     ...prev,
+  //     comet: parseInt(event.target.value),
+  //   })
+  //   )
+  // }
 
   function nextStep() {
     if (!context.registerClub.name_club || !context.registerClub.date_founded || !context.registerClub.president || !context.registerClub.comet) {

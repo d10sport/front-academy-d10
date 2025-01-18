@@ -1,75 +1,99 @@
 import AppContext from "@context/app/app-context";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import { toast } from 'sonner';
-import './club-register.css'
+import { toast } from "sonner";
+import "./club-register.css";
 
 export default function ClubRegisterThree() {
   const context = useContext(AppContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   function handleCountCoaches(event) {
-    context.setRegisterClub((prev) => ({
-      ...prev,
-      number_coaches: parseInt(event.target.value),
-    })
-    )
+    const maxLength = 4;
+    const inputValue = event.target.value;
+
+    if (inputValue.length <= maxLength) {
+      context.setRegisterClub((prev) => ({
+        ...prev,
+        contact_family: inputValue,
+      }));
+    }
   }
 
+  // function handleCountCoaches(event) {
+  //   context.setRegisterClub((prev) => ({
+  //     ...prev,
+  //     number_coaches: parseInt(event.target.value),
+  //   })
+  //   )
+  // }
+
   function handleCountAthletes(event) {
-    context.setRegisterClub((prev) => ({
-      ...prev,
-      number_athletes: parseInt(event.target.value),
-    })
-    )
+    const maxLength = 4;
+    const inputValue = event.target.value;
+
+    if (inputValue.length <= maxLength) {
+      context.setRegisterClub((prev) => ({
+        ...prev,
+        contact_family: inputValue,
+      }));
+    }
   }
+
+  // function handleCountAthletes(event) {
+  //   context.setRegisterClub((prev) => ({
+  //     ...prev,
+  //     number_athletes: parseInt(event.target.value),
+  //   }));
+  // }
 
   function handleWebSite(event) {
     context.setRegisterClub((prev) => ({
       ...prev,
       website: event.target.value,
-    })
-    )
+    }));
   }
 
   function handleCategories(event) {
     context.setRegisterClub((prev) => ({
       ...prev,
       categories: event.target.value,
-    })
-    )
+    }));
   }
 
   function handle_U13_U15_U17_U20_(event) {
     context.setRegisterClub((prev) => ({
       ...prev,
       u13_u15_u17_u20: event.target.value,
-    })
-    )
+    }));
   }
 
   function handleLocalLeague(event) {
     context.setRegisterClub((prev) => ({
       ...prev,
-      local_league: event.target.value == 'si' ? 1 : 0,
-    })
-    )
+      local_league: event.target.value == "si" ? 1 : 0,
+    }));
   }
 
   function handleNationalLeague(event) {
     context.setRegisterClub((prev) => ({
       ...prev,
-      national_tournament: event.target.value == 'si' ? 1 : 0,
-    })
-    )
+      national_tournament: event.target.value == "si" ? 1 : 0,
+    }));
   }
 
   async function nextStep() {
-    if (context.registerClub.number_coaches == 0 || context.registerClub.number_athletes == 0 || !context.registerClub.categories || context.registerClub.local_league === '' || context.registerClub.national_tournament === '') {
-      toast.error('Por favor, complete todos los campos');
-      return
+    if (
+      context.registerClub.number_coaches == 0 ||
+      context.registerClub.number_athletes == 0 ||
+      !context.registerClub.categories ||
+      context.registerClub.local_league === "" ||
+      context.registerClub.national_tournament === ""
+    ) {
+      toast.error("Por favor, complete todos los campos");
+      return;
     }
-    navigate('/register/club/step-four')
+    navigate("/register/club/step-four");
   }
 
   return (
@@ -95,7 +119,11 @@ export default function ClubRegisterThree() {
             max={100}
             step={1}
             onChange={(e) => handleCountCoaches(e)}
-            value={context.registerClub.number_coaches == 0 ? '' : context.registerClub.number_coaches}
+            value={
+              context.registerClub.number_coaches == 0
+                ? ""
+                : context.registerClub.number_coaches
+            }
           />
 
           <label htmlFor="number_athletes" className="label__login">
@@ -112,7 +140,11 @@ export default function ClubRegisterThree() {
             max={100}
             step={1}
             onChange={(e) => handleCountAthletes(e)}
-            value={context.registerClub.number_athletes == 0 ? '' : context.registerClub.number_athletes}
+            value={
+              context.registerClub.number_athletes == 0
+                ? ""
+                : context.registerClub.number_athletes
+            }
           />
 
           <label htmlFor="website" className="label__login">
@@ -142,7 +174,6 @@ export default function ClubRegisterThree() {
             value={context.registerClub.u13_u15_u17_u20}
             onChange={(e) => handle_U13_U15_U17_U20_(e)}
           />
-
 
           <label id="categoria" className="label__login">
             Categorías
@@ -217,10 +248,12 @@ export default function ClubRegisterThree() {
             </div>
           </div>
 
-          <button onClick={() => nextStep()} className="button-three__login">Siguiente</button>
+          <button onClick={() => nextStep()} className="button-three__login">
+            Siguiente
+          </button>
           <button
             className="link__login link--color__login center-text__login"
-            onClick={() => navigate('/register/club/step-two')}
+            onClick={() => navigate("/register/club/step-two")}
           >
             Regresar
           </button>
