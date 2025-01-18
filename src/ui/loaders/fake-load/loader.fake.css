@@ -1,6 +1,6 @@
 .fake-load {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background-color: black;
 }
 
@@ -14,28 +14,28 @@
   animation: spin 2s linear infinite;
 }
 
-.circle.sm-load {
+.circle-load.sm-load {
   width: 60px;
   height: 60px;
   border-top-color: white;
   animation-direction: normal;
 }
 
-.circle.md-load {
+.circle-load.md-load {
   width: 80px;
   height: 80px;
   border-bottom-color: white;
   animation-direction: reverse;
 }
 
-.circle.lg-load {
+.circle-load.lg-load {
   width: 100px;
   height: 100px;
   border-bottom-color: white;
   animation-direction: normal;
 }
 
-.circle.xl-load {
+.circle-load.xl-load {
   width: 120px;
   height: 120px;
   border-top-color: white;
