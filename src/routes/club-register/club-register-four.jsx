@@ -105,7 +105,9 @@ export default function ClubRegisterFour() {
             autoComplete="off"
             className="input__login"
             placeholder="10"
-            min={0}
+            min={1}
+            max={100}
+            step={1}
             onChange={(e) => handleCountAssistants(e)}
             value={context.registerClub.assistants == 0 ? '' : context.registerClub.assistants}
           />
@@ -120,7 +122,9 @@ export default function ClubRegisterFour() {
             autoComplete="off"
             className="input__login"
             placeholder="20"
-            min={0}
+            min={1}
+            max={100}
+            step={1}
             onChange={(e) => handleCountInterns(e)}
             value={context.registerClub.interns == 0 ? '' : context.registerClub.interns}
           />
@@ -135,7 +139,9 @@ export default function ClubRegisterFour() {
             autoComplete="off"
             className="input__login"
             placeholder="6"
-            min={0}
+            min={1}
+            max={100}
+            step={1}
             onChange={(e) => handleCountVenues(e)}
             value={context.registerClub.venues == 0 ? '' : context.registerClub.venues}
           />
@@ -150,7 +156,9 @@ export default function ClubRegisterFour() {
             autoComplete="off"
             className="input__login"
             placeholder="4"
-            min={0}
+            min={1}
+            max={100}
+            step={1}
             onChange={(e) => handleCountSites(e)}
             value={context.registerClub.sites == 0 ? '' : context.registerClub.sites}
           />

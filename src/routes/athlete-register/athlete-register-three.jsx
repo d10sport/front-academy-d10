@@ -125,6 +125,9 @@ export default function AthleteRegisterThree() {
             autoComplete="off"
             className="input__login"
             placeholder="Numero de celular"
+            min={9999999}
+            max={9999999999}
+            step={1}
             value={context.registerAthlete.contact_family == 0 ? '' : context.registerAthlete.contact_family}
             onChange={(e) => handleCellPhoneFamily(e)}
           />

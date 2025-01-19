@@ -118,7 +118,9 @@ export default function ClubRegisterOne() {
             autoComplete="off"
             className="input__login"
             placeholder="10"
-            min={0}
+            min={1}
+            max={100}
+            step={1}
             value={context.registerClub.comet == 0 ? '' : context.registerClub.comet}
             onChange={(e) => handleComet(e)}
           />
