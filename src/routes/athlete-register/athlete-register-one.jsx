@@ -104,7 +104,7 @@ export default function AthleteRegisterOne() {
             defaultValue={context.registerAthlete.gender}
             onChange={(e) => handleGender(e)}
           >
-            <option value="" selected disabled>
+            <option value="" disabled>
               Seleccionar...
             </option>
             <option value="M">Hombre</option>

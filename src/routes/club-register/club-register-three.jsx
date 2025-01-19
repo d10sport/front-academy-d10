@@ -170,7 +170,7 @@ export default function ClubRegisterThree() {
             value={context.registerClub.categories}
             onChange={(e) => handleCategories(e)}
           >
-            <option value="" disabled selected>
+            <option value="" disabled>
               Seleccionar...
             </option>
             <option value="u13">U13</option>
