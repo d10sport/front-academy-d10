@@ -45,14 +45,6 @@ export default function ClubRegisterOne() {
     }
   }
 
-  // function handleComet(event) {
-  //   context.setRegisterClub((prev) => ({
-  //     ...prev,
-  //     comet: parseInt(event.target.value),
-  //   })
-  //   )
-  // }
-
   function nextStep() {
     if (!context.registerClub.name_club || !context.registerClub.date_founded || !context.registerClub.president || !context.registerClub.comet) {
       toast.error('Por favor, complete todos los campos');

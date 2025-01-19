@@ -37,14 +37,6 @@ export default function AthleteRegisterThree() {
     }
   }
 
-  // function handleCellPhoneFamily(event) {
-  //   context.setRegisterAthlete((prev) => ({
-  //     ...prev,
-  //     contact_family: event.target.value,
-  //   })
-  //   )
-  // }
-
   async function saveRegisterAthlete(data) {
     let res = false;
     await axios

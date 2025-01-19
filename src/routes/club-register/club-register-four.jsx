@@ -23,14 +23,6 @@ export default function ClubRegisterFour() {
     }
   }
 
-  // function handleCountAssistants(event) {
-  //   context.setRegisterClub((prev) => ({
-  //     ...prev,
-  //     assistants: parseInt(event.target.value),
-  //   })
-  //   )
-  // }
-
   function handleCountInterns(event) {
     const maxLength = 4;
     const inputValue = event.target.value;
@@ -42,13 +34,6 @@ export default function ClubRegisterFour() {
       }));
     }
   }
-
-  // function handleCountInterns(event) {
-  //   context.setRegisterClub((prev) => ({
-  //     ...prev,
-  //     interns: parseInt(event.target.value),
-  //   }));
-  // }
 
   function handleCountVenues(event) {
     const maxLength = 4;
@@ -62,13 +47,6 @@ export default function ClubRegisterFour() {
     }
   }
 
-  // function handleCountVenues(event) {
-  //   context.setRegisterClub((prev) => ({
-  //     ...prev,
-  //     venues: parseInt(event.target.value),
-  //   }));
-  // }
-
   function handleCountSites(event) {
     const maxLength = 4;
     const inputValue = event.target.value;
@@ -80,13 +58,6 @@ export default function ClubRegisterFour() {
       }));
     }
   }
-
-  // function handleCountSites(event) {
-  //   context.setRegisterClub((prev) => ({
-  //     ...prev,
-  //     sites: parseInt(event.target.value),
-  //   }));
-  // }
 
   async function saveRegisterClub(data) {
     let res = false;

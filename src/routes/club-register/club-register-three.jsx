@@ -20,14 +20,6 @@ export default function ClubRegisterThree() {
     }
   }
 
-  // function handleCountCoaches(event) {
-  //   context.setRegisterClub((prev) => ({
-  //     ...prev,
-  //     number_coaches: parseInt(event.target.value),
-  //   })
-  //   )
-  // }
-
   function handleCountAthletes(event) {
     const maxLength = 4;
     const inputValue = event.target.value;
@@ -39,13 +31,6 @@ export default function ClubRegisterThree() {
       }));
     }
   }
-
-  // function handleCountAthletes(event) {
-  //   context.setRegisterClub((prev) => ({
-  //     ...prev,
-  //     number_athletes: parseInt(event.target.value),
-  //   }));
-  // }
 
   function handleWebSite(event) {
     context.setRegisterClub((prev) => ({
