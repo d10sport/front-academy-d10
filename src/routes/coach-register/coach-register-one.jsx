@@ -104,7 +104,7 @@ export default function CoachOne() {
             defaultValue={context.registerCoach.gender}
             onChange={(e) => handleGender(e)}
           >
-            <option value="" selected disabled>
+            <option value="" disabled>
               Seleccionar...
             </option>
             <option value="M">Hombre</option>

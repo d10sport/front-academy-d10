@@ -1,4 +1,4 @@
-import "./loader.basic.css";
+import "./loader.fake.css";
 
 function LoaderFake() {
   return (
