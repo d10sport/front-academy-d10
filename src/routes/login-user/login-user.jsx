@@ -27,7 +27,7 @@ export default function LoginUser() {
     }, 1000);
   };
 
-  const handleUserSelectionAndNavigate = (event) => {
+  const handleUserSelectionAndFakeLoad = (event) => {
     event.preventDefault();
 
     const selectedUserType = event.currentTarget.id;
@@ -49,7 +49,7 @@ export default function LoginUser() {
           <div className="cntr-link__register">
             <button
               id="athlete"
-              onClick={handleUserSelectionAndNavigate}
+              onClick={handleUserSelectionAndFakeLoad}
               className="link__register"
             >
               <div className="cntr-title__register index--position">
@@ -64,7 +64,7 @@ export default function LoginUser() {
 
             <button
               id="coach"
-              onClick={handleUserSelectionAndNavigate}
+              onClick={handleUserSelectionAndFakeLoad}
               className="link__register"
             >
               <img
@@ -79,7 +79,7 @@ export default function LoginUser() {
 
             <button
               id="club"
-              onClick={handleUserSelectionAndNavigate}
+              onClick={handleUserSelectionAndFakeLoad}
               className="link__register"
             >
               <img src={imageClub} alt="Img Club" className="img__register" />
