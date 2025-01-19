@@ -11,10 +11,10 @@ export default function LoginUser() {
   const { setTypeUser } = useContext(AppContext);
   const navigate = useNavigate();
 
-  function selectTypeUser(event) {
-    setTypeUser(event.currentTarget.id);
-    navigate("/login");
-  }
+  // function selectTypeUser(event) {
+  //   setTypeUser(event.currentTarget.id);
+  //   navigate("/login");
+  // }
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -27,6 +27,19 @@ export default function LoginUser() {
     }, 1000);
   };
 
+  const handleUserSelectionAndNavigate = (event) => {
+    event.preventDefault();
+
+    const selectedUserType = event.currentTarget.id;
+    setTypeUser(selectedUserType);
+
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      navigate("/login");
+    }, 1000);
+  };
+
   return (
     <>
       {isLoading ? (
@@ -36,7 +49,7 @@ export default function LoginUser() {
           <div className="cntr-link__register">
             <button
               id="athlete"
-              onClick={(event) => selectTypeUser(event)}
+              onClick={handleUserSelectionAndNavigate}
               className="link__register"
             >
               <div className="cntr-title__register index--position">
@@ -51,7 +64,7 @@ export default function LoginUser() {
 
             <button
               id="coach"
-              onClick={(event) => selectTypeUser(event)}
+              onClick={handleUserSelectionAndNavigate}
               className="link__register"
             >
               <img
@@ -66,7 +79,7 @@ export default function LoginUser() {
 
             <button
               id="club"
-              onClick={(event) => selectTypeUser(event)}
+              onClick={handleUserSelectionAndNavigate}
               className="link__register"
             >
               <img src={imageClub} alt="Img Club" className="img__register" />
