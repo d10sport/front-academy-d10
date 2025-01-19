@@ -11,15 +11,15 @@ export default function Register() {
   const { setTypeUser } = useContext(AppContext);
   const navigate = useNavigate();
 
-  function selectTypeUser(event) {
-    setTypeUser(event.currentTarget.id);
-    if (event.currentTarget.id === "athlete")
-      return navigate("/register/athlete/step-one");
-    if (event.currentTarget.id === "coach")
-      return navigate("/register/coach/step-one");
-    if (event.currentTarget.id === "club")
-      return navigate("/register/club/step-one");
-  }
+  // function selectTypeUser(event) {
+  //   setTypeUser(event.currentTarget.id);
+  //   if (event.currentTarget.id === "athlete")
+  //     return navigate("/register/athlete/step-one");
+  //   if (event.currentTarget.id === "coach")
+  //     return navigate("/register/coach/step-one");
+  //   if (event.currentTarget.id === "club")
+  //     return navigate("/register/club/step-one");
+  // }
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -32,6 +32,26 @@ export default function Register() {
     }, 1000);
   };
 
+  const handleUserSelectionWithFakeLoad = (event) => {
+    event.preventDefault();
+
+    const selectedUserType = event.currentTarget.id;
+    setTypeUser(selectedUserType);
+
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+
+      if (selectedUserType === "athlete") {
+        navigate("/register/athlete/step-one");
+      } else if (selectedUserType === "coach") {
+        navigate("/register/coach/step-one");
+      } else if (selectedUserType === "club") {
+        navigate("/register/club/step-one");
+      }
+    }, 1000);
+  };
+
   return (
     <>
       {isLoading ? (
@@ -41,7 +61,7 @@ export default function Register() {
           <div className="cntr-link__register">
             <button
               id="athlete"
-              onClick={(event) => selectTypeUser(event)}
+              onClick={handleUserSelectionWithFakeLoad}
               className="link__register"
             >
               <div className="cntr-title__register index--position">
@@ -56,7 +76,7 @@ export default function Register() {
 
             <button
               id="coach"
-              onClick={(event) => selectTypeUser(event)}
+              onClick={handleUserSelectionWithFakeLoad}
               className="link__register"
             >
               <img
@@ -71,7 +91,7 @@ export default function Register() {
 
             <button
               id="club"
-              onClick={(event) => selectTypeUser(event)}
+              onClick={handleUserSelectionWithFakeLoad}
               className="link__register"
             >
               <img src={imageClub} alt="Img Club" className="img__register" />
