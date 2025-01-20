@@ -330,7 +330,7 @@ export default function AthleteRegisterTwo() {
                   onChange={(e) => handleOnChangeClub(e)}
                   defaultValue={context.registerAthlete.current_club}
                 >
-                  <option value="" selected disabled >Seleccione un club...</option>
+                  <option value="" disabled >Seleccione un club...</option>
                   {clubResults.map((coach) => (
                     <option key={coach.id} value={coach.id}>
                       {coach.name_club}
@@ -379,7 +379,7 @@ export default function AthleteRegisterTwo() {
             defaultValue={context.registerAthlete.academic_level}
             onChange={(e) => handleAcademicLevel(e)}
           >
-            <option value="" selected disabled>
+            <option value="" disabled>
               Seleccionar...
             </option>
             <option value="bachiller">Bachiller</option>
