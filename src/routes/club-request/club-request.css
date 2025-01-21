@@ -1,0 +1,75 @@
+.menu-container__table {
+  font-family: Arial, sans-serif;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.title__table {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.menu-list__table {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.menu-item__table {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.menu-header__table {
+  background-color: black;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s;
+}
+
+.menu-header__table:hover {
+  background-color: #eee;
+}
+
+.menu-header__table.active__table {
+  background-color: #dceeff;
+}
+
+.menu-details__table {
+  padding: 10px;
+  background-color: black;
+  border-top: 1px solid #ddd;
+}
+
+.menu-details__table .text__table {
+  margin: 5px 0;
+}
+
+.menu-actions__table {
+  margin-top: 10px;
+}
+
+.button__table {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.button__table.accept__table {
+  background-color: #4caf50;
+  color: white;
+}
+
+.button__table.deny__table {
+  background-color: #f44336;
+  color: white;
+}
+
+.button__table:not(:last-child) {
+  margin-right: 10px;
+}
