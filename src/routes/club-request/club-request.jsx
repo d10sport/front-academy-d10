@@ -38,14 +38,14 @@ export default function ClubRequest() {
 
   return (
     <>
-      <div className="menu-container__table">
-        <h1 className="title__table">Menú Dinámico</h1>
-        <div className="menu-list__table">
+      <div className="menu-container__request">
+        <h1 className="title__request">Menú Dinámico</h1>
+        <div className="menu-list__request">
           {menuItems.map((item) => (
-            <div key={item.id} className="menu-item__table">
+            <div key={item.id} className="menu-item__request">
               {/* Encabezado del elemento (clic para mostrar/ocultar detalles) */}
               <div
-                className={`menu-header__table ${
+                className={`menu-header__request ${
                   visibleDetails === item.id ? "active" : ""
                 }`}
                 onClick={() => toggleDetails(item.id)}
@@ -56,25 +56,25 @@ export default function ClubRequest() {
 
               {/* Detalles del elemento (visible solo si está activo) */}
               {visibleDetails === item.id && (
-                <div className="menu-details__table">
-                  <p className="text__table">
+                <div className="menu-details__request">
+                  <p className="text__request">
                     <strong>Nombre:</strong> {item.name}
                   </p>
-                  <p className="text__table">
+                  <p className="text__request">
                     <strong>Email:</strong> {item.email}
                   </p>
-                  <p className="text__table">
+                  <p className="text__request">
                     <strong>Ocupación:</strong> {item.occupation}
                   </p>
-                  <div className="menu-actions__table">
+                  <div className="menu-actions__request">
                     <button
-                      className="button__table accept__table"
+                      className="button__request accept__request"
                       onClick={() => alert(`Has aceptado la opción ${item.id}`)}
                     >
                       Aceptar
                     </button>
                     <button
-                      className="button__table deny__table"
+                      className="button__request deny__request"
                       onClick={() => alert(`Has denegado la opción ${item.id}`)}
                     >
                       Denegar

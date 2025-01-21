@@ -1,27 +1,27 @@
-.menu-container__table {
+.menu-container__request {
   font-family: Arial, sans-serif;
   max-width: 600px;
   margin: 0 auto;
 }
 
-.title__table {
+.title__request {
   text-align: center;
   margin-bottom: 20px;
 }
 
-.menu-list__table {
+.menu-list__request {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.menu-item__table {
+.menu-item__request {
   border: 1px solid #ddd;
   border-radius: 5px;
   overflow: hidden;
 }
 
-.menu-header__table {
+.menu-header__request {
   background-color: black;
   padding: 10px;
   cursor: pointer;
@@ -31,45 +31,45 @@
   transition: background-color 0.3s;
 }
 
-.menu-header__table:hover {
+.menu-header__request:hover {
   background-color: #eee;
 }
 
-.menu-header__table.active__table {
+.menu-header__request.active__request {
   background-color: #dceeff;
 }
 
-.menu-details__table {
+.menu-details__request {
   padding: 10px;
   background-color: black;
   border-top: 1px solid #ddd;
 }
 
-.menu-details__table .text__table {
+.menu-details__request .text__request {
   margin: 5px 0;
 }
 
-.menu-actions__table {
+.menu-actions__request {
   margin-top: 10px;
 }
 
-.button__table {
+.button__request {
   padding: 5px 10px;
   border: none;
   border-radius: 3px;
   cursor: pointer;
 }
 
-.button__table.accept__table {
+.button__request.accept__request {
   background-color: #4caf50;
   color: white;
 }
 
-.button__table.deny__table {
+.button__request.deny__request {
   background-color: #f44336;
   color: white;
 }
 
-.button__table:not(:last-child) {
+.button__request:not(:last-child) {
   margin-right: 10px;
 }
