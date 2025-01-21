@@ -6,7 +6,12 @@
 
 .title__request {
   text-align: center;
-  margin-bottom: 20px;
+  margin: 20px 0px;
+  font-size: 32px;
+}
+
+.primary--color__request {
+  color: #ffc702;
 }
 
 .menu-list__request {
@@ -16,13 +21,17 @@
 }
 
 .menu-item__request {
-  border: 1px solid #ddd;
+  border: 1px solid gray;
   border-radius: 5px;
   overflow: hidden;
 }
 
 .menu-header__request {
-  background-color: black;
+  background: linear-gradient(
+    135deg,
+    rgba(24, 24, 24, 1) 0%,
+    rgba(61, 61, 61, 1) 100%
+  );
   padding: 10px;
   cursor: pointer;
   display: flex;
@@ -32,7 +41,8 @@
 }
 
 .menu-header__request:hover {
-  background-color: #eee;
+  background: rgba(61, 61, 61, 1);
+  transition: 350ms;
 }
 
 .menu-header__request.active__request {
@@ -41,7 +51,7 @@
 
 .menu-details__request {
   padding: 10px;
-  background-color: black;
+  background-color: rgb(70, 70, 70);
   border-top: 1px solid #ddd;
 }
 
@@ -65,9 +75,19 @@
   color: white;
 }
 
+.button__request.accept__request:hover {
+  background-color: #3c8b3e;
+  transition: 250ms;
+}
+
 .button__request.deny__request {
   background-color: #f44336;
   color: white;
+}
+
+.button__request.deny__request:hover {
+  background-color: #bb3228;
+  transition: 250ms;
 }
 
 .button__request:not(:last-child) {

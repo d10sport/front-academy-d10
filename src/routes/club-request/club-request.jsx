@@ -11,19 +11,19 @@ export default function ClubRequest() {
   const menuItems = [
     {
       id: 1,
-      name: "Opción 1",
+      name: "Persona N°1",
       email: "user1@example.com",
       occupation: "Atleta",
     },
     {
       id: 2,
-      name: "Opción 2",
+      name: "Persona N°2",
       email: "user2@example.com",
       occupation: "Atleta",
     },
     {
       id: 3,
-      name: "Opción 3",
+      name: "Persona N°3",
       email: "user3@example.com",
       occupation: "Entrenador",
     },
@@ -31,7 +31,6 @@ export default function ClubRequest() {
 
   const [visibleDetails, setVisibleDetails] = useState(null);
 
-  // Alternar visibilidad de los detalles
   const toggleDetails = (id) => {
     setVisibleDetails((prevId) => (prevId === id ? null : id));
   };
@@ -39,11 +38,12 @@ export default function ClubRequest() {
   return (
     <>
       <div className="menu-container__request">
-        <h1 className="title__request">Menú Dinámico</h1>
+        <h1 className="title__request primary--color__request">
+          Solicitudes de registro
+        </h1>
         <div className="menu-list__request">
           {menuItems.map((item) => (
             <div key={item.id} className="menu-item__request">
-              {/* Encabezado del elemento (clic para mostrar/ocultar detalles) */}
               <div
                 className={`menu-header__request ${
                   visibleDetails === item.id ? "active" : ""
@@ -51,10 +51,11 @@ export default function ClubRequest() {
                 onClick={() => toggleDetails(item.id)}
               >
                 <span>{item.name}</span>
-                <span>Haga clic para más detalles</span>
+                <span className="primary--color__request">
+                  Haga clic para más detalles
+                </span>
               </div>
 
-              {/* Detalles del elemento (visible solo si está activo) */}
               {visibleDetails === item.id && (
                 <div className="menu-details__request">
                   <p className="text__request">
@@ -69,13 +70,13 @@ export default function ClubRequest() {
                   <div className="menu-actions__request">
                     <button
                       className="button__request accept__request"
-                      onClick={() => alert(`Has aceptado la opción ${item.id}`)}
+                      onClick={() => alert(`Has aceptado a '${item.name}' `)}
                     >
                       Aceptar
                     </button>
                     <button
                       className="button__request deny__request"
-                      onClick={() => alert(`Has denegado la opción ${item.id}`)}
+                      onClick={() => alert(`Has denegado a '${item.name}'`)}
                     >
                       Denegar
                     </button>
