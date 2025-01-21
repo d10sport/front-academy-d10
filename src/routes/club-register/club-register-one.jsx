@@ -40,7 +40,7 @@ export default function ClubRegisterOne() {
     if (inputValue.length <= maxLength) {
       context.setRegisterClub((prev) => ({
         ...prev,
-        contact_family: inputValue,
+        comet: inputValue,
       }));
     }
   }
