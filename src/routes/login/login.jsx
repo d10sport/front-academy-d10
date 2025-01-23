@@ -1,6 +1,6 @@
 import AppContext from "@context/app/app-context";
 import { useNavigate } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { toast } from 'sonner';
 import axios from "axios";
 import './login.css';
@@ -36,7 +36,7 @@ export default function Login() {
           context.setLoadingAuth(false);
           return
         };
-        context.openSession({ user: [response.data.user], token: response.data.token });
+        context.openSession({ token: response.data.token });
         toast.success('Sesión iniciada correctamente');
         context.setLoadingAuth(false);
       })
@@ -64,6 +64,12 @@ export default function Login() {
   function selectUserAgain() {
     navigate('/login-user');
   }
+
+  useEffect(() => {
+    if (context.typeUser == '') {
+      navigate('/login-user');
+    }
+  }, [])
 
   return (
     <>
