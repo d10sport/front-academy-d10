@@ -37,13 +37,10 @@ export default function Login() {
         if (!response.data.success) {
           toast.error(`${response.data.message}`);
           context.setLoadingAuth(false);
-          return;
-        }
-        context.openSession({
-          user: [response.data.user],
-          token: response.data.token,
-        });
-        toast.success("Sesión iniciada correctamente");
+          return
+        };
+        context.openSession({ token: response.data.token });
+        toast.success('Sesión iniciada correctamente');
         context.setLoadingAuth(false);
       })
       .catch(() => {
@@ -71,9 +68,16 @@ export default function Login() {
     navigate("/login-user");
   }
 
+ 
   function useQuery() {
     return new URLSearchParams(useLocation().search);
   }
+  
+  useEffect(() => {
+    if (context.typeUser == '') {
+      navigate('/login-user');
+    }
+  }, [])
 
   useEffect(() => {
     if (username == "" || password == "" || context.typeUser == "") {

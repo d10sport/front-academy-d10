@@ -6,6 +6,7 @@ async function isTokenValid(token) {
     const decoded = jwtDecode(token);
     const currentTime = Date.now() / 1000;
     if (decoded.exp < currentTime) {
+      deleteToken();
       msg = 'Token has expired';
       return msg;
     }
@@ -14,6 +15,15 @@ async function isTokenValid(token) {
     msg = 'Invalid token';
     return msg;
   }
+}
+
+async function getDataToken() {
+  const tokenGet = await getToken();
+  if (!tokenGet) {
+    return [];
+  }
+  const decoded = jwtDecode(tokenGet);
+  return decoded.user;
 }
 
 async function getToken() {
@@ -46,4 +56,4 @@ async function deleteToken() {
   localStorage.removeItem('token');
 }
 
-export { isTokenValid, getToken, updateToken, saveToken, deleteToken };
+export { isTokenValid, getToken, updateToken, saveToken, deleteToken, getDataToken };

@@ -1,4 +1,4 @@
-import { getToken, updateToken, deleteToken } from "@lib/token/token";
+import { getToken, updateToken, deleteToken, getDataToken } from "@lib/token/token";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AppContext from "./app-context";
@@ -247,11 +247,21 @@ const AppProvider = ({ children }) => {
     if (!token) {
       navigate("/login-user");
     }
+    const dataToken = await fetchGetDataToken();
+    setUser(dataToken);
     setToken(token);
   }
 
+  async function fetchGetDataToken() {
+    const dataToken = await getDataToken();
+    if (!dataToken) {
+      return dataToken;
+    }
+    return dataToken;
+  }
+
   async function fetchUpdateToken(token) {
-    const update = updateToken(token);
+    const update = await updateToken(token);
     setToken(token);
     if (!update) {
       navigate("/login-user");
@@ -267,8 +277,9 @@ const AppProvider = ({ children }) => {
   }
 
   async function openSession(data) {
-    setUser(data.user);
-    fetchUpdateToken(data.token);
+    await fetchUpdateToken(data.token);
+    const userData = await fetchGetDataToken();
+    setUser(userData);
     navigate("/");
   }
 
@@ -280,7 +291,7 @@ const AppProvider = ({ children }) => {
 
   useEffect(() => {
     fetchToken();
-  }, [token]);
+  }, []);
 
   return (
     <AppContext.Provider value={{
