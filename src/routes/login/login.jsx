@@ -1,6 +1,7 @@
 import AppContext from "@context/app/app-context";
 import { useNavigate } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { toast } from "sonner";
 import axios from "axios";
 import "./login.css";
@@ -14,23 +15,15 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  const query = useQuery();
+
   function handleUsername(e) {
     setUsername(e.target.value);
-    sessionStorage.setItem("email", e.target.value);
   }
 
   function handlePassword(e) {
     setPassword(e.target.value);
-    sessionStorage.setItem("password", e.target.value);
   }
-
-  useEffect(() => {
-    const storedEmail = sessionStorage.getItem("email") || "";
-    const storedPassword = sessionStorage.getItem("password") || "";
-
-    setUsername(storedEmail);
-    setPassword(storedPassword);
-  }, []);
 
   function fetchLoginUser(data) {
     axios
@@ -77,6 +70,33 @@ export default function Login() {
   function selectUserAgain() {
     navigate("/login-user");
   }
+
+  function useQuery() {
+    return new URLSearchParams(useLocation().search);
+  }
+
+  useEffect(() => {
+    if (username == "" || password == "" || context.typeUser == "") {
+      return;
+    }
+
+    handleLogin();
+  }, [username, password]);
+
+  useEffect(() => {
+    const user = query.get("username");
+    const pass = query.get("password");
+    const type = query.get("role_user");
+
+    if (user && pass && type) {
+      setUsername(user);
+      setPassword(pass);
+      context.setTypeUser(type);
+    } else {
+      context.closeSession();
+      toast.error("El usuario y la contraseña no se obtuvieron correctamente");
+    }
+  }, []);
 
   return (
     <>
