@@ -68,11 +68,10 @@ export default function Login() {
     navigate("/login-user");
   }
 
- 
   function useQuery() {
     return new URLSearchParams(useLocation().search);
   }
-  
+
   useEffect(() => {
     if (context.typeUser == '') {
       navigate('/login-user');
@@ -96,9 +95,6 @@ export default function Login() {
       setUsername(user);
       setPassword(pass);
       context.setTypeUser(type);
-    } else {
-      context.closeSession();
-      toast.error("El usuario y la contraseña no se obtuvieron correctamente");
     }
   }, []);
 
