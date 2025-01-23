@@ -2,6 +2,7 @@ import { LogoHeader } from "../../utils/icons/icons";
 import AppContext from "@context/app/app-context";
 import { useContext } from "react";
 import './header.css';
+import { toast } from "sonner";
 
 export default function Header() {
   const context = useContext(AppContext);
@@ -9,13 +10,14 @@ export default function Header() {
 
   function closeSession() {
     context.closeSession();
+    toast.success('Sesión cerrada correctamente');
   }
 
   return (
     <>
       {user.length == 0 ?
         (
-          <div className="fixed bg-transparent top-0 left-0"></div>
+          <div className="relative bg-transparent top-0 left-0"></div>
         ) :
         (
           <nav id="nav_header" className="nav">
