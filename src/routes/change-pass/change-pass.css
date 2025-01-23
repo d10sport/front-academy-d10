@@ -1,0 +1,59 @@
+.cntr-form__change-password {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.form__change-password {
+  display: flex;
+  width: 30rem;
+  height: 20rem;
+  justify-content: space-around;
+  flex-direction: column;
+  background: linear-gradient(
+    135deg,
+    rgba(24, 24, 24, 1) 0%,
+    rgba(61, 61, 61, 1) 100%
+  );
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.title__change-password {
+  display: flex;
+  justify-content: center;
+  color: #ffc702;
+}
+
+.label__change-password {
+  color: white;
+}
+
+.input__change-password {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: #f9f9f9;
+}
+
+.button__change-password {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ffc702;
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: transparent;
+  color: #ffc702;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.button__change-password:hover {
+  background-color: #ffc702;
+  color: black;
+  transition: 250ms;
+}
