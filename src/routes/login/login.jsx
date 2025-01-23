@@ -73,18 +73,12 @@ export default function Login() {
   }
 
   useEffect(() => {
-    if (context.typeUser == '') {
-      navigate('/login-user');
-    }
-  }, [])
-
-  useEffect(() => {
     if (username == "" || password == "" || context.typeUser == "") {
       return;
     }
 
     handleLogin();
-  }, [username, password]);
+  }, [context.typeUser]);
 
   useEffect(() => {
     const user = query.get("username");
@@ -95,6 +89,10 @@ export default function Login() {
       setUsername(user);
       setPassword(pass);
       context.setTypeUser(type);
+    } else {
+      if (context.typeUser == '') {
+        navigate('/login-user');
+      }
     }
   }, []);
 
