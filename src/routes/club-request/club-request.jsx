@@ -125,7 +125,7 @@ export default function ClubRequest() {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleUserSelectionAndFakeLoad = () => {
+  const handleUFakeLoad = () => {
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
@@ -133,7 +133,7 @@ export default function ClubRequest() {
   };
 
   useEffect(() => {
-    handleUserSelectionAndFakeLoad();
+    handleUFakeLoad();
   }, []);
 
   // ---------------------------------------------------------------
