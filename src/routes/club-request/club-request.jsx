@@ -4,6 +4,7 @@
 import axios from "axios";
 import AppContext from "@context/app/app-context";
 import { useState, useEffect, useContext } from "react";
+import LoaderFake from "../../ui/loaders/fake-load/loader.fake.jsx";
 import "./club-request.css";
 
 export default function ClubRequest() {
@@ -120,73 +121,94 @@ export default function ClubRequest() {
     getDateUser();
   }, []);
 
+  // ---------------------------------------------------------------
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleUserSelectionAndFakeLoad = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  };
+
+  useEffect(() => {
+    handleUserSelectionAndFakeLoad();
+  }, []);
+
+  // ---------------------------------------------------------------
+
   const toggleDetails = (id) => {
     setVisibleDetails((prevId) => (prevId === id ? null : id));
   };
 
   return (
     <>
-      <div className="menu-container__request">
-        <h1 className="title__request primary--color__request">
-          Solicitudes de registro
-        </h1>
-        <div className="menu-list__request">
-          {menuItems.map((item) => (
-            <div key={item.id_solitude} className="menu-item__request">
-              <div
-                className={`menu-header__request ${
-                  visibleDetails === item.id_solitude ? "active" : ""
-                }`}
-                onClick={() => toggleDetails(item.id_solitude)}
-              >
-                <span>{item.nombre}</span>
-                <span className="primary--color__request">
-                  Haga clic para más detalles
-                </span>
-              </div>
+      {isLoading ? (
+        <LoaderFake />
+      ) : (
+        <div className="menu-container__request">
+          <h1 className="title__request primary--color__request">
+            Solicitudes de registro
+          </h1>
+          <div className="menu-list__request">
+            {menuItems.map((item) => (
+              <div key={item.id_solitude} className="menu-item__request">
+                <div
+                  className={`menu-header__request ${
+                    visibleDetails === item.id_solitude ? "active" : ""
+                  }`}
+                  onClick={() => toggleDetails(item.id_solitude)}
+                >
+                  <span>{item.nombre}</span>
+                  <span className="primary--color__request">
+                    Haga clic para más detalles
+                  </span>
+                </div>
 
-              {visibleDetails === item.id_solitude && (
-                <div className="menu-details__request">
-                  <p className="text__request">
-                    <strong>ID de Solicitud:</strong> {item.id_solitude}
-                  </p>
-                  <p className="text__request">
-                    <strong>ID de Usuario:</strong> {item.id_user}
-                  </p>
-                  <p className="text__request">
-                    <strong>Nombre:</strong> {item.nombre}
-                  </p>
-                  <p className="text__request">
-                    <strong>Ocupación:</strong> {item.role_user}
-                  </p>
-                  <div className="menu-actions__request">
-                    {/* <button
+                {visibleDetails === item.id_solitude && (
+                  <div className="menu-details__request">
+                    <p className="text__request">
+                      <strong>ID de Solicitud:</strong> {item.id_solitude}
+                    </p>
+                    <p className="text__request">
+                      <strong>ID de Usuario:</strong> {item.id_user}
+                    </p>
+                    <p className="text__request">
+                      <strong>Nombre:</strong> {item.nombre}
+                    </p>
+                    <p className="text__request">
+                      <strong>Ocupación:</strong> {item.role_user}
+                    </p>
+                    <div className="menu-actions__request">
+                      {/* <button
                       className="button__request accept__request"
                       onClick={() => alert(`Has aceptado a '${item.nombre}' `)}
                     >
                       Aceptar
                     </button> */}
 
-                    <button
-                      className="button__request accept__request"
-                      onClick={() => approveUser(item)}
-                    >
-                      Aceptar
-                    </button>
+                      <button
+                        className="button__request accept__request"
+                        onClick={() => approveUser(item)}
+                      >
+                        Aceptar
+                      </button>
 
-                    <button
-                      className="button__request deny__request"
-                      onClick={() => denyUser(item)}
-                    >
-                      Denegar
-                    </button>
+                      <button
+                        className="button__request deny__request"
+                        onClick={() => denyUser(item)}
+                      >
+                        Denegar
+                      </button>
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
-          ))}
+                )}
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 }
