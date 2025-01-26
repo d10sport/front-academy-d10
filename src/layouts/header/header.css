@@ -150,8 +150,8 @@
   display: none;
   width: 250px;
   height: 300px;
-  top: 50px;
-  right: 0;
+  top: 100%;
+  right: 2%;
   justify-content: space-around;
   flex-direction: column;
   background: linear-gradient(
