@@ -36,7 +36,7 @@
   border-radius: 8px;
   border: 2px solid #000;
   background-color: rgba(255, 255, 255, 0);
-  transition: 2.s all ease;
+  transition: 2s all ease;
 
   animation: scroll-animation-login linear both;
   animation-timeline: scroll(root block);
@@ -49,7 +49,6 @@
     color: #fff;
   }
 }
-
 
 .login__nav:hover {
   cursor: pointer;
@@ -70,7 +69,6 @@
     background-color: #ffc702;
   }
 }
-
 
 .a-linear__nav {
   position: relative;
@@ -116,4 +114,125 @@
 .a-linear__nav:hover::after {
   transform: scaleX(1);
   transform-origin: left center;
+}
+
+/* ---------------------------Info User---------------------------- */
+
+.button__button-nav {
+  display: flex;
+  width: 125px;
+  height: 80%;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid #ffc702;
+  background-color: transparent;
+  cursor: pointer;
+  color: #ffc702;
+  font-weight: bold;
+}
+
+.button__button-nav:hover {
+  background-color: #ffc702;
+  color: white;
+  transition: 250ms;
+}
+
+.img__button-nav {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin: 2px;
+}
+
+.info-user {
+  position: absolute;
+  display: none;
+  width: 250px;
+  height: 300px;
+  top: 50px;
+  right: 0;
+  justify-content: space-around;
+  flex-direction: column;
+  background: linear-gradient(
+    135deg,
+    rgba(24, 24, 24, 1) 0%,
+    rgba(61, 61, 61, 1) 100%
+  );
+  border: 1px solid rgb(97, 97, 97);
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 4;
+  /* border-radius: 8px; */
+}
+
+.padding--info-user {
+  padding: 0px 20px;
+}
+
+.info-user.visible {
+  display: block;
+}
+
+.cntr-items__info-user {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.items__info-user {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.img__info-user {
+  display: flex;
+  width: 50px;
+  height: 80%;
+  align-self: center;
+  background-color: #fff0d4;
+  border-radius: 8px;
+}
+
+.flex-column--info-user {
+  flex-direction: column;
+}
+
+.height-sm--info-user {
+  height: 10%;
+}
+
+.height-md--info-user {
+  height: 20%;
+}
+
+.height-lg--info-user {
+  height: 70%;
+}
+
+.title__info-user {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.button__info-user {
+  width: 100%;
+  height: 30px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 0px 0px 8px 8px;
+  font-weight: bold;
+}
+
+.button__info-user:hover {
+  background-color: #ffc702;
+  color: black;
+  transition: 250ms;
+  font-weight: bold;
+}
+
+.border-button {
+  border-bottom: 1px solid rgb(97, 97, 97);
 }
