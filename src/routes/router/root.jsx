@@ -26,7 +26,6 @@ export default function Router() {
     <Routes>
       <Route path="/" element={<Home />} />
 
-      <Route path="/clubrequest" element={<ClubRequest />} />
 
       <Route path="/class/:classId" element={<ClassDetail />} />
       <Route path="/forgot" element={<Forgot />} />
@@ -40,6 +39,7 @@ export default function Router() {
       <Route path="/register/athlete/step-two" element={<AthleteTwo />} />
       <Route path="/register/athlete/step-three" element={<AthleteThree />} />
       <Route path="/success-register" element={<Success />} />
+      <Route path="/club/solitudes" element={<ClubRequest />} />
       <Route path="/login-user" element={<LoginUser />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
