@@ -7,6 +7,7 @@ import ClubRegisterTwo from "@routes/club-register/club-register-two.jsx";
 import ClubRegisterOne from "@routes/club-register/club-register-one.jsx";
 import CoachRegisterOne from "@routes/coach-register/coach-register-one.jsx";
 import CoachregisterTwo from "@routes/coach-register/coach-register-two.jsx";
+import ClubRequest from "@routes/club-request/club-request.jsx";
 import Success from "@routes/success-register/success-register.jsx";
 import LoginUser from "@routes/login-user/login-user.jsx";
 import Register from "@routes/register/register.jsx";
@@ -16,8 +17,6 @@ import Forgot from "@routes/forgot/forgot.jsx";
 import Login from "@routes/login/login.jsx";
 import Home from "@routes/home/home.jsx";
 
-import ClubRequest from "@routes/club-request/club-request.jsx";
-
 
 import ClassDetail from "../../components/video-class/video-class.jsx";
 
@@ -25,7 +24,6 @@ export default function Router() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-
 
       <Route path="/class/:classId" element={<ClassDetail />} />
       <Route path="/forgot" element={<Forgot />} />
@@ -38,6 +36,7 @@ export default function Router() {
       <Route path="/register/athlete/step-one" element={<AthleteRegisterOne />} />
       <Route path="/register/athlete/step-two" element={<AthleteTwo />} />
       <Route path="/register/athlete/step-three" element={<AthleteThree />} />
+      <Route path="/club-request" element={<ClubRequest />} />
       <Route path="/success-register" element={<Success />} />
       <Route path="/club/solitudes" element={<ClubRequest />} />
       <Route path="/login-user" element={<LoginUser />} />
