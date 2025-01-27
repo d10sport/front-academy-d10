@@ -33,7 +33,7 @@ export default function Header() {
 
           <button className="button__button-nav" onClick={toggleVisibility}>
             <img src={Example} alt="img" className="img__button-nav" />
-            <p>Nombre</p>
+            <p>{user?.first_names}</p>
           </button>
 
           <div className={`info-user ${isVisible ? "visible" : ""}`}>
