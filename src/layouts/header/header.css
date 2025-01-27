@@ -150,8 +150,8 @@
   display: none;
   width: 250px;
   height: 300px;
-  top: 50px;
-  right: 0;
+  top: 100%;
+  right: 2%;
   justify-content: space-around;
   flex-direction: column;
   background: linear-gradient(
@@ -213,7 +213,8 @@
 
 .title__info-user {
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
+  color: #ffc702;
 }
 
 .button__info-user {
