@@ -1,7 +1,6 @@
 import { jwtDecode } from "jwt-decode";
 
 async function isTokenValid(token) {
-  debugger;
   let msg = 'Token valid'
   try {
     const decoded = jwtDecode(token);

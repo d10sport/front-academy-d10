@@ -79,21 +79,26 @@ export default function Login() {
     }
 
     handleLogin();
-  }, [context.typeUser]);
+  }, [username, password, context.typeUser, handleLogin]);
 
   async function getDecodeUrl() {
-    debugger;
     const tokenUser = query.get("CwcfFzgQ50HM");
-    const user = query.get("username");
-    const pass = query.get("password");
-    const type = query.get("role_user");
+    let user = '';
+    let pass = '';
+    let type = '';
 
-    const tal = await getTokenDecoded(tokenUser);
+    const decode = await getTokenDecoded(tokenUser);
+    if (decode) {
+      const params = new URLSearchParams(decode.token);
+      user = await getTokenDecoded(params.get("username"));
+      pass = await getTokenDecoded(params.get("password"));
+      type = await getTokenDecoded(params.get("role_user"));
+    }
 
     if (user && pass && type) {
-      setUsername(user);
-      setPassword(pass);
-      context.setTypeUser(type);
+      setUsername(user?.username);
+      setPassword(pass?.password);
+      context.setTypeUser(type?.role);
     } else {
       if (context.typeUser == "") {
         navigate("/login-user");
@@ -119,10 +124,10 @@ export default function Login() {
               {context.typeUser == "athlete"
                 ? "Deportista"
                 : context.typeUser == "coach"
-                ? "Entrenador"
-                : context.typeUser == "club"
-                ? "Club"
-                : ""}
+                  ? "Entrenador"
+                  : context.typeUser == "club"
+                    ? "Club"
+                    : ""}
             </button>
           </div>
 
