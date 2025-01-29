@@ -1,30 +1,30 @@
 import { jwtDecode } from "jwt-decode";
 
 async function isTokenValid(token) {
-    debugger;
     let msg = 'Token valid'
+    let decoded = {};
     try {
-        const decoded = jwtDecode(token);
+        decoded = jwtDecode(token);
         const currentTime = Date.now() / 1000;
         if (decoded.exp < currentTime) {
+            decoded = {}
             msg = 'Token has expired';
-            return msg;
+            return { decoded, msg };
         }
-        return msg;
+        return { decoded, msg };
     } catch {
         msg = 'Invalid token';
-        return msg;
+        return { decoded, msg };
     }
 }
 
 export default async function getTokenDecoded(token) {
-    debugger;
     if (!token) {
         return false;
     }
-    const valid = await isTokenValid(token);
-    if (valid != 'Token valid') {
+    const { decoded, msg } = await isTokenValid(token);
+    if (msg != 'Token valid' && Object.keys(decoded).length == 0) {
         return false;
     }
-    return token;
+    return decoded;
 }
