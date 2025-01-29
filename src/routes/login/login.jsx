@@ -1,6 +1,7 @@
+import { useState, useContext, useEffect } from "react";
+import getTokenDecoded from "@lib/token/token-url";
 import AppContext from "@context/app/app-context";
 import { useNavigate } from "react-router-dom";
-import { useState, useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { toast } from "sonner";
 import axios from "axios";
@@ -37,10 +38,10 @@ export default function Login() {
         if (!response.data.success) {
           toast.error(`${response.data.message}`);
           context.setLoadingAuth(false);
-          return
-        };
+          return;
+        }
         context.openSession({ token: response.data.token });
-        toast.success('Sesión iniciada correctamente');
+        toast.success("Sesión iniciada correctamente");
         context.setLoadingAuth(false);
       })
       .catch(() => {
@@ -80,21 +81,27 @@ export default function Login() {
     handleLogin();
   }, [context.typeUser]);
 
-  useEffect(() => {
-    debugger
-    const user = query.get("CwcfFzgQ50HM");
+  async function getDecodeUrl() {
+    debugger;
+    const tokenUser = query.get("CwcfFzgQ50HM");
+    const user = query.get("username");
     const pass = query.get("password");
     const type = query.get("role_user");
+
+    const tal = await getTokenDecoded(tokenUser);
 
     if (user && pass && type) {
       setUsername(user);
       setPassword(pass);
       context.setTypeUser(type);
     } else {
-      if (context.typeUser == '') {
-        navigate('/login-user');
+      if (context.typeUser == "") {
+        navigate("/login-user");
       }
     }
+  }
+  useEffect(() => {
+    getDecodeUrl();
   }, []);
 
   return (
