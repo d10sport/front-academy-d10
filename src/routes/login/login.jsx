@@ -79,7 +79,7 @@ export default function Login() {
     }
 
     handleLogin();
-  }, [username, password, context.typeUser, handleLogin]);
+  }, [username, context.typeUser]);
 
   async function getDecodeUrl() {
     const tokenUser = query.get("CwcfFzgQ50HM");
@@ -93,6 +93,8 @@ export default function Login() {
       user = await getTokenDecoded(params.get("username"));
       pass = await getTokenDecoded(params.get("password"));
       type = await getTokenDecoded(params.get("role_user"));
+    } else {
+      toast.error('El link ha expirado');
     }
 
     if (user && pass && type) {
