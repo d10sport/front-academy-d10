@@ -81,7 +81,8 @@ export default function Login() {
   }, [context.typeUser]);
 
   useEffect(() => {
-    const user = query.get("username");
+    debugger
+    const user = query.get("CwcfFzgQ50HM");
     const pass = query.get("password");
     const type = query.get("role_user");
 
