@@ -1,14 +1,14 @@
 import { useParams } from "react-router-dom";
-// import { useEffect, useState, useContext } from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
-// import AppContext from "@context/app/app-context";
+import AppContext from "@context/app/app-context";
 import "./video-class.css";
 
 export default function VideoClass() {
   const { idCourse } = useParams();
-  const urlApi = import.meta.env.VITE_API_URL;
-  const apiKey = import.meta.env.VITE_API_KEY;
+  const context = useContext(AppContext);
+  const urlApi = context.urlApi;
+  const apiKey = context.apiKey;
 
   const [selectedClass, setSelectedClass] = useState(null);
   const [comments, setComments] = useState([]);
