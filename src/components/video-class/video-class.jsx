@@ -6,32 +6,72 @@ import axios from "axios";
 import "./video-class.css";
 
 export default function VideoClass() {
-  const { idCourse } = useParams(); // Obtener el ID del curso desde la URL
-  const [classes, setClasses] = useState([]);
-  const [selectedClass, setSelectedClass] = useState(null);
-
+  const { idCourse } = useParams();
   const urlApi = import.meta.env.VITE_API_URL;
   const apiKey = import.meta.env.VITE_API_KEY;
 
-  useEffect(() => {
-    axios
-      .get(`${urlApi}academy/g/class/${idCourse}`, {
+  const [selectedClass, setSelectedClass] = useState(null);
+  const [comments, setComments] = useState([]);
+  const [classes, setClasses] = useState([]);
+
+  async function getClassContent() {
+    try {
+      const response = await axios.get(`${urlApi}/academy/g/class/content`, {
+        params: { id: idCourse },
         headers: {
           "Content-Type": "application/json",
           "api-key": apiKey,
         },
-      })
-      .then((response) => {
-        if (!response.data || response.data.length === 0) {
-          console.warn("No se encontraron clases.");
-          return;
-        }
-        setClasses(response.data);
-        setSelectedClass(response.data[0]);
-      })
-      .catch((error) => {
-        console.error("Error al obtener las clases:", error);
       });
+
+      if (response.data && response.data.data) {
+        setSelectedClass(response.data.data);
+      }
+    } catch (error) {
+      console.error("Error al obtener el contenido de la clase:", error);
+    }
+  }
+
+  async function getClassMenu() {
+    try {
+      const response = await axios.get(`${urlApi}/academy/g/class/menu`, {
+        params: { id_course: idCourse },
+        headers: {
+          "Content-Type": "application/json",
+          "api-key": apiKey,
+        },
+      });
+
+      if (response.data && response.data.data) {
+        setClasses(response.data.data);
+      }
+    } catch (error) {
+      console.error("Error al obtener el menú de clases:", error);
+    }
+  }
+
+  async function getClassComments() {
+    try {
+      const response = await axios.get(`${urlApi}/academy/g/class/comments`, {
+        params: { id_course: idCourse },
+        headers: {
+          "Content-Type": "application/json",
+          "api-key": apiKey,
+        },
+      });
+
+      if (response.data && response.data.data) {
+        setComments(response.data.data);
+      }
+    } catch (error) {
+      console.error("Error al obtener los comentarios de la clase:", error);
+    }
+  }
+
+  useEffect(() => {
+    getClassContent();
+    getClassMenu();
+    getClassComments();
   }, [idCourse]);
 
   return (
@@ -63,7 +103,7 @@ export default function VideoClass() {
             <div className="subcntr-video__class">
               <video
                 className="video__class"
-                src={selectedClass.class_content?.video_url || ""}
+                src={selectedClass.class_content?.video || ""}
                 controls
                 muted
               ></video>
@@ -83,21 +123,17 @@ export default function VideoClass() {
               <div className="form__class">
                 <textarea
                   className="textarea__class"
-                  name=""
-                  id=""
                   placeholder="Escribe tu comentario..."
                 ></textarea>
                 <button className="btn__class">Publicar</button>
               </div>
               <ul className="comment__class">
-                {classes
-                  .filter((cls) => cls.id === selectedClass.id)
-                  .map((cls) => (
-                    <li key={cls.comment_id} className="comment-item__class">
-                      <h2 className="subtitle__class">{cls.id_user}</h2>
-                      <p className="text__class">{cls.comment}</p>
-                    </li>
-                  ))}
+                {comments.map((comment, index) => (
+                  <li key={index} className="comment-item__class">
+                    <h2 className="subtitle__class">{comment.nombre}</h2>
+                    <p className="text__class">{comment.comentario}</p>
+                  </li>
+                ))}
               </ul>
             </div>
           </>

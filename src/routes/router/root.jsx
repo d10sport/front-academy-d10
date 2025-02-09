@@ -16,15 +16,12 @@ import ErrorPage from "@routes/router/error.jsx";
 import Forgot from "@routes/forgot/forgot.jsx";
 import Login from "@routes/login/login.jsx";
 import Home from "@routes/home/home.jsx";
-
-
 import VideoClass from "../../components/video-class/video-class.jsx";
 
 export default function Router() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-
       <Route path="/class/:idCourse" element={<VideoClass />} />
       <Route path="/forgot" element={<Forgot />} />
       <Route path="/register/club/step-one" element={<ClubRegisterOne />} />

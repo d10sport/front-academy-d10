@@ -13,24 +13,18 @@ export default function Home() {
 
   const [courses, setCourses] = useState([]);
 
-  function getDateCourses() {
-    axios
-      .get(`${urlApi}academy/g/courses`, {
+  async function getDateCourses() {
+    try {
+      const response = await axios.get(`${urlApi}/academy/g/courses`, {
         headers: {
           "Content-Type": "application/json",
           "api-key": apiKey,
         },
-      })
-      .then((response) => {
-        if (!response.data || response.data.length === 0 || !response.data[0]) {
-          console.warn("No se encontraron cursos.");
-          return;
-        }
-        setCourses(response.data);
-      })
-      .catch((error) => {
-        console.error("Error al obtener los cursos:", error);
       });
+      setCourses(response.data || []);
+    } catch (error) {
+      console.error("Error al obtener los cursos:", error);
+    }
   }
 
   useEffect(() => {
@@ -58,8 +52,8 @@ export default function Home() {
           formación perfecta en todo tipo de ámbito deportivo
         </h2>
         <div className="cntr-course__home">
-          {courses.map((course, courseIndex) => (
-            <div key={courseIndex} className="item__home">
+          {courses.map((course) => (
+            <div key={course.id} className="item__home">
               <h1 className="title__home title--color__home title-center__home margin--space">
                 {course.course_title}
               </h1>
@@ -72,7 +66,6 @@ export default function Home() {
                 </div>
                 <div className="subcntr-info__home">
                   <p className="text__home">{course.description_course}</p>
-
                   <Link to={`/class/${course.id}`} className="link__home">
                     Ver más
                   </Link>
