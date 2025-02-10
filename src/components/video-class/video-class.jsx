@@ -44,16 +44,19 @@ export default function VideoClass() {
 
       if (response.data && response.data.data) {
         setClasses(response.data.data);
+        if (response.data.data.length > 0) {
+          setSelectedClass(response.data.data[0]);
+        }
       }
     } catch (error) {
       console.error("Error al obtener el menú de clases:", error);
     }
   }
 
-  async function getClassComments() {
+  async function getClassComments(classId) {
     try {
       const response = await axios.get(`${urlApi}/academy/g/class/comments`, {
-        params: { id_course: idCourse },
+        params: { id_course: idCourse, id_class: classId },
         headers: {
           "Content-Type": "application/json",
           "api-key": apiKey,
@@ -71,8 +74,15 @@ export default function VideoClass() {
   useEffect(() => {
     getClassContent();
     getClassMenu();
-    getClassComments();
   }, [idCourse]);
+
+  useEffect(() => {
+    if (selectedClass) {
+      getClassComments(selectedClass.id);
+    } else {
+      setComments([]);
+    }
+  }, [selectedClass]);
 
   return (
     <section className="class">
