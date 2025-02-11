@@ -56,7 +56,7 @@ export default function VideoClass() {
   async function getClassComments(classId) {
     try {
       const response = await axios.get(`${urlApi}/academy/g/class/comments`, {
-        params: { id_course: idCourse, id_class: classId },
+        params: { id_class: classId }, // id_class en lugar de id_course
         headers: {
           "Content-Type": "application/json",
           "api-key": apiKey,
@@ -77,8 +77,8 @@ export default function VideoClass() {
   }, [idCourse]);
 
   useEffect(() => {
-    if (selectedClass) {
-      getClassComments(selectedClass.id);
+    if (selectedClass && selectedClass.class_id) {
+      getClassComments(selectedClass.class_id);
     } else {
       setComments([]);
     }
@@ -138,17 +138,14 @@ export default function VideoClass() {
                 <button className="btn__class">Publicar</button>
               </div>
               <ul className="comment__class">
-                {comments
-                  .filter((comment) => comment.id_class === selectedClass.id)
-                  .map((comment) => (
-                    <li
-                      key={comment.comment_id}
-                      className="comment-item__class"
-                    >
-                      <h2 className="subtitle__class">{comment.nombre}</h2>
-                      <p className="text__class">{comment.comentario}</p>
-                    </li>
-                  ))}
+                {comments.map((comment, index) => (
+                  <li key={index} className="comment-item__class">
+                    <h2 className="subtitle__class">
+                      {comment.nombre || "Usuario Desconocido"}
+                    </h2>
+                    <p className="text__class">{comment.comentario}</p>
+                  </li>
+                ))}
               </ul>
             </div>
           </>
