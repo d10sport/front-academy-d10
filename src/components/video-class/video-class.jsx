@@ -1,90 +1,162 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
+import AppContext from "@context/app/app-context";
 import "./video-class.css";
 
 export default function VideoClass() {
-  // ---------------------------------------------------------
+  const { idCourse } = useParams();
+  const context = useContext(AppContext);
+  const urlApi = context.urlApi;
+  const apiKey = context.apiKey;
 
-  const urlApi = import.meta.env.VITE_API_URL;
-  const apiKey = import.meta.env.VITE_API_KEY;
+  const [selectedClass, setSelectedClass] = useState(null);
+  const [comments, setComments] = useState([]);
+  const [classes, setClasses] = useState([]);
 
-  const [Class, setClass] = useState({
-    class_id: null,
-    class_photo: "",
-    class_title: "",
-    class_content: [
-      {
-        url: "",
-        title: "",
-        comments: [],
-        video_id: null,
-        description: "",
-      },
-    ],
-    class_description: "",
-  });
-
-  function getDateVideo() {
-    axios
-      .get(`${urlApi}academy/g/courses`, {
+  async function getClassContent() {
+    try {
+      const response = await axios.get(`${urlApi}/academy/g/class/content`, {
+        params: { id: idCourse },
         headers: {
           "Content-Type": "application/json",
           "api-key": apiKey,
         },
-      })
-      .then((response) => {
-        // console.log("Datos recibidos:", response.data); // Verifica la estructura
-        const courseData = response.data.find(
-          (course) =>
-            course.class &&
-            course.class.some((c) => c.class_id === parseInt(classId))
-        );
+      });
 
-        if (courseData) {
-          const classData = courseData.class.find(
-            (c) => c.class_id === parseInt(classId)
-          );
-          if (classData) {
-            setClass(classData);
-          }
-        } else {
-          console.error("Clase no encontrada.");
+      if (response.data && response.data.data) {
+        setSelectedClass(response.data.data);
+      }
+    } catch (error) {
+      console.error("Error al obtener el contenido de la clase:", error);
+    }
+  }
+
+  async function getClassMenu() {
+    try {
+      const response = await axios.get(`${urlApi}/academy/g/class/menu`, {
+        params: { id_course: idCourse },
+        headers: {
+          "Content-Type": "application/json",
+          "api-key": apiKey,
+        },
+      });
+
+      if (response.data && response.data.data) {
+        setClasses(response.data.data);
+        if (response.data.data.length > 0) {
+          setSelectedClass(response.data.data[0]);
         }
-      })
-      .catch((error) => {
-        console.error("Error al cargar los datos de la clase:", error);
+      }
+    } catch (error) {
+      console.error("Error al obtener el menú de clases:", error);
+    }
+  }
+
+  async function getClassComments(classId) {
+    try {
+      const response = await axios.get(`${urlApi}/academy/g/class/comments`, {
+        params: { id_class: classId }, // id_class en lugar de id_course
+        headers: {
+          "Content-Type": "application/json",
+          "api-key": apiKey,
+        },
       });
+
+      if (response.data && response.data.data) {
+        setComments(response.data.data);
+      }
+    } catch (error) {
+      console.error("Error al obtener los comentarios de la clase:", error);
+    }
   }
 
   useEffect(() => {
-    getDateVideo();
-  }, []);
-
-  // console.log(Class.class_title);
-  // ---------------------------------------------------------
-
-  const { classId } = useParams();
-  const [classData, setClassData] = useState(null);
+    getClassContent();
+    getClassMenu();
+  }, [idCourse]);
 
   useEffect(() => {
-    axios
-      .get(`/api/class/${classId}`)
-      .then((response) => {
-        setClassData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error al cargar los datos de la clase:", error);
-      });
-  }, [classId]);
-
-  if (!classData) {
-    return <div>Cargando datos de la clase...</div>;
-  }
+    if (selectedClass && selectedClass.class_id) {
+      getClassComments(selectedClass.class_id);
+    } else {
+      setComments([]);
+    }
+  }, [selectedClass]);
 
   return (
-    <>
-      <section className="class">
+    <section className="class">
+      <div className="cntr-list__class">
+        <div className="subcntr-list__class">
+          <h1 className="title__class">Clases</h1>
+          <ul className="list__class">
+            {classes.map((cls) => (
+              <li
+                key={cls.id}
+                className={`list-item__class ${
+                  selectedClass?.id === cls.id
+                    ? "item--nowplaying"
+                    : "item--active"
+                }`}
+                onClick={() => setSelectedClass(cls)}
+              >
+                {cls.class_title}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <div className="cntr-video__class">
+        {selectedClass && (
+          <>
+            <div className="subcntr-video__class">
+              <video
+                className="video__class"
+                src={selectedClass.class_content?.video || ""}
+                controls
+                muted
+              ></video>
+            </div>
+
+            <div className="description__class">
+              <h2 className="subtitle__class">{selectedClass.class_title}</h2>
+              <p className="text__class">{selectedClass.class_description}</p>
+              <div className="profile__class">
+                <img className="profile-img__class" src="" alt="Profile" />
+                <p className="text__class">Prof. Juan Pérez</p>
+              </div>
+            </div>
+
+            <div className="cntr-comment__class">
+              <h2 className="subtitle__class">Comentarios</h2>
+              <div className="form__class">
+                <textarea
+                  className="textarea__class"
+                  placeholder="Escribe tu comentario..."
+                ></textarea>
+                <button className="btn__class">Publicar</button>
+              </div>
+              <ul className="comment__class">
+                {comments.map((comment, index) => (
+                  <li key={index} className="comment-item__class">
+                    <h2 className="subtitle__class">
+                      {comment.nombre || "Usuario Desconocido"}
+                    </h2>
+                    <p className="text__class">{comment.comentario}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </>
+        )}
+      </div>
+    </section>
+  );
+}
+
+{
+  /* <section className="class">
         <div className="cntr-list__class">
           <div className="subcntr-list__class">
             <h1 className="title__class">Clases</h1>
@@ -108,14 +180,13 @@ export default function VideoClass() {
           </div>
 
           <div className="description__class">
-            {/* <h2 className="subtitle__class">Titulo del Video: Introducción</h2> */}
-            <h2 className="subtitle__class">
-              {Class.class_content?.[0]?.title || "Título no disponible"}
+            
+            <h2 className="subtitle__class">Título no disponible
             </h2>
 
             <p className="text__class">
-              {Class.class_content?.[0]?.description ||
-                "Descripción no disponible"}
+              
+                Descripción no disponible
             </p>
             <div className="profile__class">
               <img className="profile-img__class" src="" alt="Profile" />
@@ -151,7 +222,5 @@ export default function VideoClass() {
             </ul>
           </div>
         </div>
-      </section>
-    </>
-  );
+      </section> */
 }
