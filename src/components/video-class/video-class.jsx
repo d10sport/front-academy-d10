@@ -3,6 +3,7 @@ import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import AppContext from "@context/app/app-context";
 import "./video-class.css";
+// import { DatabaseBackup } from "lucide-react";
 
 export default function VideoClass() {
   const { idCourse } = useParams();
@@ -14,10 +15,11 @@ export default function VideoClass() {
   const [comments, setComments] = useState([]);
   const [classes, setClasses] = useState([]);
 
-  async function getClassContent() {
+  async function getClassContent(id) {
+    // debugger;
     try {
       const response = await axios.get(`${urlApi}/academy/g/class/content`, {
-        params: { id: idCourse },
+        params: { id: id },
         headers: {
           "Content-Type": "application/json",
           "api-key": apiKey,
@@ -25,7 +27,7 @@ export default function VideoClass() {
       });
 
       if (response.data && response.data.data) {
-        setSelectedClass(response.data.data);
+        setSelectedClass(response.data.data[0]);
       }
     } catch (error) {
       console.error("Error al obtener el contenido de la clase:", error);
@@ -44,9 +46,8 @@ export default function VideoClass() {
 
       if (response.data && response.data.data) {
         setClasses(response.data.data);
-        if (response.data.data.length > 0) {
-          setSelectedClass(response.data.data[0]);
-        }
+        getClassContent(response.data.data[0].class_id);
+        getClassComments(response.data.data[0].class_id);
       }
     } catch (error) {
       console.error("Error al obtener el menú de clases:", error);
@@ -56,7 +57,7 @@ export default function VideoClass() {
   async function getClassComments(classId) {
     try {
       const response = await axios.get(`${urlApi}/academy/g/class/comments`, {
-        params: { id_class: classId }, // id_class en lugar de id_course
+        params: { id_class: classId },
         headers: {
           "Content-Type": "application/json",
           "api-key": apiKey,
@@ -71,18 +72,57 @@ export default function VideoClass() {
     }
   }
 
-  useEffect(() => {
-    getClassContent();
-    getClassMenu();
-  }, [idCourse]);
+  // -------------------------------------------------------
+
+  const [comment, setComment] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const id_class = 5; // Debes obtenerlo dinámicamente si es variable
+  const id_user = 9; // Lo mismo con el usuario
+
+  const handleSubmit = async () => {
+    if (!comment.trim()) {
+      setError("El comentario no puede estar vacío");
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await axios.post(
+        "https://tu-api.com/academy/i/class/post-comments",
+        {
+          id_class,
+          id_user,
+          comment,
+        }
+      );
+
+      if (response.data.success) {
+        alert("Comentario publicado con éxito");
+        setComment(""); // Limpia el textarea después de enviar
+      } else {
+        throw new Error("Error al publicar el comentario");
+      }
+    } catch (err) {
+      setError("Hubo un problema al publicar el comentario");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // -------------------------------------------------------
+
+  function handleClassSelector(id) {
+    getClassContent(id);
+    getClassComments(id);
+  }
 
   useEffect(() => {
-    if (selectedClass && selectedClass.class_id) {
-      getClassComments(selectedClass.class_id);
-    } else {
-      setComments([]);
-    }
-  }, [selectedClass]);
+    getClassMenu();
+  }, []);
 
   return (
     <section className="class">
@@ -92,13 +132,13 @@ export default function VideoClass() {
           <ul className="list__class">
             {classes.map((cls) => (
               <li
-                key={cls.id}
+                key={cls.class_id}
                 className={`list-item__class ${
-                  selectedClass?.id === cls.id
+                  selectedClass?.class_id === cls.class_id
                     ? "item--nowplaying"
                     : "item--active"
                 }`}
-                onClick={() => setSelectedClass(cls)}
+                onClick={() => handleClassSelector(cls.class_id)}
               >
                 {cls.class_title}
               </li>
@@ -134,8 +174,18 @@ export default function VideoClass() {
                 <textarea
                   className="textarea__class"
                   placeholder="Escribe tu comentario..."
-                ></textarea>
-                <button className="btn__class">Publicar</button>
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  disabled={loading}
+                />
+                <button
+                  className="btn__class"
+                  onClick={handleSubmit}
+                  disabled={loading}
+                >
+                  {loading ? "Publicando..." : "Publicar"}
+                </button>
+                {error && <p className="error">{error}</p>}
               </div>
               <ul className="comment__class">
                 {comments.map((comment, index) => (

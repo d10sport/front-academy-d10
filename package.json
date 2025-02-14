@@ -13,8 +13,10 @@
     "academy": "file:",
     "axios": "^1.7.9",
     "jwt-decode": "^4.0.0",
+    "lucide-react": "^0.475.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-dropzone": "^14.3.5",
     "react-modal": "^3.16.3",
     "react-router-dom": "^6.27.0",
     "sonner": "^1.7.0"
