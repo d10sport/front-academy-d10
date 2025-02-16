@@ -24,7 +24,7 @@ export default async function getTokenDecoded(token) {
     }
     const { decoded, msg } = await isTokenValid(token);
     if (msg != 'Token valid' && Object.keys(decoded).length == 0) {
-        return false;
+        return { decoded, msg };
     }
-    return decoded;
+    return { decoded, msg };
 }

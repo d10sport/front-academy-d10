@@ -12,6 +12,7 @@ export default function Login() {
   const urlApi = context.urlApi;
   const apiKey = context.apiKey;
 
+  const [loginLink, setLoginLink] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -74,36 +75,48 @@ export default function Login() {
   }
 
   useEffect(() => {
-    if (username == "" || password == "" || context.typeUser == "") {
+    if (username == "" || username == undefined ||
+      password == "" || password == undefined ||
+      context.typeUser == "" || context.typeUser == undefined) {
       return;
     }
 
     handleLogin();
-  }, [username, context.typeUser]);
+  }, [loginLink]);
 
   async function getDecodeUrl() {
     const tokenUser = query.get("CwcfFzgQ50HM");
-    let user = '';
-    let pass = '';
-    let type = '';
+    if (tokenUser !== null && tokenUser !== undefined && tokenUser !== "") {
+      let user = '';
+      let pass = '';
+      let type = '';
 
-    const decode = await getTokenDecoded(tokenUser);
-    if (decode) {
-      const params = new URLSearchParams(decode.token);
-      user = await getTokenDecoded(params.get("username"));
-      pass = await getTokenDecoded(params.get("password"));
-      type = await getTokenDecoded(params.get("role_user"));
-    } else {
-      toast.error('El link ha expirado');
-    }
+      const decode = await getTokenDecoded(tokenUser);
+      if (decode.decoded && decode.msg == "Token valid") {
+        const params = new URLSearchParams(decode.decoded.token);
+        let dUser = await getTokenDecoded(params.get("username"));
+        let dPass = await getTokenDecoded(params.get("password"));
+        let dType = await getTokenDecoded(params.get("role_user"));
+        if (dUser && dUser.msg == "Token valid" &&
+          dPass && dPass.msg == "Token valid" &&
+          dType && dType.msg == "Token valid") {
+          user = dUser.decoded;
+          pass = dPass.decoded;
+          type = dType.decoded;
+          setLoginLink(true);
+        }
+      } else {
+        toast.error(decode.msg);
+      }
 
-    if (user && pass && type) {
-      setUsername(user?.username);
-      setPassword(pass?.password);
-      context.setTypeUser(type?.role);
-    } else {
-      if (context.typeUser == "") {
-        navigate("/login-user");
+      if (user && pass && type) {
+        setUsername(user?.username);
+        setPassword(pass?.password);
+        context.setTypeUser(type?.role);
+      } else {
+        if (context.typeUser == "") {
+          navigate("/login-user");
+        }
       }
     }
   }
