@@ -128,12 +128,13 @@ export default function Login() {
     <>
       {/* <Header /> */}
       <section className="section__login">
-        <h1 className="title__login">D10+ Academy</h1>
+        
         <div action="" className="form__login">
+          <h1 className="title__login">D10+ Academy</h1>
           <h2 className="subtitle__login">Iniciar Sesión</h2>
           <div className="container__type-user">
             <button
-              className="button__type-user text_300"
+              className="button__type-user"
               onClick={() => selectUserAgain()}
             >
               {context.typeUser == "athlete"
