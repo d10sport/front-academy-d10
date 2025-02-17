@@ -10,13 +10,13 @@ export default function VideoClass() {
   const context = useContext(AppContext);
   const urlApi = context.urlApi;
   const apiKey = context.apiKey;
+  // const id_user = context.user?.id;
 
   const [selectedClass, setSelectedClass] = useState(null);
   const [comments, setComments] = useState([]);
   const [classes, setClasses] = useState([]);
 
   async function getClassContent(id) {
-    // debugger;
     try {
       const response = await axios.get(`${urlApi}/academy/g/class/content`, {
         params: { id: id },
@@ -74,46 +74,52 @@ export default function VideoClass() {
 
   // -------------------------------------------------------
 
-  const [comment, setComment] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  // const id_class = 5;
+  // const id_user = 9;
 
-  const id_class = 5; // Debes obtenerlo dinámicamente si es variable
-  const id_user = 9; // Lo mismo con el usuario
+  // const [comment, setComment] = useState("");
+  // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState("");
 
-  const handleSubmit = async () => {
-    if (!comment.trim()) {
-      setError("El comentario no puede estar vacío");
-      return;
-    }
+  // async function handleSubmit(id_class, id_user) {
+  //   if (!comment.trim()) {
+  //     setError("El comentario no puede estar vacío");
+  //     return;
+  //   }
 
-    setLoading(true);
-    setError("");
+  //   setLoading(true);
+  //   setError("");
 
-    try {
-      const response = await axios.post(
-        "https://tu-api.com/academy/i/class/post-comments",
-        {
-          id_class,
-          id_user,
-          comment,
-        }
-      );
+  //   try {
+  //     const response = await axios.post(
+  //       "https://tu-api.com/academy/i/class/post-comments",
+  //       {
+  //         id_class,
+  //         id_user,
+  //         comment,
+  //       }
+  //     );
 
-      if (response.data.success) {
-        alert("Comentario publicado con éxito");
-        setComment(""); // Limpia el textarea después de enviar
-      } else {
-        throw new Error("Error al publicar el comentario");
-      }
-    } catch (err) {
-      setError("Hubo un problema al publicar el comentario");
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     if (response.data.success) {
+  //       alert("Comentario publicado con éxito");
+  //       setComment("");
+  //     } else {
+  //       throw new Error("Error al publicar el comentario");
+  //     }
+  //   } catch (error) {
+  //     setError("Hubo un problema al publicar el comentario");
+  //     console.error("Hubo un problema al publicar el comentario:", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }
 
   // -------------------------------------------------------
+
+  // function handleClassSelector(id) {
+  //   getClassContent(id);
+  //   getClassComments(id);
+  // }
 
   function handleClassSelector(id) {
     getClassContent(id);
@@ -125,52 +131,48 @@ export default function VideoClass() {
   }, []);
 
   return (
-    <section className="class">
-      <div className="cntr-list__class">
-        <div className="subcntr-list__class">
-          <h1 className="title__class">Clases</h1>
-          <ul className="list__class">
-            {classes.map((cls) => (
-              <li
-                key={cls.class_id}
-                className={`list-item__class ${
-                  selectedClass?.class_id === cls.class_id
-                    ? "item--nowplaying"
-                    : "item--active"
-                }`}
-                onClick={() => handleClassSelector(cls.class_id)}
-              >
-                {cls.class_title}
-              </li>
-            ))}
-          </ul>
+    <>
+      <section className="class">
+        <div className="cntr-list__class">
+          <div className="subcntr-list__class">
+            <h1 className="title__class">Clases</h1>
+            <ul className="list__class">
+              {classes.map((cls) => (
+                <li
+                  key={cls.class_id}
+                  className="list-item__class"
+                  onClick={() => handleClassSelector(cls.class_id)}
+                >
+                  {cls.class_title}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-      </div>
-
-      <div className="cntr-video__class">
-        {selectedClass && (
-          <>
-            <div className="subcntr-video__class">
-              <video
-                className="video__class"
-                src={selectedClass.class_content?.video || ""}
-                controls
-                muted
-              ></video>
-            </div>
-
-            <div className="description__class">
-              <h2 className="subtitle__class">{selectedClass.class_title}</h2>
-              <p className="text__class">{selectedClass.class_description}</p>
-              <div className="profile__class">
-                <img className="profile-img__class" src="" alt="Profile" />
-                <p className="text__class">Prof. Juan Pérez</p>
+        <div className="cntr-video__class">
+          {selectedClass && (
+            <>
+              <div className="subcntr-video__class">
+                <video
+                  className="video__class"
+                  src={selectedClass.class_content?.video || ""}
+                  controls
+                  muted
+                ></video>
               </div>
-            </div>
 
-            <div className="cntr-comment__class">
-              <h2 className="subtitle__class">Comentarios</h2>
-              <div className="form__class">
+              <div className="description__class">
+                <h2 className="subtitle__class">{selectedClass.class_title}</h2>
+                <p className="text__class">{selectedClass.class_description}</p>
+                <div className="profile__class">
+                  <img className="profile-img__class" src="" alt="Profile" />
+                  <p className="text__class">Prof. Juan Pérez</p>
+                </div>
+              </div>
+
+              <div className="cntr-comment__class">
+                <h2 className="subtitle__class">Comentarios</h2>
+                {/* <div className="form__class">
                 <textarea
                   className="textarea__class"
                   placeholder="Escribe tu comentario..."
@@ -180,28 +182,30 @@ export default function VideoClass() {
                 />
                 <button
                   className="btn__class"
-                  onClick={handleSubmit}
+                  // onClick={handleSubmit(classes.class_id, id_user)}
+                  onClick={handleSubmit(classes.class_id)}
                   disabled={loading}
                 >
                   {loading ? "Publicando..." : "Publicar"}
                 </button>
                 {error && <p className="error">{error}</p>}
+              </div> */}
+                <ul className="comment__class">
+                  {comments.map((comment, index) => (
+                    <li key={index} className="comment-item__class">
+                      <h2 className="subtitle__class">
+                        {comment.nombre || "Usuario Desconocido"}
+                      </h2>
+                      <p className="text__class">{comment.comentario}</p>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <ul className="comment__class">
-                {comments.map((comment, index) => (
-                  <li key={index} className="comment-item__class">
-                    <h2 className="subtitle__class">
-                      {comment.nombre || "Usuario Desconocido"}
-                    </h2>
-                    <p className="text__class">{comment.comentario}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </>
-        )}
-      </div>
-    </section>
+            </>
+          )}
+        </div>
+      </section>
+    </>
   );
 }
 
