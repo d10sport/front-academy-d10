@@ -84,10 +84,10 @@ export default function ClubRegisterThree() {
   return (
     <>
       <section className="section__login">
-        <h1 className="title__login">D10+ Academy</h1>
         <div className="form__login">
+          <h1 className="title__login">D10+ Academy</h1>
           <h2 className="subtitle__login margin-general__login">
-            Regístrate como Club
+            Regístrate como <span className="text-decoration__login">Club</span>
           </h2>
 
           <label htmlFor="number_coaches" className="label__login">
@@ -237,7 +237,7 @@ export default function ClubRegisterThree() {
             Siguiente
           </button>
           <button
-            className="link__login link--color__login center-text__login"
+            className="link__login center-text__login"
             onClick={() => navigate("/register/club/step-two")}
           >
             Regresar

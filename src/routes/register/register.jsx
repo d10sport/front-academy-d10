@@ -101,8 +101,8 @@ export default function Register() {
             </button>
           </div>
           <div className="cntr-menu__register">
-            <div className="cntr-title__register">
-              <h1 className="title__register">Registro</h1>
+            <div className="cntr-title__register alt-cntr-title--design">
+              <h1 className="title__register neon-text--color">Registro</h1>
             </div>
             <div className="cntr-text__register">
               <p className="text__register">¿Ya tienes una cuenta?</p>

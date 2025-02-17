@@ -242,6 +242,12 @@ const AppProvider = ({ children }) => {
     }
   }
 
+  async function searchSessionLink(){
+    debugger
+    // Que lea la url y desencripte los datos de la sesion
+    // Haga login y redirija a la url que esta solicitando
+  }
+
   async function fetchToken() {
     const token = await getToken();
     if (!token) {
@@ -290,6 +296,8 @@ const AppProvider = ({ children }) => {
   }
 
   useEffect(() => {
+    debugger
+    // searchSessionLink();
     fetchToken();
   }, []);
 
