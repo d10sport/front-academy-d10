@@ -33,14 +33,14 @@ export default function Header() {
 
           <button className="button__button-nav" onClick={toggleVisibility}>
             <img src={Example} alt="img" className="img__button-nav" />
-            <p>{user?.first_names}</p>
+            <p>{user?.first_names ?? user?.president}</p>
           </button>
 
           <div className={`info-user ${isVisible ? "visible" : ""}`}>
             <div className="cntr-items__info-user border-button height-md--info-user">
               <img src={Example} alt="img" className="img__info-user" />
               <div className="items__info-user">
-                <p className="text__info-user">{user?.first_names}</p>
+                <p className="text__info-user">{user?.first_names ?? user?.name_club}</p>
                 <p className="text__info-user">{user?.email}</p>
               </div>
             </div>
@@ -48,7 +48,7 @@ export default function Header() {
               <h1 className="title__info-user">Información de Usuario</h1>
               <p className="text__info-user">
                 <b>Nombre: </b>
-                {user?.first_names} {user?.last_names}
+                {user?.first_names ?? user?.president} {user?.last_names ?? ''}
               </p>
               <p className="text__info-user">
                 <b>Email: </b>
@@ -56,11 +56,11 @@ export default function Header() {
               </p>
               <p className="text__info-user">
                 <b>Rol: </b>
-                {user?.role}
+                {user?.role.charAt(0).toUpperCase() + user?.role.slice(1)}
               </p>
               <p className="text__info-user">
                 <b>Club: </b>
-                {user?.club?.name_club}
+                {user?.club?.name_club ?? user?.name_club}
               </p>
             </div>
             <div className="cntr-items__info-user height-sm--info-user">
