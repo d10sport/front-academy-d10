@@ -71,16 +71,22 @@
   font-size: 24px;
   width: 40%;
   height: 60px;
-  color: #ffc702;
+  color: #1e2939;
+  font-weight: bold;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(
+  background: white;
+  /* background: linear-gradient(
     135deg,
     rgba(24, 24, 24, 1) 0%,
     rgba(61, 61, 61, 1) 100%
-  );
+  ); */
   border-radius: 8px;
   pointer-events: auto;
+}
+
+.alt-cntr-title--design{
+  background: #1e2939;
 }
 
 .cntr-text__register {
@@ -92,19 +98,30 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background: linear-gradient(
+  background: #1e2939;
+  /* background: linear-gradient(
     135deg,
     rgba(24, 24, 24, 1) 0%,
     rgba(61, 61, 61, 1) 100%
-  );
+  ); */
   padding: 10px 10px;
   border-radius: 8px;
   pointer-events: auto;
 }
 
 .text--color {
-  color: #ffc702;
+  color: white;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(228, 228, 228, 0.5);
 }
+
+.neon-text--color{
+  color: white;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(228, 228, 228, 0.5);
+}
+
+
 
 .index--position {
   z-index: 2;

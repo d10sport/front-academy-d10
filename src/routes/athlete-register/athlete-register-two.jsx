@@ -222,10 +222,10 @@ export default function AthleteRegisterTwo() {
   return (
     <>
       <section className="section__login">
-        <h2 className="title__login">D10+ Academy</h2>
         <div className="form__login">
+          <h2 className="title__login">D10+ Academy</h2>
           <h2 className="subtitle__login margin-general__login">
-            Regístrate como deportista
+            Regístrate como <span className="text-decoration__login">Deportista</span>
           </h2>
 
           <label htmlFor="pais" className="label__login cursor-pointer">
@@ -405,7 +405,7 @@ export default function AthleteRegisterTwo() {
 
           <button onClick={() => nextStep()} className="button-three__login">Siguiente</button>
           <button
-            className="link__login link--color__login center-text__login"
+            className="link__login center-text__login"
             onClick={() => navigate('/register/athlete/step-one')}
           >
             Regresar

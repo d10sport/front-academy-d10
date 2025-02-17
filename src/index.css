@@ -152,6 +152,13 @@ body {
   /* text-shadow: 2px 4px 6px rgba(70, 70, 70, 0.5); */
 }
 
+.text-decoration__login{
+  color: white;
+  background-color: #1f2937;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
 .button__type-user{
   position: relative;
   color: #1f2937;
@@ -329,12 +336,17 @@ body {
   font-weight: bold;
   border-radius: 6px;
   border: none;
-  background-color: #ffc702;
-  color: black;
+  background-color: #1e2939;
+  color: white;
   font-size: 14px;
   margin: 20px 0px;
   cursor: pointer;
   padding: 6px 12px;
+}
+
+.button-three__login:hover{
+  transition: 250ms;
+  background-color: #364153;
 }
 
 /* ---------------------------------------- */

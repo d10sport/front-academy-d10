@@ -351,11 +351,12 @@ export default function CoachRegisterTwo() {
   return (
     <>
       <section className="section__login">
-        <h2 className="title__login">D10+ Academy</h2>
         <div className="form__login">
+          <h2 className="title__login">D10+ Academy</h2>
           <h2 className="subtitle__login margin-general__login">
-            Regístrate como entrenador
+            Regístrate como <span className="text-decoration__login">Entrenador</span>
           </h2>
+
 
           <label htmlFor="pais" className="label__login">
             País
@@ -594,7 +595,7 @@ export default function CoachRegisterTwo() {
 
           <button onClick={() => nextStep()} className="button-three__login">Registrar</button>
           <button
-            className="cursor-pointer link__login link--color__login center-text__login link--active__login"
+            className="cursor-pointer link__login center-text__login"
             onClick={() => navigate('/register/coach/step-one')}
           >
             Cancelar
