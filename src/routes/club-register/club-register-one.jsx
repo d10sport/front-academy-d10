@@ -56,9 +56,9 @@ export default function ClubRegisterOne() {
   return (
     <>
       <section className="section__login">
-        <h1 className="title__login">D10+ Academy</h1>
         <div className="form__login">
-          <h2 className="subtitle__login">Regístrate como club</h2>
+          <h1 className="title__login">D10+ Academy</h1>
+          <h2 className="subtitle__login">Regístrate como <span className="text-decoration__login">Club</span></h2>
           <p className="text__login link--color__login margin-general__login">
             {context.registerClub.name_club != '' ? context.registerClub.name_club : 'Nombre'}
           </p>
@@ -131,7 +131,7 @@ export default function ClubRegisterOne() {
 
           <button onClick={() => nextStep()} className="button-three__login">Siguiente</button>
           <button
-            className="cursor-pointer link__login link--color__login center-text__login link--active__login"
+            className="cursor-pointer link__login center-text__login"
             onClick={() => navigate('/register')}
           >
             Cancelar

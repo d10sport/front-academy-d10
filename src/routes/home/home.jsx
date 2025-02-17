@@ -54,9 +54,6 @@ export default function Home() {
         <div className="cntr-course__home">
           {courses.map((course) => (
             <div key={course.id} className="item__home">
-              <h1 className="title__home title--color__home title-center__home margin--space">
-                {course.course_title}
-              </h1>
               <div className="cntr-info__home">
                 <div className="cntr-small-img__home">
                   <img
@@ -65,9 +62,12 @@ export default function Home() {
                   />
                 </div>
                 <div className="subcntr-info__home">
+                  <h1 className="title__home title--color__home">
+                    {course.course_title}
+                  </h1>
                   <p className="text__home">{course.description_course}</p>
                   <Link to={`/class/${course.id}`} className="link__home">
-                    Ver más
+                    Ir a la clase
                   </Link>
                 </div>
               </div>

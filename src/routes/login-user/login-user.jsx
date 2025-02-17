@@ -89,10 +89,10 @@ export default function LoginUser() {
             </button>
           </div>
           <div className="cntr-menu__register">
-            <div className="cntr-title__register">
-              <h1 className="title__register">Iniciar Sesión</h1>
+            <div className="cntr-title__register alt-cntr-title--design">
+              <h1 className="title__register neon-text--color">Iniciar Sesión</h1>
             </div>
-            {/* <div className="cntr-text__register">
+            <div className="cntr-text__register">
               <p className="text__register">¿No tienes una cuenta?</p>
 
               <Link
@@ -102,7 +102,7 @@ export default function LoginUser() {
               >
                 Regístrate
               </Link>
-            </div> */}
+            </div>
           </div>
         </section>
       )}

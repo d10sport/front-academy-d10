@@ -83,10 +83,10 @@ export default function AthleteRegisterThree() {
   return (
     <>
       <section className="section__login">
-        <h1 className="title__login">D10+ Academy</h1>
         <div className="form__login">
+          <h1 className="title__login">D10+ Academy</h1>
           <h2 className="subtitle__login margin-general__login">
-            Regístrate como deportista
+            Regístrate como <span className="text-decoration__login">Deportista</span>
           </h2>
           <label htmlFor="nombre-familia" className="label__login">
             Nombres del Padre o Madre
@@ -156,7 +156,7 @@ export default function AthleteRegisterThree() {
             Registrar
           </button>
           <button
-            className="link__login link--color__login center-text__login"
+            className="link__login center-text__login"
             onClick={() => navigate("/register/athlete/step-two")}
           >
             Regresar
