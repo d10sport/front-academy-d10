@@ -2,74 +2,60 @@
   display: flex;
   width: 100%;
   height: fit-content;
+  background-color: #171717;
 }
 
 /* Section 1 */
 
 .cntr-list__class {
-  width: 15%;
+  width: 250px;
   height: 100%;
-  padding: 10px;
 }
 
 .subcntr-list__class {
   width: 100%;
   height: fit-content;
-  padding: 10px;
-  background-color: gray;
-  border-radius: 8px;
+  background-color: #262626;
 }
 
 .title__class {
+  display: flex;
+  width: 100%;
   color: white;
-  margin-bottom: 8px;
+  font-size: 28px;
+  font-weight: bold;
+  justify-content: center;
+  border-bottom: 1px solid gray;
 }
 
 .list-item__class {
   display: flex;
-  background-color: gainsboro;
+  height: 40px;
+  font-size: 18px;
+  color: white;
+  /* font-weight: bold; */
+  justify-content: center;
+  align-items: center;
+  /* background-color: gainsboro; */
   list-style: none;
   padding: 4px;
-  margin-bottom: 4px;
-  border-radius: 4px;
 }
 
 .list-item__class:hover {
-  color: white;
-  background-color: #9b9b9b;
   cursor: pointer;
   transition: 250ms;
+  color: black;
+  background-color: white;
+  box-shadow: 0px 0px 20px 2px rgba(114, 114, 114, 0.75);
 }
 
-.item--active {
-  color: #4e7c57;
-  background-color: #c2ffd5;
-}
-
-.item--active:hover {
-  color: white;
-  background-color: #4e7c57;
-  cursor: pointer;
-  transition: 250ms;
-}
-
-.item--nowplaying {
-  color: white;
-  background-color: #3895ff;
-}
-
-.item--nowplaying:hover {
-  color: white;
-  background-color: #2973c7;
-  cursor: pointer;
-  transition: 250ms;
-}
+/* background-color: #9b9b9b; */
 
 /* Section 2 */
 
 .cntr-video__class {
   display: flex;
-  width: 85%;
+  width: 100%;
   height: 100%;
   justify-content: center;
   align-items: center;
@@ -166,6 +152,8 @@
 
 .comment-item__class {
   border-radius: 8px;
-  border-bottom: 1px solid rgb(231, 185, 56);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   margin-bottom: 10px;
+  padding: 10px;
 }
