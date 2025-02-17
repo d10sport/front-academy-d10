@@ -1,4 +1,4 @@
-import Example from "../../assets/img/example-img.png";
+// import Example from "../../assets/img/example-img.png";
 import AppContext from "@context/app/app-context";
 import { useEffect, useContext, useState } from "react";
 import axios from "axios";
@@ -42,7 +42,7 @@ export default function Home() {
           Bienvenido {user?.first_names}
         </h1>
         <div className="cntr-big-img__home">
-          <img src={Example} alt="" className="img__home" />
+          <img src="https://academy-d10.s3.sa-east-1.amazonaws.com/images/soccer-ball-home.png" alt="" className="img__home" />
         </div>
         <h1 className="title__home title--color__home margin--space">
           Explora nuestras secciones de curso:
