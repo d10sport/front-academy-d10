@@ -100,10 +100,21 @@
 }
 
 .cntr-small-img__home {
+  position: relative;
   width: 100%;
   height: 50%;
   overflow: hidden;
   border-radius: 8px 8px 0px 0px;
+}
+.sm-img__home {
+  top: 20px;
+  left: 10px;
+  position: absolute;
+  z-index: 2;
+}
+.lg-img__home {
+  position: absolute;
+  z-index: 1;
 }
 
 .subcntr-info__home {
