@@ -32,23 +32,29 @@ export default function Header() {
           </ul>
 
           <button className="button__button-nav" onClick={toggleVisibility}>
-            <img src={Example} alt="img" className="img__button-nav" />
             <p>{user?.first_names ?? user?.president}</p>
+            <div className="cntr-img__button-nav">
+              <img src={Example} alt="img" className="img__button-nav" />
+            </div>
           </button>
 
           <div className={`info-user ${isVisible ? "visible" : ""}`}>
-            <div className="cntr-items__info-user border-button height-md--info-user">
-              <img src={Example} alt="img" className="img__info-user" />
+            <div className="cntr-one-item__info-user">
+              <div className="cntr-img__button-nav">
+                <img src={Example} alt="img" className="img__info-user" />
+              </div>
               <div className="items__info-user">
-                <p className="text__info-user">{user?.first_names ?? user?.name_club}</p>
-                <p className="text__info-user">{user?.email}</p>
+                <p className="text__info-user">
+                  {user?.first_names ?? user?.name_club}{" "}
+                  {user?.last_names ?? user?.name_club}
+                </p>
               </div>
             </div>
-            <div className="cntr-items__info-user border-button height-lg--info-user flex-column--info-user padding--info-user">
-              <h1 className="title__info-user">Información de Usuario</h1>
+            <div className="cntr-two-item__info-user">
+              <h1 className="title__info-user">Información de usuario</h1>
               <p className="text__info-user">
                 <b>Nombre: </b>
-                {user?.first_names ?? user?.president} {user?.last_names ?? ''}
+                {user?.first_names ?? user?.president} {user?.last_names ?? ""}
               </p>
               <p className="text__info-user">
                 <b>Email: </b>
@@ -63,7 +69,7 @@ export default function Header() {
                 {user?.club?.name_club ?? user?.name_club}
               </p>
             </div>
-            <div className="cntr-items__info-user height-sm--info-user">
+            <div className="cntr-three-item__info-user">
               <button onClick={closeSession} className="button__info-user">
                 Log out
               </button>
