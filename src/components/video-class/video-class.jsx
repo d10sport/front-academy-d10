@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useMemo } from "react";
 import axios from "axios";
 import AppContext from "@context/app/app-context";
 import "./video-class.css";
@@ -71,8 +71,6 @@ export default function VideoClass() {
     }
   }
 
-  // -------------------------------------------------------
-
   const [comment, setComment] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -116,15 +114,48 @@ export default function VideoClass() {
     }
   }
 
-  // -------------------------------------------------------
-
   function handleClassSelector(id) {
     getClassContent(id);
     getClassComments(id);
   }
 
+  const [isOpen, setIsOpen] = useState(false);
+  const [deviceType, setDeviceType] = useState("desktop");
+
+  const toggleList = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const changeBtnClass = useMemo(() => {
+    switch (deviceType) {
+      case "mobile":
+        return { show: true };
+      case "tablet":
+        return { show: true };
+      default:
+        return { show: false };
+    }
+  }, [deviceType]);
+
   useEffect(() => {
     getClassMenu();
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width <= 768) {
+        setDeviceType("mobile");
+      } else if (width > 768 && width <= 1024) {
+        setDeviceType("tablet");
+      } else {
+        setDeviceType("desktop");
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return (
@@ -132,18 +163,45 @@ export default function VideoClass() {
       <section className="class">
         <div className="cntr-list__class">
           <div className="subcntr-list__class">
-            <h1 className="title__class">Clases</h1>
-            <ul className="list__class">
-              {classes.map((cls) => (
-                <li
-                  key={cls.class_id}
-                  className="list-item__class"
-                  onClick={() => handleClassSelector(cls.class_id)}
-                >
-                  {cls.class_title}
-                </li>
-              ))}
-            </ul>
+            {changeBtnClass.show ? (
+              <div className="cntr-list__class">
+                <div className="subcntr-list__class">
+                  <h1 className="title-btn__class" onClick={toggleList}>
+                    Clases
+                  </h1>
+                  {isOpen && (
+                    <ul className="list__class">
+                      {classes.map((cls) => (
+                        <li
+                          key={cls.class_id}
+                          className="list-item__class"
+                          onClick={() => handleClassSelector(cls.class_id)}
+                        >
+                          {cls.class_title}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </div>
+            ) : (
+              <div className="cntr-list__class">
+                <div className="subcntr-list__class">
+                  <h1 className="title__class">Clases</h1>
+                  <ul className="list__class">
+                    {classes.map((cls) => (
+                      <li
+                        key={cls.class_id}
+                        className="list-item__class"
+                        onClick={() => handleClassSelector(cls.class_id)}
+                      >
+                        {cls.class_title}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            )}
           </div>
         </div>
         <div className="cntr-video__class">
