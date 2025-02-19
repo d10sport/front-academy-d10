@@ -42,7 +42,11 @@ export default function Home() {
           Bienvenido {user?.first_names}
         </h1>
         <div className="cntr-big-img__home">
-          <img src="https://academy-d10.s3.sa-east-1.amazonaws.com/images/soccer-ball-home.png" alt="" className="img__home" />
+          <img
+            src="https://academy-d10.s3.sa-east-1.amazonaws.com/images/soccer-ball-home.png"
+            alt=""
+            className="img__home"
+          />
         </div>
         <h1 className="title__home title--color__home margin--space">
           Explora nuestras secciones de curso:
@@ -57,8 +61,14 @@ export default function Home() {
               <div className="cntr-info__home">
                 <div className="cntr-small-img__home">
                   <img
+                    className="sm-img__home"
                     src={course.main_photo?.bg_photo}
                     alt="Imagen del curso"
+                  />
+                  <img
+                    className="lg-img__home"
+                    src="https://academy-d10.s3.sa-east-1.amazonaws.com/images/soccer-ball-home.png"
+                    alt=""
                   />
                 </div>
                 <div className="subcntr-info__home">

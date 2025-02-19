@@ -1,16 +1,15 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useMemo } from "react";
 import axios from "axios";
 import AppContext from "@context/app/app-context";
 import "./video-class.css";
-// import { DatabaseBackup } from "lucide-react";
 
 export default function VideoClass() {
   const { idCourse } = useParams();
   const context = useContext(AppContext);
   const urlApi = context.urlApi;
   const apiKey = context.apiKey;
-  // const id_user = context.user?.id;
+  const id_user = context.user?.id_login;
 
   const [selectedClass, setSelectedClass] = useState(null);
   const [comments, setComments] = useState([]);
@@ -72,62 +71,91 @@ export default function VideoClass() {
     }
   }
 
-  // -------------------------------------------------------
+  const [comment, setComment] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  // const id_class = 5;
-  // const id_user = 9;
+  async function handleSubmit(class_id, id_user) {
+    if (!comment.trim()) {
+      setError("El comentario no puede estar vacío");
+      return;
+    }
 
-  // const [comment, setComment] = useState("");
-  // const [loading, setLoading] = useState(false);
-  // const [error, setError] = useState("");
+    setLoading(true);
+    setError("");
 
-  // async function handleSubmit(id_class, id_user) {
-  //   if (!comment.trim()) {
-  //     setError("El comentario no puede estar vacío");
-  //     return;
-  //   }
+    try {
+      const response = await axios.post(
+        `${urlApi}/academy/i/class/post-comments`,
+        {
+          id_class: class_id,
+          id_user: id_user,
+          comment: comment,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "api-key": apiKey,
+          },
+        }
+      );
 
-  //   setLoading(true);
-  //   setError("");
-
-  //   try {
-  //     const response = await axios.post(
-  //       "https://tu-api.com/academy/i/class/post-comments",
-  //       {
-  //         id_class,
-  //         id_user,
-  //         comment,
-  //       }
-  //     );
-
-  //     if (response.data.success) {
-  //       alert("Comentario publicado con éxito");
-  //       setComment("");
-  //     } else {
-  //       throw new Error("Error al publicar el comentario");
-  //     }
-  //   } catch (error) {
-  //     setError("Hubo un problema al publicar el comentario");
-  //     console.error("Hubo un problema al publicar el comentario:", error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // }
-
-  // -------------------------------------------------------
-
-  // function handleClassSelector(id) {
-  //   getClassContent(id);
-  //   getClassComments(id);
-  // }
+      if (response.data.success) {
+        alert("Comentario publicado con éxito");
+        setComment("");
+      } else {
+        throw new Error("Error al publicar el comentario");
+      }
+    } catch (error) {
+      setError("Hubo un problema al publicar el comentario");
+      console.error("Hubo un problema al publicar el comentario:", error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   function handleClassSelector(id) {
     getClassContent(id);
     getClassComments(id);
   }
 
+  const [isOpen, setIsOpen] = useState(false);
+  const [deviceType, setDeviceType] = useState("desktop");
+
+  const toggleList = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const changeBtnClass = useMemo(() => {
+    switch (deviceType) {
+      case "mobile":
+        return { show: true };
+      case "tablet":
+        return { show: true };
+      default:
+        return { show: false };
+    }
+  }, [deviceType]);
+
   useEffect(() => {
     getClassMenu();
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width <= 768) {
+        setDeviceType("mobile");
+      } else if (width > 768 && width <= 1024) {
+        setDeviceType("tablet");
+      } else {
+        setDeviceType("desktop");
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return (
@@ -135,18 +163,45 @@ export default function VideoClass() {
       <section className="class">
         <div className="cntr-list__class">
           <div className="subcntr-list__class">
-            <h1 className="title__class">Clases</h1>
-            <ul className="list__class">
-              {classes.map((cls) => (
-                <li
-                  key={cls.class_id}
-                  className="list-item__class"
-                  onClick={() => handleClassSelector(cls.class_id)}
-                >
-                  {cls.class_title}
-                </li>
-              ))}
-            </ul>
+            {changeBtnClass.show ? (
+              <div className="cntr-list__class">
+                <div className="subcntr-list__class">
+                  <h1 className="title-btn__class" onClick={toggleList}>
+                    Clases
+                  </h1>
+                  {isOpen && (
+                    <ul className="list__class">
+                      {classes.map((cls) => (
+                        <li
+                          key={cls.class_id}
+                          className="list-item__class"
+                          onClick={() => handleClassSelector(cls.class_id)}
+                        >
+                          {cls.class_title}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </div>
+            ) : (
+              <div className="cntr-list__class">
+                <div className="subcntr-list__class">
+                  <h1 className="title__class">Clases</h1>
+                  <ul className="list__class">
+                    {classes.map((cls) => (
+                      <li
+                        key={cls.class_id}
+                        className="list-item__class"
+                        onClick={() => handleClassSelector(cls.class_id)}
+                      >
+                        {cls.class_title}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            )}
           </div>
         </div>
         <div className="cntr-video__class">
@@ -169,40 +224,38 @@ export default function VideoClass() {
                   <p className="text__class">Prof. Juan Pérez</p>
                 </div>
               </div>
-
-              <div className="cntr-comment__class">
-                <h2 className="subtitle__class">Comentarios</h2>
-                {/* <div className="form__class">
-                <textarea
-                  className="textarea__class"
-                  placeholder="Escribe tu comentario..."
-                  value={comment}
-                  onChange={(e) => setComment(e.target.value)}
-                  disabled={loading}
-                />
-                <button
-                  className="btn__class"
-                  // onClick={handleSubmit(classes.class_id, id_user)}
-                  onClick={handleSubmit(classes.class_id)}
-                  disabled={loading}
-                >
-                  {loading ? "Publicando..." : "Publicar"}
-                </button>
-                {error && <p className="error">{error}</p>}
-              </div> */}
-                <ul className="comment__class">
-                  {comments.map((comment, index) => (
-                    <li key={index} className="comment-item__class">
-                      <h2 className="subtitle__class">
-                        {comment.nombre || "Usuario Desconocido"}
-                      </h2>
-                      <p className="text__class">{comment.comentario}</p>
-                    </li>
-                  ))}
-                </ul>
-              </div>
             </>
           )}
+        </div>
+        <div className="cntr-comment__class">
+          <h2 className="subtitle__comment">Comentarios</h2>
+          <div className="form__class">
+            <textarea
+              className="textarea__class"
+              placeholder="Escribe tu comentario..."
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              disabled={loading}
+            />
+            <button
+              className="btn__class"
+              onClick={() => handleSubmit(selectedClass.id, id_user)}
+              disabled={loading}
+            >
+              {loading ? "Publicando..." : "Publicar"}
+            </button>
+            {error && <p className="error">{error}</p>}
+          </div>
+          <ul className="comment__class">
+            {comments.map((comment, index) => (
+              <li key={index} className="comment-item__class">
+                <h2 className="subtitle__class">
+                  {comment.nombre || "Usuario Desconocido"}
+                </h2>
+                <p className="text__class">{comment.comentario}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
     </>

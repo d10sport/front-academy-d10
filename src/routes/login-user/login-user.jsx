@@ -45,59 +45,59 @@ export default function LoginUser() {
       {isLoading ? (
         <LoaderFake />
       ) : (
-        <section className="section__register">
-          <div className="cntr-link__register">
+        <section className="section__login-user">
+          <div className="cntr-link__login-user">
             <button
               id="athlete"
               onClick={handleUserSelectionAndFakeLoad}
-              className="link__register"
+              className="link__login-user"
             >
-              <div className="cntr-title__register index--position">
-                <h1 className="title__register">Deportista</h1>
+              <div className="cntr-title__login-user index--position">
+                <h1 className="title__login-user">Deportista</h1>
               </div>
               <img
                 src={imageAthlete}
                 alt="Img Deportista"
-                className="img__register"
+                className="img__login-user"
               />
             </button>
 
             <button
               id="coach"
               onClick={handleUserSelectionAndFakeLoad}
-              className="link__register"
+              className="link__login-user"
             >
               <img
                 src={imageCoach}
                 alt="Img Entrenador"
-                className="img__register"
+                className="img__login-user"
               />
-              <div className="cntr-title__register index--position">
-                <h1 className="title__register">Entrenador</h1>
+              <div className="cntr-title__login-user index--position">
+                <h1 className="title__login-user">Entrenador</h1>
               </div>
             </button>
 
             <button
               id="club"
               onClick={handleUserSelectionAndFakeLoad}
-              className="link__register"
+              className="link__login-user"
             >
-              <img src={imageClub} alt="Img Club" className="img__register" />
-              <div className="cntr-title__register index--position">
-                <h1 className="title__register">Club</h1>
+              <img src={imageClub} alt="Img Club" className="img__login-user" />
+              <div className="cntr-title__login-user index--position">
+                <h1 className="title__login-user">Club</h1>
               </div>
             </button>
           </div>
-          <div className="cntr-menu__register">
-            <div className="cntr-title__register alt-cntr-title--design">
-              <h1 className="title__register neon-text--color">Iniciar Sesión</h1>
+          <div className="cntr-menu__login-user">
+            <div className="cntr-title__login-user alt-cntr-title--design cntr-title--responsive">
+              <h1 className="title__login-user neon-text--color">Iniciar Sesión</h1>
             </div>
-            <div className="cntr-text__register">
-              <p className="text__register">¿No tienes una cuenta?</p>
+            <div className="cntr-text__login-user">
+              <p className="text__login-user">¿No tienes una cuenta?</p>
 
               <Link
                 to="/register"
-                className="text__register text--color"
+                className="text__login-user text--color"
                 onClick={handleFakeLoadClick}
               >
                 Regístrate
