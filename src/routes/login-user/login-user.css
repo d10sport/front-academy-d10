@@ -1,4 +1,4 @@
-.section__register {
+.section__login-user {
   position: relative;
   display: flex;
   width: 100%;
@@ -8,7 +8,7 @@
 
 /* ------------ IMG ------------ */
 
-.cntr-link__register {
+.cntr-link__login-user {
   display: flex;
   position: absolute;
   width: 100%;
@@ -16,7 +16,7 @@
   z-index: 1;
 }
 
-.link__register {
+.link__login-user {
   position: relative;
   display: flex;
   width: 0;
@@ -30,13 +30,13 @@
   text-decoration: none;
 }
 
-.link__register:hover {
+.link__login-user:hover {
   width: 300px;
   opacity: 100%;
   filter: contrast(120%);
 }
 
-.img__register {
+.img__login-user {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -47,16 +47,8 @@
 
 /* ------------ MENU ------------ */
 
-.cntr-menu__register {
-  display: flex;
+.cntr-menu__login-user {
   position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-  pointer-events: none;
-}
-
-.cntr-menu__register {
   display: flex;
   width: 100%;
   height: 100%;
@@ -64,9 +56,11 @@
   align-items: center;
   flex-direction: column;
   padding: 40px 0px 80px 0px;
+  pointer-events: none;
+  z-index: 2;
 }
 
-.cntr-title__register {
+.cntr-title__login-user {
   display: flex;
   font-size: 24px;
   width: 40%;
@@ -76,11 +70,6 @@
   justify-content: center;
   align-items: center;
   background: white;
-  /* background: linear-gradient(
-    135deg,
-    rgba(24, 24, 24, 1) 0%,
-    rgba(61, 61, 61, 1) 100%
-  ); */
   border-radius: 8px;
   pointer-events: auto;
 }
@@ -89,7 +78,7 @@
   background: #1e2939;
 }
 
-.cntr-text__register {
+.cntr-text__login-user {
   display: flex;
   width: 10%;
   height: fit-content;
@@ -99,11 +88,6 @@
   align-items: center;
   flex-direction: column;
   background: #1e2939;
-  /* background: linear-gradient(
-    135deg,
-    rgba(24, 24, 24, 1) 0%,
-    rgba(61, 61, 61, 1) 100%
-  ); */
   padding: 10px 10px;
   border-radius: 8px;
   pointer-events: auto;
@@ -123,4 +107,53 @@
 
 .index--position {
   z-index: 2;
+}
+
+@media (min-width: 1153px) {
+}
+
+@media (min-width: 769px) and (max-width: 1152px) {
+}
+
+@media (max-width: 768px) {
+  .section__login-user {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .cntr-link__login-user {
+    height: 90%;
+    flex-direction: column;
+  }
+
+  .link__login-user {
+    width: 100%;
+    height: 0;
+    justify-content: center;
+    align-items: start;
+    padding-top: 40px;
+    transition: 0.5s ease;
+    text-decoration: none;
+  }
+
+  .link__login-user:hover {
+    width: 100%;
+    height: 300px;
+    opacity: 100%;
+    filter: contrast(120%);
+  }
+
+  .cntr-title--responsive {
+    width: 100%;
+    border-radius: 0px;
+  }
+
+  .cntr-text__login-user {
+    width: 100%;
+    border-radius: 0px;
+  }
+
+  .cntr-menu__login-user {
+    padding: 0px 0px 0px 0px;
+  }
 }
