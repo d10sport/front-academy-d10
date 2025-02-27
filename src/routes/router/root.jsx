@@ -18,19 +18,8 @@ import Login from "@routes/login/login.jsx";
 import Home from "@routes/home/home.jsx";
 import VideoClass from "../../components/video-class/video-class.jsx";
 import UploadFiles from "../../components/upload-files/upload-files.jsx";
-
-// Admin Course
-
-import MenuCourse from "@routes/admin-course/menu-course/menu-course.jsx";
-import AddCourse from "@routes/admin-course/add-course/add-course.jsx";
-import EditCourse from "@routes/admin-course/edit-course/edit-course.jsx";
-
-// Admin Class
-
-import MenuClass from "@routes/admin-class/menu-class/menu-class.jsx";
-import AddClass from "@routes/admin-class/add-class/add-class.jsx";
-import EditClass from "@routes/admin-class/edit-class/edit-class.jsx";
-
+import MenuCourse from "@routes/menu-course/menu-course.jsx";
+import MenuClass from "@routes/menu-class/menu-class.jsx";
 
 export default function Router() {
   return (
@@ -38,12 +27,10 @@ export default function Router() {
       <Route path="/" element={<Home />} />
 
       <Route path="/menu-course" element={<MenuCourse />} />
-      <Route path="/add-course" element={<AddCourse />} />
-      <Route path="/edit-course" element={<EditCourse />} />
+      {/* <Route path="/edit-course" element={<EditCourse />} /> */}
 
-      <Route path="/menu-class" element={<MenuClass />} />
-      <Route path="/add-class" element={<AddClass />} />
-      <Route path="/edit-class" element={<EditClass />} />
+      <Route path="/menu-class/:idCourse" element={<MenuClass />} />
+      {/* <Route path="/edit-class" element={<EditClass />} /> */}
 
       <Route path="/upload" element={<UploadFiles />} />
       <Route path="/class/:idCourse" element={<VideoClass />} />

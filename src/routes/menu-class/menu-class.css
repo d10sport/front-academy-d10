@@ -14,6 +14,11 @@
   align-items: center;
 }
 
+.btn-back__menu-class {
+  display: flex;
+  font-size: 40px;
+}
+
 .title__menu-class {
   font-size: 32px;
 }
