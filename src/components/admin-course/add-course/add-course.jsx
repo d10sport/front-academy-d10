@@ -1,13 +1,61 @@
 /* eslint-disable react/prop-types */
-// import { useEffect, useContext, useState } from "react";
+import { useContext, useState } from "react";
 // import Example from "../../assets/img/example-img.png";
-// import AppContext from "@context/app/app-context";
+import AppContext from "@context/app/app-context";
 // import { Link } from "react-router-dom";
 import Modal from "react-modal";
-// import axios from "axios";
+import axios from "axios";
 import "./add-course.css";
 
 export default function AddCourse({ isOpen, onClose }) {
+  const context = useContext(AppContext);
+  const urlApi = context.urlApi;
+  const apiKey = context.apiKey;
+
+  const [courseTitle, setCourseTitle] = useState("");
+  const [courseDescription, setCourseDescription] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  async function handleAddCourse() {
+    if (!courseTitle.trim() || !courseDescription.trim()) {
+      setError("Los campos no pueden estar vacíos");
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await axios.post(
+        `${urlApi}academy/i/add-course`,
+        {
+          course_title: courseTitle,
+          description_course: courseDescription,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "api-key": apiKey,
+          },
+        }
+      );
+
+      if (response.data.success) {
+        alert("Curso agregado con éxito");
+        setCourseTitle("");
+        setCourseDescription("");
+      } else {
+        throw new Error("Error al agregar el curso");
+      }
+    } catch (error) {
+      setError("Hubo un problema al agregar el curso");
+      console.error("Error:", error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <>
       <Modal
@@ -40,6 +88,8 @@ export default function AddCourse({ isOpen, onClose }) {
             className="input__add-course sm-margin-bottom"
             type="text"
             placeholder="Enter course title"
+            value={courseTitle}
+            onChange={(e) => setCourseTitle(e.target.value)}
             required
           />
           <label className="label__add-course sm-margin-bottom" htmlFor="">
@@ -47,9 +97,9 @@ export default function AddCourse({ isOpen, onClose }) {
           </label>
           <textarea
             className="textarea__add-course sm-margin-bottom"
-            name=""
-            id=""
             placeholder="Enter course description"
+            value={courseDescription}
+            onChange={(e) => setCourseDescription(e.target.value)}
             required
           ></textarea>
           <label className="label__add-course sm-margin-bottom" htmlFor="">
@@ -57,10 +107,19 @@ export default function AddCourse({ isOpen, onClose }) {
           </label>
           <div className="cntr-input__add-course lg-margin-bottom">
             <input className="file__add-course" type="file" disabled />
-            <button className="btn-upload__add-course" disabled>⬆</button>
+            <button className="btn-upload__add-course" disabled>
+              ⬆
+            </button>
           </div>
-          <button className="btn-add__add-course lg-margin-bottom">
-            Add Course
+
+          {error && <p style={{ color: "red" }}>{error}</p>}
+
+          <button
+            className="btn-add__add-course lg-margin-bottom"
+            onClick={handleAddCourse}
+            disabled={loading}
+          >
+            {loading ? "Adding..." : "Add Course"}
           </button>
 
           <button onClick={onClose} className="btn-back__edit-course">
