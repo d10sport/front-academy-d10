@@ -11,8 +11,9 @@ import "./menu-course.css";
 export default function MenuCourse() {
   const [modalIsOpenOne, setModalIsOpenOne] = useState(false);
   const [modalIsOpenTwo, setModalIsOpenTwo] = useState(false);
+  const [selectedCourse, setSelectedCourse] = useState(null);
   const [modalIsOpenThree, setModalIsOpenThree] = useState(false);
-  const [selectedCourseId, setSelectedCourseId] = useState(null); 
+  const [selectedCourseId, setSelectedCourseId] = useState(null);
 
   const context = useContext(AppContext);
   const urlApi = context.urlApi;
@@ -64,7 +65,10 @@ export default function MenuCourse() {
               </div>
               <div className="cntr-btn__menu-course">
                 <button
-                  onClick={() => setModalIsOpenTwo(true)}
+                  onClick={() => {
+                    setSelectedCourse(course);
+                    setModalIsOpenTwo(true);
+                  }}
                   className="btn-edit__menu-course"
                 >
                   Edit
@@ -100,7 +104,8 @@ export default function MenuCourse() {
       <EditCourse
         isOpen={modalIsOpenTwo}
         onClose={() => setModalIsOpenTwo(false)}
-      ></EditCourse>
+        course={selectedCourse}
+      />
 
       <DeleteCourse
         isOpen={modalIsOpenThree}

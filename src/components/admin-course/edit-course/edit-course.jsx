@@ -1,19 +1,64 @@
 /* eslint-disable react/prop-types */
-// import { useEffect, useContext, useState } from "react";
 // import Example from "../../assets/img/example-img.png";
-// import AppContext from "@context/app/app-context";
+import AppContext from "@context/app/app-context";
 // import { Link } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState, useContext } from "react";
 import Modal from "react-modal";
-// import axios from "axios";
 import "./edit-course.css";
 
-export default function EditCourse({ isOpen, onClose }) {
+export default function EditCourse({ isOpen, onClose, course }) {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const context = useContext(AppContext);
+  const urlApi = context.urlApi;
+  const apiKey = context.apiKey;
+
+  useEffect(() => {
+    if (course) {
+      setTitle(course.course_title || "");
+      setDescription(course.description_course || "");
+    }
+  }, [course]);
+
+  async function handleUpdateCourse() {
+    if (!course || !course.id) {
+      console.error("No hay un curso válido para actualizar");
+      return;
+    }
+
+    try {
+      const response = await axios.put(
+        `${urlApi}academy/u/update-course/${course.id}`,
+        {
+          course_title: title,
+          description_course: description,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "api-key": apiKey,
+          },
+        }
+      );
+
+      if (response.data.success) {
+        console.log("Curso actualizado con éxito:", response.data);
+        onClose();
+      } else {
+        console.error("Error al actualizar el curso:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error en la solicitud de actualización:", error);
+    }
+  }
+
   return (
     <>
       <Modal
         isOpen={isOpen}
         onRequestClose={onClose}
-        contentLabel="Agregar Nuevo Curso"
+        contentLabel="Editar Curso"
         style={{
           overlay: { backgroundColor: "rgba(0,0,0,0.5)" },
           content: {
@@ -41,6 +86,8 @@ export default function EditCourse({ isOpen, onClose }) {
             type="text"
             className="input__edit-course lg-margin-bottom"
             placeholder="Enter course title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
           <label
             htmlFor="course-description-edit"
@@ -53,9 +100,14 @@ export default function EditCourse({ isOpen, onClose }) {
             type="text"
             className="textarea__edit-course lg-margin-bottom"
             placeholder="Enter course description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           ></textarea>
 
-          <button className="btn-edit__edit-course lg-margin-bottom">
+          <button
+            className="btn-edit__edit-course lg-margin-bottom"
+            onClick={handleUpdateCourse}
+          >
             Save Course
           </button>
 
