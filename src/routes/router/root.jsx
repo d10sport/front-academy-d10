@@ -25,13 +25,8 @@ export default function Router() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-
       <Route path="/menu-course" element={<MenuCourse />} />
-      {/* <Route path="/edit-course" element={<EditCourse />} /> */}
-
       <Route path="/menu-class/:idCourse" element={<MenuClass />} />
-      {/* <Route path="/edit-class" element={<EditClass />} /> */}
-
       <Route path="/upload" element={<UploadFiles />} />
       <Route path="/class/:idCourse" element={<VideoClass />} />
       <Route path="/forgot" element={<Forgot />} />
