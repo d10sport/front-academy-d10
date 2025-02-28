@@ -32,7 +32,7 @@ export default function MenuClass() {
 
   async function getClassMenu() {
     try {
-      const response = await axios.get(`${urlApi}/academy/g/class/menu`, {
+      const response = await axios.get(`${urlApi}academy/g/class/menu`, {
         params: { id_course: idCourse },
         headers: {
           "Content-Type": "application/json",

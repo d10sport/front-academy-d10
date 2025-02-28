@@ -15,7 +15,7 @@ export default function Home() {
 
   async function getDateCourses() {
     try {
-      const response = await axios.get(`${urlApi}/academy/g/courses`, {
+      const response = await axios.get(`${urlApi}academy/g/courses`, {
         headers: {
           "Content-Type": "application/json",
           "api-key": apiKey,
