@@ -1,7 +1,8 @@
+// import Example from "../../assets/img/example-img.png";
 import AddCourse from "../../components/admin-course/add-course/add-course.jsx";
 import EditCourse from "../../components/admin-course/edit-course/edit-course.jsx";
+import DeleteCourse from "../../components/admin-course/delete-course/delete-course.jsx";
 import { useEffect, useContext, useState } from "react";
-// import Example from "../../assets/img/example-img.png";
 import AppContext from "@context/app/app-context";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -10,6 +11,8 @@ import "./menu-course.css";
 export default function MenuCourse() {
   const [modalIsOpenOne, setModalIsOpenOne] = useState(false);
   const [modalIsOpenTwo, setModalIsOpenTwo] = useState(false);
+  const [modalIsOpenThree, setModalIsOpenThree] = useState(false);
+  const [selectedCourseId, setSelectedCourseId] = useState(null); 
 
   const context = useContext(AppContext);
   const urlApi = context.urlApi;
@@ -19,7 +22,7 @@ export default function MenuCourse() {
 
   async function getDateCourses() {
     try {
-      const response = await axios.get(`${urlApi}/academy/g/courses`, {
+      const response = await axios.get(`${urlApi}academy/g/courses`, {
         headers: {
           "Content-Type": "application/json",
           "api-key": apiKey,
@@ -66,7 +69,21 @@ export default function MenuCourse() {
                 >
                   Edit
                 </button>
-                <Link to={`/menu-class/${course.id}`} className="btn-manage__menu-course">
+
+                <button
+                  onClick={() => {
+                    setSelectedCourseId(course.id);
+                    setModalIsOpenThree(true);
+                  }}
+                  className="btn-delete__menu-course"
+                >
+                  Eliminar
+                </button>
+
+                <Link
+                  to={`/menu-class/${course.id}`}
+                  className="btn-manage__menu-course"
+                >
                   Manage Classes
                 </Link>
               </div>
@@ -84,6 +101,13 @@ export default function MenuCourse() {
         isOpen={modalIsOpenTwo}
         onClose={() => setModalIsOpenTwo(false)}
       ></EditCourse>
+
+      <DeleteCourse
+        isOpen={modalIsOpenThree}
+        onClose={() => setModalIsOpenThree(false)}
+        courseId={selectedCourseId}
+        refreshCourses={getDateCourses}
+      />
     </>
   );
 }
