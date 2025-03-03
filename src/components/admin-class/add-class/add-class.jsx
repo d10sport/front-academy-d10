@@ -1,12 +1,62 @@
 /* eslint-disable react/prop-types */
-// import { useEffect, useContext, useState } from "react";
+import { useContext, useState } from "react";
 // import Example from "../../assets/img/example-img.png";
-// import AppContext from "@context/app/app-context";
+import AppContext from "@context/app/app-context";
 import Modal from "react-modal";
-// import axios from "axios";
+import axios from "axios";
 import "./add-class.css";
+// import { DatabaseBackup } from "lucide-react";
 
-export default function AddClass({ isOpen, onClose }) {
+export default function AddClass({ isOpen, onClose, idCourse }) {
+  const context = useContext(AppContext);
+  const urlApi = context.urlApi;
+  const apiKey = context.apiKey;
+
+  const [classTitle, setClassTitle] = useState("");
+  const [classDescription, setClassDescription] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  async function handleAddClass() {
+    if (!classTitle.trim() || !classDescription.trim()) {
+      setError("Los campos no pueden estar vacíos");
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await axios.post(
+        `${urlApi}academy/i/add-class`,
+        {
+          id_course: idCourse,
+          class_title: classTitle,
+          class_description: classDescription,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "api-key": apiKey,
+          },
+        }
+      );
+
+      if (response.data.success) {
+        alert("Curso agregado con éxito");
+        setClassTitle("");
+        setClassDescription("");
+      } else {
+        throw new Error("Error al agregar el curso");
+      }
+    } catch (error) {
+      setError("Hubo un problema al agregar el curso");
+      console.error("Error:", error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <>
       <Modal
@@ -30,34 +80,47 @@ export default function AddClass({ isOpen, onClose }) {
         <section className="add-class">
           <h1 className="title__add-class sm-margin-bottom">Add New Class</h1>
           <p className="text__add-class lg-margin-bottom">
-            Create a new class for this course.
+            Create a new class.
           </p>
-          <label className="label__add-class sm-margin-bottom">
+          <label className="label__add-class sm-margin-bottom" htmlFor="">
             Class Title
           </label>
           <input
             className="input__add-class sm-margin-bottom"
             type="text"
-            placeholder="Enter class title"
+            placeholder="Enter course title"
+            value={classTitle}
+            onChange={(e) => setClassTitle(e.target.value)}
+            required
           />
-          <label className="label__add-class sm-margin-bottom">
+          <label className="label__add-class sm-margin-bottom" htmlFor="">
             Class Description
           </label>
           <textarea
             className="textarea__add-class sm-margin-bottom"
-            name=""
-            id=""
-            placeholder="Enter class description"
+            placeholder="Enter course description"
+            value={classDescription}
+            onChange={(e) => setClassDescription(e.target.value)}
+            required
           ></textarea>
-          <label className="label__add-class sm-margin-bottom">
-            Video Upload
+          <label className="label__add-class sm-margin-bottom" htmlFor="">
+            Image Upload
           </label>
           <div className="cntr-input__add-class lg-margin-bottom">
-            <input className="file__add-class" type="file" />
-            <button className="btn-upload__add-class">⬆</button>
+            <input className="file__add-class" type="file" disabled />
+            <button className="btn-upload__add-class" disabled>
+              ⬆
+            </button>
           </div>
-          <button className="btn-add__add-class lg-margin-bottom">
-            Add Class
+
+          {error && <p style={{ color: "red" }}>{error}</p>}
+
+          <button
+            className="btn-add__add-class lg-margin-bottom"
+            onClick={handleAddClass}
+            disabled={loading}
+          >
+            {loading ? "Adding..." : "Add Class"}
           </button>
 
           <button onClick={onClose} className="btn-back__edit-course">
