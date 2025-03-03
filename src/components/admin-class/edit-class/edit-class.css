@@ -29,6 +29,7 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   padding: 0 10px;
+  color: black;
 }
 
 .textarea__edit-class {
@@ -37,6 +38,7 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   padding: 10px;
+  color: black;
 }
 
 .btn-edit__edit-class {
