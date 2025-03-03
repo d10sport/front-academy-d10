@@ -1,13 +1,62 @@
 /* eslint-disable react/prop-types */
-// import { useEffect, useContext, useState } from "react";
+import { useContext, useState } from "react";
 // import Example from "../../assets/img/example-img.png";
-// import AppContext from "@context/app/app-context";
+import AppContext from "@context/app/app-context";
 // import { Link } from "react-router-dom";
-// import axios from "axios";
+import axios from "axios";
 import "./delete-class.css";
 import Modal from "react-modal";
 
-export default function DeleteClass({ isOpen, onClose}) {
+export default function DeleteClass({
+  isOpen,
+  onClose,
+  classId,
+  refreshCourses,
+}) {
+
+  const context = useContext(AppContext);
+  const urlApi = context.urlApi;
+  const apiKey = context.apiKey;
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  async function deleteDateCourse() {
+    if (!classId) return;
+
+    console.log("ID del curso a eliminar:", classId);
+
+    try {
+      await axios.delete(`${urlApi}academy/d/delete-class/${classId}`, {
+        headers: {
+          "Content-Type": "application/json",
+          "api-key": apiKey,
+        },
+      });
+
+      return true;
+    } catch (error) {
+      console.error("Error eliminando la clase:", error);
+      return false;
+    }
+  }
+
+  const handleDelete = async () => {
+    setLoading(true);
+    setError(null);
+
+    const success = await deleteDateCourse();
+
+    if (success) {
+      refreshCourses();
+      onClose();
+    } else {
+      setError("Error al eliminar el curso. Intenta de nuevo.");
+    }
+
+    setLoading(false);
+  };
+
   return (
     <>
       <Modal
@@ -28,39 +77,24 @@ export default function DeleteClass({ isOpen, onClose}) {
           },
         }}
       >
-        <section className="add-course">
-          <h1 className="title__add-course sm-margin-bottom">Add New Class</h1>
-          <p className="text__add-course lg-margin-bottom">
-            Create a new course. 
+        <section className="delete-course">
+          <h1 className="title__delete-course sm-margin-bottom">
+            ¿Estás seguro de que quieres eliminar el curso con ID {classId}?
+          </h1>
+          <p className="text__delete-course lg-margin-bottom">
+            Esta acción no se puede deshacer.
           </p>
-          <label className="label__add-course sm-margin-bottom" htmlFor="">
-            Course Title
-          </label>
-          <input
-            className="input__add-course sm-margin-bottom"
-            type="text"
-            placeholder="Enter course title"
-            required
-          />
-          <label className="label__add-course sm-margin-bottom" htmlFor="">
-            Course Description
-          </label>
-          <textarea
-            className="textarea__add-course sm-margin-bottom"
-            name=""
-            id=""
-            placeholder="Enter course description"
-            required
-          ></textarea>
-          <label className="label__add-course sm-margin-bottom" htmlFor="">
-            Image Upload
-          </label>
-          <div className="cntr-input__add-course lg-margin-bottom">
-            <input className="file__add-course" type="file" disabled />
-            <button className="btn-upload__add-course" disabled>⬆</button>
-          </div>
-          <button className="btn-add__add-course lg-margin-bottom">
-            Add Course
+
+          {error && <p className="error-message">{error}</p>}
+
+          <button
+            className="btn-delete__delete-course lg-margin-bottom"
+            onClick={handleDelete}
+            disabled={loading}
+          >
+            <div className="text-[black]">
+              {loading ? "Eliminando..." : "Eliminar curso de forma permanente"}
+            </div>
           </button>
 
           <button onClick={onClose} className="btn-back__edit-course">
