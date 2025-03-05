@@ -15,8 +15,6 @@ export default function EditClass({ isOpen, onClose, classCourse }) {
   const urlApi = context.urlApi;
   const apiKey = context.apiKey;
 
-  console.log("classCourse: ", classCourse);
-
   useEffect(() => {
     if (classCourse) {
       setTitle(classCourse.class_title || "");
@@ -25,7 +23,6 @@ export default function EditClass({ isOpen, onClose, classCourse }) {
   }, [classCourse]);
 
   async function handleUpdateClass() {
-    debugger
     if (!classCourse || !classCourse.class_id) {
       console.error("No hay un curso válido para actualizar");
       return;
