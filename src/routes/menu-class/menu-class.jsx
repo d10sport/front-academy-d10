@@ -42,8 +42,12 @@ export default function MenuClass() {
   }
 
   useEffect(() => {
-    getClassMenu();
-  }, []);
+    if (!context.token) {
+      context.fetchToken();
+    } else {
+      getClassMenu();
+    }
+  }, [context.token]);
 
   return (
     <>
@@ -69,7 +73,7 @@ export default function MenuClass() {
                 <p className="text__menu-class">{cls.class_description}</p>
               </div>
               <div className="cntr-btn__menu-class">
-              <button
+                <button
                   onClick={() => {
                     setSelectedClass(cls);
                     setModalIsOpenTwo(true);
