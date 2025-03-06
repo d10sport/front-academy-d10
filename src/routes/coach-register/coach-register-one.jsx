@@ -50,14 +50,11 @@ export default function CoachOne() {
   }
 
   return (
-    <>
+    <div className="container__login fixed top-0 left-0 right-0 bottom-0 bg-color__login">
       <section className="section__login">
         <div className="form__login">
           <h1 className="title__login">D10+ Academy</h1>
           <h2 className="subtitle__login">Regístrate como <span className="text-decoration__login">Entrenador</span></h2>
-          <p className="text__login link--color__login margin-general__login">
-            {context.registerCoach.first_names}
-          </p>
           <div className="cntr-img__login">
             <img
               src={imageCoach}
@@ -135,6 +132,6 @@ export default function CoachOne() {
           </button>
         </div>
       </section>
-    </>
+    </div>
   );
 }

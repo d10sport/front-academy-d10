@@ -21,7 +21,7 @@ export default function ClubRequest() {
 
   function getDateUser() {
     axios
-      .get(`${urlApi}academy/solitude/register/users`, {
+      .get(`${urlApi}academy/solitude/register/users/coach`, {
         headers: {
           "Content-Type": "application/json",
           "api-key": apiKey,
@@ -135,8 +135,6 @@ export default function ClubRequest() {
   useEffect(() => {
     handleUFakeLoad();
   }, []);
-
-  // ---------------------------------------------------------------
 
   const toggleDetails = (id) => {
     setVisibleDetails((prevId) => (prevId === id ? null : id));

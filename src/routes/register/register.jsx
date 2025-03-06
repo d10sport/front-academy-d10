@@ -8,18 +8,8 @@ import LoaderFake from "../../ui/loaders/fake-load/loader.fake.jsx";
 import "./register.css";
 
 export default function Register() {
-  const { setTypeUser } = useContext(AppContext);
+  const context = useContext(AppContext);
   const navigate = useNavigate();
-
-  // function selectTypeUser(event) {
-  //   setTypeUser(event.currentTarget.id);
-  //   if (event.currentTarget.id === "athlete")
-  //     return navigate("/register/athlete/step-one");
-  //   if (event.currentTarget.id === "coach")
-  //     return navigate("/register/coach/step-one");
-  //   if (event.currentTarget.id === "club")
-  //     return navigate("/register/club/step-one");
-  // }
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -36,17 +26,29 @@ export default function Register() {
     event.preventDefault();
 
     const selectedUserType = event.currentTarget.id;
-    setTypeUser(selectedUserType);
+    context.setTypeUser(selectedUserType);
 
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
 
       if (selectedUserType === "athlete") {
+        context.setRegisterAthlete((prev) => ({
+          ...prev,
+          role: "athlete",
+        }));
         navigate("/register/athlete/step-one");
       } else if (selectedUserType === "coach") {
+        context.setRegisterCoach((prev) => ({
+          ...prev,
+          role: "coach",
+        }));
         navigate("/register/coach/step-one");
       } else if (selectedUserType === "club") {
+        context.setRegisterClub((prev) => ({
+          ...prev,
+          role: "club",
+        }));
         navigate("/register/club/step-one");
       }
     }, 1000);

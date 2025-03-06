@@ -26,15 +26,15 @@ export default function AthleteRegisterThree() {
   }
 
   function handleCellPhoneFamily(event) {
-    const maxLength = 10;
-    const inputValue = event.target.value;
-
-    if (inputValue.length <= maxLength) {
-      context.setRegisterAthlete((prev) => ({
-        ...prev,
-        contact_family: inputValue,
-      }));
+    let number = parseInt(event.target.value);
+    if (isNaN(number)) {
+      event.target.value = '';
+      number = 0;
     }
+    context.setRegisterAthlete((prev) => ({
+      ...prev,
+      contact_family: number,
+    }));
   }
 
   async function saveRegisterAthlete(data) {
@@ -65,6 +65,9 @@ export default function AthleteRegisterThree() {
       toast.error("Por favor, complete todos los campos");
       return;
     }
+    const button = document.querySelector(".button-three__login");
+    button.disabled = true;
+    button.classList.add("opacity-50", "cursor-not-allowed");
     toast.promise(saveRegisterAthlete(context.registerAthlete), {
       loading: "Cargando...",
       success: (data) => {
@@ -81,13 +84,9 @@ export default function AthleteRegisterThree() {
   }
 
   return (
-    <>
+    <div className="container__login fixed top-0 left-0 right-0 bottom-0 bg-color__login">
       <section className="section__login">
         <div className="form__login">
-          <h1 className="title__login">D10+ Academy</h1>
-          <h2 className="subtitle__login margin-general__login">
-            Regístrate como <span className="text-decoration__login">Deportista</span>
-          </h2>
           <label htmlFor="nombre-familia" className="label__login">
             Nombres del Padre o Madre
           </label>
@@ -118,13 +117,14 @@ export default function AthleteRegisterThree() {
             Contacto del Padre o Madre
           </label>
           <input
-            type="tel"
+            type="text"
             id="contac_family"
             name="contac_family"
             autoComplete="off"
             className="input__login"
             placeholder="Número de celular"
             min={1}
+            maxLength={10}
             max={9999999999}
             step={1}
             value={
@@ -135,23 +135,6 @@ export default function AthleteRegisterThree() {
             onChange={(e) => handleCellPhoneFamily(e)}
           />
 
-          {/* <input
-            type="tel"
-            id="contac_family"
-            name="contac_family"
-            autoComplete="off"
-            className="input__login"
-            placeholder="Numero de celular"
-            min={9999999}
-            max={9999999999}
-            step={1}
-            value={
-              context.registerAthlete.contact_family == 0
-                ? ""
-                : context.registerAthlete.contact_family
-            }
-            onChange={(e) => handleCellPhoneFamily(e)}
-          /> */}
           <button onClick={() => nextStep()} className="button-three__login">
             Registrar
           </button>
@@ -163,6 +146,6 @@ export default function AthleteRegisterThree() {
           </button>
         </div>
       </section>
-    </>
+    </div>
   );
 }

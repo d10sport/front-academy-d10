@@ -50,14 +50,11 @@ export default function AthleteRegisterOne() {
   }
 
   return (
-    <>
+    <div className="container__login fixed top-0 left-0 right-0 bottom-0 bg-color__login">
       <section className="section__login">
         <div className="form__login">
           <h1 className="title__login">D10+ Academy</h1>
           <h2 className="subtitle__login">Regístrate como <span className="text-decoration__login">Deportista</span></h2>
-          <p className="text__login link--color__login margin-general__login">
-            {context.registerClub.first_names != '' ? context.registerClub.first_names : 'Nombre'}
-          </p>
           <div className="cntr-img__login">
             <img
               src={imageAthlete}
@@ -135,6 +132,6 @@ export default function AthleteRegisterOne() {
           </button>
         </div>
       </section>
-    </>
+    </div>
   );
 }

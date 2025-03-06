@@ -29,11 +29,9 @@ const AppProvider = ({ children }) => {
     countryID: '',
     city: '',
     cityID: '',
-    current_club: '',
-    id_club: 0,
     contact: 0,
     mail: '',
-    social_networks: '',
+    social_networks: {},
     academic_level: '',
     first_names_family: '',
     last_names_family: '',
@@ -50,11 +48,12 @@ const AppProvider = ({ children }) => {
     countryID: '',
     city: '',
     cityID: '',
+    role: '',
     id_club: 0,
     current_club: '',
     contact: 0,
     mail: '',
-    social_networks: '',
+    social_networks:  {},
     academic_level: '',
     licenses_obtained: '',
     other: ''
@@ -71,7 +70,7 @@ const AppProvider = ({ children }) => {
     comet: 0,
     contact: 0,
     mail: '',
-    social_networks: '',
+    social_networks: {},
     website: '',
     number_athletes: '',
     categories: '',
@@ -106,15 +105,13 @@ const AppProvider = ({ children }) => {
       countryID: '',
       city: '',
       cityID: '',
-      current_club: '',
       contact: 0,
       mail: '',
-      social_networks: '',
+      social_networks: {},
       academic_level: '',
       first_names_family: '',
       last_names_family: '',
-      contact_family: 0,
-      id_club: 0
+      contact_family: 0
     })
   }
 
@@ -132,7 +129,7 @@ const AppProvider = ({ children }) => {
       current_club: '',
       contact: 0,
       mail: '',
-      social_networks: '',
+      social_networks: {},
       academic_level: '',
       licenses_obtained: '',
       other: ''
@@ -151,7 +148,7 @@ const AppProvider = ({ children }) => {
       comet: 0,
       contact: 0,
       mail: '',
-      social_networks: '',
+      social_networks: {},
       website: '',
       number_athletes: '',
       categories: '',
@@ -177,13 +174,11 @@ const AppProvider = ({ children }) => {
       registerAthlete.city != '' &&
       registerAthlete.cityID != '' &&
       registerAthlete.contact != 0 &&
-      registerAthlete.social_networks != '' &&
+      Object.keys(registerAthlete.social_networks).length > 0 &&
       registerAthlete.academic_level != '' &&
       registerAthlete.first_names_family != '' &&
       registerAthlete.last_names_family != '' &&
-      registerAthlete.contact_family != 0 &&
-      registerAthlete.current_club != '' &&
-      registerAthlete.id_club != 0) {
+      registerAthlete.contact_family != 0) {
       return true
     } else {
       return false
@@ -202,8 +197,9 @@ const AppProvider = ({ children }) => {
       registerCoach.id_club != 0 &&
       registerCoach.city != '' &&
       registerCoach.cityID != '' &&
+      registerCoach.role != '' &&
       registerCoach.contact != 0 &&
-      registerCoach.social_networks != '' &&
+      Object.keys(registerCoach.social_networks).length > 0 &&
       registerCoach.academic_level != '' &&
       registerCoach.licenses_obtained != '' &&
       registerCoach.other != '') {
@@ -224,7 +220,7 @@ const AppProvider = ({ children }) => {
       registerClub.comet != 0 &&
       registerClub.contact != 0 &&
       registerClub.mail != '' &&
-      registerClub.social_networks != '' &&
+      Object.keys(registerClub.social_networks).length > 0 &&
       registerClub.website != '' &&
       registerClub.number_athletes != 0 &&
       registerClub.categories != '' &&
@@ -243,7 +239,7 @@ const AppProvider = ({ children }) => {
   }
 
   async function searchSessionLink(){
-    debugger
+    console.log('searchSessionLink');
     // Que lea la url y desencripte los datos de la sesion
     // Haga login y redirija a la url que esta solicitando
   }
@@ -296,8 +292,7 @@ const AppProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    debugger
-    // searchSessionLink();
+    searchSessionLink();
     fetchToken();
   }, []);
 

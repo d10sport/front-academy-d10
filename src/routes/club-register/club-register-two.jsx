@@ -63,6 +63,11 @@ export default function ClubRegisterTwo() {
   }
 
   function handleCellPhone(event) {
+    let number = parseInt(event.target.value);
+    if (isNaN(number)) {
+      event.target.value = '';
+      number = 0;
+    }
     context.setRegisterClub((prev) => ({
       ...prev,
       contact: parseInt(event.target.value),
@@ -73,7 +78,7 @@ export default function ClubRegisterTwo() {
   function handleSocialNetworks(user) {
     context.setRegisterClub((prev) => ({
       ...prev,
-      social_networks: user,
+      social_networks: { instagram: user },
     })
     )
   }
@@ -172,8 +177,7 @@ export default function ClubRegisterTwo() {
 
   const handleUserInstagram = async (e) => {
     let value = e.target.value;
-    if (context.registerClub.social_networks != "") {
-      let newValue = value.replace(context.registerClub.social_networks, "").trim();
+    if (Object.keys(context.registerClub.social_networks).length > 0 && context.registerClub.social_networks?.instagram != "") {      let newValue = value.replace(context.registerClub.social_networks?.instagram, "").trim();
       value = newValue;
       clearSelectInstagram();
     }
@@ -192,7 +196,7 @@ export default function ClubRegisterTwo() {
   };
 
   async function nextStep() {
-    if (!context.registerClub.country || !context.registerClub.city || !context.registerClub.mail || !context.registerClub.contact || !context.registerClub.social_networks) {
+    if (!context.registerClub.country || !context.registerClub.city || !context.registerClub.mail || !context.registerClub.contact || ! Object.keys(context.registerClub.social_networks).length > 0) {
       toast.error('Por favor, complete todos los campos');
       return
     }
@@ -224,7 +228,7 @@ export default function ClubRegisterTwo() {
                 autoComplete="off"
                 className="input__login"
                 placeholder="País"
-                value={context.registerClub.country}
+                defaultValue={context.registerClub.country}
                 onClick={(e) => handleCountry(e)}
               />
             ) :
@@ -236,11 +240,11 @@ export default function ClubRegisterTwo() {
                 defaultValue={context.registerClub.country}
                 onChange={(e) => handleCountry(e)}
               >
-                <option value="" disabled>
+                <option defaultValue="" disabled>
                   Seleccionar...
                 </option>
                 {countries.map((country) => (
-                  <option key={country.id} id={country.code} value={country.name}>
+                  <option key={country.id} id={country.code} defaultValue={country.name}>
                     {country.name}
                   </option>
                 ))}
@@ -261,7 +265,8 @@ export default function ClubRegisterTwo() {
                 className="input__login cursor-no-drop outline-none"
                 placeholder="Ciudad"
                 disabled
-                value={context.registerClub.city}
+                defaultValue={context.registerClub.city}
+                readOnly={true}
               />
             ) : (
               <select
@@ -272,7 +277,7 @@ export default function ClubRegisterTwo() {
                 onChange={(e) => handleCity(e)}
                 disabled={cities.length === 0 && !context.registerClub.city ? true : false}
               >
-                <option value="" disabled>
+                <option defaultValue="" disabled>
                   Seleccionar...
                 </option>
                 {cities.map((city) => (
@@ -294,7 +299,7 @@ export default function ClubRegisterTwo() {
             autoComplete="off"
             className="input__login"
             placeholder="Email"
-            value={context.registerClub.mail}
+            defaultValue={context.registerClub.mail}
             onChange={(e) => handleEmail(e)}
           />
 
@@ -308,7 +313,7 @@ export default function ClubRegisterTwo() {
             autoComplete="off"
             className="input__login"
             placeholder="Numero celular"
-            value={context.registerClub.contact == 0 ? '' : context.registerClub.contact}
+            defaultValue={context.registerClub.contact == 0 ? '' : context.registerClub.contact}
             onChange={(e) => handleCellPhone(e)}
           />
 
@@ -324,7 +329,7 @@ export default function ClubRegisterTwo() {
                 autoComplete="off"
                 className="input__login"
                 placeholder="Usuario Instagram"
-                value={userIntagram || context.registerClub.social_networks}
+                defaultValue={userIntagram || context.registerClub.social_networks?.instagram || ""}
                 onChange={(e) => handleUserInstagram(e)}
               />
               <button className="input-btn" onClick={handleInstagramSearch}>
