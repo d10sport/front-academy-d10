@@ -10,22 +10,23 @@ export default function Admin() {
 
   const [isEditing, setIsEditing] = useState(false);
 
+  // const [sectionOneServices, setSectionOneServices] = useState({
+  //   title: "",
+  // });
+
   const [sectionTwoServices, setSectionTwoServices] = useState({
-    photo: "",
     title: "",
     subtitle: "",
     description: "",
   });
 
   const [sectionThreeServices, setSectionThreeServices] = useState({
-    photo: "",
     title: "",
     subtitle: "",
     description: "",
   });
 
-  const [sectionFourServices, setSectioFourServices] = useState({
-    photo: "",
+  const [sectionFourServices, setSectionFourServices] = useState({
     title: "",
     subtitle: "",
     description: "",
@@ -42,14 +43,118 @@ export default function Admin() {
       .then((response) => {
         setSectionTwoServices(response.data[0].section_two);
         setSectionThreeServices(response.data[0].section_three);
-        setSectioFourServices(response.data[0].section_four);
+        setSectionFourServices(response.data[0].section_four);
       })
       .catch((error) => {
         console.error(error);
       });
   }
 
-  // --------------------------------------
+  // ----------------------------- Update Title ---------------------------------
+
+  // async function handleUpdateTitle() {
+  //   try {
+  //     const response = await axios.put(
+  //       `${urlApi}landing/u/update-services-title/1`,
+  //       sectionOneServices,
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           "api-key": apiKey,
+  //         },
+  //       }
+  //     );
+
+  //     if (response.data.success) {
+  //       console.log("Datos actualizados con éxito:", response.data);
+  //       setIsEditing(false);
+  //     } else {
+  //       console.error("Error en la actualización:", response.data.message);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error en la solicitud de actualización:", error);
+  //   }
+  // }
+
+  // ----------------------------- Update Services One ---------------------------------
+
+  async function handleUpdateServicesOne() {
+    try {
+      const response = await axios.put(
+        `${urlApi}landing/u/update-services-one/1`,
+        sectionTwoServices,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "api-key": apiKey,
+          },
+        }
+      );
+
+      if (response.data.success) {
+        console.log("Datos actualizados con éxito:", response.data);
+        setIsEditing(false);
+      } else {
+        console.error("Error en la actualización:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error en la solicitud de actualización:", error);
+    }
+  }
+
+  // ----------------------------- Update Services Two ---------------------------------
+
+  async function handleUpdateServicesTwo() {
+    try {
+      const response = await axios.put(
+        `${urlApi}landing/u/update-services-two/1`,
+        sectionThreeServices,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "api-key": apiKey,
+          },
+        }
+      );
+
+      if (response.data.success) {
+        console.log("Datos actualizados con éxito:", response.data);
+        setIsEditing(false);
+      } else {
+        console.error("Error en la actualización:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error en la solicitud de actualización:", error);
+    }
+  }
+
+  // ----------------------------- Update Services Three ---------------------------------
+
+  async function handleUpdateServicesThree() {
+    try {
+      const response = await axios.put(
+        `${urlApi}landing/u/update-services-three/1`,
+        sectionFourServices,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "api-key": apiKey,
+          },
+        }
+      );
+
+      if (response.data.success) {
+        console.log("Datos actualizados con éxito:", response.data);
+        setIsEditing(false);
+      } else {
+        console.error("Error en la actualización:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error en la solicitud de actualización:", error);
+    }
+  }
+
+  // -----------------------------------------------------------------------------
 
   useEffect(() => {
     if (!context.token) {
@@ -61,10 +166,6 @@ export default function Admin() {
 
   return (
     <>
-      {/* --------------- */}
-      {/* -- Servicios -- */}
-      {/* --------------- */}
-
       <h1 className="title__admin-section">Service</h1>
 
       <ul className="list__admin-section">
@@ -74,19 +175,34 @@ export default function Admin() {
             type="text"
             className="input__admin-section"
             value={sectionTwoServices.title}
-            readOnly
+            onChange={(e) =>
+              setSectionTwoServices({
+                ...sectionTwoServices,
+                title: e.target.value,
+              })
+            }
           />
           <input
             type="text"
             className="input__admin-section"
             value={sectionTwoServices.subtitle}
-            readOnly
+            onChange={(e) =>
+              setSectionTwoServices({
+                ...sectionTwoServices,
+                subtitle: e.target.value,
+              })
+            }
           />
           <textarea
             type="text"
             className="textarea__admin-section"
             value={sectionTwoServices.description}
-            readOnly
+            onChange={(e) =>
+              setSectionTwoServices({
+                ...sectionTwoServices,
+                description: e.target.value,
+              })
+            }
           ></textarea>
 
           {isEditing ? (
@@ -94,7 +210,7 @@ export default function Admin() {
               <p className="text__admin-section">¿Estás seguro de editarlo?</p>
               <button
                 className="btn-confirm__admin-section"
-                onClick={() => console.log("Lógica de edición aquí")}
+                onClick={handleUpdateServicesOne}
               >
                 Sí
               </button>
@@ -121,19 +237,34 @@ export default function Admin() {
             type="text"
             className="input__admin-section"
             value={sectionThreeServices.title}
-            readOnly
+            onChange={(e) =>
+              setSectionThreeServices({
+                ...sectionThreeServices,
+                title: e.target.value,
+              })
+            }
           />
           <input
             type="text"
             className="input__admin-section"
             value={sectionThreeServices.subtitle}
-            readOnly
+            onChange={(e) =>
+              setSectionThreeServices({
+                ...sectionThreeServices,
+                subtitle: e.target.value,
+              })
+            }
           />
           <textarea
             type="text"
             className="textarea__admin-section"
             value={sectionThreeServices.description}
-            readOnly
+            onChange={(e) =>
+              setSectionThreeServices({
+                ...sectionThreeServices,
+                description: e.target.value,
+              })
+            }
           ></textarea>
 
           {isEditing ? (
@@ -141,7 +272,7 @@ export default function Admin() {
               <p className="text__admin-section">¿Estás seguro de editarlo?</p>
               <button
                 className="btn-confirm__admin-section"
-                onClick={() => console.log("Lógica de edición aquí")}
+                onClick={handleUpdateServicesTwo}
               >
                 Sí
               </button>
@@ -168,19 +299,34 @@ export default function Admin() {
             type="text"
             className="input__admin-section"
             value={sectionFourServices.title}
-            readOnly
+            onChange={(e) =>
+              setSectionFourServices({
+                ...sectionFourServices,
+                title: e.target.value,
+              })
+            }
           />
           <input
             type="text"
             className="input__admin-section"
             value={sectionFourServices.subtitle}
-            readOnly
+            onChange={(e) =>
+              setSectionFourServices({
+                ...sectionFourServices,
+                subtitle: e.target.value,
+              })
+            }
           />
           <textarea
             type="text"
             className="textarea__admin-section"
             value={sectionFourServices.description}
-            readOnly
+            onChange={(e) =>
+              setSectionFourServices({
+                ...sectionFourServices,
+                description: e.target.value,
+              })
+            }
           ></textarea>
 
           {isEditing ? (
@@ -188,7 +334,7 @@ export default function Admin() {
               <p className="text__admin-section">¿Estás seguro de editarlo?</p>
               <button
                 className="btn-confirm__admin-section"
-                onClick={() => console.log("Lógica de edición aquí")}
+                onClick={handleUpdateServicesThree}
               >
                 Sí
               </button>
