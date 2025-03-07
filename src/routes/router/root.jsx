@@ -18,11 +18,17 @@ import Login from "@routes/login/login.jsx";
 import Home from "@routes/home/home.jsx";
 import VideoClass from "../../components/video-class/video-class.jsx";
 import UploadFiles from "../../components/upload-files/upload-files.jsx";
+import MenuCourse from "@routes/menu-course/menu-course.jsx";
+import MenuClass from "@routes/menu-class/menu-class.jsx";
+import Admin from "@routes/admin/admin.jsx";
 
 export default function Router() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/admin" element={<Admin />} />
+      <Route path="/menu-course" element={<MenuCourse />} />
+      <Route path="/menu-class/:idCourse" element={<MenuClass />} />
       <Route path="/upload" element={<UploadFiles />} />
       <Route path="/class/:idCourse" element={<VideoClass />} />
       <Route path="/forgot" element={<Forgot />} />

@@ -17,7 +17,7 @@ export default function VideoClass() {
 
   async function getClassContent(id) {
     try {
-      const response = await axios.get(`${urlApi}/academy/g/class/content`, {
+      const response = await axios.get(`${urlApi}academy/g/class/content`, {
         params: { id: id },
         headers: {
           "Content-Type": "application/json",
@@ -35,7 +35,7 @@ export default function VideoClass() {
 
   async function getClassMenu() {
     try {
-      const response = await axios.get(`${urlApi}/academy/g/class/menu`, {
+      const response = await axios.get(`${urlApi}academy/g/class/menu`, {
         params: { id_course: idCourse },
         headers: {
           "Content-Type": "application/json",
@@ -55,7 +55,7 @@ export default function VideoClass() {
 
   async function getClassComments(classId) {
     try {
-      const response = await axios.get(`${urlApi}/academy/g/class/comments`, {
+      const response = await axios.get(`${urlApi}academy/g/class/comments`, {
         params: { id_class: classId },
         headers: {
           "Content-Type": "application/json",
@@ -86,7 +86,7 @@ export default function VideoClass() {
 
     try {
       const response = await axios.post(
-        `${urlApi}/academy/i/class/post-comments`,
+        `${urlApi}academy/i/class/post-comments`,
         {
           id_class: class_id,
           id_user: id_user,
