@@ -64,9 +64,7 @@ export default function EditClass({ isOpen, onClose, indice }) {
         }}
       >
         <section className="edit-class">
-          <h1 className="title__edit-class lg-margin-bottom">
-            Edit Img {`con indice: "${indice}"`}
-          </h1>
+          <h1 className="title__edit-class lg-margin-bottom">Edit Img</h1>
           <label
             htmlFor="course-title-edit"
             className="label__edit-class sm-margin-bottom"
