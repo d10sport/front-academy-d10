@@ -1,6 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 // import getTokenDecoded from "../../../token/token-data.js";
 import AddImg from "./add-img/add-img.jsx";
+import EditImg from "./edit-img/edit-img.jsx";
 import AppContext from "@context/app/app-context";
 import axios from "axios";
 import "./admin-gallery.css";
@@ -12,7 +13,9 @@ export default function Admin() {
 
   // const [isEditing, setIsEditing] = useState(false);
   const [modalIsOpenOne, setModalIsOpenOne] = useState(false);
-  const [indice, setIndice] = useState(false)
+  const [modalIsOpenTwo, setModalIsOpenTwo] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(false);
+  // const [indice, setIndice] = useState(false)
 
   const [sectionOne, setSectionOne] = useState({
     gallery: "",
@@ -121,7 +124,15 @@ export default function Admin() {
                   alt={`Img ${index + 1}`}
                 />
                 <div className="cntr-btn__gallery">
-                  <button className="btn-update__gallery" >Update</button>
+                  <button
+                    onClick={() => {
+                      setSelectedIndex(index);
+                      setModalIsOpenTwo(true);
+                    }}
+                    className="btn-update__gallery"
+                  >
+                    Update
+                  </button>
                   <button className="btn-delete__gallery">Delete</button>
                 </div>
               </li>
@@ -135,8 +146,13 @@ export default function Admin() {
       <AddImg
         isOpen={modalIsOpenOne}
         onClose={() => setModalIsOpenOne(false)}
-        index={indice}
       ></AddImg>
+
+      <EditImg
+        isOpen={modalIsOpenTwo}
+        onClose={() => setModalIsOpenTwo(false)}
+        indice={selectedIndex}
+      ></EditImg>
     </>
   );
 }

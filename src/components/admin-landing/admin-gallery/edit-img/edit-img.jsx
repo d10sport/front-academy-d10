@@ -1,38 +1,28 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useContext, useState } from "react";
-// import Example from "../../assets/img/example-img.png";
+import { useContext, useState } from "react";
 import AppContext from "@context/app/app-context";
-// import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import axios from "axios";
 
-export default function EditClass({ isOpen, onClose, classCourse }) {
+export default function EditClass({ isOpen, onClose, indice }) {
+  const [galleryImg, setGalleryImg] = useState("");
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
   const context = useContext(AppContext);
   const urlApi = context.urlApi;
   const apiKey = context.apiKey;
 
-  useEffect(() => {
-    if (classCourse) {
-      setTitle(classCourse.class_title || "");
-      setDescription(classCourse.class_description || "");
-    }
-  }, [classCourse]);
-
-  async function handleUpdateClass() {
-    if (!classCourse || !classCourse.class_id) {
-      console.error("No hay un curso válido para actualizar");
+  async function handleUpdateImg() {
+    if (!galleryImg.trim()) {
+      console.error("No hay un indice válido para actualizar");
       return;
     }
 
     try {
       const response = await axios.put(
-        `${urlApi}academy/u/update-class/${classCourse.class_id}`,
+        `${urlApi}landing/u/update-gallery/1`,
         {
-          class_title: title,
-          class_description: description,
+          index: indice,
+          imageUrl: galleryImg,
         },
         {
           headers: {
@@ -43,10 +33,10 @@ export default function EditClass({ isOpen, onClose, classCourse }) {
       );
 
       if (response.data.success) {
-        console.log("Curso actualizado con éxito:", response.data);
+        console.log("Imagen actualizado con éxito:", response.data);
         onClose();
       } else {
-        console.error("Error al actualizar el curso:", response.data.message);
+        console.error("Error al actualizar la imagen:", response.data.message);
       }
     } catch (error) {
       console.error("Error en la solicitud de actualización:", error);
@@ -74,41 +64,29 @@ export default function EditClass({ isOpen, onClose, classCourse }) {
         }}
       >
         <section className="edit-class">
-          <h1 className="title__edit-class lg-margin-bottom">Edit Class</h1>
+          <h1 className="title__edit-class lg-margin-bottom">
+            Edit Img {`con indice: "${indice}"`}
+          </h1>
           <label
             htmlFor="course-title-edit"
             className="label__edit-class sm-margin-bottom"
           >
-            Class Title
+            Url de la Img
           </label>
           <input
             id="course-title-edit"
             type="text"
             className="input__edit-class lg-margin-bottom"
             placeholder="Enter course title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={galleryImg}
+            onChange={(e) => setGalleryImg(e.target.value)}
           />
-          <label
-            htmlFor="course-description-edit"
-            className="label__edit-class sm-margin-bottom"
-          >
-            Class Description
-          </label>
-          <textarea
-            id="course-description-edit"
-            type="text"
-            className="textarea__edit-class lg-margin-bottom"
-            placeholder="Enter course description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          ></textarea>
 
           <button
             className="btn-edit__edit-class lg-margin-bottom"
-            onClick={handleUpdateClass}
+            onClick={handleUpdateImg}
           >
-            Save Class
+            Update Img
           </button>
 
           <button onClick={onClose} className="btn-back__edit-class">
