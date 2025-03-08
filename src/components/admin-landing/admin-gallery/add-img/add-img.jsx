@@ -3,7 +3,6 @@ import { useContext, useState } from "react";
 import AppContext from "@context/app/app-context";
 import Modal from "react-modal";
 import axios from "axios";
-// import { DatabaseBackup } from "lucide-react";
 
 export default function AddImg({ isOpen, onClose }) {
   const context = useContext(AppContext);

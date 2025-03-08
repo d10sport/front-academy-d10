@@ -4,12 +4,12 @@ import AppContext from "@context/app/app-context";
 import Modal from "react-modal";
 import axios from "axios";
 
-export default function EditClass({ isOpen, onClose, indice }) {
-  const [galleryImg, setGalleryImg] = useState("");
-
+export default function EditImg({ isOpen, onClose, indice }) {
   const context = useContext(AppContext);
   const urlApi = context.urlApi;
   const apiKey = context.apiKey;
+
+  const [galleryImg, setGalleryImg] = useState("");
 
   async function handleUpdateImg() {
     if (!galleryImg.trim()) {
