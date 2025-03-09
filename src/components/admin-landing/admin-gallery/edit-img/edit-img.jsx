@@ -4,12 +4,14 @@ import AppContext from "@context/app/app-context";
 import Modal from "react-modal";
 import axios from "axios";
 
-export default function EditImg({ isOpen, onClose, indice }) {
+export default function EditImg({ isOpen, onClose, indice, refreshCourses }) {
   const context = useContext(AppContext);
   const urlApi = context.urlApi;
   const apiKey = context.apiKey;
 
   const [galleryImg, setGalleryImg] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   async function handleUpdateImg() {
     if (!galleryImg.trim()) {
@@ -43,6 +45,22 @@ export default function EditImg({ isOpen, onClose, indice }) {
     }
   }
 
+  const handleUpdateReload = async () => {
+    setLoading(true);
+    setError(null);
+
+    const success = await handleUpdateImg();
+
+    if (success) {
+      refreshCourses();
+      onClose();
+    } else {
+      setError("Error al eliminar el curso. Intenta de nuevo.");
+    }
+
+    setLoading(false);
+  };
+
   return (
     <>
       <Modal
@@ -75,16 +93,21 @@ export default function EditImg({ isOpen, onClose, indice }) {
             id="course-title-edit"
             type="text"
             className="input__edit-class lg-margin-bottom"
-            placeholder="Enter course title"
+            placeholder="Enter Url Img"
             value={galleryImg}
             onChange={(e) => setGalleryImg(e.target.value)}
           />
 
+          {error && <p className="error-message">{error}</p>}
+
           <button
             className="btn-edit__edit-class lg-margin-bottom"
-            onClick={handleUpdateImg}
+            onClick={handleUpdateReload}
+            disabled={loading}
           >
-            Update Img
+            <div className="text-[white]">
+              {loading ? "Actualizando..." : "Actualizar la imagen"}
+            </div>
           </button>
 
           <button onClick={onClose} className="btn-back__edit-class">
