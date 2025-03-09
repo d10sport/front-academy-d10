@@ -2,6 +2,7 @@ import { useContext, useState, useEffect } from "react";
 // import getTokenDecoded from "../../../token/token-data.js";
 import AddImg from "./add-img/add-img.jsx";
 import EditImg from "./edit-img/edit-img.jsx";
+import DeleteImg from "./delete-img/delete-img.jsx";
 import AppContext from "@context/app/app-context";
 import axios from "axios";
 import "./admin-gallery.css";
@@ -11,11 +12,10 @@ export default function Admin() {
   const urlApi = context.urlApi;
   const apiKey = context.apiKey;
 
-  // const [isEditing, setIsEditing] = useState(false);
   const [modalIsOpenOne, setModalIsOpenOne] = useState(false);
   const [modalIsOpenTwo, setModalIsOpenTwo] = useState(false);
+  const [modalIsOpenThree, setModalIsOpenThree] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(false);
-  // const [indice, setIndice] = useState(false)
 
   const [sectionOne, setSectionOne] = useState({
     gallery: "",
@@ -37,64 +37,6 @@ export default function Admin() {
         console.error(error);
       });
   }
-
-  // function handleGetIndex(indice){
-
-  // }
-
-  // ----------------------------- Update Home ---------------------------------
-
-  // async function handleUpdateHome() {
-  //   try {
-  //     const response = await axios.put(
-  //       `${urlApi}landing/u/update-home/1`,
-  //       sectionOne,
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           "api-key": apiKey,
-  //         },
-  //       }
-  //     );
-
-  //     if (response.data.success) {
-  //       console.log("Datos actualizados con éxito:", response.data);
-  //       setIsEditing(false);
-  //     } else {
-  //       console.error("Error en la actualización:", response.data.message);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error en la solicitud de actualización:", error);
-  //   }
-  // }
-
-  // ----------------------------- Update Nosotros ---------------------------------
-
-  // async function handleUpdateNosotros() {
-  //   try {
-  //     const response = await axios.put(
-  //       `${urlApi}landing/u/update-nosotros/1`,
-  //       sectionTwo,
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           "api-key": apiKey,
-  //         },
-  //       }
-  //     );
-
-  //     if (response.data.success) {
-  //       console.log("Datos actualizados con éxito:", response.data);
-  //       setIsEditing(false);
-  //     } else {
-  //       console.error("Error en la actualización:", response.data.message);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error en la solicitud de actualización:", error);
-  //   }
-  // }
-
-  // -----------------------------------------------------------------------------
 
   useEffect(() => {
     if (!context.token) {
@@ -133,7 +75,15 @@ export default function Admin() {
                   >
                     Update
                   </button>
-                  <button className="btn-delete__gallery">Delete</button>
+                  <button
+                    onClick={() => {
+                      setSelectedIndex(index);
+                      setModalIsOpenThree(true);
+                    }}
+                    className="btn-delete__gallery"
+                  >
+                    Delete
+                  </button>
                 </div>
               </li>
             ))
@@ -152,7 +102,15 @@ export default function Admin() {
         isOpen={modalIsOpenTwo}
         onClose={() => setModalIsOpenTwo(false)}
         indice={selectedIndex}
+        refreshCourses={() => getDataGallery()}
       ></EditImg>
+
+      <DeleteImg
+        isOpen={modalIsOpenThree}
+        onClose={() => setModalIsOpenThree(false)}
+        indice={selectedIndex}
+        refreshCourses={() => getDataGallery()}
+      ></DeleteImg>
     </>
   );
 }

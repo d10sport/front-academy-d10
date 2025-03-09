@@ -1,18 +1,10 @@
 /* eslint-disable react/prop-types */
 import { useContext, useState } from "react";
-// import Example from "../../assets/img/example-img.png";
 import AppContext from "@context/app/app-context";
-// import { Link } from "react-router-dom";
-import axios from "axios";
 import Modal from "react-modal";
+import axios from "axios";
 
-export default function DeleteClass({
-  isOpen,
-  onClose,
-  classId,
-  refreshCourses,
-}) {
-
+export default function DeleteImg({ isOpen, onClose, indice, refreshCourses }) {
   const context = useContext(AppContext);
   const urlApi = context.urlApi;
   const apiKey = context.apiKey;
@@ -20,31 +12,42 @@ export default function DeleteClass({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  async function deleteDateCourse() {
-    if (!classId) return;
-
-    console.log("ID del curso a eliminar:", classId);
+  async function handleDeleteImg() {
+    if (!indice) {
+      console.error("No hay un indice válido para actualizar");
+      return;
+    }
 
     try {
-      await axios.delete(`${urlApi}academy/d/delete-class/${classId}`, {
-        headers: {
-          "Content-Type": "application/json",
-          "api-key": apiKey,
+      const response = await axios.put(
+        `${urlApi}landing/d/delete-gallery/1`,
+        {
+          index: indice,
         },
-      });
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "api-key": apiKey,
+          },
+        }
+      );
 
-      return true;
+      if (response.data.success) {
+        console.log("Imagen actualizado con éxito:", response.data);
+        onClose();
+      } else {
+        console.error("Error al actualizar la imagen:", response.data.message);
+      }
     } catch (error) {
-      console.error("Error eliminando la clase:", error);
-      return false;
+      console.error("Error en la solicitud de actualización:", error);
     }
   }
 
-  const handleDelete = async () => {
+  const handleDeleteReload = async () => {
     setLoading(true);
     setError(null);
 
-    const success = await deleteDateCourse();
+    const success = await handleDeleteImg();
 
     if (success) {
       refreshCourses();
@@ -78,7 +81,7 @@ export default function DeleteClass({
       >
         <section className="delete-course">
           <h1 className="title__delete-course sm-margin-bottom">
-            ¿Estás seguro de que quieres eliminar el curso con ID {classId}?
+            ¿Estás seguro de que quieres eliminar esta imagen?
           </h1>
           <p className="text__delete-course lg-margin-bottom">
             Esta acción no se puede deshacer.
@@ -88,11 +91,13 @@ export default function DeleteClass({
 
           <button
             className="btn-delete__delete-course lg-margin-bottom"
-            onClick={handleDelete}
+            onClick={handleDeleteReload}
             disabled={loading}
           >
-            <div className="text-[black]">
-              {loading ? "Eliminando..." : "Eliminar curso de forma permanente"}
+            <div className="text-[white]">
+              {loading
+                ? "Eliminando..."
+                : "Eliminar imagen de forma permanente"}
             </div>
           </button>
 
