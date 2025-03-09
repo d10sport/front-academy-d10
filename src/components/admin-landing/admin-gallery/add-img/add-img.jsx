@@ -14,7 +14,6 @@ export default function AddImg({ isOpen, onClose }) {
   const [error, setError] = useState("");
 
   async function handleAddImg() {
-
     if (!galleryImg.trim()) {
       setError("Los campos no pueden estar vacíos");
       return;
@@ -48,6 +47,7 @@ export default function AddImg({ isOpen, onClose }) {
       console.error("Error:", error);
     } finally {
       setLoading(false);
+      onClose();
     }
   }
 
