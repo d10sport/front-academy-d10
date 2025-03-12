@@ -30,7 +30,7 @@ export default function Admin() {
     description: "",
   });
 
-  const [sectionFourAboutUs, setSectioFourAboutUs] = useState({
+  const [sectionFourAboutUs, setSectionFourAboutUs] = useState({
     title: "",
     bg_photo: "",
     description: "",
@@ -55,7 +55,7 @@ export default function Admin() {
         setSectionOneAboutUs(response.data[0].section_one);
         setSectionTwoAboutUs(response.data[0].section_two);
         setSectionThreeAboutUs(response.data[0].section_three);
-        setSectioFourAboutUs(response.data[0].section_four);
+        setSectionFourAboutUs(response.data[0].section_four);
         setSectionSixAboutUs(response.data[0].section_six);
       })
       .catch((error) => {
@@ -63,7 +63,137 @@ export default function Admin() {
       });
   }
 
-  // --------------------------------------
+  // ----------------------------- Update About Us Conócenos ---------------------------------
+
+  async function handleUpdateAboutUsConocenos() {
+    try {
+      const response = await axios.put(
+        `${urlApi}landing/u/update-aboutus-conocenos/1`,
+        sectionOneAboutUs,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "api-key": apiKey,
+          },
+        }
+      );
+
+      if (response.data.success) {
+        console.log("Datos actualizados con éxito:", response.data);
+        setIsEditing(false);
+      } else {
+        console.error("Error en la actualización:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error en la solicitud de actualización:", error);
+    }
+  }
+
+  // ----------------------------- Update About Us Fundador ---------------------------------
+
+  async function handleUpdateAboutUsFundador() {
+    try {
+      const response = await axios.put(
+        `${urlApi}landing/u/update-aboutus-fundador/1`,
+        sectionTwoAboutUs,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "api-key": apiKey,
+          },
+        }
+      );
+
+      if (response.data.success) {
+        console.log("Datos actualizados con éxito:", response.data);
+        setIsEditing(false);
+      } else {
+        console.error("Error en la actualización:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error en la solicitud de actualización:", error);
+    }
+  }
+
+  // ----------------------------- Update About Us Objetivos ---------------------------------
+
+  async function handleUpdateAboutUsObjetivos() {
+    try {
+      const response = await axios.put(
+        `${urlApi}landing/u/update-aboutus-objetivos/1`,
+        sectionThreeAboutUs,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "api-key": apiKey,
+          },
+        }
+      );
+
+      if (response.data.success) {
+        console.log("Datos actualizados con éxito:", response.data);
+        setIsEditing(false);
+      } else {
+        console.error("Error en la actualización:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error en la solicitud de actualización:", error);
+    }
+  }
+
+  // ----------------------------- Update About Us Misión ---------------------------------
+
+  async function handleUpdateAboutUsMision() {
+    try {
+      const response = await axios.put(
+        `${urlApi}landing/u/update-aboutus-mision/1`,
+        sectionFourAboutUs,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "api-key": apiKey,
+          },
+        }
+      );
+
+      if (response.data.success) {
+        console.log("Datos actualizados con éxito:", response.data);
+        setIsEditing(false);
+      } else {
+        console.error("Error en la actualización:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error en la solicitud de actualización:", error);
+    }
+  }
+
+  // ----------------------------- Update About Us Vision ---------------------------------
+
+  async function handleUpdateAboutUsVision() {
+    try {
+      const response = await axios.put(
+        `${urlApi}landing/u/update-aboutus-vision/1`,
+        sectionSixAboutUs,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "api-key": apiKey,
+          },
+        }
+      );
+
+      if (response.data.success) {
+        console.log("Datos actualizados con éxito:", response.data);
+        setIsEditing(false);
+      } else {
+        console.error("Error en la actualización:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error en la solicitud de actualización:", error);
+    }
+  }
+
+  // -----------------------------------------------------------------------------
 
   useEffect(() => {
     if (!context.token) {
@@ -75,10 +205,6 @@ export default function Admin() {
 
   return (
     <>
-      {/* --------------- */}
-      {/* -- Nosotros -- */}
-      {/* --------------- */}
-
       <h1 className="title__admin-section">Nosotros</h1>
 
       <ul className="list__admin-section">
@@ -88,14 +214,24 @@ export default function Admin() {
             type="text"
             className="input__admin-section"
             value={sectionOneAboutUs.title}
-            readOnly
+            onChange={(e) =>
+              setSectionOneAboutUs({
+                ...sectionOneAboutUs,
+                title: e.target.value,
+              })
+            }
           />
 
           <textarea
             type="text"
             className="textarea__admin-section"
             value={sectionOneAboutUs.description}
-            readOnly
+            onChange={(e) =>
+              setSectionOneAboutUs({
+                ...sectionOneAboutUs,
+                description: e.target.value,
+              })
+            }
           ></textarea>
 
           {isEditing ? (
@@ -103,7 +239,7 @@ export default function Admin() {
               <p className="text__admin-section">¿Estás seguro de editarlo?</p>
               <button
                 className="btn-confirm__admin-section"
-                onClick={() => console.log("Lógica de edición aquí")}
+                onClick={handleUpdateAboutUsConocenos}
               >
                 Sí
               </button>
@@ -130,28 +266,48 @@ export default function Admin() {
             type="text"
             className="input__admin-section"
             value={sectionTwoAboutUs.title1}
-            readOnly
+            onChange={(e) =>
+              setSectionTwoAboutUs({
+                ...sectionTwoAboutUs,
+                title1: e.target.value,
+              })
+            }
           />
 
           <input
             type="text"
             className="input__admin-section"
             value={sectionTwoAboutUs.title2}
-            readOnly
+            onChange={(e) =>
+              setSectionTwoAboutUs({
+                ...sectionTwoAboutUs,
+                title2: e.target.value,
+              })
+            }
           />
 
           <input
             type="text"
             className="input__admin-section"
             value={sectionTwoAboutUs.subtitle}
-            readOnly
+            onChange={(e) =>
+              setSectionTwoAboutUs({
+                ...sectionTwoAboutUs,
+                subtitle: e.target.value,
+              })
+            }
           />
 
           <textarea
             type="text"
             className="textarea__admin-section"
             value={sectionTwoAboutUs.description}
-            readOnly
+            onChange={(e) =>
+              setSectionTwoAboutUs({
+                ...sectionTwoAboutUs,
+                description: e.target.value,
+              })
+            }
           ></textarea>
 
           {isEditing ? (
@@ -159,7 +315,7 @@ export default function Admin() {
               <p className="text__admin-section">¿Estás seguro de editarlo?</p>
               <button
                 className="btn-confirm__admin-section"
-                onClick={() => console.log("Lógica de edición aquí")}
+                onClick={handleUpdateAboutUsFundador}
               >
                 Sí
               </button>
@@ -186,14 +342,24 @@ export default function Admin() {
             type="text"
             className="input__admin-section"
             value={sectionThreeAboutUs.title}
-            readOnly
+            onChange={(e) =>
+              setSectionThreeAboutUs({
+                ...sectionThreeAboutUs,
+                title: e.target.value,
+              })
+            }
           />
 
           <textarea
             type="text"
             className="textarea__admin-section"
             value={sectionThreeAboutUs.description}
-            readOnly
+            onChange={(e) =>
+              setSectionThreeAboutUs({
+                ...sectionThreeAboutUs,
+                description: e.target.value,
+              })
+            }
           ></textarea>
 
           {isEditing ? (
@@ -201,7 +367,7 @@ export default function Admin() {
               <p className="text__admin-section">¿Estás seguro de editarlo?</p>
               <button
                 className="btn-confirm__admin-section"
-                onClick={() => console.log("Lógica de edición aquí")}
+                onClick={handleUpdateAboutUsObjetivos}
               >
                 Sí
               </button>
@@ -228,14 +394,24 @@ export default function Admin() {
             type="text"
             className="input__admin-section"
             value={sectionFourAboutUs.title}
-            readOnly
+            onChange={(e) =>
+              setSectionFourAboutUs({
+                ...sectionFourAboutUs,
+                title: e.target.value,
+              })
+            }
           />
 
           <textarea
             type="text"
             className="textarea__admin-section"
             value={sectionFourAboutUs.description}
-            readOnly
+            onChange={(e) =>
+              setSectionFourAboutUs({
+                ...sectionFourAboutUs,
+                description: e.target.value,
+              })
+            }
           ></textarea>
 
           {isEditing ? (
@@ -243,7 +419,7 @@ export default function Admin() {
               <p className="text__admin-section">¿Estás seguro de editarlo?</p>
               <button
                 className="btn-confirm__admin-section"
-                onClick={() => console.log("Lógica de edición aquí")}
+                onClick={handleUpdateAboutUsMision}
               >
                 Sí
               </button>
@@ -270,14 +446,24 @@ export default function Admin() {
             type="text"
             className="input__admin-section"
             value={sectionSixAboutUs.title}
-            readOnly
+            onChange={(e) =>
+              setSectionSixAboutUs({
+                ...sectionSixAboutUs,
+                title: e.target.value,
+              })
+            }
           />
 
           <textarea
             type="text"
             className="textarea__admin-section"
             value={sectionSixAboutUs.description}
-            readOnly
+            onChange={(e) =>
+              setSectionSixAboutUs({
+                ...sectionSixAboutUs,
+                description: e.target.value,
+              })
+            }
           ></textarea>
 
           {isEditing ? (
@@ -285,7 +471,7 @@ export default function Admin() {
               <p className="text__admin-section">¿Estás seguro de editarlo?</p>
               <button
                 className="btn-confirm__admin-section"
-                onClick={() => console.log("Lógica de edición aquí")}
+                onClick={handleUpdateAboutUsVision}
               >
                 Sí
               </button>
