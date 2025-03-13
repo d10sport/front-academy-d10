@@ -123,6 +123,19 @@ export default function ClubRegisterTwo() {
       });
   }
 
+  function clearCity() {
+    setCountries([]);
+    setCities([]);
+    fetchCountries();
+    context.setRegisterCoach({
+      ...context.registerClub,
+      country: "",
+      countryID: "",
+      city: "",
+      cityID: ""
+    });
+  }
+
   const clearSelectInstagram = () => {
     setUserInstagram("");
     setSuggestions([]);
@@ -177,7 +190,8 @@ export default function ClubRegisterTwo() {
 
   const handleUserInstagram = async (e) => {
     let value = e.target.value;
-    if (Object.keys(context.registerClub.social_networks).length > 0 && context.registerClub.social_networks?.instagram != "") {      let newValue = value.replace(context.registerClub.social_networks?.instagram, "").trim();
+    if (Object.keys(context.registerClub.social_networks).length > 0 && context.registerClub.social_networks?.instagram != "") {
+      let newValue = value.replace(context.registerClub.social_networks?.instagram, "").trim();
       value = newValue;
       clearSelectInstagram();
     }
@@ -196,7 +210,7 @@ export default function ClubRegisterTwo() {
   };
 
   async function nextStep() {
-    if (!context.registerClub.country || !context.registerClub.city || !context.registerClub.mail || !context.registerClub.contact || ! Object.keys(context.registerClub.social_networks).length > 0) {
+    if (!context.registerClub.country || !context.registerClub.city || !context.registerClub.mail || !context.registerClub.contact || !Object.keys(context.registerClub.social_networks).length > 0) {
       toast.error('Por favor, complete todos los campos');
       return
     }
@@ -215,7 +229,6 @@ export default function ClubRegisterTwo() {
           <h2 className="subtitle__login margin-general__login">
             Regístrate como <span className="text-decoration__login">Club</span>
           </h2>
-
           <label htmlFor="pais" className="label__login">
             País
           </label>
@@ -234,13 +247,14 @@ export default function ClubRegisterTwo() {
             ) :
             (
               <select
+                key={context.registerClub.countryID}
                 name="country"
                 id="country"
                 className="input__login"
                 defaultValue={context.registerClub.country}
                 onChange={(e) => handleCountry(e)}
               >
-                <option defaultValue="" disabled>
+                <option selected>
                   Seleccionar...
                 </option>
                 {countries.map((country) => (
@@ -257,17 +271,23 @@ export default function ClubRegisterTwo() {
           {cities.length === 0 && countries.length === 0 ||
             context.registerClub.city != '' && context.registerClub.country != '' ?
             (
-              <input
-                type="text"
-                id="city"
-                name="city"
-                autoComplete="off"
-                className="input__login cursor-no-drop outline-none"
-                placeholder="Ciudad"
-                disabled
-                defaultValue={context.registerClub.city}
-                readOnly={true}
-              />
+              <div className="w-full flex justify-between gap-2">
+                <input
+                  type="text"
+                  id="city"
+                  name="city"
+                  autoComplete="off"
+                  className="input__login cursor-no-drop outline-none"
+                  placeholder="Ciudad"
+                  defaultValue={context.registerClub.city}
+                  disabled
+                />
+                <button className="input-btn" onClick={() => clearCity()}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                  </svg>
+                </button>
+              </div>
             ) : (
               <select
                 name="country"
@@ -277,17 +297,16 @@ export default function ClubRegisterTwo() {
                 onChange={(e) => handleCity(e)}
                 disabled={cities.length === 0 && !context.registerClub.city ? true : false}
               >
-                <option defaultValue="" disabled>
+                <option selected>
                   Seleccionar...
                 </option>
                 {cities.map((city) => (
-                  <option key={city.id} id={city.code} value={city.name}>
+                  <option key={city.id} id={city.code} defaultValue={city.name}>
                     {city.name}
                   </option>
                 ))}
               </select>
             )}
-
 
           <label htmlFor="email" className="label__login">
             Email
@@ -307,15 +326,18 @@ export default function ClubRegisterTwo() {
             Numero celular
           </label>
           <input
+            maxLength={10}
             type="text"
             id="number_phone"
             name="number_phone"
             autoComplete="off"
             className="input__login"
+            pattern="[0-9]{10}"
             placeholder="Numero celular"
             defaultValue={context.registerClub.contact == 0 ? '' : context.registerClub.contact}
             onChange={(e) => handleCellPhone(e)}
           />
+
 
           <label htmlFor="user-instagram" className="label__login">
             Usuario Instagram
@@ -329,11 +351,11 @@ export default function ClubRegisterTwo() {
                 autoComplete="off"
                 className="input__login"
                 placeholder="Usuario Instagram"
-                defaultValue={userIntagram || context.registerClub.social_networks?.instagram || ""}
+                defaultValue={userIntagram || context.registerClub.social_networks?.instagram || ''}
                 onChange={(e) => handleUserInstagram(e)}
               />
               <button className="input-btn" onClick={handleInstagramSearch}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" />
                 </svg>
               </button>

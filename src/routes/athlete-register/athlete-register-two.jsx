@@ -1,4 +1,5 @@
 import { useEffect, useContext, useState } from "react";
+import photoUser from "@assets/icons/photo_user.png"
 import AppContext from "@context/app/app-context";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'sonner';
@@ -7,11 +8,16 @@ import './athlete-register.css'
 
 export default function AthleteRegisterTwo() {
   const context = useContext(AppContext);
+  const apiHostRapidIntagram = context.apiHostRapidIntagram;
+  const apiKeyRapidApi = context.apiKeyRapidApi;
   const urlApi = context.urlApi;
   const apiKey = context.apiKey;
   const navigate = useNavigate()
 
+  const [userIntagram, setUserInstagram] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
   const [countries, setCountries] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [cities, setCities] = useState([]);
 
   function handleCountry(event) {
@@ -77,13 +83,89 @@ export default function AthleteRegisterTwo() {
     )
   }
 
-  function handleInstagram(event) {
+  function handleSocialNetworks(user) {
     context.setRegisterAthlete((prev) => ({
       ...prev,
-      social_networks: { instagram: event.target.value },
+      social_networks: { instagram: user },
     })
     )
   }
+
+  const handleUserInstagram = async (e) => {
+    let value = e.target.value;
+    if (Object.keys(context.registerAthlete.social_networks).length > 0 && context.registerAthlete.social_networks?.instagram != "") {
+      let newValue = value.replace(context.registerAthlete.social_networks?.instagram, "").trim();
+      value = newValue;
+      clearSelectInstagram();
+    }
+    setUserInstagram(value);
+  };
+
+  const handleSuggestionClick = (username) => {
+    if (username.full_name != "") {
+      setUserInstagram(username.full_name);
+      handleSocialNetworks(username.full_name);
+    } else {
+      setUserInstagram(username.username)
+      handleSocialNetworks(username.username);
+    }
+    setSuggestions([]);
+  };
+
+  async function fetchFilterInstragram() {
+    setIsLoading(true);
+    try {
+      const response = await axios.get(`https://${apiHostRapidIntagram}/v1/info?username_or_id_or_url=${userIntagram}`, {
+        headers: {
+          "x-rapidapi-key": apiKeyRapidApi,
+          "x-rapidapi-host": apiHostRapidIntagram,
+        },
+      });
+      if (!response?.data?.data) {
+        setSuggestions([]);
+        return []
+      } else {
+        setSuggestions([response.data.data]);
+        return [response.data.data];
+      }
+    } catch (error) {
+      console.error("Error al filtrar entrenadores:", error);
+      setUserInstagram(userIntagram);
+      handleSocialNetworks(userIntagram);
+      return []
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  const clearSelectInstagram = () => {
+    setUserInstagram("");
+    setSuggestions([]);
+    context.setregisterAthlete((prev) => ({
+      ...prev,
+      instagram: "",
+    })
+    )
+  }
+
+  const handleInstagramSearch = () => {
+    if (userIntagram.length >= 1) {
+      toast.promise(fetchFilterInstragram(userIntagram), {
+        loading: 'Cargando...',
+        success: (data) => {
+          if (data.length > 0) {
+            return 'Filtro realizado con exito'
+          } else {
+            return 'No se encontraron resultados'
+          }
+        },
+        error: 'Error al filtrar',
+      });
+    } else {
+      setSuggestions([]);
+      toast.error('Por favor, ingrese un usuario');
+    }
+  };
 
   function clearCity() {
     setCountries([]);
@@ -285,19 +367,52 @@ export default function AthleteRegisterTwo() {
             <option defaultValue="doctorado">Doctorado</option>
           </select>
 
-          <label htmlFor="user_instagram" className="label__login cursor-pointer">
+          <label htmlFor="user-instagram" className="label__login">
             Usuario Instagram
           </label>
-          <input
-            type="text"
-            id="user_instagram"
-            name="user_instagram"
-            autoComplete="off"
-            className="input__login"
-            placeholder="Usuario_Instagram"
-            defaultValue={context.registerAthlete.social_networks?.instagram || ''}
-            onChange={(e) => handleInstagram(e)}
-          />
+          <div className="input-container">
+            <div className="w-full flex justify-between gap-2">
+              <input
+                type="text"
+                id="user-instagram"
+                name="user-instagram"
+                autoComplete="off"
+                className="input__login"
+                placeholder="Usuario Instagram"
+                defaultValue={userIntagram || context.registerAthlete.social_networks?.instagram || ''}
+                onChange={(e) => handleUserInstagram(e)}
+              />
+              <button className="input-btn" onClick={handleInstagramSearch}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          {isLoading && <p>Cargando...</p>}
+          {suggestions.length > 0 && (
+            <ul className="suggestions-list">
+              {suggestions.map((user) => (
+                <li
+                  key={user.id}
+                  className="suggestion-item"
+                  onClick={() => handleSuggestionClick(user)}
+                >
+                  <div className="suggestion-info">
+                    <p className="suggestion-fullname">{user.full_name != "" ? user.full_name : user.username}</p>
+                  </div>
+                  <img
+                    // src={user.hd_profile_pic_url_info.url}
+                    src={photoUser}
+                    width="24"
+                    height="24"
+                    alt={user.username}
+                    className="suggestion-avatar"
+                  />
+                </li>
+              ))}
+            </ul>
+          )}
 
           <button onClick={() => nextStep()} className="button-three__login">Siguiente</button>
           <button

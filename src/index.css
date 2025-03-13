@@ -116,6 +116,10 @@ body {
 
 /* LOGIN STYLES */
 
+select {
+  cursor: pointer;
+}
+
 .section__login {
   display: flex;
   position: absolute;
@@ -223,7 +227,6 @@ body {
   border-radius: 6px;
   border: 1px solid rgb(136, 136, 136);
   padding: 0px 10px;
-  cursor: pointer;
 }
 
 .input__login[disabled]{

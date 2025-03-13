@@ -260,6 +260,8 @@ export default function CoachRegisterTwo() {
       }
     } catch (error) {
       console.error("Error al filtrar entrenadores:", error);
+      setUserInstagram(userIntagram);
+      handleSocialNetworks(userIntagram);
       return []
     } finally {
       setIsLoading(false);
@@ -268,8 +270,8 @@ export default function CoachRegisterTwo() {
 
   const handleClubSearch = (e) => {
     let value = e.target.value;
-    if (context.registerCoach.coach != "") {
-      const newValue = e.target.value.replace(context.registerCoach.coach, "").trim();
+    if (context.registerCoach.current_club != "") {
+      const newValue = e.target.value.replace(context.registerCoach.current_club, "").trim();
       value = newValue;
       clearSelectClub();
     }
@@ -313,7 +315,6 @@ export default function CoachRegisterTwo() {
     setSuggestions([]);
   };
 
-
   async function saveRegisterCoach(data) {
     let res = false;
     await axios.post(`${urlApi}academy/register/coach`,
@@ -342,6 +343,9 @@ export default function CoachRegisterTwo() {
       toast.error('Por favor, complete todos los campos');
       return
     }
+    const button = document.querySelector(".button-three__login");
+    button.disabled = true;
+    button.classList.add("opacity-50", "cursor-not-allowed");
     toast.promise(saveRegisterCoach(context.registerCoach), {
       loading: 'Cargando...',
       success: (data) => {
@@ -350,10 +354,15 @@ export default function CoachRegisterTwo() {
           navigate('/success-register')
           return 'Solicitud de Registro realizada'
         } else {
-          return 'Error al registrarte'
+          throw Error('Error al registrarte')
         }
       },
-      error: 'Error al filtrar entrenadores',
+      error: (msg) => {
+        console.error(msg)
+        button.disabled = false;
+        button.classList.remove("opacity-50", "cursor-not-allowed");
+        return 'Error al registrarte'
+      },
     });
   }
 
@@ -490,23 +499,6 @@ export default function CoachRegisterTwo() {
               />
             )}
           <div className="input-container">
-            {/* <div className="w-full flex justify-between gap-2">
-              <input
-                type="text"
-                id="club"
-                name="club"
-                autoComplete="off"
-                className="input__login"
-                placeholder="Buscar club"
-                defaultValue={context.registerCoach.current_club}
-                onChange={(e) => handleClubSearch(e)}
-              />
-              <button className="input-btn" onClick={() => clearSelectClub()}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                </svg>
-              </button>
-            </div> */}
             {isLoading && <p>Cargando...</p>}
             {clubResults.length > 0 && (
               <>

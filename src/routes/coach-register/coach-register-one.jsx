@@ -1,4 +1,3 @@
-import imageCoach from "@assets/img/entrenador.png"
 import AppContext from "@context/app/app-context";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
@@ -42,6 +41,11 @@ export default function CoachOne() {
   }
 
   function nextStep() {
+    //Añadir rol de usuario seleccionado
+    context.setRegisterCoach((prev) => ({
+      ...prev,
+      role: context.typeUser,
+    }))
     if (!context.registerCoach.first_names || !context.registerCoach.last_names || !context.registerCoach.gender || !context.registerCoach.date_birth) {
       toast.error('Por favor, complete todos los campos');
       return
@@ -54,10 +58,10 @@ export default function CoachOne() {
       <section className="section__login">
         <div className="form__login">
           <h1 className="title__login">D10+ Academy</h1>
-          <h2 className="subtitle__login">Regístrate como <span className="text-decoration__login">Entrenador</span></h2>
+          <h2 className="subtitle__login">Regístrate como <span className="text-decoration__login">{context.typeUser.name_role}</span></h2>
           <div className="cntr-img__login">
             <img
-              src={imageCoach}
+              src={new URL(`../../assets/img/${context.typeUser.description_role}.png`, import.meta.url).href}
               alt="img"
               className="img__login"
             />

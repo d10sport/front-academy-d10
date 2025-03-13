@@ -76,10 +76,15 @@ export default function AthleteRegisterThree() {
           navigate("/success-register");
           return "Solicitud de Registro realizada";
         } else {
-          return "Error al registrarte";
+          throw Error('Error al registrarte')
         }
       },
-      error: "Error al filtrar entrenadores",
+      error: (msg) => {
+        console.error(msg);
+        button.disabled = false;
+        button.classList.remove("opacity-50", "cursor-not-allowed");
+        return 'Error al registrarte'
+      },
     });
   }
 
