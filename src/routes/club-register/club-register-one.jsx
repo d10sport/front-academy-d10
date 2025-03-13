@@ -1,4 +1,3 @@
-import imageClub from "@assets/img/club.png"
 import AppContext from "@context/app/app-context";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
@@ -46,6 +45,10 @@ export default function ClubRegisterOne() {
   }
 
   function nextStep() {
+    context.setRegisterClub((prev) => ({
+      ...prev,
+      role: context.typeUser,
+    }))
     if (!context.registerClub.name_club || !context.registerClub.date_founded || !context.registerClub.president || !context.registerClub.comet) {
       toast.error('Por favor, complete todos los campos');
       return
@@ -58,13 +61,10 @@ export default function ClubRegisterOne() {
       <section className="section__login">
         <div className="form__login">
           <h1 className="title__login">D10+ Academy</h1>
-          <h2 className="subtitle__login">Regístrate como <span className="text-decoration__login">Club</span></h2>
-          <p className="text__login link--color__login margin-general__login">
-            {context.registerClub.name_club != '' ? context.registerClub.name_club : 'Nombre'}
-          </p>
+          <h2 className="subtitle__login">Regístrate como <span className="text-decoration__login">{context.typeUser.name_role}</span></h2>
           <div className="cntr-img__login">
             <img
-              src={imageClub}
+              src={new URL(`../../assets/img/${context.typeUser.description_role}.png`, import.meta.url).href}
               alt="img"
               className="img__login"
             />

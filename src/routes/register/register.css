@@ -80,7 +80,7 @@
 
 .cntr-text__register {
   display: flex;
-  width: 10%;
+  width: auto;
   height: fit-content;
   color: white;
   text-align: center;

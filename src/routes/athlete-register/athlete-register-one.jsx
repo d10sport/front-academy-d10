@@ -1,4 +1,3 @@
-import imageAthlete from "@assets/img/deportista.png"
 import AppContext from "@context/app/app-context";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
@@ -42,6 +41,11 @@ export default function AthleteRegisterOne() {
   }
 
   function nextStep() {
+    //Añadir rol de usuario seleccionado
+    context.setRegisterAthlete((prev) => ({
+      ...prev,
+      role: context.typeUser,
+    }))
     if (!context.registerAthlete.first_names || !context.registerAthlete.last_names || !context.registerAthlete.gender || !context.registerAthlete.date_birth) {
       toast.error('Por favor, complete todos los campos');
       return
@@ -50,17 +54,14 @@ export default function AthleteRegisterOne() {
   }
 
   return (
-    <>
+    <div className="container__login fixed top-0 left-0 right-0 bottom-0 bg-color__login">
       <section className="section__login">
         <div className="form__login">
           <h1 className="title__login">D10+ Academy</h1>
-          <h2 className="subtitle__login">Regístrate como <span className="text-decoration__login">Deportista</span></h2>
-          <p className="text__login link--color__login margin-general__login">
-            {context.registerClub.first_names != '' ? context.registerClub.first_names : 'Nombre'}
-          </p>
+          <h2 className="subtitle__login">Regístrate como <span className="text-decoration__login">{context.typeUser.name_role}</span></h2>
           <div className="cntr-img__login">
             <img
-              src={imageAthlete}
+              src={new URL(`../../assets/img/${context.typeUser.description_role}.png`, import.meta.url).href}
               alt="img"
               className="img__login"
             />
@@ -135,6 +136,6 @@ export default function AthleteRegisterOne() {
           </button>
         </div>
       </section>
-    </>
+    </div>
   );
 }

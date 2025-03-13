@@ -1,6 +1,6 @@
 import AppContext from "@context/app/app-context";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { toast } from "sonner";
 import "./club-register.css";
 
@@ -15,7 +15,7 @@ export default function ClubRegisterThree() {
     if (inputValue.length <= maxLength) {
       context.setRegisterClub((prev) => ({
         ...prev,
-        contact_family: inputValue,
+        number_coaches: inputValue,
       }));
     }
   }
@@ -27,7 +27,7 @@ export default function ClubRegisterThree() {
     if (inputValue.length <= maxLength) {
       context.setRegisterClub((prev) => ({
         ...prev,
-        contact_family: inputValue,
+        number_athletes: inputValue,
       }));
     }
   }
@@ -80,6 +80,16 @@ export default function ClubRegisterThree() {
     }
     navigate("/register/club/step-four");
   }
+
+  useEffect(() => {
+    const event = {
+      target : {
+        value : "no"
+      }
+    }
+    handleNationalLeague(event)
+    handleLocalLeague(event)
+  }, []);
 
   return (
     <>
