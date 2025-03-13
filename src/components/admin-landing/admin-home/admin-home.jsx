@@ -420,11 +420,11 @@ export default function Admin() {
         <li className="item__admin-section">
           <h1 className="subtitle__admin-section">Comercial</h1>
           <label htmlFor="" className="label__admin-section">
-            Video comercial
+            Video comercial:
           </label>
           <input
             type="text"
-            className="input__admin-section"
+            className="input__admin-section sm-margin-bottom"
             value={sectionThree.video}
             onChange={(e) =>
               setSectionThree({ ...sectionThree, video: e.target.value })
@@ -613,9 +613,12 @@ export default function Admin() {
 
         <li className="item__admin-section">
           <h1 className="subtitle__admin-section">Aliados</h1>
+          <label htmlFor="" className="label__admin-section">
+            Title:
+          </label>
           <input
             type="text"
-            className="input__admin-section"
+            className="input__admin-section sm-margin-bottom"
             value={sectionSix.tile}
             onChange={(e) =>
               setSectionSix({ ...sectionSix, tile: e.target.value })
