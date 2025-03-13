@@ -1,6 +1,6 @@
 import "./loader.fake.css";
 
-function LoaderFake() {
+function Loader() {
   return (
     <div className="fake-load">
       <div className="circle-load sm-load"></div>
@@ -11,4 +11,4 @@ function LoaderFake() {
   );
 }
 
-export default LoaderFake;
+export default Loader;

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AppContext from "./app-context";
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 const AppProvider = ({ children }) => {
   AppProvider.propTypes = {
@@ -16,9 +17,23 @@ const AppProvider = ({ children }) => {
   const navigate = useNavigate();
 
   const [user, setUser] = useState([]);
-  const [typeUser, setTypeUser] = useState('');
   const [token, setToken] = useState(getToken());
   const [loadingAuth, setLoadingAuth] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [typeUser, setTypeUser] = useState({
+    role_id: 0,
+    name_role: "",
+    description_role: "",
+    role_admin: 0
+  });
+
+  const [roleSystem, setRoleSystem] = useState([{
+    id: 0,
+    name_role: '',
+    description_role: '',
+    created_at: '',
+  }]);
 
   const [registerAthlete, setRegisterAthlete] = useState({
     first_names: '',
@@ -29,16 +44,13 @@ const AppProvider = ({ children }) => {
     countryID: '',
     city: '',
     cityID: '',
-    current_club: '',
-    id_club: 0,
     contact: 0,
     mail: '',
-    social_networks: '',
+    social_networks: {},
     academic_level: '',
     first_names_family: '',
     last_names_family: '',
     contact_family: 0,
-    coach: '',
   })
 
   const [registerCoach, setRegisterCoach] = useState({
@@ -54,7 +66,7 @@ const AppProvider = ({ children }) => {
     current_club: '',
     contact: 0,
     mail: '',
-    social_networks: '',
+    social_networks: {},
     academic_level: '',
     licenses_obtained: '',
     other: ''
@@ -71,7 +83,7 @@ const AppProvider = ({ children }) => {
     comet: 0,
     contact: 0,
     mail: '',
-    social_networks: '',
+    social_networks: {},
     website: '',
     number_athletes: '',
     categories: '',
@@ -106,15 +118,13 @@ const AppProvider = ({ children }) => {
       countryID: '',
       city: '',
       cityID: '',
-      current_club: '',
       contact: 0,
       mail: '',
-      social_networks: '',
+      social_networks: {},
       academic_level: '',
       first_names_family: '',
       last_names_family: '',
-      contact_family: 0,
-      id_club: 0
+      contact_family: 0
     })
   }
 
@@ -132,7 +142,7 @@ const AppProvider = ({ children }) => {
       current_club: '',
       contact: 0,
       mail: '',
-      social_networks: '',
+      social_networks: {},
       academic_level: '',
       licenses_obtained: '',
       other: ''
@@ -151,7 +161,7 @@ const AppProvider = ({ children }) => {
       comet: 0,
       contact: 0,
       mail: '',
-      social_networks: '',
+      social_networks: {},
       website: '',
       number_athletes: '',
       categories: '',
@@ -177,13 +187,11 @@ const AppProvider = ({ children }) => {
       registerAthlete.city != '' &&
       registerAthlete.cityID != '' &&
       registerAthlete.contact != 0 &&
-      registerAthlete.social_networks != '' &&
+      Object.keys(registerAthlete.social_networks).length > 0 &&
       registerAthlete.academic_level != '' &&
       registerAthlete.first_names_family != '' &&
       registerAthlete.last_names_family != '' &&
-      registerAthlete.contact_family != 0 &&
-      registerAthlete.current_club != '' &&
-      registerAthlete.id_club != 0) {
+      registerAthlete.contact_family != 0) {
       return true
     } else {
       return false
@@ -203,7 +211,7 @@ const AppProvider = ({ children }) => {
       registerCoach.city != '' &&
       registerCoach.cityID != '' &&
       registerCoach.contact != 0 &&
-      registerCoach.social_networks != '' &&
+      Object.keys(registerCoach.social_networks).length > 0 &&
       registerCoach.academic_level != '' &&
       registerCoach.licenses_obtained != '' &&
       registerCoach.other != '') {
@@ -213,7 +221,7 @@ const AppProvider = ({ children }) => {
     }
   }
 
-  async function validateEmptyClub(){
+  async function validateEmptyClub() {
     if (registerClub.name_club != '' &&
       registerClub.date_founded != '' &&
       registerClub.country != '' &&
@@ -224,7 +232,7 @@ const AppProvider = ({ children }) => {
       registerClub.comet != 0 &&
       registerClub.contact != 0 &&
       registerClub.mail != '' &&
-      registerClub.social_networks != '' &&
+      Object.keys(registerClub.social_networks).length > 0 &&
       registerClub.website != '' &&
       registerClub.number_athletes != 0 &&
       registerClub.categories != '' &&
@@ -242,8 +250,8 @@ const AppProvider = ({ children }) => {
     }
   }
 
-  async function searchSessionLink(){
-    debugger
+  async function searchSessionLink() {
+    console.log('searchSessionLink');
     // Que lea la url y desencripte los datos de la sesion
     // Haga login y redirija a la url que esta solicitando
   }
@@ -282,6 +290,29 @@ const AppProvider = ({ children }) => {
     }
   }
 
+  async function fetchRoleUsers() {
+    const data = await axios.get(`${urlApi}academy/g/role`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'api-key': apiKey
+        },
+      })
+      .then((response) => {
+        if (!response.data.success) {
+          console.error(`${response.data.message}`);
+          return
+        };
+        const users = response.data.data.splice(response.data.data, 3)
+        setRoleSystem(users);
+        return users;
+      })
+      .catch(() => {
+        console.error('Error al obtener los paises');
+      });
+    return data;
+  }
+
   async function openSession(data) {
     await fetchUpdateToken(data.token);
     const userData = await fetchGetDataToken();
@@ -296,8 +327,7 @@ const AppProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    debugger
-    // searchSessionLink();
+    searchSessionLink();
     fetchToken();
   }, []);
 
@@ -320,6 +350,8 @@ const AppProvider = ({ children }) => {
       setUser,
       loadingAuth,
       setLoadingAuth,
+      isLoading,
+      setIsLoading,
       typeUser,
       setTypeUser,
       registerAthlete,
@@ -335,7 +367,10 @@ const AppProvider = ({ children }) => {
       validateEmptyClub,
       clearRegisterClub,
       apiKeyRapidApi,
-      apiHostRapidIntagram
+      apiHostRapidIntagram,
+      roleSystem,
+      setRoleSystem,
+      fetchRoleUsers,
     }}>
       {children}
     </AppContext.Provider>

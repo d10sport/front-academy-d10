@@ -1,10 +1,7 @@
-// import photoUser from "@assets/icons/photo_user.png";
-// import { useNavigate } from "react-router-dom";
-// import { toast } from "sonner";
 import axios from "axios";
 import AppContext from "@context/app/app-context";
 import { useState, useEffect, useContext } from "react";
-import LoaderFake from "../../ui/loaders/fake-load/loader.fake.jsx";
+import Loader from "../../ui/loaders/fake-load/loader.fake.jsx";
 import "./club-request.css";
 
 export default function ClubRequest() {
@@ -21,7 +18,7 @@ export default function ClubRequest() {
 
   function getDateUser() {
     axios
-      .get(`${urlApi}academy/solitude/register/users`, {
+      .get(`${urlApi}academy/solitude/register/users/coach`, {
         headers: {
           "Content-Type": "application/json",
           "api-key": apiKey,
@@ -136,8 +133,6 @@ export default function ClubRequest() {
     handleUFakeLoad();
   }, []);
 
-  // ---------------------------------------------------------------
-
   const toggleDetails = (id) => {
     setVisibleDetails((prevId) => (prevId === id ? null : id));
   };
@@ -145,7 +140,7 @@ export default function ClubRequest() {
   return (
     <>
       {isLoading ? (
-        <LoaderFake />
+        <Loader />
       ) : (
         <div className="menu-container__request">
           <h1 className="title__request primary--color__request">

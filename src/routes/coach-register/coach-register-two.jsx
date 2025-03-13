@@ -65,6 +65,11 @@ export default function CoachRegisterTwo() {
   }
 
   function handleCellPhone(event) {
+    let number = parseInt(event.target.value);
+    if (isNaN(number)) {
+      event.target.value = '';
+      number = 0;
+    }
     context.setRegisterCoach((prev) => ({
       ...prev,
       contact: parseInt(event.target.value),
@@ -99,7 +104,7 @@ export default function CoachRegisterTwo() {
   function handleSocialNetworks(user) {
     context.setRegisterCoach((prev) => ({
       ...prev,
-      social_networks: user,
+      social_networks: { instagram: user },
     })
     )
   }
@@ -179,7 +184,7 @@ export default function CoachRegisterTwo() {
     }
   };
 
-  const clearSelectClub = () => {
+  function clearSelectClub() {
     setFilterClub("");
     context.setRegisterCoach((prev) => ({
       ...prev,
@@ -187,6 +192,19 @@ export default function CoachRegisterTwo() {
       id_club: 0,
     })
     )
+  }
+
+  function clearCity() {
+    setCountries([]);
+    setCities([]);
+    fetchCountries();
+    context.setRegisterCoach({
+      ...context.registerAthlete,
+      country: "",
+      countryID: "",
+      city: "",
+      cityID: ""
+    });
   }
 
   const clearSelectInstagram = () => {
@@ -214,6 +232,7 @@ export default function CoachRegisterTwo() {
       });
     } else {
       setSuggestions([]);
+      toast.error('Por favor, ingrese un usuario');
     }
   };
 
@@ -241,6 +260,8 @@ export default function CoachRegisterTwo() {
       }
     } catch (error) {
       console.error("Error al filtrar entrenadores:", error);
+      setUserInstagram(userIntagram);
+      handleSocialNetworks(userIntagram);
       return []
     } finally {
       setIsLoading(false);
@@ -249,8 +270,8 @@ export default function CoachRegisterTwo() {
 
   const handleClubSearch = (e) => {
     let value = e.target.value;
-    if (context.registerCoach.coach != "") {
-      const newValue = e.target.value.replace(context.registerCoach.coach, "").trim();
+    if (context.registerCoach.current_club != "") {
+      const newValue = e.target.value.replace(context.registerCoach.current_club, "").trim();
       value = newValue;
       clearSelectClub();
     }
@@ -275,8 +296,8 @@ export default function CoachRegisterTwo() {
 
   const handleUserInstagram = async (e) => {
     let value = e.target.value;
-    if (context.registerCoach.social_networks != "") {
-      let newValue = value.replace(context.registerCoach.social_networks, "").trim();
+    if (Object.keys(context.registerCoach.social_networks).length > 0 && context.registerCoach.social_networks?.instagram != "") {
+      let newValue = value.replace(context.registerCoach.social_networks?.instagram, "").trim();
       value = newValue;
       clearSelectInstagram();
     }
@@ -293,7 +314,6 @@ export default function CoachRegisterTwo() {
     }
     setSuggestions([]);
   };
-
 
   async function saveRegisterCoach(data) {
     let res = false;
@@ -323,6 +343,9 @@ export default function CoachRegisterTwo() {
       toast.error('Por favor, complete todos los campos');
       return
     }
+    const button = document.querySelector(".button-three__login");
+    button.disabled = true;
+    button.classList.add("opacity-50", "cursor-not-allowed");
     toast.promise(saveRegisterCoach(context.registerCoach), {
       loading: 'Cargando...',
       success: (data) => {
@@ -331,10 +354,15 @@ export default function CoachRegisterTwo() {
           navigate('/success-register')
           return 'Solicitud de Registro realizada'
         } else {
-          return 'Error al registrarte'
+          throw Error('Error al registrarte')
         }
       },
-      error: 'Error al filtrar entrenadores',
+      error: (msg) => {
+        console.error(msg)
+        button.disabled = false;
+        button.classList.remove("opacity-50", "cursor-not-allowed");
+        return 'Error al registrarte'
+      },
     });
   }
 
@@ -349,14 +377,13 @@ export default function CoachRegisterTwo() {
   }, [filterClub]);
 
   return (
-    <>
+    <div className="container__login fixed top-0 left-0 right-0 bottom-0 bg-color__login">
       <section className="section__login">
         <div className="form__login">
           <h2 className="title__login">D10+ Academy</h2>
           <h2 className="subtitle__login margin-general__login">
             Regístrate como <span className="text-decoration__login">Entrenador</span>
           </h2>
-
 
           <label htmlFor="pais" className="label__login">
             País
@@ -370,23 +397,24 @@ export default function CoachRegisterTwo() {
                 autoComplete="off"
                 className="input__login"
                 placeholder="País"
-                value={context.registerCoach.country}
+                defaultValue={context.registerCoach.country}
                 onClick={(e) => handleCountry(e)}
               />
             ) :
             (
               <select
+                key={context.registerCoach.countryID}
                 name="country"
                 id="country"
                 className="input__login"
                 defaultValue={context.registerCoach.country}
                 onChange={(e) => handleCountry(e)}
               >
-                <option value="" disabled>
+                <option selected>
                   Seleccionar...
                 </option>
                 {countries.map((country) => (
-                  <option key={country.id} id={country.code} value={country.name}>
+                  <option key={country.id} id={country.code} defaultValue={country.name}>
                     {country.name}
                   </option>
                 ))}
@@ -399,16 +427,23 @@ export default function CoachRegisterTwo() {
           {cities.length === 0 && countries.length === 0 ||
             context.registerCoach.city != '' && context.registerCoach.country != '' ?
             (
-              <input
-                type="text"
-                id="city"
-                name="city"
-                autoComplete="off"
-                className="input__login cursor-no-drop outline-none"
-                placeholder="Ciudad"
-                disabled
-                value={context.registerCoach.city}
-              />
+              <div className="w-full flex justify-between gap-2">
+                <input
+                  type="text"
+                  id="city"
+                  name="city"
+                  autoComplete="off"
+                  className="input__login cursor-no-drop outline-none"
+                  placeholder="Ciudad"
+                  defaultValue={context.registerCoach.city}
+                  disabled
+                />
+                <button className="input-btn" onClick={() => clearCity()}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                  </svg>
+                </button>
+              </div>
             ) : (
               <select
                 name="country"
@@ -418,11 +453,11 @@ export default function CoachRegisterTwo() {
                 onChange={(e) => handleCity(e)}
                 disabled={cities.length === 0 && !context.registerCoach.city ? true : false}
               >
-                <option value="" disabled>
+                <option selected>
                   Seleccionar...
                 </option>
                 {cities.map((city) => (
-                  <option key={city.id} id={city.code} value={city.name}>
+                  <option key={city.id} id={city.code} defaultValue={city.name}>
                     {city.name}
                   </option>
                 ))}
@@ -432,8 +467,26 @@ export default function CoachRegisterTwo() {
           <label htmlFor="club" className="label__login">
             Club Actual
           </label>
-          <div className="input-container">
-            <div className="w-full flex justify-between gap-2">
+          {context.registerCoach.current_club != '' && context.registerCoach.id_club != 0 ?
+            (
+              <div className="w-full flex justify-between gap-2">
+                <input
+                  type="text"
+                  id="city"
+                  name="city"
+                  autoComplete="off"
+                  className="input__login cursor-no-drop outline-none"
+                  placeholder="Ciudad"
+                  defaultValue={context.registerCoach.current_club}
+                  disabled
+                />
+                <button className="input-btn" onClick={() => clearSelectClub()}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                  </svg>
+                </button>
+              </div>
+            ) : (
               <input
                 type="text"
                 id="club"
@@ -441,15 +494,11 @@ export default function CoachRegisterTwo() {
                 autoComplete="off"
                 className="input__login"
                 placeholder="Buscar club"
-                value={filterClub || context.registerCoach.current_club}
+                defaultValue={context.registerCoach.current_club}
                 onChange={(e) => handleClubSearch(e)}
               />
-              <button className="input-btn" onClick={clearSelectClub}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" ><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                </svg>
-              </button>
-            </div>
+            )}
+          <div className="input-container">
             {isLoading && <p>Cargando...</p>}
             {clubResults.length > 0 && (
               <>
@@ -459,9 +508,9 @@ export default function CoachRegisterTwo() {
                   onChange={(e) => handleOnChangeClub(e)}
                   defaultValue={context.registerCoach.current_club}
                 >
-                  <option value="" disabled >Seleccione un club...</option>
+                  <option defaultValue="" selected >Seleccione un club...</option>
                   {clubResults.map((coach) => (
-                    <option key={coach.id} value={coach.id}>
+                    <option key={coach.id} defaultValue={coach.id}>
                       {coach.name_club}
                     </option>
                   ))}
@@ -480,7 +529,7 @@ export default function CoachRegisterTwo() {
             autoComplete="off"
             className="input__login"
             placeholder="Email"
-            value={context.registerCoach.mail}
+            defaultValue={context.registerCoach.mail}
             onChange={(e) => handleEmail(e)}
           />
 
@@ -488,13 +537,15 @@ export default function CoachRegisterTwo() {
             Numero celular
           </label>
           <input
+            maxLength={10}
             type="text"
             id="number_phone"
             name="number_phone"
             autoComplete="off"
             className="input__login"
+            pattern="[0-9]{10}"
             placeholder="Numero celular"
-            value={context.registerCoach.contact == 0 ? '' : context.registerCoach.contact}
+            defaultValue={context.registerCoach.contact == 0 ? '' : context.registerCoach.contact}
             onChange={(e) => handleCellPhone(e)}
           />
 
@@ -508,14 +559,16 @@ export default function CoachRegisterTwo() {
             defaultValue={context.registerAthlete.academic_level}
             onChange={(e) => handleAcademicLevel(e)}
           >
-            <option value="" disabled>
+            <option defaultValue="" selected>
               Seleccionar...
             </option>
-            <option value="bachiller">Bachiller</option>
-            <option value="pregrado">Pregrado</option>
-            <option value="postgrado">Postgrado</option>
-            <option value="especializacion">Especializacion</option>
-            <option value="doctorado">Doctorado</option>
+            <option defaultValue="bachiller">Bachiller</option>
+            <option defaultValue="tecnico">Técnico</option>
+            <option defaultValue="tecnologico">Tecnológico</option>
+            <option defaultValue="pregrado">Pregrado</option>
+            <option defaultValue="postgrado">Postgrado</option>
+            <option defaultValue="especializacion">Especializacion</option>
+            <option defaultValue="doctorado">Doctorado</option>
           </select>
 
           <label htmlFor="licenses_obtained" className="label__login">
@@ -528,7 +581,7 @@ export default function CoachRegisterTwo() {
             autoComplete="off"
             className="input__login"
             placeholder="Licenciado en..."
-            value={context.registerCoach.licenses_obtained}
+            defaultValue={context.registerCoach.licenses_obtained}
             onChange={(e) => handleLinceses(e)}
           />
 
@@ -542,7 +595,7 @@ export default function CoachRegisterTwo() {
             autoComplete="off"
             className="input__login"
             placeholder="Soy bueno en..."
-            value={context.registerCoach.other}
+            defaultValue={context.registerCoach.other}
             onChange={(e) => handleOthers(e)}
           />
 
@@ -558,11 +611,11 @@ export default function CoachRegisterTwo() {
                 autoComplete="off"
                 className="input__login"
                 placeholder="Usuario Instagram"
-                value={userIntagram || context.registerCoach.social_networks}
+                defaultValue={userIntagram || context.registerCoach.social_networks?.instagram || ''}
                 onChange={(e) => handleUserInstagram(e)}
               />
               <button className="input-btn" onClick={handleInstagramSearch}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" />
                 </svg>
               </button>
@@ -602,6 +655,6 @@ export default function CoachRegisterTwo() {
           </button>
         </div>
       </section>
-    </>
+    </div>
   );
 }

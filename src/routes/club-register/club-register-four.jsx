@@ -18,7 +18,7 @@ export default function ClubRegisterFour() {
     if (inputValue.length <= maxLength) {
       context.setRegisterClub((prev) => ({
         ...prev,
-        contact_family: inputValue,
+        assistants: inputValue,
       }));
     }
   }
@@ -30,7 +30,7 @@ export default function ClubRegisterFour() {
     if (inputValue.length <= maxLength) {
       context.setRegisterClub((prev) => ({
         ...prev,
-        contact_family: inputValue,
+        interns: inputValue,
       }));
     }
   }
@@ -42,7 +42,7 @@ export default function ClubRegisterFour() {
     if (inputValue.length <= maxLength) {
       context.setRegisterClub((prev) => ({
         ...prev,
-        contact_family: inputValue,
+        venues: inputValue,
       }));
     }
   }
@@ -54,7 +54,7 @@ export default function ClubRegisterFour() {
     if (inputValue.length <= maxLength) {
       context.setRegisterClub((prev) => ({
         ...prev,
-        contact_family: inputValue,
+        sites: inputValue,
       }));
     }
   }
@@ -87,6 +87,9 @@ export default function ClubRegisterFour() {
       toast.error("Por favor, complete todos los campos");
       return;
     }
+    const button = document.querySelector(".button-three__login");
+    button.disabled = true;
+    button.classList.add("opacity-50", "cursor-not-allowed");
     toast.promise(saveRegisterClub(context.registerClub), {
       loading: "Cargando...",
       success: (data) => {
@@ -95,10 +98,15 @@ export default function ClubRegisterFour() {
           navigate("/success-register");
           return "Solicitud de Registro realizada";
         } else {
-          return "Error al registrarte";
+          throw Error('Error al registrarte')
         }
       },
-      error: "Error al filtrar entrenadores",
+      error: (msg) => {
+        console.error(msg)
+        button.disabled = false;
+        button.classList.remove("opacity-50", "cursor-not-allowed");
+        return 'Error al registrarte'
+      },
     });
   }
 

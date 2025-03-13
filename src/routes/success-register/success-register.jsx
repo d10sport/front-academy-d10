@@ -1,4 +1,4 @@
-import imageAthlete from "@assets/img/deportista.png"
+import imageAthlete from "@assets/img/athlete.png"
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
