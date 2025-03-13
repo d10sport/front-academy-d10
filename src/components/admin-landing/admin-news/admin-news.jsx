@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import AddNews from "./add-news/add-news.jsx";
-import EditNews from "./edit-news/edit-news.jsx";
-import DeleteNews from "./delete-news/delete-news.jsx";
+// import EditNews from "./edit-news/edit-news.jsx";
+// import DeleteNews from "./delete-news/delete-news.jsx";
 import AppContext from "@context/app/app-context";
 import axios from "axios";
 import "./admin-news.css";
@@ -12,11 +12,11 @@ export default function NewsAdmin() {
   const apiKey = context.apiKey;
 
   const [modalIsOpenOne, setModalIsOpenOne] = useState(false);
-  const [modalIsOpenTwo, setModalIsOpenTwo] = useState(false);
-  const [modalIsOpenThree, setModalIsOpenThree] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(false);
+  // const [modalIsOpenTwo, setModalIsOpenTwo] = useState(false);
+  // const [modalIsOpenThree, setModalIsOpenThree] = useState(false);
+  // const [selectedIndex, setSelectedIndex] = useState(false);
 
-  const numIndex = parseInt(selectedIndex.match(/\d+/)[0]);
+  // const numIndex = parseInt(selectedIndex.match(/\d+/)[0]);
 
   const [sectionNews, setSectionNews] = useState({
     gallery: "",
@@ -90,7 +90,7 @@ export default function NewsAdmin() {
                   value={item.description}
                   readOnly
                 ></textarea>
-                <div className="cntr-btn__news">
+                {/* <div className="cntr-btn__news">
                   <button
                     onClick={() => {
                       setSelectedIndex(key);
@@ -109,7 +109,7 @@ export default function NewsAdmin() {
                   >
                     Delete
                   </button>
-                </div>
+                </div> */}
               </li>
             ))
           ) : (
@@ -124,7 +124,7 @@ export default function NewsAdmin() {
         refreshCourses={() => getNews()}
       ></AddNews>
 
-      <EditNews
+      {/* <EditNews
         isOpen={modalIsOpenTwo}
         onClose={() => setModalIsOpenTwo(false)}
         indice={numIndex}
@@ -136,7 +136,7 @@ export default function NewsAdmin() {
         onClose={() => setModalIsOpenThree(false)}
         indice={numIndex}
         refreshCourses={() => getNews()}
-      ></DeleteNews>
+      ></DeleteNews> */}
     </>
   );
 }
