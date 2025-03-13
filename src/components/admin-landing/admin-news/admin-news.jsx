@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import AddNews from "./add-news/add-news.jsx";
-// import EditNews from "./edit-news/edit-news.jsx";
-// import DeleteNews from "./delete-news/delete-news.jsx";
+import EditNews from "./edit-news/edit-news.jsx";
+import DeleteNews from "./delete-news/delete-news.jsx";
 import AppContext from "@context/app/app-context";
 import axios from "axios";
 import "./admin-news.css";
@@ -12,11 +12,9 @@ export default function NewsAdmin() {
   const apiKey = context.apiKey;
 
   const [modalIsOpenOne, setModalIsOpenOne] = useState(false);
-  // const [modalIsOpenTwo, setModalIsOpenTwo] = useState(false);
-  // const [modalIsOpenThree, setModalIsOpenThree] = useState(false);
-  // const [selectedIndex, setSelectedIndex] = useState(false);
-
-  // const numIndex = parseInt(selectedIndex.match(/\d+/)[0]);
+  const [modalIsOpenTwo, setModalIsOpenTwo] = useState(false);
+  const [modalIsOpenThree, setModalIsOpenThree] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(false);
 
   const [sectionNews, setSectionNews] = useState({
     gallery: "",
@@ -105,10 +103,10 @@ export default function NewsAdmin() {
                   value={item.description}
                   readOnly
                 ></textarea>
-                {/* <div className="cntr-btn__news">
+                <div className="cntr-btn__news">
                   <button
                     onClick={() => {
-                      setSelectedIndex(key);
+                      setSelectedIndex(parseInt(key.match(/\d+/)[0]));
                       setModalIsOpenTwo(true);
                     }}
                     className="btn-update__news"
@@ -117,14 +115,14 @@ export default function NewsAdmin() {
                   </button>
                   <button
                     onClick={() => {
-                      setSelectedIndex(key);
+                      setSelectedIndex(parseInt(key.match(/\d+/)[0]));
                       setModalIsOpenThree(true);
                     }}
                     className="btn-delete__news"
                   >
                     Delete
                   </button>
-                </div> */}
+                </div>
               </li>
             ))
           ) : (
@@ -139,19 +137,19 @@ export default function NewsAdmin() {
         refreshCourses={() => getNews()}
       ></AddNews>
 
-      {/* <EditNews
+      <EditNews
         isOpen={modalIsOpenTwo}
         onClose={() => setModalIsOpenTwo(false)}
-        indice={numIndex}
+        indice={selectedIndex}
         refreshCourses={() => getNews()}
       ></EditNews>
 
       <DeleteNews
         isOpen={modalIsOpenThree}
         onClose={() => setModalIsOpenThree(false)}
-        indice={numIndex}
+        indice={selectedIndex}
         refreshCourses={() => getNews()}
-      ></DeleteNews> */}
+      ></DeleteNews>
     </>
   );
 }
