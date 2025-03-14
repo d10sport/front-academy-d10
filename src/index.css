@@ -14,11 +14,18 @@
   --bg-400: #000000;
 }
 
+@font-face {
+  font-family: "Light";
+  src: local("Robson-Light"),
+       url("./fonts/Robson-Light.otf") format("opentype");
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Urbanist", sans-serif;
+  /* font-family: "Urbanist", sans-serif; */
+  font-family: "Light";
 }
 
 /* html {
