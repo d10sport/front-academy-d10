@@ -219,6 +219,13 @@ export default function Admin() {
           <label htmlFor="" className="label__admin-section">
             Imagen:
           </label>
+          <div className="cntr-img__admin-section sm-margin-bottom">
+            <img
+              className="img__admin-section"
+              src={sectionTwoServices.photo}
+              alt={`Img`}
+            />
+          </div>
           <input
             type="text"
             className="input__admin-section sm-margin-bottom"
@@ -304,6 +311,13 @@ export default function Admin() {
           <label htmlFor="" className="label__admin-section">
             Imagen:
           </label>
+          <div className="cntr-img__admin-section sm-margin-bottom">
+            <img
+              className="img__admin-section"
+              src={sectionThreeServices.photo}
+              alt={`Img`}
+            />
+          </div>
           <input
             type="text"
             className="input__admin-section sm-margin-bottom"
@@ -389,6 +403,13 @@ export default function Admin() {
           <label htmlFor="" className="label__admin-section">
             Imagen:
           </label>
+          <div className="cntr-img__admin-section sm-margin-bottom">
+            <img
+              className="img__admin-section"
+              src={sectionFourServices.photo}
+              alt={`Img`}
+            />
+          </div>
           <input
             type="text"
             className="input__admin-section sm-margin-bottom"
