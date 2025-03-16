@@ -3,6 +3,7 @@ import { LogoHeader } from "../../utils/icons/icons";
 import AppContext from "@context/app/app-context";
 import { useContext, useState } from "react";
 import "./header.css";
+import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
 export default function Header() {
@@ -28,7 +29,12 @@ export default function Header() {
         <nav id="nav_header" className="nav">
           <LogoHeader />
           <ul className="list__nav">
-            <div></div>
+            <li className="item__nav">
+              <Link to={"/admin"}>Admin Landing</Link>
+            </li>
+            <li className="item__nav">
+              <Link to={"/menu-course"}>Admin Cursos</Link>
+            </li>
           </ul>
 
           <button className="button__button-nav" onClick={toggleVisibility}>

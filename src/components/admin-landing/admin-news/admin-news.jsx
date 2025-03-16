@@ -16,8 +16,6 @@ export default function NewsAdmin() {
   const [modalIsOpenThree, setModalIsOpenThree] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(false);
 
-  const numIndex = parseInt(selectedIndex.match(/\d+/)[0]);
-
   const [sectionNews, setSectionNews] = useState({
     gallery: "",
   });
@@ -49,7 +47,7 @@ export default function NewsAdmin() {
   return (
     <>
       <section className="admin-section">
-        <h1 className="title__admin-section">Galería</h1>
+        <h1 className="title__admin-section">Noticias</h1>
         <button
           onClick={() => setModalIsOpenOne(true)}
           className="btn-add__news"
@@ -60,31 +58,46 @@ export default function NewsAdmin() {
           {sectionNews.length > 0 ? (
             sectionNews.map(([key, item], index) => (
               <li key={key} className="item__admin-section">
-                <div className="cntr-img__admin-section">
+                <label htmlFor="" className="label__admin-section">
+                  Pre-visualización de imagen:
+                </label>
+                <div className="cntr-img__admin-section sm-margin-bottom">
                   <img
                     className="img__admin-section"
                     src={item.image}
                     alt={`Img ${index + 1}`}
                   />
                 </div>
+                <label htmlFor="" className="label__admin-section">
+                  Fecha:
+                </label>
                 <input
                   type="text"
-                  className="text-[black] input__admin-section"
+                  className="text-[black] input__admin-section sm-margin-bottom"
                   value={item.date}
                   readOnly
                 />
+                <label htmlFor="" className="label__admin-section">
+                  Imagen:
+                </label>
                 <input
                   type="text"
-                  className="text-[black] input__admin-section"
+                  className="text-[black] input__admin-section sm-margin-bottom"
                   value={item.image}
                   readOnly
                 />
+                <label htmlFor="" className="label__admin-section">
+                  Titulo:
+                </label>
                 <input
                   type="text"
-                  className="text-[black] input__admin-section"
+                  className="text-[black] input__admin-section sm-margin-bottom"
                   value={item.title}
                   readOnly
                 />
+                <label htmlFor="" className="label__admin-section">
+                  Descripción
+                </label>
                 <textarea
                   className="textarea__admin-section sm-margin-bottom"
                   value={item.description}
@@ -93,7 +106,7 @@ export default function NewsAdmin() {
                 <div className="cntr-btn__news">
                   <button
                     onClick={() => {
-                      setSelectedIndex(key);
+                      setSelectedIndex(parseInt(key.match(/\d+/)[0]));
                       setModalIsOpenTwo(true);
                     }}
                     className="btn-update__news"
@@ -102,7 +115,7 @@ export default function NewsAdmin() {
                   </button>
                   <button
                     onClick={() => {
-                      setSelectedIndex(key);
+                      setSelectedIndex(parseInt(key.match(/\d+/)[0]));
                       setModalIsOpenThree(true);
                     }}
                     className="btn-delete__news"
@@ -127,14 +140,14 @@ export default function NewsAdmin() {
       <EditNews
         isOpen={modalIsOpenTwo}
         onClose={() => setModalIsOpenTwo(false)}
-        indice={numIndex}
+        indice={selectedIndex}
         refreshCourses={() => getNews()}
       ></EditNews>
 
       <DeleteNews
         isOpen={modalIsOpenThree}
         onClose={() => setModalIsOpenThree(false)}
-        indice={numIndex}
+        indice={selectedIndex}
         refreshCourses={() => getNews()}
       ></DeleteNews>
     </>

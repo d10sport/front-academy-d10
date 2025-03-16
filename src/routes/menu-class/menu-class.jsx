@@ -8,6 +8,7 @@ import AppContext from "@context/app/app-context";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./menu-class.css";
+import { ArrowLeft } from "lucide-react";
 
 export default function MenuClass() {
   const [modalIsOpenOne, setModalIsOpenOne] = useState(false);
@@ -54,7 +55,7 @@ export default function MenuClass() {
       <section className="menu-class">
         <div className="home__menu-class">
           <Link to={"/menu-course"} className="btn-back__menu-class">
-            {"<"}
+          <ArrowLeft />
           </Link>
           <h1 className="title__menu-class">Manage Classes</h1>
           <button

@@ -14,6 +14,15 @@ export default function VideoClass() {
   const [selectedClass, setSelectedClass] = useState(null);
   const [comments, setComments] = useState([]);
   const [classes, setClasses] = useState([]);
+  const [unlockedClass, setUnlockedClass] = useState(null);
+
+  useEffect(() => {
+    const savedProgress = localStorage.getItem(`unlockedClass_${idCourse}`);
+    if (savedProgress) {
+      setUnlockedClass(Number(savedProgress));
+    }
+    getClassMenu();
+  }, []);
 
   async function getClassContent(id) {
     try {
@@ -45,8 +54,13 @@ export default function VideoClass() {
 
       if (response.data && response.data.data) {
         setClasses(response.data.data);
-        getClassContent(response.data.data[0].class_id);
-        getClassComments(response.data.data[0].class_id);
+        const savedProgress = localStorage.getItem(`unlockedClass_${idCourse}`);
+        const lastUnlocked = savedProgress
+          ? Number(savedProgress)
+          : response.data.data[0].class_id;
+        setUnlockedClass(lastUnlocked);
+        getClassContent(lastUnlocked);
+        getClassComments(lastUnlocked);
       }
     } catch (error) {
       console.error("Error al obtener el menú de clases:", error);
@@ -115,8 +129,23 @@ export default function VideoClass() {
   }
 
   function handleClassSelector(id) {
-    getClassContent(id);
-    getClassComments(id);
+    if (id === unlockedClass) {
+      getClassContent(id);
+      getClassComments(id);
+    }
+  }
+
+  function unlockNextClass() {
+    const currentIndex = classes.findIndex(
+      (cls) => cls.class_id === unlockedClass
+    );
+    if (currentIndex < classes.length - 1) {
+      const nextClassId = classes[currentIndex + 1].class_id;
+      setUnlockedClass(nextClassId);
+      localStorage.setItem(`unlockedClass_${idCourse}`, nextClassId);
+      getClassContent(nextClassId);
+      getClassComments(nextClassId);
+    }
   }
 
   const [isOpen, setIsOpen] = useState(false);
@@ -192,8 +221,16 @@ export default function VideoClass() {
                     {classes.map((cls) => (
                       <li
                         key={cls.class_id}
-                        className="list-item__class"
+                        className={`list-item__class ${
+                          cls.class_id === unlockedClass ? "unlocked" : "locked"
+                        }`}
                         onClick={() => handleClassSelector(cls.class_id)}
+                        style={{
+                          cursor:
+                            cls.class_id === unlockedClass
+                              ? "pointer"
+                              : "not-allowed",
+                        }}
                       >
                         {cls.class_title}
                       </li>
@@ -222,6 +259,10 @@ export default function VideoClass() {
                 <div className="profile__class">
                   <img className="profile-img__class" src="" alt="Profile" />
                   <p className="text__class">Prof. Juan Pérez</p>
+                </div>
+                <div className="confirmation-section">
+                  <p>¿Ya viste la clase?</p>
+                  <button onClick={unlockNextClass}>Sí, continuar</button>
                 </div>
               </div>
             </>
@@ -260,74 +301,4 @@ export default function VideoClass() {
       </section>
     </>
   );
-}
-
-{
-  /* <section className="class">
-        <div className="cntr-list__class">
-          <div className="subcntr-list__class">
-            <h1 className="title__class">Clases</h1>
-            <ul className="list__class">
-              <li className="list-item__class item--active">Clase 1</li>
-              <li className="list-item__class item--active">Clase 2</li>
-              <li className="list-item__class item--nowplaying">clase 3</li>
-              <li className="list-item__class">clase 4</li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="cntr-video__class">
-          <div className="subcntr-video__class">
-            <video
-              className="video__class"
-              src="https://youtu.be/dQw4w9WgXcQ"
-              controls
-              muted
-            ></video>
-          </div>
-
-          <div className="description__class">
-            
-            <h2 className="subtitle__class">Título no disponible
-            </h2>
-
-            <p className="text__class">
-              
-                Descripción no disponible
-            </p>
-            <div className="profile__class">
-              <img className="profile-img__class" src="" alt="Profile" />
-              <p className="text__class">Prof. Juan Pérez</p>
-            </div>
-          </div>
-
-          <div className="cntr-comment__class">
-            <h2 className="subtitle__class">Comentarios</h2>
-            <form action="" className="form__class">
-              <textarea
-                className="textarea__class"
-                name=""
-                id=""
-                placeholder="Escribe tu comentario..."
-              ></textarea>
-              <button className="btn__class">Publicar</button>
-            </form>
-
-            <ul className="comment__class">
-              <li className="comment-item__class">
-                <h2 className="subtitle__class">Ana Garcia</h2>
-                <p className="text__class">
-                  ¡Excelente video! Muy informativo.
-                </p>
-              </li>
-              <li className="comment-item__class">
-                <h2 className="subtitle__class">Carlos Rodriguez</h2>
-                <p className="text__class">
-                  Gracias por la explicación detallada
-                </p>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section> */
 }

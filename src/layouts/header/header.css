@@ -28,6 +28,15 @@
   gap: 4rem;
 }
 
+.item__nav {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.item__nav:hover {
+  border-bottom: 1px solid white;
+}
+
 .login__nav {
   color: #000;
   font-weight: 800;
