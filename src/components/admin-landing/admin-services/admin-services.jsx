@@ -15,18 +15,21 @@ export default function Admin() {
   // });
 
   const [sectionTwoServices, setSectionTwoServices] = useState({
+    photo: "",
     title: "",
     subtitle: "",
     description: "",
   });
 
   const [sectionThreeServices, setSectionThreeServices] = useState({
+    photo: "",
     title: "",
     subtitle: "",
     description: "",
   });
 
   const [sectionFourServices, setSectionFourServices] = useState({
+    photo: "",
     title: "",
     subtitle: "",
     description: "",
@@ -171,9 +174,12 @@ export default function Admin() {
       <ul className="list__admin-section">
         <li className="item__admin-section">
           <h1 className="subtitle__admin-section">Vestuario</h1>
+          <label htmlFor="" className="label__admin-section">
+            Title:
+          </label>
           <input
             type="text"
-            className="input__admin-section"
+            className="input__admin-section sm-margin-bottom"
             value={sectionTwoServices.title}
             onChange={(e) =>
               setSectionTwoServices({
@@ -182,9 +188,12 @@ export default function Admin() {
               })
             }
           />
+          <label htmlFor="" className="label__admin-section">
+            Subtitle:
+          </label>
           <input
             type="text"
-            className="input__admin-section"
+            className="input__admin-section sm-margin-bottom"
             value={sectionTwoServices.subtitle}
             onChange={(e) =>
               setSectionTwoServices({
@@ -193,9 +202,12 @@ export default function Admin() {
               })
             }
           />
+          <label htmlFor="" className="label__admin-section">
+            Descripción:
+          </label>
           <textarea
             type="text"
-            className="textarea__admin-section"
+            className="textarea__admin-section sm-margin-bottom"
             value={sectionTwoServices.description}
             onChange={(e) =>
               setSectionTwoServices({
@@ -204,6 +216,20 @@ export default function Admin() {
               })
             }
           ></textarea>
+          <label htmlFor="" className="label__admin-section">
+            Imagen:
+          </label>
+          <input
+            type="text"
+            className="input__admin-section sm-margin-bottom"
+            value={sectionTwoServices.photo}
+            onChange={(e) =>
+              setSectionTwoServices({
+                ...sectionTwoServices,
+                photo: e.target.value,
+              })
+            }
+          />
 
           {isEditing ? (
             <div className="confirm-edit__admin-section">
@@ -233,9 +259,12 @@ export default function Admin() {
 
         <li className="item__admin-section">
           <h1 className="subtitle__admin-section">Entrenamiento</h1>
+          <label htmlFor="" className="label__admin-section">
+            Title:
+          </label>
           <input
             type="text"
-            className="input__admin-section"
+            className="input__admin-section sm-margin-bottom"
             value={sectionThreeServices.title}
             onChange={(e) =>
               setSectionThreeServices({
@@ -244,9 +273,12 @@ export default function Admin() {
               })
             }
           />
+          <label htmlFor="" className="label__admin-section">
+            Subtitle:
+          </label>
           <input
             type="text"
-            className="input__admin-section"
+            className="input__admin-section sm-margin-bottom"
             value={sectionThreeServices.subtitle}
             onChange={(e) =>
               setSectionThreeServices({
@@ -255,9 +287,12 @@ export default function Admin() {
               })
             }
           />
+          <label htmlFor="" className="label__admin-section">
+            Descripción:
+          </label>
           <textarea
             type="text"
-            className="textarea__admin-section"
+            className="textarea__admin-section sm-margin-bottom"
             value={sectionThreeServices.description}
             onChange={(e) =>
               setSectionThreeServices({
@@ -266,6 +301,20 @@ export default function Admin() {
               })
             }
           ></textarea>
+          <label htmlFor="" className="label__admin-section">
+            Imagen:
+          </label>
+          <input
+            type="text"
+            className="input__admin-section sm-margin-bottom"
+            value={sectionThreeServices.photo}
+            onChange={(e) =>
+              setSectionThreeServices({
+                ...sectionThreeServices,
+                photo: e.target.value,
+              })
+            }
+          />
 
           {isEditing ? (
             <div className="confirm-edit__admin-section">
@@ -295,9 +344,12 @@ export default function Admin() {
 
         <li className="item__admin-section">
           <h1 className="subtitle__admin-section">Capacitación</h1>
+          <label htmlFor="" className="label__admin-section">
+            Title:
+          </label>
           <input
             type="text"
-            className="input__admin-section"
+            className="input__admin-section sm-margin-bottom"
             value={sectionFourServices.title}
             onChange={(e) =>
               setSectionFourServices({
@@ -306,9 +358,12 @@ export default function Admin() {
               })
             }
           />
+          <label htmlFor="" className="label__admin-section">
+            Subtitle:
+          </label>
           <input
             type="text"
-            className="input__admin-section"
+            className="input__admin-section sm-margin-bottom"
             value={sectionFourServices.subtitle}
             onChange={(e) =>
               setSectionFourServices({
@@ -317,9 +372,12 @@ export default function Admin() {
               })
             }
           />
+          <label htmlFor="" className="label__admin-section">
+            Descripción:
+          </label>
           <textarea
             type="text"
-            className="textarea__admin-section"
+            className="textarea__admin-section sm-margin-bottom"
             value={sectionFourServices.description}
             onChange={(e) =>
               setSectionFourServices({
@@ -328,6 +386,20 @@ export default function Admin() {
               })
             }
           ></textarea>
+          <label htmlFor="" className="label__admin-section">
+            Imagen:
+          </label>
+          <input
+            type="text"
+            className="input__admin-section sm-margin-bottom"
+            value={sectionFourServices.photo}
+            onChange={(e) =>
+              setSectionFourServices({
+                ...sectionFourServices,
+                photo: e.target.value,
+              })
+            }
+          />
 
           {isEditing ? (
             <div className="confirm-edit__admin-section">

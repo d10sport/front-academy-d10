@@ -13,17 +13,17 @@ export default function Admin() {
 
   const [sectionOne, setSectionOne] = useState({
     slogan: "",
-    slogan_two: "",
-    slogan_three: "",
     company: "",
     bg_photo: "",
+    slogan_two: "",
     bg_photo_res: "",
+    slogan_three: "",
   });
 
   const [sectionTwo, setSectionTwo] = useState({
     title: "",
-    description: "",
     bg_photo: "",
+    description: "",
   });
 
   const [sectionThree, setSectionThree] = useState({
@@ -47,11 +47,11 @@ export default function Admin() {
   });
 
   const [sectionFive, setSectionFive] = useState({
+    link: "",
     title_1: "",
     title_2: "",
-    text_link: "",
-    link: "",
     bg_photo: "",
+    text_link: "",
     logo: "",
   });
 
@@ -255,7 +255,6 @@ export default function Admin() {
     }
   }, [context.token]);
 
-
   return (
     <>
       <h1 className="title__admin-section">Home</h1>
@@ -263,36 +262,70 @@ export default function Admin() {
       <ul className="list__admin-section">
         <li className="item__admin-section">
           <h1 className="subtitle__admin-section">Inicio</h1>
+          <label htmlFor="" className="label__admin-section">
+            Nombre de la compañía:
+          </label>
           <input
             type="text"
-            className="input__admin-section"
+            className="input__admin-section sm-margin-bottom"
             value={sectionOne.company}
             onChange={(e) =>
               setSectionOne({ ...sectionOne, company: e.target.value })
             }
           />
+          <label htmlFor="" className="label__admin-section">
+            Slogan #1:
+          </label>
           <input
             type="text"
-            className="input__admin-section"
+            className="input__admin-section sm-margin-bottom"
             value={sectionOne.slogan}
             onChange={(e) =>
               setSectionOne({ ...sectionOne, slogan: e.target.value })
             }
           />
+          <label htmlFor="" className="label__admin-section">
+            Slogan #2:
+          </label>
           <input
             type="text"
-            className="input__admin-section"
+            className="input__admin-section sm-margin-bottom"
             value={sectionOne.slogan_two}
             onChange={(e) =>
               setSectionOne({ ...sectionOne, slogan_two: e.target.value })
             }
           />
+          <label htmlFor="" className="label__admin-section">
+            Slogan #3:
+          </label>
           <input
             type="text"
-            className="input__admin-section"
+            className="input__admin-section sm-margin-bottom"
             value={sectionOne.slogan_three}
             onChange={(e) =>
               setSectionOne({ ...sectionOne, slogan_three: e.target.value })
+            }
+          />
+          <label htmlFor="" className="label__admin-section">
+            Imagen de fondo para monitores:
+          </label>
+          <input
+            type="text"
+            className="input__admin-section sm-margin-bottom"
+            value={sectionOne.bg_photo}
+            onChange={(e) =>
+              setSectionOne({ ...sectionOne, bg_photo: e.target.value })
+            }
+          />
+          <label htmlFor="" className="label__admin-section">
+            Imagen de fondo para celulares:
+          </label>
+          <input
+            type="text"
+            className="input__admin-section sm-margin-bottom"
+            value={sectionOne.bg_photo_res}
+            onChange={(e) =>
+              setSectionOne({ ...sectionOne, bg_photo_res: e.target.value })
             }
           />
 
@@ -324,23 +357,39 @@ export default function Admin() {
 
         <li className="item__admin-section">
           <h1 className="subtitle__admin-section">Nosotros</h1>
+          <label htmlFor="" className="label__admin-section">
+            Titulo:
+          </label>
           <input
             type="text"
-            className="input__admin-section"
+            className="input__admin-section sm-margin-bottom"
             value={sectionTwo.title}
             onChange={(e) =>
               setSectionTwo({ ...sectionTwo, title: e.target.value })
             }
           />
-
+          <label htmlFor="" className="label__admin-section">
+            Descripción:
+          </label>
           <textarea
             type="text"
-            className="textarea__admin-section"
+            className="textarea__admin-section sm-margin-bottom"
             value={sectionTwo.description}
             onChange={(e) =>
               setSectionTwo({ ...sectionTwo, description: e.target.value })
             }
           ></textarea>
+          <label htmlFor="" className="label__admin-section">
+            Imagen de fondo:
+          </label>
+          <input
+            type="text"
+            className="input__admin-section sm-margin-bottom"
+            value={sectionTwo.bg_photo}
+            onChange={(e) =>
+              setSectionTwo({ ...sectionTwo, bg_photo: e.target.value })
+            }
+          />
 
           {isEditing ? (
             <div className="confirm-edit__admin-section">
@@ -370,9 +419,12 @@ export default function Admin() {
 
         <li className="item__admin-section">
           <h1 className="subtitle__admin-section">Comercial</h1>
+          <label htmlFor="" className="label__admin-section">
+            Video comercial:
+          </label>
           <input
             type="text"
-            className="input__admin-section"
+            className="input__admin-section sm-margin-bottom"
             value={sectionThree.video}
             onChange={(e) =>
               setSectionThree({ ...sectionThree, video: e.target.value })
@@ -407,9 +459,12 @@ export default function Admin() {
 
         <li className="item__admin-section">
           <h1 className="subtitle__admin-section">News</h1>
+          <label htmlFor="" className="label__admin-section">
+            Titulo de sección:
+          </label>
           <input
             type="text"
-            className="input__admin-section"
+            className="input__admin-section sm-margin-bottom"
             value={sectionFour.news.h1}
             onChange={(e) =>
               setSectionFour({
@@ -418,9 +473,12 @@ export default function Admin() {
               })
             }
           />
+          <label htmlFor="" className="label__admin-section">
+            Titulo:
+          </label>
           <input
             type="text"
-            className="input__admin-section"
+            className="input__admin-section sm-margin-bottom"
             value={sectionFour.news.title}
             onChange={(e) =>
               setSectionFour({
@@ -429,9 +487,12 @@ export default function Admin() {
               })
             }
           />
+          <label htmlFor="" className="label__admin-section">
+            Descripción:
+          </label>
           <input
             type="text"
-            className="input__admin-section"
+            className="input__admin-section sm-margin-bottom"
             value={sectionFour.news.description}
             onChange={(e) =>
               setSectionFour({
@@ -469,28 +530,59 @@ export default function Admin() {
 
         <li className="item__admin-section">
           <h1 className="subtitle__admin-section">Academia</h1>
+          <label htmlFor="" className="label__admin-section">
+            Link de redireccion:
+          </label>
           <input
             type="text"
-            className="input__admin-section"
+            className="input__admin-section sm-margin-bottom"
+            value={sectionFive.link}
+            onChange={(e) =>
+              setSectionFive({ ...sectionFive, link: e.target.value })
+            }
+          />
+          <label htmlFor="" className="label__admin-section">
+            Titulo #1:
+          </label>
+          <input
+            type="text"
+            className="input__admin-section sm-margin-bottom"
             value={sectionFive.title_1}
             onChange={(e) =>
               setSectionFive({ ...sectionFive, title_1: e.target.value })
             }
           />
+          <label htmlFor="" className="label__admin-section">
+            Titulo #2:
+          </label>
           <input
             type="text"
-            className="input__admin-section"
+            className="input__admin-section sm-margin-bottom"
             value={sectionFive.title_2}
             onChange={(e) =>
               setSectionFive({ ...sectionFive, title_2: e.target.value })
             }
           />
+          <label htmlFor="" className="label__admin-section">
+            Texto del link:
+          </label>
           <input
             type="text"
-            className="input__admin-section"
+            className="input__admin-section sm-margin-bottom"
             value={sectionFive.text_link}
             onChange={(e) =>
               setSectionFive({ ...sectionFive, text_link: e.target.value })
+            }
+          />
+          <label htmlFor="" className="label__admin-section">
+            Imagen de fondo:
+          </label>
+          <input
+            type="text"
+            className="input__admin-section sm-margin-bottom"
+            value={sectionFive.bg_photo}
+            onChange={(e) =>
+              setSectionFive({ ...sectionFive, bg_photo: e.target.value })
             }
           />
           {isEditing ? (
@@ -521,9 +613,12 @@ export default function Admin() {
 
         <li className="item__admin-section">
           <h1 className="subtitle__admin-section">Aliados</h1>
+          <label htmlFor="" className="label__admin-section">
+            Title:
+          </label>
           <input
             type="text"
-            className="input__admin-section"
+            className="input__admin-section sm-margin-bottom"
             value={sectionSix.tile}
             onChange={(e) =>
               setSectionSix({ ...sectionSix, tile: e.target.value })
