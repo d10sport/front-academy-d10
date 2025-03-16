@@ -14,6 +14,15 @@ export default function VideoClass() {
   const [selectedClass, setSelectedClass] = useState(null);
   const [comments, setComments] = useState([]);
   const [classes, setClasses] = useState([]);
+  const [unlockedClass, setUnlockedClass] = useState(null);
+
+  useEffect(() => {
+    const savedProgress = localStorage.getItem(`unlockedClass_${idCourse}`);
+    if (savedProgress) {
+      setUnlockedClass(Number(savedProgress));
+    }
+    getClassMenu();
+  }, []);
 
   async function getClassContent(id) {
     try {
@@ -45,8 +54,13 @@ export default function VideoClass() {
 
       if (response.data && response.data.data) {
         setClasses(response.data.data);
-        getClassContent(response.data.data[0].class_id);
-        getClassComments(response.data.data[0].class_id);
+        const savedProgress = localStorage.getItem(`unlockedClass_${idCourse}`);
+        const lastUnlocked = savedProgress
+          ? Number(savedProgress)
+          : response.data.data[0].class_id;
+        setUnlockedClass(lastUnlocked);
+        getClassContent(lastUnlocked);
+        getClassComments(lastUnlocked);
       }
     } catch (error) {
       console.error("Error al obtener el menú de clases:", error);
@@ -115,8 +129,23 @@ export default function VideoClass() {
   }
 
   function handleClassSelector(id) {
-    getClassContent(id);
-    getClassComments(id);
+    if (id === unlockedClass) {
+      getClassContent(id);
+      getClassComments(id);
+    }
+  }
+
+  function unlockNextClass() {
+    const currentIndex = classes.findIndex(
+      (cls) => cls.class_id === unlockedClass
+    );
+    if (currentIndex < classes.length - 1) {
+      const nextClassId = classes[currentIndex + 1].class_id;
+      setUnlockedClass(nextClassId);
+      localStorage.setItem(`unlockedClass_${idCourse}`, nextClassId);
+      getClassContent(nextClassId);
+      getClassComments(nextClassId);
+    }
   }
 
   const [isOpen, setIsOpen] = useState(false);
@@ -192,8 +221,16 @@ export default function VideoClass() {
                     {classes.map((cls) => (
                       <li
                         key={cls.class_id}
-                        className="list-item__class"
+                        className={`list-item__class ${
+                          cls.class_id === unlockedClass ? "unlocked" : "locked"
+                        }`}
                         onClick={() => handleClassSelector(cls.class_id)}
+                        style={{
+                          cursor:
+                            cls.class_id === unlockedClass
+                              ? "pointer"
+                              : "not-allowed",
+                        }}
                       >
                         {cls.class_title}
                       </li>
@@ -222,6 +259,10 @@ export default function VideoClass() {
                 <div className="profile__class">
                   <img className="profile-img__class" src="" alt="Profile" />
                   <p className="text__class">Prof. Juan Pérez</p>
+                </div>
+                <div className="confirmation-section">
+                  <p>¿Ya viste la clase?</p>
+                  <button onClick={unlockNextClass}>Sí, continuar</button>
                 </div>
               </div>
             </>
