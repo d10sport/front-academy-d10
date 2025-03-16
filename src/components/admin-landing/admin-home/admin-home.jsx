@@ -309,6 +309,13 @@ export default function Admin() {
           <label htmlFor="" className="label__admin-section">
             Imagen de fondo para monitores:
           </label>
+          <div className="cntr-img__admin-section sm-margin-bottom">
+            <img
+              className="img__admin-section"
+              src={sectionOne.bg_photo}
+              alt={`Img`}
+            />
+          </div>
           <input
             type="text"
             className="input__admin-section sm-margin-bottom"
@@ -320,6 +327,13 @@ export default function Admin() {
           <label htmlFor="" className="label__admin-section">
             Imagen de fondo para celulares:
           </label>
+          <div className="cntr-img__admin-section sm-margin-bottom">
+            <img
+              className="img__admin-section"
+              src={sectionOne.bg_photo_res}
+              alt={`Img`}
+            />
+          </div>
           <input
             type="text"
             className="input__admin-section sm-margin-bottom"
@@ -382,6 +396,13 @@ export default function Admin() {
           <label htmlFor="" className="label__admin-section">
             Imagen de fondo:
           </label>
+          <div className="cntr-img__admin-section sm-margin-bottom">
+            <img
+              className="img__admin-section"
+              src={sectionTwo.bg_photo}
+              alt={`Img`}
+            />
+          </div>
           <input
             type="text"
             className="input__admin-section sm-margin-bottom"
@@ -422,6 +443,15 @@ export default function Admin() {
           <label htmlFor="" className="label__admin-section">
             Video comercial:
           </label>
+          <div className="cntr-img__admin-section sm-margin-bottom">
+            <video
+              src={sectionThree.video}
+              className="img__admin-section"
+              muted
+              loop
+              autoPlay
+            ></video>
+          </div>
           <input
             type="text"
             className="input__admin-section sm-margin-bottom"
@@ -577,6 +607,13 @@ export default function Admin() {
           <label htmlFor="" className="label__admin-section">
             Imagen de fondo:
           </label>
+          <div className="cntr-img__admin-section sm-margin-bottom">
+            <img
+              className="img__admin-section"
+              src={sectionFive.bg_photo}
+              alt={`Img`}
+            />
+          </div>
           <input
             type="text"
             className="input__admin-section sm-margin-bottom"
@@ -650,19 +687,6 @@ export default function Admin() {
             </button>
           )}
         </li>
-
-        {/* {list.map((item, index) => (
-            <li className="admin__item" key={index}>
-              <h2 className="admin__title">{item.title}</h2>
-              <input type="text" className="input__admin"  />
-              <input type="text" className="input__admin" />
-              <input type="text" className="input__admin" />
-              <input type="text" className="input__admin" />
-              <p className="admin__text">{item.sloganOne}</p>
-              <p className="admin__text">{item.sloganTwo}</p>
-              <p className="admin__text">{item.sloganThree}</p>
-            </li>
-          ))} */}
       </ul>
     </>
   );
