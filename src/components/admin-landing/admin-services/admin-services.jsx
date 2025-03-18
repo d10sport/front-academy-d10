@@ -8,7 +8,11 @@ export default function Admin() {
   const urlApi = context.urlApi;
   const apiKey = context.apiKey;
 
-  const [isEditing, setIsEditing] = useState(false);
+  // const [isEditing, setIsEditing] = useState(false);
+
+  const [isEditingOne, setIsEditingOne] = useState(false);
+  const [isEditingTwo, setIsEditingTwo] = useState(false);
+  const [isEditingThree, setIsEditingThree] = useState(false);
 
   // const [sectionOneServices, setSectionOneServices] = useState({
   //   title: "",
@@ -96,7 +100,10 @@ export default function Admin() {
 
       if (response.data.success) {
         console.log("Datos actualizados con éxito:", response.data);
-        setIsEditing(false);
+        // setIsEditing(false);
+        setIsEditingOne(false);
+        setIsEditingTwo(false);
+        setIsEditingThree(false);
       } else {
         console.error("Error en la actualización:", response.data.message);
       }
@@ -122,7 +129,10 @@ export default function Admin() {
 
       if (response.data.success) {
         console.log("Datos actualizados con éxito:", response.data);
-        setIsEditing(false);
+        // setIsEditing(false);
+        setIsEditingOne(false);
+        setIsEditingTwo(false);
+        setIsEditingThree(false);
       } else {
         console.error("Error en la actualización:", response.data.message);
       }
@@ -148,7 +158,10 @@ export default function Admin() {
 
       if (response.data.success) {
         console.log("Datos actualizados con éxito:", response.data);
-        setIsEditing(false);
+        // setIsEditing(false);
+        setIsEditingOne(false);
+        setIsEditingTwo(false);
+        setIsEditingThree(false);
       } else {
         console.error("Error en la actualización:", response.data.message);
       }
@@ -247,7 +260,7 @@ export default function Admin() {
             </button>
           </div> */}
 
-          {isEditing ? (
+          {isEditingOne ? (
             <div className="confirm-edit__admin-section">
               <p className="text__admin-section">¿Estás seguro de editarlo?</p>
               <button
@@ -258,7 +271,7 @@ export default function Admin() {
               </button>
               <button
                 className="btn-cancel__admin-section"
-                onClick={() => setIsEditing(false)}
+                onClick={() => setIsEditingOne(false)}
               >
                 No
               </button>
@@ -266,7 +279,7 @@ export default function Admin() {
           ) : (
             <button
               className="btn-edit__admin-section"
-              onClick={() => setIsEditing(true)}
+              onClick={() => setIsEditingOne(true)}
             >
               Editar
             </button>
@@ -348,7 +361,7 @@ export default function Admin() {
             </button>
           </div> */}
 
-          {isEditing ? (
+          {isEditingTwo ? (
             <div className="confirm-edit__admin-section">
               <p className="text__admin-section">¿Estás seguro de editarlo?</p>
               <button
@@ -359,7 +372,7 @@ export default function Admin() {
               </button>
               <button
                 className="btn-cancel__admin-section"
-                onClick={() => setIsEditing(false)}
+                onClick={() => setIsEditingTwo(false)}
               >
                 No
               </button>
@@ -367,7 +380,7 @@ export default function Admin() {
           ) : (
             <button
               className="btn-edit__admin-section"
-              onClick={() => setIsEditing(true)}
+              onClick={() => setIsEditingTwo(true)}
             >
               Editar
             </button>
@@ -449,7 +462,7 @@ export default function Admin() {
             </button>
           </div> */}
 
-          {isEditing ? (
+          {isEditingThree ? (
             <div className="confirm-edit__admin-section">
               <p className="text__admin-section">¿Estás seguro de editarlo?</p>
               <button
@@ -460,7 +473,7 @@ export default function Admin() {
               </button>
               <button
                 className="btn-cancel__admin-section"
-                onClick={() => setIsEditing(false)}
+                onClick={() => setIsEditingThree(false)}
               >
                 No
               </button>
@@ -468,7 +481,7 @@ export default function Admin() {
           ) : (
             <button
               className="btn-edit__admin-section"
-              onClick={() => setIsEditing(true)}
+              onClick={() => setIsEditingThree(true)}
             >
               Editar
             </button>
