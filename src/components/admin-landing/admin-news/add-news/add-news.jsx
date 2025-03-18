@@ -103,6 +103,15 @@ export default function AddNews({ isOpen, onClose, refreshCourses }) {
           onChange={(e) => setNewNews({ ...newNews, image: e.target.value })}
           required
         />
+        {/* <label className="label__admin-section sm-margin-bottom" htmlFor="">
+            Image Upload
+          </label>
+          <div className="cntr-input__add-course lg-margin-bottom">
+            <input className="file__add-course" type="file" disabled />
+            <button className="btn-upload__add-course" disabled>
+              ⬆
+            </button>
+          </div> */}
 
         <label className="label__add-class sm-margin-bottom">Título</label>
         <input
