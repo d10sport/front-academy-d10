@@ -344,6 +344,15 @@ export default function Admin() {
               })
             }
           />
+          {/* <label className="label__admin-section sm-margin-bottom" htmlFor="">
+            Image Upload
+          </label>
+          <div className="cntr-input__add-course lg-margin-bottom">
+            <input className="file__add-course" type="file" disabled />
+            <button className="btn-upload__add-course" disabled>
+              ⬆
+            </button>
+          </div> */}
 
           {isEditing ? (
             <div className="confirm-edit__admin-section">
@@ -479,6 +488,15 @@ export default function Admin() {
               })
             }
           />
+          {/* <label className="label__admin-section sm-margin-bottom" htmlFor="">
+            Image Upload
+          </label>
+          <div className="cntr-input__add-course lg-margin-bottom">
+            <input className="file__add-course" type="file" disabled />
+            <button className="btn-upload__add-course" disabled>
+              ⬆
+            </button>
+          </div> */}
 
           {isEditing ? (
             <div className="confirm-edit__admin-section">
@@ -557,6 +575,15 @@ export default function Admin() {
               })
             }
           />
+          {/* <label className="label__admin-section sm-margin-bottom" htmlFor="">
+            Image Upload
+          </label>
+          <div className="cntr-input__add-course lg-margin-bottom">
+            <input className="file__add-course" type="file" disabled />
+            <button className="btn-upload__add-course" disabled>
+              ⬆
+            </button>
+          </div> */}
 
           {isEditing ? (
             <div className="confirm-edit__admin-section">
