@@ -7,18 +7,28 @@ import axios from "axios";
 import "./add-class.css";
 // import { DatabaseBackup } from "lucide-react";
 
-export default function AddClass({ isOpen, onClose, idCourse }) {
+export default function AddClass({
+  isOpen,
+  onClose,
+  idCourse,
+  refreshCourses,
+}) {
   const context = useContext(AppContext);
   const urlApi = context.urlApi;
   const apiKey = context.apiKey;
 
   const [classTitle, setClassTitle] = useState("");
   const [classDescription, setClassDescription] = useState("");
+  const [classContent, setClassContent] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   async function handleAddClass() {
-    if (!classTitle.trim() || !classDescription.trim()) {
+    if (
+      !classTitle.trim() ||
+      !classDescription.trim() ||
+      !classContent.trim()
+    ) {
       setError("Los campos no pueden estar vacíos");
       return;
     }
@@ -33,6 +43,7 @@ export default function AddClass({ isOpen, onClose, idCourse }) {
           id_course: idCourse,
           class_title: classTitle,
           class_description: classDescription,
+          class_content: classContent,
         },
         {
           headers: {
@@ -43,17 +54,20 @@ export default function AddClass({ isOpen, onClose, idCourse }) {
       );
 
       if (response.data.success) {
-        alert("Curso agregado con éxito");
+        alert("Clase agregado con éxito");
         setClassTitle("");
         setClassDescription("");
+        setClassContent("");
       } else {
-        throw new Error("Error al agregar el curso");
+        throw new Error("Error al agregar la clase");
       }
     } catch (error) {
-      setError("Hubo un problema al agregar el curso");
+      setError("Hubo un problema al agregar la clase");
       console.error("Error:", error);
     } finally {
       setLoading(false);
+      refreshCourses();
+      onClose();
     }
   }
 
@@ -103,6 +117,23 @@ export default function AddClass({ isOpen, onClose, idCourse }) {
             onChange={(e) => setClassDescription(e.target.value)}
             required
           ></textarea>
+
+          {/* Borrar según lo requerido */}
+
+          <label className="label__add-class sm-margin-bottom" htmlFor="">
+            Class Title
+          </label>
+          <input
+            className="input__add-class sm-margin-bottom"
+            type="text"
+            placeholder="Enter course title"
+            value={classContent}
+            onChange={(e) => setClassContent(e.target.value)}
+            required
+          />
+
+          {/* Quitar el disabled en caso de eliminar el anterior */}
+
           <label className="label__add-class sm-margin-bottom" htmlFor="">
             Image Upload
           </label>

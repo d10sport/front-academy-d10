@@ -83,6 +83,15 @@ export default function AddImg({ isOpen, onClose }) {
             onChange={(e) => setGalleryImg(e.target.value)}
             required
           />
+          {/* <label className="label__admin-section sm-margin-bottom" htmlFor="">
+            Image Upload
+          </label>
+          <div className="cntr-input__add-course lg-margin-bottom">
+            <input className="file__add-course" type="file" disabled />
+            <button className="btn-upload__add-course" disabled>
+              ⬆
+            </button>
+          </div> */}
 
           {error && <p style={{ color: "red" }}>{error}</p>}
 

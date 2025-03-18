@@ -7,12 +7,13 @@ import Modal from "react-modal";
 import axios from "axios";
 import "./add-course.css";
 
-export default function AddCourse({ isOpen, onClose }) {
+export default function AddCourse({ isOpen, onClose, refreshCourses }) {
   const context = useContext(AppContext);
   const urlApi = context.urlApi;
   const apiKey = context.apiKey;
 
   const [courseTitle, setCourseTitle] = useState("");
+  const [courseImage, setCourseImage] = useState("");
   const [courseDescription, setCourseDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -31,6 +32,7 @@ export default function AddCourse({ isOpen, onClose }) {
         `${urlApi}academy/i/add-course`,
         {
           course_title: courseTitle,
+          main_photo: courseImage,
           description_course: courseDescription,
         },
         {
@@ -44,6 +46,7 @@ export default function AddCourse({ isOpen, onClose }) {
       if (response.data.success) {
         alert("Curso agregado con éxito");
         setCourseTitle("");
+        setCourseImage("");
         setCourseDescription("");
       } else {
         throw new Error("Error al agregar el curso");
@@ -53,6 +56,8 @@ export default function AddCourse({ isOpen, onClose }) {
       console.error("Error:", error);
     } finally {
       setLoading(false);
+      refreshCourses();
+      onClose();
     }
   }
 
@@ -102,6 +107,23 @@ export default function AddCourse({ isOpen, onClose }) {
             onChange={(e) => setCourseDescription(e.target.value)}
             required
           ></textarea>
+
+          {/* Borrar según lo requerido */}
+
+          <label className="label__add-course sm-margin-bottom" htmlFor="">
+            Course Url Img
+          </label>
+          <input
+            className="input__add-course sm-margin-bottom"
+            type="text"
+            placeholder="Enter course title"
+            value={courseImage}
+            onChange={(e) => setCourseImage(e.target.value)}
+            required
+          />
+
+          {/* Quitar el disabled en caso de eliminar el anterior */}
+
           <label className="label__add-course sm-margin-bottom" htmlFor="">
             Image Upload
           </label>
