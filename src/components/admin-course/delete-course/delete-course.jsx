@@ -92,7 +92,7 @@ export default function DeleteCourse({
             onClick={handleDelete}
             disabled={loading}
           >
-            <div className="text-[black]">
+            <div className="text-[white]">
               {loading ? "Eliminando..." : "Eliminar curso de forma permanente"}
             </div>
           </button>

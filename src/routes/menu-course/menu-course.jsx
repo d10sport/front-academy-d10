@@ -99,19 +99,21 @@ export default function MenuCourse() {
       <AddCourse
         isOpen={modalIsOpenOne}
         onClose={() => setModalIsOpenOne(false)}
+        refreshCourses={() => getDateCourses()}
       ></AddCourse>
 
       <EditCourse
         isOpen={modalIsOpenTwo}
         onClose={() => setModalIsOpenTwo(false)}
         course={selectedCourse}
+        refreshCourses={() => getDateCourses()}
       />
 
       <DeleteCourse
         isOpen={modalIsOpenThree}
         onClose={() => setModalIsOpenThree(false)}
         courseId={selectedCourseId}
-        refreshCourses={getDateCourses}
+        refreshCourses={() => getDateCourses()}
       />
     </>
   );

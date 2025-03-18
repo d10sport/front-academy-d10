@@ -9,7 +9,14 @@ export default function Admin() {
   const urlApi = context.urlApi;
   const apiKey = context.apiKey;
 
-  const [isEditing, setIsEditing] = useState(false);
+  // const [isEditing, setIsEditing] = useState(false);
+
+  const [isEditingOne, setIsEditingOne] = useState(false);
+  const [isEditingTwo, setIsEditingTwo] = useState(false);
+  const [isEditingThree, setIsEditingThree] = useState(false);
+  const [isEditingFour, setIsEditingFour] = useState(false);
+  const [isEditingFive, setIsEditingFive] = useState(false);
+  const [isEditingSix, setIsEditingSix] = useState(false);
 
   const [sectionOne, setSectionOne] = useState({
     slogan: "",
@@ -104,7 +111,13 @@ export default function Admin() {
 
       if (response.data.success) {
         console.log("Datos actualizados con éxito:", response.data);
-        setIsEditing(false);
+        // setIsEditing(false);
+        setIsEditingOne(false);
+        setIsEditingTwo(false);
+        setIsEditingThree(false);
+        setIsEditingFour(false);
+        setIsEditingFive(false);
+        setIsEditingSix(false);
       } else {
         console.error("Error en la actualización:", response.data.message);
       }
@@ -130,7 +143,13 @@ export default function Admin() {
 
       if (response.data.success) {
         console.log("Datos actualizados con éxito:", response.data);
-        setIsEditing(false);
+        // setIsEditing(false);
+        setIsEditingOne(false);
+        setIsEditingTwo(false);
+        setIsEditingThree(false);
+        setIsEditingFour(false);
+        setIsEditingFive(false);
+        setIsEditingSix(false);
       } else {
         console.error("Error en la actualización:", response.data.message);
       }
@@ -156,7 +175,13 @@ export default function Admin() {
 
       if (response.data.success) {
         console.log("Datos actualizados con éxito:", response.data);
-        setIsEditing(false);
+        // setIsEditing(false);
+        setIsEditingOne(false);
+        setIsEditingTwo(false);
+        setIsEditingThree(false);
+        setIsEditingFour(false);
+        setIsEditingFive(false);
+        setIsEditingSix(false);
       } else {
         console.error("Error en la actualización:", response.data.message);
       }
@@ -184,7 +209,13 @@ export default function Admin() {
 
       if (response.data.success) {
         console.log("Datos actualizados con éxito:", response.data);
-        setIsEditing(false);
+        // setIsEditing(false);
+        setIsEditingOne(false);
+        setIsEditingTwo(false);
+        setIsEditingThree(false);
+        setIsEditingFour(false);
+        setIsEditingFive(false);
+        setIsEditingSix(false);
       } else {
         console.error("Error en la actualización:", response.data.message);
       }
@@ -210,7 +241,13 @@ export default function Admin() {
 
       if (response.data.success) {
         console.log("Datos actualizados con éxito:", response.data);
-        setIsEditing(false);
+        // setIsEditing(false);
+        setIsEditingOne(false);
+        setIsEditingTwo(false);
+        setIsEditingThree(false);
+        setIsEditingFour(false);
+        setIsEditingFive(false);
+        setIsEditingSix(false);
       } else {
         console.error("Error en la actualización:", response.data.message);
       }
@@ -236,7 +273,13 @@ export default function Admin() {
 
       if (response.data.success) {
         console.log("Datos actualizados con éxito:", response.data);
-        setIsEditing(false);
+        // setIsEditing(false);
+        setIsEditingOne(false);
+        setIsEditingTwo(false);
+        setIsEditingThree(false);
+        setIsEditingFour(false);
+        setIsEditingFive(false);
+        setIsEditingSix(false);
       } else {
         console.error("Error en la actualización:", response.data.message);
       }
@@ -309,6 +352,13 @@ export default function Admin() {
           <label htmlFor="" className="label__admin-section">
             Imagen de fondo para monitores:
           </label>
+          <div className="cntr-img__admin-section sm-margin-bottom">
+            <img
+              className="img__admin-section"
+              src={sectionOne.bg_photo}
+              alt={`Img`}
+            />
+          </div>
           <input
             type="text"
             className="input__admin-section sm-margin-bottom"
@@ -317,9 +367,25 @@ export default function Admin() {
               setSectionOne({ ...sectionOne, bg_photo: e.target.value })
             }
           />
+          {/* <label className="label__admin-section sm-margin-bottom" htmlFor="">
+            Image Upload
+          </label>
+          <div className="cntr-input__add-course lg-margin-bottom">
+            <input className="file__add-course" type="file" disabled />
+            <button className="btn-upload__add-course" disabled>
+              ⬆
+            </button>
+          </div> */}
           <label htmlFor="" className="label__admin-section">
             Imagen de fondo para celulares:
           </label>
+          <div className="cntr-img__admin-section sm-margin-bottom">
+            <img
+              className="img__admin-section"
+              src={sectionOne.bg_photo_res}
+              alt={`Img`}
+            />
+          </div>
           <input
             type="text"
             className="input__admin-section sm-margin-bottom"
@@ -328,8 +394,17 @@ export default function Admin() {
               setSectionOne({ ...sectionOne, bg_photo_res: e.target.value })
             }
           />
+          {/* <label className="label__admin-section sm-margin-bottom" htmlFor="">
+            Image Upload
+          </label>
+          <div className="cntr-input__add-course lg-margin-bottom">
+            <input className="file__add-course" type="file" disabled />
+            <button className="btn-upload__add-course" disabled>
+              ⬆
+            </button>
+          </div> */}
 
-          {isEditing ? (
+          {isEditingOne ? (
             <div className="confirm-edit__admin-section">
               <p className="text__admin-section">¿Estás seguro de editarlo?</p>
               <button
@@ -340,7 +415,7 @@ export default function Admin() {
               </button>
               <button
                 className="btn-cancel__admin-section"
-                onClick={() => setIsEditing(false)}
+                onClick={() => setIsEditingOne(false)}
               >
                 No
               </button>
@@ -348,7 +423,7 @@ export default function Admin() {
           ) : (
             <button
               className="btn-edit__admin-section"
-              onClick={() => setIsEditing(true)}
+              onClick={() => setIsEditingOne(true)}
             >
               Editar
             </button>
@@ -382,6 +457,13 @@ export default function Admin() {
           <label htmlFor="" className="label__admin-section">
             Imagen de fondo:
           </label>
+          <div className="cntr-img__admin-section sm-margin-bottom">
+            <img
+              className="img__admin-section"
+              src={sectionTwo.bg_photo}
+              alt={`Img`}
+            />
+          </div>
           <input
             type="text"
             className="input__admin-section sm-margin-bottom"
@@ -390,8 +472,17 @@ export default function Admin() {
               setSectionTwo({ ...sectionTwo, bg_photo: e.target.value })
             }
           />
+          {/* <label className="label__admin-section sm-margin-bottom" htmlFor="">
+            Image Upload
+          </label>
+          <div className="cntr-input__add-course lg-margin-bottom">
+            <input className="file__add-course" type="file" disabled />
+            <button className="btn-upload__add-course" disabled>
+              ⬆
+            </button>
+          </div> */}
 
-          {isEditing ? (
+          {isEditingTwo ? (
             <div className="confirm-edit__admin-section">
               <p className="text__admin-section">¿Estás seguro de editarlo?</p>
               <button
@@ -402,7 +493,7 @@ export default function Admin() {
               </button>
               <button
                 className="btn-cancel__admin-section"
-                onClick={() => setIsEditing(false)}
+                onClick={() => setIsEditingTwo(false)}
               >
                 No
               </button>
@@ -410,7 +501,7 @@ export default function Admin() {
           ) : (
             <button
               className="btn-edit__admin-section"
-              onClick={() => setIsEditing(true)}
+              onClick={() => setIsEditingTwo(true)}
             >
               Editar
             </button>
@@ -422,6 +513,15 @@ export default function Admin() {
           <label htmlFor="" className="label__admin-section">
             Video comercial:
           </label>
+          <div className="cntr-img__admin-section sm-margin-bottom">
+            <video
+              src={sectionThree.video}
+              className="img__admin-section"
+              muted
+              loop
+              autoPlay
+            ></video>
+          </div>
           <input
             type="text"
             className="input__admin-section sm-margin-bottom"
@@ -430,8 +530,17 @@ export default function Admin() {
               setSectionThree({ ...sectionThree, video: e.target.value })
             }
           />
+          {/* <label className="label__admin-section sm-margin-bottom" htmlFor="">
+            Image Upload
+          </label>
+          <div className="cntr-input__add-course lg-margin-bottom">
+            <input className="file__add-course" type="file" disabled />
+            <button className="btn-upload__add-course" disabled>
+              ⬆
+            </button>
+          </div> */}
 
-          {isEditing ? (
+          {isEditingThree ? (
             <div className="confirm-edit__admin-section">
               <p className="text__admin-section">¿Estás seguro de editarlo?</p>
               <button
@@ -442,7 +551,7 @@ export default function Admin() {
               </button>
               <button
                 className="btn-cancel__admin-section"
-                onClick={() => setIsEditing(false)}
+                onClick={() => setIsEditingThree(false)}
               >
                 No
               </button>
@@ -450,7 +559,7 @@ export default function Admin() {
           ) : (
             <button
               className="btn-edit__admin-section"
-              onClick={() => setIsEditing(true)}
+              onClick={() => setIsEditingThree(true)}
             >
               Editar
             </button>
@@ -502,7 +611,7 @@ export default function Admin() {
             }
           />
 
-          {isEditing ? (
+          {isEditingFour ? (
             <div className="confirm-edit__admin-section">
               <p className="text__admin-section">¿Estás seguro de editarlo?</p>
               <button
@@ -513,7 +622,7 @@ export default function Admin() {
               </button>
               <button
                 className="btn-cancel__admin-section"
-                onClick={() => setIsEditing(false)}
+                onClick={() => setIsEditingFour(false)}
               >
                 No
               </button>
@@ -521,7 +630,7 @@ export default function Admin() {
           ) : (
             <button
               className="btn-edit__admin-section"
-              onClick={() => setIsEditing(true)}
+              onClick={() => setIsEditingFour(true)}
             >
               Editar
             </button>
@@ -577,6 +686,13 @@ export default function Admin() {
           <label htmlFor="" className="label__admin-section">
             Imagen de fondo:
           </label>
+          <div className="cntr-img__admin-section sm-margin-bottom">
+            <img
+              className="img__admin-section"
+              src={sectionFive.bg_photo}
+              alt={`Img`}
+            />
+          </div>
           <input
             type="text"
             className="input__admin-section sm-margin-bottom"
@@ -585,7 +701,16 @@ export default function Admin() {
               setSectionFive({ ...sectionFive, bg_photo: e.target.value })
             }
           />
-          {isEditing ? (
+          {/* <label className="label__admin-section sm-margin-bottom" htmlFor="">
+            Image Upload
+          </label>
+          <div className="cntr-input__add-course lg-margin-bottom">
+            <input className="file__add-course" type="file" disabled />
+            <button className="btn-upload__add-course" disabled>
+              ⬆
+            </button>
+          </div> */}
+          {isEditingFive ? (
             <div className="confirm-edit__admin-section">
               <p className="text__admin-section">¿Estás seguro de editarlo?</p>
               <button
@@ -596,7 +721,7 @@ export default function Admin() {
               </button>
               <button
                 className="btn-cancel__admin-section"
-                onClick={() => setIsEditing(false)}
+                onClick={() => setIsEditingFive(false)}
               >
                 No
               </button>
@@ -604,7 +729,7 @@ export default function Admin() {
           ) : (
             <button
               className="btn-edit__admin-section"
-              onClick={() => setIsEditing(true)}
+              onClick={() => setIsEditingFive(true)}
             >
               Editar
             </button>
@@ -625,7 +750,7 @@ export default function Admin() {
             }
           />
 
-          {isEditing ? (
+          {isEditingSix ? (
             <div className="confirm-edit__admin-section">
               <p className="text__admin-section">¿Estás seguro de editarlo?</p>
               <button
@@ -636,7 +761,7 @@ export default function Admin() {
               </button>
               <button
                 className="btn-cancel__admin-section"
-                onClick={() => setIsEditing(false)}
+                onClick={() => setIsEditingSix(false)}
               >
                 No
               </button>
@@ -644,25 +769,12 @@ export default function Admin() {
           ) : (
             <button
               className="btn-edit__admin-section"
-              onClick={() => setIsEditing(true)}
+              onClick={() => setIsEditingSix(true)}
             >
               Editar
             </button>
           )}
         </li>
-
-        {/* {list.map((item, index) => (
-            <li className="admin__item" key={index}>
-              <h2 className="admin__title">{item.title}</h2>
-              <input type="text" className="input__admin"  />
-              <input type="text" className="input__admin" />
-              <input type="text" className="input__admin" />
-              <input type="text" className="input__admin" />
-              <p className="admin__text">{item.sloganOne}</p>
-              <p className="admin__text">{item.sloganTwo}</p>
-              <p className="admin__text">{item.sloganThree}</p>
-            </li>
-          ))} */}
       </ul>
     </>
   );
