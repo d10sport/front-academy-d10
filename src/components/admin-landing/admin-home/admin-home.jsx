@@ -324,6 +324,15 @@ export default function Admin() {
               setSectionOne({ ...sectionOne, bg_photo: e.target.value })
             }
           />
+          {/* <label className="label__admin-section sm-margin-bottom" htmlFor="">
+            Image Upload
+          </label>
+          <div className="cntr-input__add-course lg-margin-bottom">
+            <input className="file__add-course" type="file" disabled />
+            <button className="btn-upload__add-course" disabled>
+              ⬆
+            </button>
+          </div> */}
           <label htmlFor="" className="label__admin-section">
             Imagen de fondo para celulares:
           </label>
@@ -342,6 +351,15 @@ export default function Admin() {
               setSectionOne({ ...sectionOne, bg_photo_res: e.target.value })
             }
           />
+          {/* <label className="label__admin-section sm-margin-bottom" htmlFor="">
+            Image Upload
+          </label>
+          <div className="cntr-input__add-course lg-margin-bottom">
+            <input className="file__add-course" type="file" disabled />
+            <button className="btn-upload__add-course" disabled>
+              ⬆
+            </button>
+          </div> */}
 
           {isEditing ? (
             <div className="confirm-edit__admin-section">
@@ -411,6 +429,15 @@ export default function Admin() {
               setSectionTwo({ ...sectionTwo, bg_photo: e.target.value })
             }
           />
+          {/* <label className="label__admin-section sm-margin-bottom" htmlFor="">
+            Image Upload
+          </label>
+          <div className="cntr-input__add-course lg-margin-bottom">
+            <input className="file__add-course" type="file" disabled />
+            <button className="btn-upload__add-course" disabled>
+              ⬆
+            </button>
+          </div> */}
 
           {isEditing ? (
             <div className="confirm-edit__admin-section">
@@ -460,6 +487,15 @@ export default function Admin() {
               setSectionThree({ ...sectionThree, video: e.target.value })
             }
           />
+          {/* <label className="label__admin-section sm-margin-bottom" htmlFor="">
+            Image Upload
+          </label>
+          <div className="cntr-input__add-course lg-margin-bottom">
+            <input className="file__add-course" type="file" disabled />
+            <button className="btn-upload__add-course" disabled>
+              ⬆
+            </button>
+          </div> */}
 
           {isEditing ? (
             <div className="confirm-edit__admin-section">
@@ -622,6 +658,15 @@ export default function Admin() {
               setSectionFive({ ...sectionFive, bg_photo: e.target.value })
             }
           />
+          {/* <label className="label__admin-section sm-margin-bottom" htmlFor="">
+            Image Upload
+          </label>
+          <div className="cntr-input__add-course lg-margin-bottom">
+            <input className="file__add-course" type="file" disabled />
+            <button className="btn-upload__add-course" disabled>
+              ⬆
+            </button>
+          </div> */}
           {isEditing ? (
             <div className="confirm-edit__admin-section">
               <p className="text__admin-section">¿Estás seguro de editarlo?</p>
