@@ -55,7 +55,7 @@ export default function MenuClass() {
       <section className="menu-class">
         <div className="home__menu-class">
           <Link to={"/menu-course"} className="btn-back__menu-class">
-          <ArrowLeft />
+            <ArrowLeft />
           </Link>
           <h1 className="title__menu-class">Manage Classes</h1>
           <button
@@ -103,19 +103,21 @@ export default function MenuClass() {
         isOpen={modalIsOpenOne}
         onClose={() => setModalIsOpenOne(false)}
         idCourse={idCourse}
+        refreshCourses={() => getClassMenu()}
       ></AddClass>
 
       <EditClass
         isOpen={modalIsOpenTwo}
         onClose={() => setModalIsOpenTwo(false)}
         classCourse={selectedClass}
+        refreshCourses={() => getClassMenu()}
       ></EditClass>
 
       <DeleteCourse
         isOpen={modalIsOpenThree}
         onClose={() => setModalIsOpenThree(false)}
         classId={selectedClassId}
-        refreshCourses={getClassMenu}
+        refreshCourses={() => getClassMenu()}
       />
     </>
   );
