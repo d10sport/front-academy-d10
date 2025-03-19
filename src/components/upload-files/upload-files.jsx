@@ -1,41 +1,51 @@
-import { useState, useCallback } from "react";
-import { Upload } from "lucide-react";
-import { useDropzone } from "react-dropzone";
+import { useState, useContext } from "react";
+import AppContext from "@context/app/app-context";
+import axios from "axios";
 
-export default function UploadFiles() {
-  const [files, setFiles] = useState([]);
+export default function Upload() {
+  const context = useContext(AppContext);
+  const urlApi = context.urlApi;
+  const apiKey = context.apiKey;
 
-  const onDrop = useCallback((acceptedFiles) => {
-    setFiles(acceptedFiles);
-  }, []);
+  const [file, setFile] = useState(null);
+  const [message, setMessage] = useState("");
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+  };
+
+  const postFile = async () => {
+    if (!file) {
+      setMessage("Por favor, selecciona un archivo");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("page", "academy");
+
+    try {
+      const response = await axios.post(`${urlApi}external/p/s3/`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "api-key": apiKey,
+        },
+      });
+      setMessage(`Archivo subido exitosamente: ${response.data.fileUrl}`);
+    } catch (error) {
+      setMessage(
+        `Error al subir el archivo: ${
+          error.response?.data?.error || error.message
+        }`
+      );
+    }
+  };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-black p-4">
-      <div
-        {...getRootProps()}
-        className={`w-full max-w-md p-8 rounded-lg border-2 border-dashed transition-colors ${
-          isDragActive ? "border-neutral-400" : "border-neutral-600"
-        }`}
-      >
-        <input {...getInputProps()} />
-        <div className="flex flex-col items-center text-center">
-          <Upload className="w-12 h-12 mb-4 text-neutral-400" />
-          <p className="mb-2 text-lg font-medium text-neutral-300">
-            {isDragActive ? "Drop the files here" : "Drag & drop files here"}
-          </p>
-          <p className="mb-4 text-sm text-neutral-500">or</p>
-          <button className="px-4 py-2 text-sm font-medium text-neutral-200 bg-neutral-800 rounded-md hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-600">
-            Select Files
-          </button>
-          {files.length > 0 && (
-            <div className="mt-4 text-sm text-neutral-400">
-              {files.length} file(s) selected
-            </div>
-          )}
-        </div>
-      </div>
+    <div>
+      <input type="file" onChange={handleFileChange} />
+      <button onClick={postFile}>Subir Archivo</button>
+      {message && <p>{message}</p>}
     </div>
   );
 }
