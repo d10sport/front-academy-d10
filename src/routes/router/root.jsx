@@ -1,26 +1,25 @@
 import AthleteRegisterOne from "@routes/athlete-register/athlete-register-one.jsx";
 import AthleteThree from "@routes/athlete-register/athlete-register-three.jsx";
-import AthleteTwo from "@routes/athlete-register/athlete-register-two.jsx";
 import ClubRegisterThree from "@routes/club-register/club-register-three.jsx";
+import VideoClass from "../../components/academy/video-class/video-class.jsx";
+import CoachregisterTwo from "@routes/coach-register/coach-register-two.jsx";
+import CoachRegisterOne from "@routes/coach-register/coach-register-one.jsx";
 import ClubRegisterFour from "@routes/club-register/club-register-four.jsx";
+import AthleteTwo from "@routes/athlete-register/athlete-register-two.jsx";
 import ClubRegisterTwo from "@routes/club-register/club-register-two.jsx";
 import ClubRegisterOne from "@routes/club-register/club-register-one.jsx";
-import CoachRegisterOne from "@routes/coach-register/coach-register-one.jsx";
-import CoachregisterTwo from "@routes/coach-register/coach-register-two.jsx";
-import ClubRequest from "@routes/club-request/club-request.jsx";
 import Success from "@routes/success-register/success-register.jsx";
+import ClubRequest from "@routes/club-request/club-request.jsx";
+import MenuCourse from "@routes/menu-course/menu-course.jsx";
+import MenuClass from "@routes/menu-class/menu-class.jsx";
 import LoginUser from "@routes/login-user/login-user.jsx";
 import Register from "@routes/register/register.jsx";
 import { Route, Routes } from "react-router-dom";
 import ErrorPage from "@routes/router/error.jsx";
 import Forgot from "@routes/forgot/forgot.jsx";
+import Admin from "@routes/admin/admin.jsx";
 import Login from "@routes/login/login.jsx";
 import Home from "@routes/home/home.jsx";
-import VideoClass from "../../components/video-class/video-class.jsx";
-import UploadFiles from "../../components/upload-files/upload-files.jsx";
-import MenuCourse from "@routes/menu-course/menu-course.jsx";
-import MenuClass from "@routes/menu-class/menu-class.jsx";
-import Admin from "@routes/admin/admin.jsx";
 
 export default function Router() {
   return (
@@ -29,7 +28,6 @@ export default function Router() {
       <Route path="/admin" element={<Admin />} />
       <Route path="/menu-course" element={<MenuCourse />} />
       <Route path="/menu-class/:idCourse" element={<MenuClass />} />
-      <Route path="/upload" element={<UploadFiles />} />
       <Route path="/class/:idCourse" element={<VideoClass />} />
       <Route path="/forgot" element={<Forgot />} />
       <Route path="/register/club/step-one" element={<ClubRegisterOne />} />

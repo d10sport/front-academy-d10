@@ -1,11 +1,10 @@
 import { useContext, useState, useEffect } from "react";
-// import getTokenDecoded from "../../../token/token-data.js";
-import AddImg from "./add-img/add-img.jsx";
-import EditImg from "./edit-img/edit-img.jsx";
 import DeleteImg from "./delete-img/delete-img.jsx";
 import AppContext from "@context/app/app-context";
-import axios from "axios";
+import EditImg from "./edit-img/edit-img.jsx";
+import AddImg from "./add-img/add-img.jsx";
 import "./admin-gallery.css";
+import axios from "axios";
 
 export default function Admin() {
   const context = useContext(AppContext);
@@ -16,6 +15,7 @@ export default function Admin() {
   const [modalIsOpenTwo, setModalIsOpenTwo] = useState(false);
   const [modalIsOpenThree, setModalIsOpenThree] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(false);
+  const [selectedUrlS3, setSelectedUrlS3] = useState(false);
 
   const [sectionOne, setSectionOne] = useState({
     gallery: "",
@@ -66,7 +66,7 @@ export default function Admin() {
                   alt={`Img ${index + 1}`}
                 />
                 <div className="cntr-btn__gallery">
-                  <button
+                  {/* <button
                     onClick={() => {
                       setSelectedIndex(index);
                       setModalIsOpenTwo(true);
@@ -74,15 +74,16 @@ export default function Admin() {
                     className="btn-update__gallery"
                   >
                     Update
-                  </button>
+                  </button> */}
                   <button
                     onClick={() => {
                       setSelectedIndex(index);
                       setModalIsOpenThree(true);
+                      setSelectedUrlS3(item.gallery);
                     }}
                     className="btn-delete__gallery"
                   >
-                    Delete
+                    Eliminar
                   </button>
                 </div>
               </li>
@@ -109,6 +110,7 @@ export default function Admin() {
         isOpen={modalIsOpenThree}
         onClose={() => setModalIsOpenThree(false)}
         indice={selectedIndex}
+        urlS3={selectedUrlS3}
         refreshCourses={() => getDataGallery()}
       ></DeleteImg>
     </>
