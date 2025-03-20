@@ -1,8 +1,7 @@
-import { useContext, useState, useEffect } from "react";
 import getTokenDecoded from "../../../token/token-data.js";
+import { useContext, useState, useEffect } from "react";
 import AppContext from "@context/app/app-context";
 import axios from "axios";
-// import "./admin-home.css";
 
 export default function Admin() {
   const context = useContext(AppContext);
@@ -480,7 +479,7 @@ export default function Admin() {
             <button className="btn-upload__add-course" disabled>
               ⬆
             </button>
-          </div> */}
+          </div>
 
           {isEditingTwo ? (
             <div className="confirm-edit__admin-section">
