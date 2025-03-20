@@ -1,7 +1,7 @@
 // import Example from "../../assets/img/example-img.png";
-import AddCourse from "../../components/admin-course/add-course/add-course.jsx";
-import EditCourse from "../../components/admin-course/edit-course/edit-course.jsx";
-import DeleteCourse from "../../components/admin-course/delete-course/delete-course.jsx";
+import AddCourse from "../../components/academy/admin-course/add-course/add-course.jsx";
+import EditCourse from "../../components/academy/admin-course/edit-course/edit-course.jsx";
+import DeleteCourse from "../../components/academy/admin-course/delete-course/delete-course.jsx";
 import { useEffect, useContext, useState } from "react";
 import AppContext from "@context/app/app-context";
 import { Link } from "react-router-dom";

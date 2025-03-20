@@ -4,7 +4,7 @@ import AppContext from "@context/app/app-context";
 import Modal from "react-modal";
 import axios from "axios";
 
-export default function DeleteImg({ isOpen, onClose, indice, refreshCourses }) {
+export default function DeleteImg({ isOpen, onClose, indice, urlS3, refreshCourses }) {
   const context = useContext(AppContext);
   const urlApi = context.urlApi;
   const apiKey = context.apiKey;
@@ -23,6 +23,7 @@ export default function DeleteImg({ isOpen, onClose, indice, refreshCourses }) {
         `${urlApi}landing/d/delete-gallery/1`,
         {
           index: indice,
+          url: urlS3,
         },
         {
           headers: {
