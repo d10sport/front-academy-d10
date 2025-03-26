@@ -365,16 +365,14 @@ export default function Admin() {
             onChange={(e) =>
               setSectionOne({ ...sectionOne, bg_photo: e.target.value })
             }
+            readOnly
           />
-          {/* <label className="label__admin-section sm-margin-bottom" htmlFor="">
-            Image Upload
-          </label>
           <div className="cntr-input__add-course lg-margin-bottom">
-            <input className="file__add-course" type="file" disabled />
+            <input className="file__add-course" type="file" disabled required />
             <button className="btn-upload__add-course" disabled>
               ⬆
             </button>
-          </div> */}
+          </div>
           <label htmlFor="" className="label__admin-section">
             Imagen de fondo para celulares:
           </label>
@@ -392,16 +390,14 @@ export default function Admin() {
             onChange={(e) =>
               setSectionOne({ ...sectionOne, bg_photo_res: e.target.value })
             }
+            readOnly
           />
-          {/* <label className="label__admin-section sm-margin-bottom" htmlFor="">
-            Image Upload
-          </label>
           <div className="cntr-input__add-course lg-margin-bottom">
-            <input className="file__add-course" type="file" disabled />
+            <input className="file__add-course" type="file" disabled required />
             <button className="btn-upload__add-course" disabled>
               ⬆
             </button>
-          </div> */}
+          </div>
 
           {isEditingOne ? (
             <div className="confirm-edit__admin-section">
@@ -470,12 +466,10 @@ export default function Admin() {
             onChange={(e) =>
               setSectionTwo({ ...sectionTwo, bg_photo: e.target.value })
             }
+            readOnly
           />
-          {/* <label className="label__admin-section sm-margin-bottom" htmlFor="">
-            Image Upload
-          </label>
           <div className="cntr-input__add-course lg-margin-bottom">
-            <input className="file__add-course" type="file" disabled />
+            <input className="file__add-course" type="file" disabled required />
             <button className="btn-upload__add-course" disabled>
               ⬆
             </button>
@@ -528,16 +522,14 @@ export default function Admin() {
             onChange={(e) =>
               setSectionThree({ ...sectionThree, video: e.target.value })
             }
+            readOnly
           />
-          {/* <label className="label__admin-section sm-margin-bottom" htmlFor="">
-            Image Upload
-          </label>
           <div className="cntr-input__add-course lg-margin-bottom">
-            <input className="file__add-course" type="file" disabled />
+            <input className="file__add-course" type="file" disabled required />
             <button className="btn-upload__add-course" disabled>
               ⬆
             </button>
-          </div> */}
+          </div>
 
           {isEditingThree ? (
             <div className="confirm-edit__admin-section">
@@ -699,16 +691,14 @@ export default function Admin() {
             onChange={(e) =>
               setSectionFive({ ...sectionFive, bg_photo: e.target.value })
             }
+            readOnly
           />
-          {/* <label className="label__admin-section sm-margin-bottom" htmlFor="">
-            Image Upload
-          </label>
           <div className="cntr-input__add-course lg-margin-bottom">
-            <input className="file__add-course" type="file" disabled />
+            <input className="file__add-course" type="file" disabled required />
             <button className="btn-upload__add-course" disabled>
               ⬆
             </button>
-          </div> */}
+          </div>
           {isEditingFive ? (
             <div className="confirm-edit__admin-section">
               <p className="text__admin-section">¿Estás seguro de editarlo?</p>
