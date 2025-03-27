@@ -15,7 +15,7 @@ export default function Header() {
 
   const getPermissions = useCallback(async () => {
     let userPermissions = permissionsUser;
-    if (userPermissions.length === 0) {
+    if (userPermissions?.length === 0 || userPermissions == undefined) {
       userPermissions = await fetchPermissionsUser();
     }
     const allPermissions = await fetchPermissionsRoles();
