@@ -14,6 +14,7 @@ import MenuCourse from "@routes/menu-course/menu-course.jsx";
 import MenuClass from "@routes/menu-class/menu-class.jsx";
 import LoginUser from "@routes/login-user/login-user.jsx";
 import Register from "@routes/register/register.jsx";
+import Courses from "@routes/courses/courses.jsx";
 import { Route, Routes } from "react-router-dom";
 import ErrorPage from "@routes/router/error.jsx";
 import Forgot from "@routes/forgot/forgot.jsx";
@@ -25,10 +26,12 @@ export default function Router() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/admin" element={<Admin />} />
-      <Route path="/menu-course" element={<MenuCourse />} />
+      <Route path="/manage-user" element={<Admin />} />
+      <Route path="/edit-landig" element={<Admin />} />
+      <Route path="/edit-courses" element={<MenuCourse/>} />
       <Route path="/menu-class/:idCourse" element={<MenuClass />} />
       <Route path="/class/:idCourse" element={<VideoClass />} />
+      <Route path="/courses" element={<Courses />} />
       <Route path="/forgot" element={<Forgot />} />
       <Route path="/register/club/step-one" element={<ClubRegisterOne />} />
       <Route path="/register/club/step-two" element={<ClubRegisterTwo />} />
