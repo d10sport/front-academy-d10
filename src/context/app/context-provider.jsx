@@ -1,6 +1,6 @@
 import { getToken, updateToken, deleteToken, getDataToken } from "@lib/token/token-user";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import AppContext from "./app-context";
 import PropTypes from 'prop-types';
 import axios from 'axios';
@@ -17,6 +17,7 @@ const AppProvider = ({ children }) => {
   const navigate = useNavigate();
 
   const [user, setUser] = useState([]);
+  const [permissionsUser, setPermissionsUser] = useState([])
   const [token, setToken] = useState(getToken());
   const [loadingAuth, setLoadingAuth] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -24,8 +25,7 @@ const AppProvider = ({ children }) => {
   const [typeUser, setTypeUser] = useState({
     role_id: 0,
     name_role: "",
-    description_role: "",
-    role_admin: 0
+    description_role: ""
   });
 
   const [roleSystem, setRoleSystem] = useState([{
@@ -250,18 +250,14 @@ const AppProvider = ({ children }) => {
     }
   }
 
-  async function searchSessionLink() {
-    console.log('searchSessionLink');
-    // Que lea la url y desencripte los datos de la sesion
-    // Haga login y redirija a la url que esta solicitando
-  }
-
   async function fetchToken() {
     const token = await getToken();
     if (!token) {
       navigate("/login-user");
     }
     const dataToken = await fetchGetDataToken();
+    setPermissionsUser(dataToken.permissions);
+    delete dataToken.permissions;
     setUser(dataToken);
     setToken(token);
   }
@@ -290,6 +286,27 @@ const AppProvider = ({ children }) => {
     }
   }
 
+  async function fetchPermissionsRoles() {
+    const data = await axios.get(`${urlApi}academy/permissions/roles`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'api-key': apiKey
+        },
+      })
+      .then((response) => {
+        if (!response.data.success) {
+          console.error(`${response.data.message}`);
+          return
+        };
+        return response.data.data;
+      })
+      .catch(() => {
+        console.error('Error al obtener los permisos');
+      });
+    return data;
+  }
+
   async function fetchRoleUsers() {
     const data = await axios.get(`${urlApi}academy/g/role`,
       {
@@ -313,21 +330,36 @@ const AppProvider = ({ children }) => {
     return data;
   }
 
+  async function fetchPermissionsUser(){
+    const userData = await fetchGetDataToken();
+    setPermissionsUser(userData.permissions);
+    return userData.permissions
+  }
+
+  async function fetchUser(){
+    const userData = await fetchGetDataToken();
+    delete userData.permissions;
+    setUser(userData);
+    return userData
+  }
+
   async function openSession(data) {
     await fetchUpdateToken(data.token);
     const userData = await fetchGetDataToken();
+    setPermissionsUser(userData.permissions);
+    delete userData.permissions;
     setUser(userData);
     navigate("/");
   }
 
   async function closeSession() {
+    setPermissionsUser([]);
     setUser([]);
     fetchDeleteToken();
     navigate('/login-user');
   }
 
   useEffect(() => {
-    searchSessionLink();
     fetchToken();
   }, []);
 
@@ -354,6 +386,8 @@ const AppProvider = ({ children }) => {
       setIsLoading,
       typeUser,
       setTypeUser,
+      permissionsUser,
+      setPermissionsUser,
       registerAthlete,
       setRegisterAthlete,
       validateEmptyAthlete,
@@ -371,6 +405,9 @@ const AppProvider = ({ children }) => {
       roleSystem,
       setRoleSystem,
       fetchRoleUsers,
+      fetchPermissionsRoles,
+      fetchPermissionsUser,
+      fetchUser
     }}>
       {children}
     </AppContext.Provider>

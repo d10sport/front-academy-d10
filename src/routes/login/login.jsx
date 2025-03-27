@@ -57,6 +57,7 @@ export default function Login() {
       toast.error("Por favor, complete todos los campos");
       return;
     }
+
     context.setLoadingAuth(true);
     const data = {
       username: username,
@@ -113,6 +114,7 @@ export default function Login() {
         setUsername(user?.username);
         setPassword(pass?.password);
         context.setTypeUser(type?.role);
+        context.setPermissionsUser(type?.permissions)
       } else {
         if (context.typeUser == "") {
           navigate("/login-user");
@@ -128,7 +130,6 @@ export default function Login() {
     <>
       {/* <Header /> */}
       <section className="section__login">
-        
         <div action="" className="form__login">
           <h1 className="title__login">D10+ Academy</h1>
           <h2 className="subtitle__login">Iniciar Sesión</h2>
