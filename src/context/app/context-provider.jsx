@@ -407,7 +407,7 @@ const AppProvider = ({ children }) => {
       fetchRoleUsers,
       fetchPermissionsRoles,
       fetchPermissionsUser,
-      fetchUser
+      fetchUser,
     }}>
       {children}
     </AppContext.Provider>
