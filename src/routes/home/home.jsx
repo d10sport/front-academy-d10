@@ -1,16 +1,28 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import AppContext from "@context/app/app-context";
+import AWSContext from "@context/aws/aws-context";
 import "./home.css";
 
 export default function Home() {
   const context = useContext(AppContext);
+  const { fetchFiles } = useContext(AWSContext);
   const user = context.user;
+
+  const [imageUrl, setImageUrl] = useState("");
 
   useEffect(() => {
     if (!context.token) {
       context.fetchToken();
     }
   }, [context.token]);
+
+  useEffect(() => {
+    async function loadImage() {
+      const url = await fetchFiles("academy/images/soccer-ball-home.png");
+      setImageUrl(url);
+    }
+    loadImage();
+  }, []);
 
   return (
     <>
@@ -19,11 +31,11 @@ export default function Home() {
           Bienvenido {user?.first_names}
         </h1>
         <div className="cntr-big-img__home">
-          <img
-            src="https://academy-d10.s3.sa-east-1.amazonaws.com/images/soccer-ball-home.png"
-            alt=""
-            className="img__home"
-          />
+          {imageUrl ? (
+            <img src={imageUrl} alt="Soccer Ball" className="img__home" />
+          ) : (
+            <p>Cargando imagen...</p>
+          )}
         </div>
         <h1 className="title__home title--color__home margin--space">
           Explora nuestras secciones de curso:
