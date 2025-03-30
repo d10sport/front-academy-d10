@@ -1,6 +1,6 @@
 // import Example from "../../assets/img/example-img.png";
 import AddClass from "../../components/academy/admin-class/add-class/add-class.jsx";
-import EditClass from "../../components/academy/admin-class/edit-class/edit-class.jsx";
+// import EditClass from "../../components/academy/admin-class/edit-class/edit-class.jsx";
 import DeleteCourse from "../../components/academy/admin-class/delete-class/delete-class.jsx";
 import { useEffect, useContext, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -12,8 +12,8 @@ import { ArrowLeft } from "lucide-react";
 
 export default function MenuClass() {
   const [modalIsOpenOne, setModalIsOpenOne] = useState(false);
-  const [modalIsOpenTwo, setModalIsOpenTwo] = useState(false);
-  const [selectedClass, setSelectedClass] = useState(null);
+  // const [modalIsOpenTwo, setModalIsOpenTwo] = useState(false);
+  // const [selectedClass, setSelectedClass] = useState(null);
   const [modalIsOpenThree, setModalIsOpenThree] = useState(false);
   const [selectedClassId, setSelectedClassId] = useState(null);
 
@@ -74,7 +74,7 @@ export default function MenuClass() {
                 <p className="text__menu-class">{cls.class_description}</p>
               </div>
               <div className="cntr-btn__menu-class">
-                <button
+                {/* <button
                   onClick={() => {
                     setSelectedClass(cls);
                     setModalIsOpenTwo(true);
@@ -82,7 +82,7 @@ export default function MenuClass() {
                   className="btn-edit__menu-class"
                 >
                   Edit
-                </button>
+                </button> */}
 
                 <button
                   onClick={() => {
@@ -106,12 +106,12 @@ export default function MenuClass() {
         refreshCourses={() => getClassMenu()}
       ></AddClass>
 
-      <EditClass
+      {/* <EditClass
         isOpen={modalIsOpenTwo}
         onClose={() => setModalIsOpenTwo(false)}
         classCourse={selectedClass}
         refreshCourses={() => getClassMenu()}
-      ></EditClass>
+      ></EditClass> */}
 
       <DeleteCourse
         isOpen={modalIsOpenThree}
