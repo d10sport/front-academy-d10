@@ -1,6 +1,5 @@
 import { useContext, useState, useEffect, useCallback } from "react";
 import AppContext from "@context/app/app-context";
-// import "./admin-services.css";
 import { Upload, Trash2 } from "lucide-react";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
@@ -14,7 +13,6 @@ export default function Admin() {
   const [isEditingTwo, setIsEditingTwo] = useState(false);
   const [isEditingThree, setIsEditingThree] = useState(false);
 
-  // Nueva subida de image
   const [imageOpenOne, setImageOpenOne] = useState(false);
   const [imageOpenTwo, setImageOpenTwo] = useState(false);
   const [imageOpenThree, setImageOpenThree] = useState(false);
@@ -33,8 +31,36 @@ export default function Admin() {
 
   const [error, setError] = useState("");
 
+  const [sectionTwoServices, setSectionTwoServices] = useState({
+    photo: "",
+    title: "",
+    subtitle: "",
+    description: "",
+  });
+
+  const [sectionThreeServices, setSectionThreeServices] = useState({
+    photo: "",
+    title: "",
+    subtitle: "",
+    description: "",
+  });
+
+  const [sectionFourServices, setSectionFourServices] = useState({
+    photo: "",
+    title: "",
+    subtitle: "",
+    description: "",
+  });
+
   const onDrop = useCallback((acceptedFiles, rootRef, inputRef) => {
-    const parentId = inputRef.nativeEvent.srcElement.parentElement.id;
+    const parentIdDrag = inputRef.nativeEvent.srcElement.parentElement.parentElement.id;
+    const parentIdDrop = inputRef.nativeEvent.srcElement.parentElement.id;
+    let parentId = "";
+    if (parentIdDrag != "") {
+      parentId = parentIdDrag;
+    } else {
+      parentId = parentIdDrop;
+    }
     if (acceptedFiles.length > 0) {
       if (parentId === "dropzone-one") {
         setFilesOne(acceptedFiles);
@@ -72,32 +98,40 @@ export default function Admin() {
     setImageUploadThree("");
   }
 
-  // --------------------------------------
+  function cancelUploadImageOne(){
+    setImageOpenOne(false);
+    setFilesOne([]);
+    setImageUploadOne("");
+  }
 
-  // const [sectionOneServices, setSectionOneServices] = useState({
-  //   title: "",
-  // });
+  function cancelUploadImageTwo(){
+    setImageOpenTwo(false);
+    setFilesTwo([]);
+    setImageUploadTwo("");
+  }
 
-  const [sectionTwoServices, setSectionTwoServices] = useState({
-    photo: "",
-    title: "",
-    subtitle: "",
-    description: "",
-  });
+  function cancelUploadImageThree(){
+    setImageOpenThree(false);
+    setFilesThree([]);
+    setImageUploadThree("");
+  }
 
-  const [sectionThreeServices, setSectionThreeServices] = useState({
-    photo: "",
-    title: "",
-    subtitle: "",
-    description: "",
-  });
-
-  const [sectionFourServices, setSectionFourServices] = useState({
-    photo: "",
-    title: "",
-    subtitle: "",
-    description: "",
-  });
+  function openOrCloseImage(e){
+    const idBtn = e.target.id;
+    if(idBtn == "btn_one"){
+      setImageOpenOne(true);
+      cancelUploadImageTwo()
+      cancelUploadImageThree()
+    } else if(idBtn == "btn_two"){
+      setImageOpenTwo(true);
+      cancelUploadImageOne()
+      cancelUploadImageThree()
+    } else if(idBtn == "btn_three"){
+      setImageOpenThree(true);
+      cancelUploadImageOne()
+      cancelUploadImageTwo()
+    }
+  }
 
   function getServices() {
     axios
@@ -116,34 +150,6 @@ export default function Admin() {
         console.error(error);
       });
   }
-
-  // ----------------------------- Update Title ---------------------------------
-
-  // async function handleUpdateTitle() {
-  //   try {
-  //     const response = await axios.put(
-  //       `${urlApi}landing/u/update-services-title/1`,
-  //       sectionOneServices,
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           "api-key": apiKey,
-  //         },
-  //       }
-  //     );
-
-  //     if (response.data.success) {
-  //       console.log("Datos actualizados con éxito:", response.data);
-  //       setIsEditing(false);
-  //     } else {
-  //       console.error("Error en la actualización:", response.data.message);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error en la solicitud de actualización:", error);
-  //   }
-  // }
-
-  // ----------------------------- Update Services One ---------------------------------
 
   async function handleUpdateServicesOne() {
     if (imageOpenOne && imageUploadOne.length == 0) {
@@ -181,8 +187,6 @@ export default function Admin() {
       console.error("Error en la solicitud de actualización:", error);
     }
   }
-
-  // ----------------------------- Update Services Two ---------------------------------
 
   async function handleUpdateServicesTwo() {
     if (imageOpenTwo && imageUploadTwo.length == 0) {
@@ -333,7 +337,8 @@ export default function Admin() {
               </div>
               <div className="cntr-input__add-course lg-margin-bottom">
                 <button
-                  onClick={() => setImageOpenOne(true)}
+                  id="btn_one"
+                  onClick={(e) => openOrCloseImage(e)}
                   className="btn-upload__add-course"
                 >
                   Cambiar imagen
@@ -344,18 +349,12 @@ export default function Admin() {
 
           {imageOpenOne && (
             <section className="upload-section">
-              <h1 className="title__add-class sm-margin-bottom">
-                Añadir nueva imagen
-              </h1>
-              <br />
-
               {filesOne.length === 0 ? (
                 <div
                   id="dropzone-one"
                   {...getRootProps()}
-                  className={`w-full max-w-md p-8 rounded-lg border-2 border-dashed transition-colors ${
-                    isDragActive ? "border-neutral-400" : "border-neutral-600"
-                  }`}
+                  className={`w-full max-w-md p-8 rounded-lg border-2 border-dashed transition-colors ${isDragActive ? "border-neutral-400" : "border-neutral-600"
+                    }`}
                 >
                   <input {...getInputProps()} />
                   <div className="flex flex-col items-center text-center">
@@ -489,7 +488,8 @@ export default function Admin() {
               </div>
               <div className="cntr-input__add-course lg-margin-bottom">
                 <button
-                  onClick={() => setImageOpenTwo(true)}
+                  id="btn_two"
+                  onClick={(e) => openOrCloseImage(e)}
                   className="btn-upload__add-course"
                 >
                   Cambiar imagen
@@ -500,18 +500,12 @@ export default function Admin() {
 
           {imageOpenTwo && (
             <section className="upload-section">
-              <h1 className="title__add-class sm-margin-bottom">
-                Añadir nueva imagen
-              </h1>
-              <br />
-
               {filesTwo.length === 0 ? (
                 <div
                   id="dropzone-two"
                   {...getRootProps()}
-                  className={`w-full max-w-md p-8 rounded-lg border-2 border-dashed transition-colors ${
-                    isDragActive ? "border-neutral-400" : "border-neutral-600"
-                  }`}
+                  className={`w-full max-w-md p-8 rounded-lg border-2 border-dashed transition-colors ${isDragActive ? "border-neutral-400" : "border-neutral-600"
+                    }`}
                 >
                   <input {...getInputProps()} />
                   <div className="flex flex-col items-center text-center">
@@ -645,7 +639,8 @@ export default function Admin() {
               </div>
               <div className="cntr-input__add-course lg-margin-bottom">
                 <button
-                  onClick={() => setImageOpenThree(true)}
+                  id="btn_three"
+                  onClick={(e) => openOrCloseImage(e)}
                   className="btn-upload__add-course"
                 >
                   Cambiar imagen
@@ -656,18 +651,12 @@ export default function Admin() {
 
           {imageOpenThree && (
             <section className="upload-section">
-              <h1 className="title__add-class sm-margin-bottom">
-                Añadir nueva imagen
-              </h1>
-              <br />
-
               {filesThree.length === 0 ? (
                 <div
                   id="dropzone-three"
                   {...getRootProps()}
-                  className={`w-full max-w-md p-8 rounded-lg border-2 border-dashed transition-colors ${
-                    isDragActive ? "border-neutral-400" : "border-neutral-600"
-                  }`}
+                  className={`w-full max-w-md p-8 rounded-lg border-2 border-dashed transition-colors ${isDragActive ? "border-neutral-400" : "border-neutral-600"
+                    }`}
                 >
                   <input {...getInputProps()} />
                   <div className="flex flex-col items-center text-center">
