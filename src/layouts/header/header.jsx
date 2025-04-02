@@ -123,6 +123,7 @@ export default function Header() {
         <div className="cntr-three-item__info-user">
           <button
             onClick={() => {
+              toggleVisibility();
               closeSession();
               toast.success("Sesión cerrada correctamente");
             }}
