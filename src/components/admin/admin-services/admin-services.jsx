@@ -2,6 +2,7 @@ import { useContext, useState, useEffect, useCallback } from "react";
 import AppContext from "@context/app/app-context";
 import { Upload, Trash2 } from "lucide-react";
 import { useDropzone } from "react-dropzone";
+import { toast } from "sonner";
 import axios from "axios";
 
 export default function Admin() {
@@ -53,7 +54,8 @@ export default function Admin() {
   });
 
   const onDrop = useCallback((acceptedFiles, rootRef, inputRef) => {
-    const parentIdDrag = inputRef.nativeEvent.srcElement.parentElement.parentElement.id;
+    const parentIdDrag =
+      inputRef.nativeEvent.srcElement.parentElement.parentElement.id;
     const parentIdDrop = inputRef.nativeEvent.srcElement.parentElement.id;
     let parentId = "";
     if (parentIdDrag != "") {
@@ -98,38 +100,38 @@ export default function Admin() {
     setImageUploadThree("");
   }
 
-  function cancelUploadImageOne(){
+  function cancelUploadImageOne() {
     setImageOpenOne(false);
     setFilesOne([]);
     setImageUploadOne("");
   }
 
-  function cancelUploadImageTwo(){
+  function cancelUploadImageTwo() {
     setImageOpenTwo(false);
     setFilesTwo([]);
     setImageUploadTwo("");
   }
 
-  function cancelUploadImageThree(){
+  function cancelUploadImageThree() {
     setImageOpenThree(false);
     setFilesThree([]);
     setImageUploadThree("");
   }
 
-  function openOrCloseImage(e){
+  function openOrCloseImage(e) {
     const idBtn = e.target.id;
-    if(idBtn == "btn_one"){
+    if (idBtn == "btn_one") {
       setImageOpenOne(true);
-      cancelUploadImageTwo()
-      cancelUploadImageThree()
-    } else if(idBtn == "btn_two"){
+      cancelUploadImageTwo();
+      cancelUploadImageThree();
+    } else if (idBtn == "btn_two") {
       setImageOpenTwo(true);
-      cancelUploadImageOne()
-      cancelUploadImageThree()
-    } else if(idBtn == "btn_three"){
+      cancelUploadImageOne();
+      cancelUploadImageThree();
+    } else if (idBtn == "btn_three") {
       setImageOpenThree(true);
-      cancelUploadImageOne()
-      cancelUploadImageTwo()
+      cancelUploadImageOne();
+      cancelUploadImageTwo();
     }
   }
 
@@ -158,34 +160,38 @@ export default function Admin() {
     } else {
       setError("");
     }
-    try {
-      const formData = new FormData();
-      formData.append("file", formImageUploadOne);
-      formData.append("page", "landing");
-      formData.append("data", JSON.stringify(sectionTwoServices));
 
-      const response = await axios.put(
-        `${urlApi}landing/u/update-services-one/1`,
-        formData,
-        {
+    const formData = new FormData();
+    formData.append("file", formImageUploadOne);
+    formData.append("page", "landing");
+    formData.append("data", JSON.stringify(sectionTwoServices));
+
+    toast.promise(
+      axios
+        .put(`${urlApi}landing/u/update-services-one/1`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
             "api-key": apiKey,
           },
-        }
-      );
-
-      if (response.data.success) {
-        console.log("Datos actualizados con éxito:", response.data);
-        setIsEditingOne(false);
-        cancelUploadImage();
-        getServices();
-      } else {
-        console.error("Error en la actualización:", response.data.message);
+        })
+        .then((response) => {
+          if (response.data.success) {
+            setIsEditingOne(false);
+            cancelUploadImage();
+            getServices();
+            return "Datos actualizados con éxito";
+          } else {
+            throw new Error(
+              "Error en la actualización: " + response.data.message
+            );
+          }
+        }),
+      {
+        loading: "Guardando cambios...",
+        success: (msg) => msg,
+        error: (err) => err.message || "Error en la solicitud de actualización",
       }
-    } catch (error) {
-      console.error("Error en la solicitud de actualización:", error);
-    }
+    );
   }
 
   async function handleUpdateServicesTwo() {
@@ -195,34 +201,38 @@ export default function Admin() {
     } else {
       setError("");
     }
-    try {
-      const formData = new FormData();
-      formData.append("file", formImageUploadTwo);
-      formData.append("page", "landing");
-      formData.append("data", JSON.stringify(sectionThreeServices));
 
-      const response = await axios.put(
-        `${urlApi}landing/u/update-services-two/1`,
-        formData,
-        {
+    const formData = new FormData();
+    formData.append("file", formImageUploadTwo);
+    formData.append("page", "landing");
+    formData.append("data", JSON.stringify(sectionThreeServices));
+
+    toast.promise(
+      axios
+        .put(`${urlApi}landing/u/update-services-two/1`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
             "api-key": apiKey,
           },
-        }
-      );
-
-      if (response.data.success) {
-        console.log("Datos actualizados con éxito:", response.data);
-        setIsEditingTwo(false);
-        cancelUploadImage();
-        getServices();
-      } else {
-        console.error("Error en la actualización:", response.data.message);
+        })
+        .then((response) => {
+          if (response.data.success) {
+            setIsEditingTwo(false);
+            cancelUploadImage();
+            getServices();
+            return "Datos actualizados con éxito";
+          } else {
+            throw new Error(
+              "Error en la actualización: " + response.data.message
+            );
+          }
+        }),
+      {
+        loading: "Guardando cambios...",
+        success: (msg) => msg,
+        error: (err) => err.message || "Error en la solicitud de actualización",
       }
-    } catch (error) {
-      console.error("Error en la solicitud de actualización:", error);
-    }
+    );
   }
 
   // ----------------------------- Update Services Three ---------------------------------
@@ -234,34 +244,38 @@ export default function Admin() {
     } else {
       setError("");
     }
-    try {
-      const formData = new FormData();
-      formData.append("file", formImageUploadThree);
-      formData.append("page", "landing");
-      formData.append("data", JSON.stringify(sectionFourServices));
 
-      const response = await axios.put(
-        `${urlApi}landing/u/update-services-three/1`,
-        formData,
-        {
+    const formData = new FormData();
+    formData.append("file", formImageUploadThree);
+    formData.append("page", "landing");
+    formData.append("data", JSON.stringify(sectionFourServices));
+
+    toast.promise(
+      axios
+        .put(`${urlApi}landing/u/update-services-three/1`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
             "api-key": apiKey,
           },
-        }
-      );
-
-      if (response.data.success) {
-        console.log("Datos actualizados con éxito:", response.data);
-        setIsEditingThree(false);
-        cancelUploadImage();
-        getServices();
-      } else {
-        console.error("Error en la actualización:", response.data.message);
+        })
+        .then((response) => {
+          if (response.data.success) {
+            setIsEditingThree(false);
+            cancelUploadImage();
+            getServices();
+            return "Datos actualizados con éxito";
+          } else {
+            throw new Error(
+              "Error en la actualización: " + response.data.message
+            );
+          }
+        }),
+      {
+        loading: "Guardando cambios...",
+        success: (msg) => msg,
+        error: (err) => err.message || "Error en la solicitud de actualización",
       }
-    } catch (error) {
-      console.error("Error en la solicitud de actualización:", error);
-    }
+    );
   }
 
   // -----------------------------------------------------------------------------
@@ -294,6 +308,8 @@ export default function Admin() {
                 title: e.target.value,
               })
             }
+            style={{ cursor: !isEditingOne ? "not-allowed" : "text" }}
+            disabled={!isEditingOne}
           />
           <label htmlFor="" className="label__admin-section">
             Subtitle:
@@ -308,6 +324,8 @@ export default function Admin() {
                 subtitle: e.target.value,
               })
             }
+            style={{ cursor: !isEditingOne ? "not-allowed" : "text" }}
+            disabled={!isEditingOne}
           />
           <label htmlFor="" className="label__admin-section">
             Descripción:
@@ -322,6 +340,8 @@ export default function Admin() {
                 description: e.target.value,
               })
             }
+            style={{ cursor: !isEditingOne ? "not-allowed" : "text" }}
+            disabled={!isEditingOne}
           ></textarea>
           <label htmlFor="" className="label__admin-section">
             Imagen:
@@ -340,6 +360,8 @@ export default function Admin() {
                   id="btn_one"
                   onClick={(e) => openOrCloseImage(e)}
                   className="btn-upload__add-course"
+                  style={{ cursor: !isEditingOne ? "not-allowed" : "pointer" }}
+                  disabled={!isEditingOne}
                 >
                   Cambiar imagen
                 </button>
@@ -353,8 +375,9 @@ export default function Admin() {
                 <div
                   id="dropzone-one"
                   {...getRootProps()}
-                  className={`w-full max-w-md p-8 rounded-lg border-2 border-dashed transition-colors ${isDragActive ? "border-neutral-400" : "border-neutral-600"
-                    }`}
+                  className={`w-full max-w-md p-8 rounded-lg border-2 border-dashed transition-colors ${
+                    isDragActive ? "border-neutral-400" : "border-neutral-600"
+                  }`}
                 >
                   <input {...getInputProps()} />
                   <div className="flex flex-col items-center text-center">
@@ -406,7 +429,9 @@ export default function Admin() {
 
           {isEditingOne ? (
             <div className="confirm-edit__admin-section">
-              <p className="text__admin-section">¿Estás seguro de editarlo?</p>
+              <p className="text__admin-section">
+                ¿Estás seguro de guardar los cambios?
+              </p>
               <button
                 className="btn-confirm__admin-section"
                 onClick={handleUpdateServicesOne}
@@ -415,7 +440,10 @@ export default function Admin() {
               </button>
               <button
                 className="btn-cancel__admin-section"
-                onClick={() => setIsEditingOne(false)}
+                onClick={() => {
+                  setIsEditingOne(false);
+                  cancelUploadImage();
+                }}
               >
                 No
               </button>
@@ -445,6 +473,8 @@ export default function Admin() {
                 title: e.target.value,
               })
             }
+            style={{ cursor: !isEditingTwo ? "not-allowed" : "text" }}
+            disabled={!isEditingTwo}
           />
           <label htmlFor="" className="label__admin-section">
             Subtitle:
@@ -459,6 +489,8 @@ export default function Admin() {
                 subtitle: e.target.value,
               })
             }
+            style={{ cursor: !isEditingTwo ? "not-allowed" : "text" }}
+            disabled={!isEditingTwo}
           />
           <label htmlFor="" className="label__admin-section">
             Descripción:
@@ -473,6 +505,8 @@ export default function Admin() {
                 description: e.target.value,
               })
             }
+            style={{ cursor: !isEditingTwo ? "not-allowed" : "point" }}
+            disabled={!isEditingTwo}
           ></textarea>
           <label htmlFor="" className="label__admin-section">
             Imagen:
@@ -491,6 +525,8 @@ export default function Admin() {
                   id="btn_two"
                   onClick={(e) => openOrCloseImage(e)}
                   className="btn-upload__add-course"
+                  style={{ cursor: !isEditingTwo ? "not-allowed" : "text" }}
+                  disabled={!isEditingTwo}
                 >
                   Cambiar imagen
                 </button>
@@ -504,8 +540,9 @@ export default function Admin() {
                 <div
                   id="dropzone-two"
                   {...getRootProps()}
-                  className={`w-full max-w-md p-8 rounded-lg border-2 border-dashed transition-colors ${isDragActive ? "border-neutral-400" : "border-neutral-600"
-                    }`}
+                  className={`w-full max-w-md p-8 rounded-lg border-2 border-dashed transition-colors ${
+                    isDragActive ? "border-neutral-400" : "border-neutral-600"
+                  }`}
                 >
                   <input {...getInputProps()} />
                   <div className="flex flex-col items-center text-center">
@@ -557,7 +594,9 @@ export default function Admin() {
 
           {isEditingTwo ? (
             <div className="confirm-edit__admin-section">
-              <p className="text__admin-section">¿Estás seguro de editarlo?</p>
+              <p className="text__admin-section">
+                ¿Estás seguro de guardar los cambios?
+              </p>
               <button
                 className="btn-confirm__admin-section"
                 onClick={handleUpdateServicesTwo}
@@ -566,7 +605,10 @@ export default function Admin() {
               </button>
               <button
                 className="btn-cancel__admin-section"
-                onClick={() => setIsEditingTwo(false)}
+                onClick={() => {
+                  setIsEditingTwo(false);
+                  cancelUploadImage();
+                }}
               >
                 No
               </button>
@@ -596,6 +638,8 @@ export default function Admin() {
                 title: e.target.value,
               })
             }
+            style={{ cursor: !isEditingThree ? "not-allowed" : "text" }}
+            disabled={!isEditingThree}
           />
           <label htmlFor="" className="label__admin-section">
             Subtitle:
@@ -610,6 +654,8 @@ export default function Admin() {
                 subtitle: e.target.value,
               })
             }
+            style={{ cursor: !isEditingThree ? "not-allowed" : "text" }}
+            disabled={!isEditingThree}
           />
           <label htmlFor="" className="label__admin-section">
             Descripción:
@@ -624,6 +670,8 @@ export default function Admin() {
                 description: e.target.value,
               })
             }
+            style={{ cursor: !isEditingThree ? "not-allowed" : "text" }}
+            disabled={!isEditingThree}
           ></textarea>
           <label htmlFor="" className="label__admin-section">
             Imagen:
@@ -642,6 +690,10 @@ export default function Admin() {
                   id="btn_three"
                   onClick={(e) => openOrCloseImage(e)}
                   className="btn-upload__add-course"
+                  style={{
+                    cursor: !isEditingThree ? "not-allowed" : "pointer",
+                  }}
+                  disabled={!isEditingThree}
                 >
                   Cambiar imagen
                 </button>
@@ -655,8 +707,9 @@ export default function Admin() {
                 <div
                   id="dropzone-three"
                   {...getRootProps()}
-                  className={`w-full max-w-md p-8 rounded-lg border-2 border-dashed transition-colors ${isDragActive ? "border-neutral-400" : "border-neutral-600"
-                    }`}
+                  className={`w-full max-w-md p-8 rounded-lg border-2 border-dashed transition-colors ${
+                    isDragActive ? "border-neutral-400" : "border-neutral-600"
+                  }`}
                 >
                   <input {...getInputProps()} />
                   <div className="flex flex-col items-center text-center">
@@ -708,7 +761,9 @@ export default function Admin() {
 
           {isEditingThree ? (
             <div className="confirm-edit__admin-section">
-              <p className="text__admin-section">¿Estás seguro de editarlo?</p>
+              <p className="text__admin-section">
+                ¿Estás seguro de guardar los cambios?
+              </p>
               <button
                 className="btn-confirm__admin-section"
                 onClick={handleUpdateServicesThree}
@@ -717,7 +772,10 @@ export default function Admin() {
               </button>
               <button
                 className="btn-cancel__admin-section"
-                onClick={() => setIsEditingThree(false)}
+                onClick={() => {
+                  setIsEditingThree(false);
+                  cancelUploadImage();
+                }}
               >
                 No
               </button>
