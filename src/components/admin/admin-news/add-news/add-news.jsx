@@ -153,11 +153,6 @@ export default function AddNews({ isOpen, onClose, refreshCourses }) {
 
         {imageOpen && (
           <section className="upload-section">
-            <h1 className="title__add-class sm-margin-bottom">
-              Añadir nueva imagen
-            </h1>
-            <br />
-
             {files.length === 0 ? (
               <div
                 {...getRootProps()}
