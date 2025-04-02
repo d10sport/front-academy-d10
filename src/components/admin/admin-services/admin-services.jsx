@@ -33,17 +33,24 @@ export default function Admin() {
 
   const [error, setError] = useState("");
 
-  const onDrop = useCallback((acceptedFiles) => {
+  const onDrop = useCallback((acceptedFiles, rootRef, inputRef) => {
+    const parentId = inputRef.nativeEvent.srcElement.parentElement.id;
     if (acceptedFiles.length > 0) {
-      setFilesOne(acceptedFiles);
-      setFilesTwo(acceptedFiles);
-      setFilesThree(acceptedFiles);
-      setImageUploadOne(URL.createObjectURL(acceptedFiles[0]));
-      setImageUploadTwo(URL.createObjectURL(acceptedFiles[0]));
-      setImageUploadThree(URL.createObjectURL(acceptedFiles[0]));
-      setFormImageUploadOne(acceptedFiles[0]);
-      setFormImageUploadTwo(acceptedFiles[0]);
-      setFormImageUploadThree(acceptedFiles[0]);
+      if (parentId === "dropzone-one") {
+        setFilesOne(acceptedFiles);
+        setImageUploadOne(URL.createObjectURL(acceptedFiles[0]));
+        setFormImageUploadOne(acceptedFiles[0]);
+      } else if (parentId === "dropzone-two") {
+        setFilesTwo(acceptedFiles);
+        setImageUploadTwo(URL.createObjectURL(acceptedFiles[0]));
+        setFormImageUploadTwo(acceptedFiles[0]);
+      } else if (parentId === "dropzone-three") {
+        setFilesThree(acceptedFiles);
+        setImageUploadThree(URL.createObjectURL(acceptedFiles[0]));
+        setFormImageUploadThree(acceptedFiles[0]);
+      } else {
+        setError("No se ha podido subir la imagen");
+      }
       setError("");
     }
   }, []);
@@ -165,8 +172,8 @@ export default function Admin() {
       if (response.data.success) {
         console.log("Datos actualizados con éxito:", response.data);
         setIsEditingOne(false);
-        setIsEditingTwo(false);
-        setIsEditingThree(false);
+        cancelUploadImage();
+        getServices();
       } else {
         console.error("Error en la actualización:", response.data.message);
       }
@@ -203,9 +210,9 @@ export default function Admin() {
 
       if (response.data.success) {
         console.log("Datos actualizados con éxito:", response.data);
-        setIsEditingOne(false);
         setIsEditingTwo(false);
-        setIsEditingThree(false);
+        cancelUploadImage();
+        getServices();
       } else {
         console.error("Error en la actualización:", response.data.message);
       }
@@ -234,7 +241,7 @@ export default function Admin() {
         formData,
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
             "api-key": apiKey,
           },
         }
@@ -242,9 +249,9 @@ export default function Admin() {
 
       if (response.data.success) {
         console.log("Datos actualizados con éxito:", response.data);
-        setIsEditingOne(false);
-        setIsEditingTwo(false);
         setIsEditingThree(false);
+        cancelUploadImage();
+        getServices();
       } else {
         console.error("Error en la actualización:", response.data.message);
       }
@@ -344,6 +351,7 @@ export default function Admin() {
 
               {filesOne.length === 0 ? (
                 <div
+                  id="dropzone-one"
                   {...getRootProps()}
                   className={`w-full max-w-md p-8 rounded-lg border-2 border-dashed transition-colors ${
                     isDragActive ? "border-neutral-400" : "border-neutral-600"
@@ -499,6 +507,7 @@ export default function Admin() {
 
               {filesTwo.length === 0 ? (
                 <div
+                  id="dropzone-two"
                   {...getRootProps()}
                   className={`w-full max-w-md p-8 rounded-lg border-2 border-dashed transition-colors ${
                     isDragActive ? "border-neutral-400" : "border-neutral-600"
@@ -654,6 +663,7 @@ export default function Admin() {
 
               {filesThree.length === 0 ? (
                 <div
+                  id="dropzone-three"
                   {...getRootProps()}
                   className={`w-full max-w-md p-8 rounded-lg border-2 border-dashed transition-colors ${
                     isDragActive ? "border-neutral-400" : "border-neutral-600"

@@ -16,37 +16,45 @@ export default function Admin() {
   const [isEditingThree, setIsEditingThree] = useState(false);
   const [isEditingFour, setIsEditingFour] = useState(false);
   const [isEditingFive, setIsEditingFive] = useState(false);
+
   // --------------------------------------
-  // Nueva subida de image
-  const [imageOpen, setImageOpen] = useState(false);
-  const [imageUpload, setImageUpload] = useState("");
-  const [formImageUpload, setFormImageUpload] = useState("");
-  const [files, setFiles] = useState([]);
 
-  const [imageOpenFundador, setImageOpenFundador] = useState(false);
-  const [imageOpenVision, setImageOpenVision] = useState(false);
+  const [imageOpenOne, setImageOpenOne] = useState(false);
+  const [imageOpenTwo, setImageOpenTwo] = useState(false);
+  const [imageOpenThree, setImageOpenThree] = useState(false);
 
-  const [imageUploadFundador, setImageUploadFundador] = useState("");
-  const [formImageUploadFundador, setFormImageUploadFundador] = useState("");
-  const [filesFundador, setFilesFundador] = useState([]);
+  const [imageUploadOne, setImageUploadOne] = useState("");
+  const [imageUploadTwo, setImageUploadTwo] = useState("");
+  const [imageUploadThree, setImageUploadThree] = useState("");
 
-  const [imageUploadVision, setImageUploadVision] = useState("");
-  const [formImageUploadVision, setFormImageUploadVision] = useState("");
-  const [filesVision, setFilesVision] = useState([]);
+  const [formImageUploadOne, setFormImageUploadOne] = useState("");
+  const [formImageUploadTwo, setFormImageUploadTwo] = useState("");
+  const [formImageUploadThree, setFormImageUploadThree] = useState("");
+
+  const [filesOne, setFilesOne] = useState([]);
+  const [filesTwo, setFilesTwo] = useState([]);
+  const [filesThree, setFilesThree] = useState([]);
 
   const [error, setError] = useState("");
 
-  const onDrop = useCallback((acceptedFiles) => {
+  const onDrop = useCallback((acceptedFiles, rootRef, inputRef) => {
+    const parentId = inputRef.nativeEvent.srcElement.parentElement.id;
     if (acceptedFiles.length > 0) {
-      setFiles(acceptedFiles);
-      setFilesFundador(acceptedFiles);
-      setFilesVision(acceptedFiles);
-      setImageUpload(URL.createObjectURL(acceptedFiles[0]));
-      setImageUploadFundador(URL.createObjectURL(acceptedFiles[0]));
-      setImageUploadVision(URL.createObjectURL(acceptedFiles[0]));
-      setFormImageUpload(acceptedFiles[0]);
-      setFormImageUploadFundador(acceptedFiles[0]);
-      setFormImageUploadVision(acceptedFiles[0]);
+      if (parentId === "dropzone-one") {
+        setFilesOne(acceptedFiles);
+        setImageUploadOne(URL.createObjectURL(acceptedFiles[0]));
+        setFormImageUploadOne(acceptedFiles[0]);
+      } else if (parentId === "dropzone-two") {
+        setFilesTwo(acceptedFiles);
+        setImageUploadTwo(URL.createObjectURL(acceptedFiles[0]));
+        setFormImageUploadTwo(acceptedFiles[0]);
+      } else if (parentId === "dropzone-three") {
+        setFilesThree(acceptedFiles);
+        setImageUploadThree(URL.createObjectURL(acceptedFiles[0]));
+        setFormImageUploadThree(acceptedFiles[0]);
+      } else {
+        setError("No se ha podido subir la imagen");
+      }
       setError("");
     }
   }, []);
@@ -57,16 +65,15 @@ export default function Admin() {
   });
 
   function cancelUploadImage() {
-    setImageOpen(false);
-    setFiles([]);
-    setImageUpload("");
-
-    setImageOpenFundador(false);
-    setFilesFundador([]);
-    setImageUploadFundador("");
-    setImageOpenVision(false);
-    setFilesVision([]);
-    setImageUploadVision("");
+    setImageOpenOne(false);
+    setImageOpenTwo(false);
+    setImageOpenThree(false);
+    setFilesOne([]);
+    setFilesTwo([]);
+    setFilesThree([]);
+    setImageUploadOne("");
+    setImageUploadTwo("");
+    setImageUploadThree("");
   }
 
   // --------------------------------------
@@ -139,7 +146,6 @@ export default function Admin() {
 
       if (response.data.success) {
         console.log("Datos actualizados con éxito:", response.data);
-        // setIsEditing(false);
         setIsEditingOne(false);
         setIsEditingTwo(false);
         setIsEditingThree(false);
@@ -156,7 +162,7 @@ export default function Admin() {
   // ----------------------------- Update About Us Fundador ---------------------------------
 
   async function handleUpdateAboutUsFundador() {
-    if (imageOpenFundador && imageUploadFundador.length == 0) {
+    if (imageOpenOne && imageUploadOne.length == 0) {
       setError("Por favor, suba una imagen");
       return;
     } else {
@@ -164,7 +170,7 @@ export default function Admin() {
     }
     try {
       const formData = new FormData();
-      formData.append("file", formImageUploadFundador);
+      formData.append("file", formImageUploadOne);
       formData.append("page", "landing");
       formData.append("data", JSON.stringify(sectionTwoAboutUs));
 
@@ -211,7 +217,6 @@ export default function Admin() {
 
       if (response.data.success) {
         console.log("Datos actualizados con éxito:", response.data);
-        // setIsEditing(false);
         setIsEditingOne(false);
         setIsEditingTwo(false);
         setIsEditingThree(false);
@@ -228,7 +233,7 @@ export default function Admin() {
   // ----------------------------- Update About Us Misión ---------------------------------
 
   async function handleUpdateAboutUsMision() {
-    if (imageOpen && imageUpload.length == 0) {
+    if (imageOpenTwo && imageUploadTwo.length == 0) {
       setError("Por favor, suba una imagen");
       return;
     } else {
@@ -236,13 +241,13 @@ export default function Admin() {
     }
     try {
       const formData = new FormData();
-      formData.append("file", formImageUpload); // Archivo
-      formData.append("page", "landing"); // Definir el bucket según el backend
-      formData.append("data", JSON.stringify(sectionFourAboutUs)); // Datos en JSON
+      formData.append("file", formImageUploadTwo);
+      formData.append("page", "landing");
+      formData.append("data", JSON.stringify(sectionFourAboutUs));
 
       const response = await axios.put(
         `${urlApi}landing/u/update-aboutus-mision/1`,
-        formData, // Pasamos el FormData
+        formData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -269,7 +274,7 @@ export default function Admin() {
   // ----------------------------- Update About Us Vision ---------------------------------
 
   async function handleUpdateAboutUsVision() {
-    if (imageOpenVision && imageUploadVision.length == 0) {
+    if (imageOpenThree && imageUploadThree.length == 0) {
       setError("Por favor, suba una imagen");
       return;
     } else {
@@ -277,7 +282,7 @@ export default function Admin() {
     }
     try {
       const formData = new FormData();
-      formData.append("file", formImageUploadVision);
+      formData.append("file", formImageUploadThree);
       formData.append("page", "landing");
       formData.append("data", JSON.stringify(sectionSixAboutUs));
 
@@ -294,7 +299,6 @@ export default function Admin() {
 
       if (response.data.success) {
         console.log("Datos actualizados con éxito:", response.data);
-        // setIsEditing(false);
         setIsEditingOne(false);
         setIsEditingTwo(false);
         setIsEditingThree(false);
@@ -441,7 +445,7 @@ export default function Admin() {
           <label htmlFor="" className="label__admin-section">
             Imagen de fondo:
           </label>
-          {!imageOpenFundador && (
+          {!imageOpenOne && (
             <>
               <div className="cntr-img__admin-section sm-margin-bottom">
                 <img
@@ -452,7 +456,7 @@ export default function Admin() {
               </div>
               <div className="cntr-input__add-course lg-margin-bottom">
                 <button
-                  onClick={() => setImageOpenFundador(true)}
+                  onClick={() => setImageOpenOne(true)}
                   className="btn-upload__add-course"
                 >
                   Cambiar imagen
@@ -461,15 +465,16 @@ export default function Admin() {
             </>
           )}
 
-          {imageOpenFundador && (
+          {imageOpenOne && (
             <section className="upload-section">
               <h1 className="title__add-class sm-margin-bottom">
                 Añadir nueva imagen
               </h1>
               <br />
 
-              {filesFundador.length === 0 ? (
+              {filesOne.length === 0 ? (
                 <div
+                  id="dropzone-one"
                   {...getRootProps()}
                   className={`w-full max-w-md p-8 rounded-lg border-2 border-dashed transition-colors ${
                     isDragActive ? "border-neutral-400" : "border-neutral-600"
@@ -491,17 +496,17 @@ export default function Admin() {
                 </div>
               ) : (
                 <div className="mt-4 flex flex-col items-center">
-                  {imageUploadFundador && (
+                  {imageUploadOne && (
                     <img
-                      src={imageUploadFundador}
+                      src={imageUploadOne}
                       alt="Preview"
                       className="w-full h-50 max-h-52 object-cover rounded-md mb-4"
                     />
                   )}
                   <button
                     onClick={() => {
-                      setFilesFundador([]);
-                      setImageUploadFundador("");
+                      setFilesOne([]);
+                      setImageUploadOne("");
                     }}
                     className="px-4 py-2 text-sm font-medium text-red-600 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-red-400 flex items-center"
                   >
@@ -639,7 +644,7 @@ export default function Admin() {
           <label htmlFor="" className="label__admin-section">
             Imagen de fondo:
           </label>
-          {!imageOpen && (
+          {!imageOpenTwo && (
             <>
               <div className="cntr-img__admin-section sm-margin-bottom">
                 <img
@@ -650,7 +655,7 @@ export default function Admin() {
               </div>
               <div className="cntr-input__add-course lg-margin-bottom">
                 <button
-                  onClick={() => setImageOpen(true)}
+                  onClick={() => setImageOpenTwo(true)}
                   className="btn-upload__add-course"
                 >
                   Cambiar imagen
@@ -659,15 +664,16 @@ export default function Admin() {
             </>
           )}
 
-          {imageOpen && (
+          {imageOpenTwo && (
             <section className="upload-section">
               <h1 className="title__add-class sm-margin-bottom">
                 Añadir nueva imagen
               </h1>
               <br />
 
-              {files.length === 0 ? (
+              {filesTwo.length === 0 ? (
                 <div
+                  id="dropzone-two"
                   {...getRootProps()}
                   className={`w-full max-w-md p-8 rounded-lg border-2 border-dashed transition-colors ${
                     isDragActive ? "border-neutral-400" : "border-neutral-600"
@@ -689,17 +695,17 @@ export default function Admin() {
                 </div>
               ) : (
                 <div className="mt-4 flex flex-col items-center">
-                  {imageUpload && (
+                  {imageUploadTwo && (
                     <img
-                      src={imageUpload}
+                      src={imageUploadTwo}
                       alt="Preview"
                       className="w-full h-50 max-h-52 object-cover rounded-md mb-4"
                     />
                   )}
                   <button
                     onClick={() => {
-                      setFiles([]);
-                      setImageUpload("");
+                      setFilesTwo([]);
+                      setImageUploadTwo("");
                     }}
                     className="px-4 py-2 text-sm font-medium text-red-600 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-red-400 flex items-center"
                   >
@@ -780,7 +786,7 @@ export default function Admin() {
           <label htmlFor="" className="label__admin-section">
             Imagen de fondo:
           </label>
-          {!imageOpenVision && (
+          {!imageOpenThree && (
             <>
               <div className="cntr-img__admin-section sm-margin-bottom">
                 <img
@@ -791,7 +797,7 @@ export default function Admin() {
               </div>
               <div className="cntr-input__add-course lg-margin-bottom">
                 <button
-                  onClick={() => setImageOpenVision(true)}
+                  onClick={() => setImageOpenThree(true)}
                   className="btn-upload__add-course"
                 >
                   Cambiar imagen
@@ -800,15 +806,16 @@ export default function Admin() {
             </>
           )}
 
-          {imageOpenVision && (
+          {imageOpenThree && (
             <section className="upload-section">
               <h1 className="title__add-class sm-margin-bottom">
                 Añadir nueva imagen
               </h1>
               <br />
 
-              {filesVision.length === 0 ? (
+              {filesThree.length === 0 ? (
                 <div
+                  id="dropzone-three"
                   {...getRootProps()}
                   className={`w-full max-w-md p-8 rounded-lg border-2 border-dashed transition-colors ${
                     isDragActive ? "border-neutral-400" : "border-neutral-600"
@@ -830,17 +837,17 @@ export default function Admin() {
                 </div>
               ) : (
                 <div className="mt-4 flex flex-col items-center">
-                  {imageUploadVision && (
+                  {imageUploadThree && (
                     <img
-                      src={imageUploadVision}
+                      src={imageUploadThree}
                       alt="Preview"
                       className="w-full h-50 max-h-52 object-cover rounded-md mb-4"
                     />
                   )}
                   <button
                     onClick={() => {
-                      setFilesVision([]);
-                      setImageUploadVision("");
+                      setFilesThree([]);
+                      setImageUploadThree("");
                     }}
                     className="px-4 py-2 text-sm font-medium text-red-600 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-red-400 flex items-center"
                   >
