@@ -107,3 +107,15 @@
 .btn-back__edit-course:hover {
   text-decoration: underline;
 }
+
+/* Upload section */
+
+.upload-section {
+  display: flex;
+  width: fit-content;
+  height: fit-content;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 8px;
+  padding: 40px;
+}

@@ -162,3 +162,26 @@
 .close-btn:hover {
   background: darkred;
 } */
+
+/* Responsive */
+
+@media only screen and (min-width: 1200px) and (max-width: 1400px) {
+  .list__menu-class {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1199px) and (orientation: landscape) {
+}
+
+@media only screen and (max-width: 767px) and (orientation: portrait) {
+  .list__menu-class {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+@media only screen and (max-width: 767px) and (orientation: landscape) {
+}

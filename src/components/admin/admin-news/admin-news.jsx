@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import AddNews from "./add-news/add-news.jsx";
-import EditNews from "./edit-news/edit-news.jsx";
+// import EditNews from "./edit-news/edit-news.jsx";
 import DeleteNews from "./delete-news/delete-news.jsx";
 import AppContext from "@context/app/app-context";
 import axios from "axios";
@@ -12,7 +12,7 @@ export default function NewsAdmin() {
   const apiKey = context.apiKey;
 
   const [modalIsOpenOne, setModalIsOpenOne] = useState(false);
-  const [modalIsOpenTwo, setModalIsOpenTwo] = useState(false);
+  // const [modalIsOpenTwo, setModalIsOpenTwo] = useState(false);
   const [modalIsOpenThree, setModalIsOpenThree] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(false);
 
@@ -104,7 +104,7 @@ export default function NewsAdmin() {
                   readOnly
                 ></textarea>
                 <div className="cntr-btn__news">
-                  <button
+                  {/* <button
                     onClick={() => {
                       setSelectedIndex(parseInt(key.match(/\d+/)[0]));
                       setModalIsOpenTwo(true);
@@ -112,7 +112,7 @@ export default function NewsAdmin() {
                     className="btn-update__news"
                   >
                     Update
-                  </button>
+                  </button> */}
                   <button
                     onClick={() => {
                       setSelectedIndex(parseInt(key.match(/\d+/)[0]));
@@ -137,12 +137,12 @@ export default function NewsAdmin() {
         refreshCourses={() => getNews()}
       ></AddNews>
 
-      <EditNews
+      {/* <EditNews
         isOpen={modalIsOpenTwo}
         onClose={() => setModalIsOpenTwo(false)}
         indice={selectedIndex}
         refreshCourses={() => getNews()}
-      ></EditNews>
+      ></EditNews> */}
 
       <DeleteNews
         isOpen={modalIsOpenThree}
