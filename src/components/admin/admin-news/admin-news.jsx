@@ -75,7 +75,7 @@ export default function NewsAdmin() {
                   type="text"
                   className="text-[black] input__admin-section sm-margin-bottom"
                   value={item.date}
-                  readOnly
+                  disabled
                 />
                 <label htmlFor="" className="label__admin-section">
                   Imagen:
@@ -84,7 +84,7 @@ export default function NewsAdmin() {
                   type="text"
                   className="text-[black] input__admin-section sm-margin-bottom"
                   value={item.image}
-                  readOnly
+                  disabled
                 />
                 <label htmlFor="" className="label__admin-section">
                   Titulo:
@@ -93,7 +93,7 @@ export default function NewsAdmin() {
                   type="text"
                   className="text-[black] input__admin-section sm-margin-bottom"
                   value={item.title}
-                  readOnly
+                  disabled
                 />
                 <label htmlFor="" className="label__admin-section">
                   Descripción
@@ -101,7 +101,7 @@ export default function NewsAdmin() {
                 <textarea
                   className="textarea__admin-section sm-margin-bottom"
                   value={item.description}
-                  readOnly
+                  disabled
                 ></textarea>
                 <div className="cntr-btn__news">
                   {/* <button
