@@ -1,7 +1,7 @@
+import { useContext, useEffect, useState, useCallback } from "react";
 import Example from "../../assets/img/example-img.png";
 import { LogoHeader } from "../../utils/icons/icons";
 import AppContext from "@context/app/app-context";
-import { useContext, useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import "./header.css";
@@ -25,6 +25,11 @@ export default function Header() {
       role_user = id_role;
     }
 
+    if(allPermissions == undefined || userPermissions == undefined || allPermissions.length == 0 && userPermissions.length > 0){
+      setPermissionsSystem(userPermissions);
+      return;
+    }
+
     const filteredPermissions = allPermissions.filter(permissionSystem =>
       userPermissions.some(permissionUser => permissionUser.id_permission === permissionSystem.permission_id && permissionSystem.role_id == role_user)
     );
@@ -46,7 +51,7 @@ export default function Header() {
       <ul className="list__nav">
         {permissionsSystem.length > 0 && (
           permissionsSystem.map(permission => (
-            <li key={permission.permission_id} className="item__nav">
+            <li key={permission.permission_id ?? permission.id_permission} className="item__nav">
               <Link to={permission.link}>{permission.description_permission}</Link>
             </li>
           ))
