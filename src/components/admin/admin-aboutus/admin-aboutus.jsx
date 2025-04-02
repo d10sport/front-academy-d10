@@ -38,10 +38,11 @@ export default function Admin() {
   const [error, setError] = useState("");
 
   const onDrop = useCallback((acceptedFiles, rootRef, inputRef) => {
-    const parentIdDrag = inputRef.nativeEvent.srcElement.parentElement.parentElement.id;
+    const parentIdDrag =
+      inputRef.nativeEvent.srcElement.parentElement.parentElement.id;
     const parentIdDrop = inputRef.nativeEvent.srcElement.parentElement.id;
     let parentId = "";
-    if(parentIdDrag != ""){
+    if (parentIdDrag != "") {
       parentId = parentIdDrag;
     } else {
       parentId = parentIdDrop;
@@ -154,10 +155,8 @@ export default function Admin() {
       if (response.data.success) {
         console.log("Datos actualizados con éxito:", response.data);
         setIsEditingOne(false);
-        setIsEditingTwo(false);
-        setIsEditingThree(false);
-        setIsEditingFour(false);
-        setIsEditingFive(false);
+        cancelUploadImage();
+        getDataAbout();
       } else {
         console.error("Error en la actualización:", response.data.message);
       }
@@ -194,11 +193,9 @@ export default function Admin() {
 
       if (response.data.success) {
         console.log("Datos actualizados con éxito:", response.data);
-        setIsEditingOne(false);
         setIsEditingTwo(false);
-        setIsEditingThree(false);
-        setIsEditingFour(false);
-        setIsEditingFive(false);
+        cancelUploadImage();
+        getDataAbout();
       } else {
         console.error("Error en la actualización:", response.data.message);
       }
@@ -224,11 +221,9 @@ export default function Admin() {
 
       if (response.data.success) {
         console.log("Datos actualizados con éxito:", response.data);
-        setIsEditingOne(false);
-        setIsEditingTwo(false);
         setIsEditingThree(false);
-        setIsEditingFour(false);
-        setIsEditingFive(false);
+        cancelUploadImage();
+        getDataAbout();
       } else {
         console.error("Error en la actualización:", response.data.message);
       }
@@ -265,11 +260,9 @@ export default function Admin() {
 
       if (response.data.success) {
         console.log("Datos actualizados con éxito:", response.data);
-        setIsEditingOne(false);
-        setIsEditingTwo(false);
-        setIsEditingThree(false);
         setIsEditingFour(false);
-        setIsEditingFive(false);
+        cancelUploadImage();
+        getDataAbout();
       } else {
         console.error("Error en la actualización:", response.data.message);
       }
@@ -306,11 +299,9 @@ export default function Admin() {
 
       if (response.data.success) {
         console.log("Datos actualizados con éxito:", response.data);
-        setIsEditingOne(false);
-        setIsEditingTwo(false);
-        setIsEditingThree(false);
-        setIsEditingFour(false);
         setIsEditingFive(false);
+        cancelUploadImage();
+        getDataAbout();
       } else {
         console.error("Error en la actualización:", response.data.message);
       }
@@ -349,6 +340,8 @@ export default function Admin() {
                 title: e.target.value,
               })
             }
+            style={{ cursor: !isEditingOne ? "not-allowed" : "text" }}
+            disabled={!isEditingOne}
           />
           <label htmlFor="" className="label__admin-section">
             Descripción:
@@ -363,11 +356,15 @@ export default function Admin() {
                 description: e.target.value,
               })
             }
+            style={{ cursor: !isEditingOne ? "not-allowed" : "text" }}
+            disabled={!isEditingOne}
           ></textarea>
 
           {isEditingOne ? (
             <div className="confirm-edit__admin-section">
-              <p className="text__admin-section">¿Estás seguro de editarlo?</p>
+              <p className="text__admin-section">
+                ¿Estás seguro de guardar los cambios?
+              </p>
               <button
                 className="btn-confirm__admin-section"
                 onClick={handleUpdateAboutUsConocenos}
@@ -406,6 +403,8 @@ export default function Admin() {
                 title1: e.target.value,
               })
             }
+            style={{ cursor: !isEditingTwo ? "not-allowed" : "text" }}
+            disabled={!isEditingTwo}
           />
           <label htmlFor="" className="label__admin-section">
             Titulo #2:
@@ -420,6 +419,8 @@ export default function Admin() {
                 title2: e.target.value,
               })
             }
+            style={{ cursor: !isEditingTwo ? "not-allowed" : "text" }}
+            disabled={!isEditingTwo}
           />
           <label htmlFor="" className="label__admin-section">
             Subtitulo:
@@ -434,6 +435,8 @@ export default function Admin() {
                 subtitle: e.target.value,
               })
             }
+            style={{ cursor: !isEditingTwo ? "not-allowed" : "text" }}
+            disabled={!isEditingTwo}
           />
           <label htmlFor="" className="label__admin-section">
             Descripción:
@@ -448,6 +451,8 @@ export default function Admin() {
                 description: e.target.value,
               })
             }
+            style={{ cursor: !isEditingTwo ? "not-allowed" : "text" }}
+            disabled={!isEditingTwo}
           ></textarea>
           <label htmlFor="" className="label__admin-section">
             Imagen de fondo:
@@ -465,6 +470,8 @@ export default function Admin() {
                 <button
                   onClick={() => setImageOpenOne(true)}
                   className="btn-upload__add-course"
+                  style={{ cursor: !isEditingTwo ? "not-allowed" : "pointer" }}
+                  disabled={!isEditingTwo}
                 >
                   Cambiar imagen
                 </button>
@@ -474,11 +481,6 @@ export default function Admin() {
 
           {imageOpenOne && (
             <section className="upload-section">
-              <h1 className="title__add-class sm-margin-bottom">
-                Añadir nueva imagen
-              </h1>
-              <br />
-
               {filesOne.length === 0 ? (
                 <div
                   id="dropzone-one"
@@ -537,7 +539,9 @@ export default function Admin() {
 
           {isEditingTwo ? (
             <div className="confirm-edit__admin-section">
-              <p className="text__admin-section">¿Estás seguro de editarlo?</p>
+              <p className="text__admin-section">
+                ¿Estás seguro de guardar los cambios?
+              </p>
               <button
                 className="btn-confirm__admin-section"
                 onClick={handleUpdateAboutUsFundador}
@@ -546,7 +550,10 @@ export default function Admin() {
               </button>
               <button
                 className="btn-cancel__admin-section"
-                onClick={() => setIsEditingTwo(false)}
+                onClick={() => {
+                  setIsEditingTwo(false);
+                  cancelUploadImage();
+                }}
               >
                 No
               </button>
@@ -576,6 +583,8 @@ export default function Admin() {
                 title: e.target.value,
               })
             }
+            style={{ cursor: !isEditingThree ? "not-allowed" : "text" }}
+            disabled={!isEditingThree}
           />
           <label htmlFor="" className="label__admin-section">
             Descripción:
@@ -590,11 +599,15 @@ export default function Admin() {
                 description: e.target.value,
               })
             }
+            style={{ cursor: !isEditingThree ? "not-allowed" : "text" }}
+            disabled={!isEditingThree}
           ></textarea>
 
           {isEditingThree ? (
             <div className="confirm-edit__admin-section">
-              <p className="text__admin-section">¿Estás seguro de editarlo?</p>
+              <p className="text__admin-section">
+                ¿Estás seguro de guardar los cambios?
+              </p>
               <button
                 className="btn-confirm__admin-section"
                 onClick={handleUpdateAboutUsObjetivos}
@@ -633,6 +646,8 @@ export default function Admin() {
                 title: e.target.value,
               })
             }
+            style={{ cursor: !isEditingFour ? "not-allowed" : "text" }}
+            disabled={!isEditingFour}
           />
           <label htmlFor="" className="label__admin-section">
             Descripción:
@@ -647,6 +662,8 @@ export default function Admin() {
                 description: e.target.value,
               })
             }
+            style={{ cursor: !isEditingFour ? "not-allowed" : "text" }}
+            disabled={!isEditingFour}
           ></textarea>
           <label htmlFor="" className="label__admin-section">
             Imagen de fondo:
@@ -664,6 +681,8 @@ export default function Admin() {
                 <button
                   onClick={() => setImageOpenTwo(true)}
                   className="btn-upload__add-course"
+                  style={{ cursor: !isEditingFour ? "not-allowed" : "pointer" }}
+                  disabled={!isEditingFour}
                 >
                   Cambiar imagen
                 </button>
@@ -673,11 +692,6 @@ export default function Admin() {
 
           {imageOpenTwo && (
             <section className="upload-section">
-              <h1 className="title__add-class sm-margin-bottom">
-                Añadir nueva imagen
-              </h1>
-              <br />
-
               {filesTwo.length === 0 ? (
                 <div
                   id="dropzone-two"
@@ -736,7 +750,9 @@ export default function Admin() {
 
           {isEditingFour ? (
             <div className="confirm-edit__admin-section">
-              <p className="text__admin-section">¿Estás seguro de editarlo?</p>
+              <p className="text__admin-section">
+                ¿Estás seguro de guardar los cambios?
+              </p>
               <button
                 className="btn-confirm__admin-section"
                 onClick={handleUpdateAboutUsMision}
@@ -745,7 +761,10 @@ export default function Admin() {
               </button>
               <button
                 className="btn-cancel__admin-section"
-                onClick={() => setIsEditingFour(false)}
+                onClick={() => {
+                  setIsEditingFour(false);
+                  cancelUploadImage();
+                }}
               >
                 No
               </button>
@@ -775,6 +794,8 @@ export default function Admin() {
                 title: e.target.value,
               })
             }
+            style={{ cursor: !isEditingFive ? "not-allowed" : "text" }}
+            disabled={!isEditingFive}
           />
           <label htmlFor="" className="label__admin-section">
             Descripción:
@@ -789,6 +810,8 @@ export default function Admin() {
                 description: e.target.value,
               })
             }
+            style={{ cursor: !isEditingFive ? "not-allowed" : "text" }}
+            disabled={!isEditingFive}
           ></textarea>
           <label htmlFor="" className="label__admin-section">
             Imagen de fondo:
@@ -806,6 +829,8 @@ export default function Admin() {
                 <button
                   onClick={() => setImageOpenThree(true)}
                   className="btn-upload__add-course"
+                  style={{ cursor: !isEditingFive ? "not-allowed" : "pointer" }}
+                  disabled={!isEditingFive}
                 >
                   Cambiar imagen
                 </button>
@@ -815,11 +840,6 @@ export default function Admin() {
 
           {imageOpenThree && (
             <section className="upload-section">
-              <h1 className="title__add-class sm-margin-bottom">
-                Añadir nueva imagen
-              </h1>
-              <br />
-
               {filesThree.length === 0 ? (
                 <div
                   id="dropzone-three"
@@ -878,7 +898,9 @@ export default function Admin() {
 
           {isEditingFive ? (
             <div className="confirm-edit__admin-section">
-              <p className="text__admin-section">¿Estás seguro de editarlo?</p>
+              <p className="text__admin-section">
+                ¿Estás seguro de guardar los cambios?
+              </p>
               <button
                 className="btn-confirm__admin-section"
                 onClick={handleUpdateAboutUsVision}
@@ -887,7 +909,10 @@ export default function Admin() {
               </button>
               <button
                 className="btn-cancel__admin-section"
-                onClick={() => setIsEditingFive(false)}
+                onClick={() => {
+                  setIsEditingFive(false);
+                  cancelUploadImage();
+                }}
               >
                 No
               </button>
