@@ -45,7 +45,14 @@ export default function Admin() {
   const [error, setError] = useState("");
 
   const onDrop = useCallback((acceptedFiles, rootRef, inputRef) => {
-    const parentId = inputRef.nativeEvent.srcElement.parentElement.id;
+    const parentIdDrag = inputRef.nativeEvent.srcElement.parentElement.parentElement.id;
+    const parentIdDrop = inputRef.nativeEvent.srcElement.parentElement.id;
+    let parentId = "";
+    if(parentIdDrag != ""){
+      parentId = parentIdDrag;
+    } else {
+      parentId = parentIdDrop;
+    }
     if (acceptedFiles.length > 0) {
       if (parentId === "dropzone-one") {
         setFilesOne(acceptedFiles);
@@ -76,6 +83,7 @@ export default function Admin() {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
+    // onDropAccepted,
     accept: "image/jpeg, image/png, image/webp, video/mp4",
   });
 

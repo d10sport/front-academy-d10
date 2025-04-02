@@ -70,7 +70,7 @@ export default function Header() {
     <nav id="nav_header" className="nav">
       <LogoHeader />
       <ul className="list__nav">
-        {permissionsSystem.length > 0 &&
+        {permissionsSystem?.length > 0 &&
           permissionsSystem.map((permission) => (
             <li
               key={permission.permission_id ?? permission.id_permission}
