@@ -525,7 +525,7 @@ export default function Admin() {
                   id="btn_two"
                   onClick={(e) => openOrCloseImage(e)}
                   className="btn-upload__add-course"
-                  style={{ cursor: !isEditingTwo ? "not-allowed" : "text" }}
+                  style={{ cursor: !isEditingTwo ? "not-allowed" : "pointer" }}
                   disabled={!isEditingTwo}
                 >
                   Cambiar imagen
