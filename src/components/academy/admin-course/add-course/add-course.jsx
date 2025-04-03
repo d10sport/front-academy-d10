@@ -239,7 +239,7 @@ export default function AddCourse({ isOpen, onClose, refreshCourses }) {
 
           <button
             className="btn-add__add-course lg-margin-bottom"
-            onClick={handleAddCourse}
+            onClick={() => handleAddCourse()}
             disabled={loading}
           >
             {loading ? "Adding..." : "Add Course"}

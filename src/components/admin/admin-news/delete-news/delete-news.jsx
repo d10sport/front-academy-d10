@@ -87,7 +87,7 @@ export default function DeleteNews({
 
         <button
           className="btn-delete__delete-course lg-margin-bottom"
-          onClick={handleDeleteNews}
+          onClick={() => handleDeleteNews()}
           disabled={loading}
         >
           <div className="text-[white]">

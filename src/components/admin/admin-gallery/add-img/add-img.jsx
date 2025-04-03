@@ -70,7 +70,9 @@ export default function AddImg({ isOpen, onClose, refreshCourses }) {
             onClose();
             return "La imagen se cargo con éxito";
           } else {
-            throw new Error("Error al subir la imagen: "+ response.data.message);
+            throw new Error(
+              "Error al subir la imagen: " + response.data.message
+            );
           }
         }),
       {
@@ -157,7 +159,7 @@ export default function AddImg({ isOpen, onClose, refreshCourses }) {
             </button>
             <button
               className="btn-add__add-class"
-              onClick={handleAddImg}
+              onClick={() => handleAddImg()}
               disabled={loading}
             >
               {loading ? "Añadiendo..." : "Guardar imagen"}

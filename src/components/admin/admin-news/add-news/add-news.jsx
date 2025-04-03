@@ -233,7 +233,7 @@ export default function AddNews({ isOpen, onClose, refreshCourses }) {
 
         <button
           className="btn-add__add-class lg-margin-bottom"
-          onClick={handleSaveNews}
+          onClick={() => handleSaveNews()}
           disabled={loading}
         >
           {loading ? "Guardando..." : "Guardar Noticia"}

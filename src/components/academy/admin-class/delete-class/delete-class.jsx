@@ -91,7 +91,7 @@ export default function DeleteClass({
 
           <button
             className="btn-delete__delete-course lg-margin-bottom"
-            onClick={handleDeleteDateClass}
+            onClick={() => handleDeleteDateClass()}
             disabled={loading}
           >
             <div className="text-[white]">

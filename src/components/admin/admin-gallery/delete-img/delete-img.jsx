@@ -99,7 +99,7 @@ export default function DeleteImg({
 
           <button
             className="btn-delete__delete-course lg-margin-bottom"
-            onClick={handleDeleteImg}
+            onClick={() => handleDeleteImg()}
             disabled={loading}
           >
             <div className="text-[white]">

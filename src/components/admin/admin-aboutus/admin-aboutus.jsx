@@ -394,7 +394,7 @@ export default function Admin() {
               </p>
               <button
                 className="btn-confirm__admin-section"
-                onClick={handleUpdateAboutUsConocenos}
+                onClick={() => handleUpdateAboutUsConocenos()}
               >
                 Sí
               </button>
@@ -571,7 +571,7 @@ export default function Admin() {
               </p>
               <button
                 className="btn-confirm__admin-section"
-                onClick={handleUpdateAboutUsFundador}
+                onClick={() => handleUpdateAboutUsFundador()}
               >
                 Sí
               </button>
@@ -637,7 +637,7 @@ export default function Admin() {
               </p>
               <button
                 className="btn-confirm__admin-section"
-                onClick={handleUpdateAboutUsObjetivos}
+                onClick={() => handleUpdateAboutUsObjetivos()}
               >
                 Sí
               </button>
@@ -782,7 +782,7 @@ export default function Admin() {
               </p>
               <button
                 className="btn-confirm__admin-section"
-                onClick={handleUpdateAboutUsMision}
+                onClick={() => handleUpdateAboutUsMision()}
               >
                 Sí
               </button>
@@ -930,7 +930,7 @@ export default function Admin() {
               </p>
               <button
                 className="btn-confirm__admin-section"
-                onClick={handleUpdateAboutUsVision}
+                onClick={() => handleUpdateAboutUsVision()}
               >
                 Sí
               </button>

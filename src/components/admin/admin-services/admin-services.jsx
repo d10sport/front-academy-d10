@@ -434,7 +434,7 @@ export default function Admin() {
               </p>
               <button
                 className="btn-confirm__admin-section"
-                onClick={handleUpdateServicesOne}
+                onClick={() => handleUpdateServicesOne()}
               >
                 Sí
               </button>
@@ -599,7 +599,7 @@ export default function Admin() {
               </p>
               <button
                 className="btn-confirm__admin-section"
-                onClick={handleUpdateServicesTwo}
+                onClick={() => handleUpdateServicesTwo()}
               >
                 Sí
               </button>
@@ -766,7 +766,7 @@ export default function Admin() {
               </p>
               <button
                 className="btn-confirm__admin-section"
-                onClick={handleUpdateServicesThree}
+                onClick={() => handleUpdateServicesThree()}
               >
                 Sí
               </button>

@@ -246,7 +246,7 @@ export default function AddClass({
 
           <button
             className="btn-add__add-class lg-margin-bottom"
-            onClick={handleAddClass}
+            onClick={() => handleAddClass()}
             disabled={loading}
           >
             {loading ? "Adding..." : "Add Class"}
