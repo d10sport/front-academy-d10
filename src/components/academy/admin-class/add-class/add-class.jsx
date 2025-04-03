@@ -5,6 +5,7 @@ import { useDropzone } from "react-dropzone";
 import AppContext from "@context/app/app-context";
 import Modal from "react-modal";
 import axios from "axios";
+import { toast } from "sonner";
 import "./add-class.css";
 
 export default function AddClass({
@@ -71,49 +72,48 @@ export default function AddClass({
     setLoading(true);
     setError("");
 
-    try {
-      const formData = new FormData();
-      formData.append("file", formImageUpload);
-      formData.append("page", "academy");
-      formData.append(
-        "data",
-        JSON.stringify({
-          id_course: idCourse,
-          class_title: classTitle,
-          class_description: classDescription,
-          class_content: classContent,
-        })
-      );
+    const formData = new FormData();
+    formData.append("file", formImageUpload);
+    formData.append("page", "academy");
+    formData.append(
+      "data",
+      JSON.stringify({
+        id_course: idCourse,
+        class_title: classTitle,
+        class_description: classDescription,
+        class_content: classContent,
+      })
+    );
 
-      const response = await axios.post(
-        `${urlApi}academy/i/add-class`,
-        formData,
-        {
+    toast.promise(
+      axios
+        .post(`${urlApi}academy/i/add-class`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
             "api-key": apiKey,
           },
-        }
-      );
-
-      if (response.data.success) {
-        alert("Clase agregado con éxito");
-        setClassTitle("");
-        setClassDescription("");
-        setImageUpload("");
-        setFormImageUpload("");
-        setClassContent("");
-      } else {
-        throw new Error("Error al agregar la clase");
+        })
+        .then((response) => {
+          if (response.data.success) {
+            setClassTitle("");
+            setClassDescription("");
+            setImageUpload("");
+            setFormImageUpload("");
+            setClassContent("");
+            setLoading(false);
+            refreshCourses();
+            onClose();
+            return "Clase agregado con éxito";
+          } else {
+            throw new Error("Error al agregar la clase");
+          }
+        }),
+      {
+        loading: "Guardando cambios...",
+        success: (msg) => msg,
+        error: (err) => err.message || "Error en la solicitud de guardado",
       }
-    } catch (error) {
-      setError("Hubo un problema al agregar la clase");
-      console.error("Error:", error);
-    } finally {
-      setLoading(false);
-      refreshCourses();
-      onClose();
-    }
+    );
   }
 
   return (

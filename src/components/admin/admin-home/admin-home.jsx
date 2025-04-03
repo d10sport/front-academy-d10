@@ -3,7 +3,7 @@ import getTokenDecoded from "../../../token/token-data.js";
 import AppContext from "@context/app/app-context";
 import { Upload, Trash2 } from "lucide-react";
 import { useDropzone } from "react-dropzone";
-import { toast } from 'sonner';
+import { toast } from "sonner";
 import axios from "axios";
 
 export default function Admin() {
@@ -199,35 +199,39 @@ export default function Admin() {
     } else {
       setError("");
     }
-    try {
-      const formData = new FormData();
-      formData.append("file", formImageUploadOne);
-      formData.append("file", formImageUploadTwo);
-      formData.append("page", "landing");
-      formData.append("data", JSON.stringify(sectionOne));
 
-      const response = await axios.put(
-        `${urlApi}landing/u/update-home/1`,
-        formData,
-        {
+    const formData = new FormData();
+    formData.append("file", formImageUploadOne);
+    formData.append("file", formImageUploadTwo);
+    formData.append("page", "landing");
+    formData.append("data", JSON.stringify(sectionOne));
+
+    toast.promise(
+      axios
+        .put(`${urlApi}landing/u/update-home/1`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
             "api-key": apiKey,
           },
-        }
-      );
-
-      if (response.data.success) {
-        console.log("Datos actualizados con éxito:", response.data);
-        setIsEditingOne(false);
-        cancelUploadImage();
-        getDateHome();
-      } else {
-        console.error("Error en la actualización:", response.data.message);
+        })
+        .then((response) => {
+          if (response.data.success) {
+            setIsEditingOne(false);
+            cancelUploadImage();
+            getDateHome();
+            return "Datos actualizados con éxito";
+          } else {
+            throw new Error(
+              "Error en la actualización: " + response.data.message
+            );
+          }
+        }),
+      {
+        loading: "Guardando cambios...",
+        success: (msg) => msg,
+        error: (err) => err.message || "Error en la solicitud de actualización",
       }
-    } catch (error) {
-      console.error("Error en la solicitud de actualización:", error);
-    }
+    );
   }
 
   // ----------------------------- Update Nosotros ---------------------------------
@@ -239,34 +243,38 @@ export default function Admin() {
     } else {
       setError("");
     }
-    try {
-      const formData = new FormData();
-      formData.append("file", formImageUploadThree);
-      formData.append("page", "landing");
-      formData.append("data", JSON.stringify(sectionTwo));
 
-      const response = await axios.put(
-        `${urlApi}landing/u/update-nosotros/1`,
-        formData,
-        {
+    const formData = new FormData();
+    formData.append("file", formImageUploadThree);
+    formData.append("page", "landing");
+    formData.append("data", JSON.stringify(sectionTwo));
+
+    toast.promise(
+      axios
+        .put(`${urlApi}landing/u/update-nosotros/1`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
             "api-key": apiKey,
           },
-        }
-      );
-
-      if (response.data.success) {
-        console.log("Datos actualizados con éxito:", response.data);
-        setIsEditingTwo(false);
-        cancelUploadImage();
-        getDateHome();
-      } else {
-        console.error("Error en la actualización:", response.data.message);
+        })
+        .then((response) => {
+          if (response.data.success) {
+            setIsEditingTwo(false);
+            cancelUploadImage();
+            getDateHome();
+            return "Datos actualizados con éxito";
+          } else {
+            throw new Error(
+              "Error en la actualización: " + response.data.message
+            );
+          }
+        }),
+      {
+        loading: "Guardando cambios...",
+        success: (msg) => msg,
+        error: (err) => err.message || "Error en la solicitud de actualización",
       }
-    } catch (error) {
-      console.error("Error en la solicitud de actualización:", error);
-    }
+    );
   }
 
   // ----------------------------- Update Comercial ---------------------------------
@@ -278,64 +286,75 @@ export default function Admin() {
     } else {
       setError("");
     }
-    try {
-      const formData = new FormData();
-      formData.append("file", formImageUploadFour);
-      formData.append("page", "landing");
-      formData.append("data", JSON.stringify(sectionThree));
 
-      const response = await axios.put(
-        `${urlApi}landing/u/update-comercial/1`,
-        formData,
-        {
+    const formData = new FormData();
+    formData.append("file", formImageUploadFour);
+    formData.append("page", "landing");
+    formData.append("data", JSON.stringify(sectionThree));
+
+    toast.promise(
+      axios
+        .put(`${urlApi}landing/u/update-comercial/1`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
             "api-key": apiKey,
           },
-        }
-      );
-
-      if (response.data.success) {
-        console.log("Datos actualizados con éxito:", response.data);
-        setIsEditingThree(false);
-        cancelUploadImage();
-        getDateHome();
-      } else {
-        console.error("Error en la actualización:", response.data.message);
+        })
+        .then((response) => {
+          if (response.data.success) {
+            setIsEditingThree(false);
+            cancelUploadImage();
+            getDateHome();
+            return "Datos actualizados con éxito";
+          } else {
+            throw new Error(
+              "Error en la actualización: " + response.data.message
+            );
+          }
+        }),
+      {
+        loading: "Guardando cambios",
+        success: (msg) => msg,
+        error: (err) => err.message || "Error en la solicitud de actualización",
       }
-    } catch (error) {
-      console.error("Error en la solicitud de actualización:", error);
-    }
+    );
   }
 
   // ----------------------------- Update News ---------------------------------
 
   async function handleUpdateNews() {
-    try {
-      const { h1, title, description } = sectionFour.news;
+    const { h1, title, description } = sectionFour.news;
 
-      const response = await axios.put(
-        `${urlApi}landing/u/update-news/1`,
-        { h1, title, description },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "api-key": apiKey,
-          },
-        }
-      );
-
-      if (response.data.success) {
-        console.log("Datos actualizados con éxito:", response.data);
-        setIsEditingFour(false);
-        cancelUploadImage();
-        getDateHome();
-      } else {
-        console.error("Error en la actualización:", response.data.message);
+    toast.promise(
+      axios
+        .put(
+          `${urlApi}landing/u/update-news/1`,
+          { h1, title, description },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "api-key": apiKey,
+            },
+          }
+        )
+        .then((response) => {
+          if (response.data.success) {
+            setIsEditingFour(false);
+            cancelUploadImage();
+            getDateHome();
+            return "Datos actualizados con éxito";
+          } else {
+            throw new Error(
+              "Error en la actualización: " + response.data.message
+            );
+          }
+        }),
+      {
+        loading: "Guardando cambios...",
+        success: (msg) => msg,
+        error: (err) => err.message || "Error en la solicitud de actualización",
       }
-    } catch (error) {
-      console.error("Error en la solicitud de actualización:", error);
-    }
+    );
   }
 
   // ----------------------------- Update Academia ---------------------------------
@@ -347,34 +366,38 @@ export default function Admin() {
     } else {
       setError("");
     }
-    try {
-      const formData = new FormData();
-      formData.append("file", formImageUploadFive);
-      formData.append("page", "landing");
-      formData.append("data", JSON.stringify(sectionFive));
 
-      const response = await axios.put(
-        `${urlApi}landing/u/update-academia/1`,
-        formData,
-        {
+    const formData = new FormData();
+    formData.append("file", formImageUploadFive);
+    formData.append("page", "landing");
+    formData.append("data", JSON.stringify(sectionFive));
+
+    toast.promise(
+      axios
+        .put(`${urlApi}landing/u/update-academia/1`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
             "api-key": apiKey,
           },
-        }
-      );
-
-      if (response.data.success) {
-        console.log("Datos actualizados con éxito:", response.data);
-        setIsEditingFive(false);
-        cancelUploadImage();
-        getDateHome();
-      } else {
-        console.error("Error en la actualización:", response.data.message);
+        })
+        .then((response) => {
+          if (response.data.success) {
+            setIsEditingFive(false);
+            cancelUploadImage();
+            getDateHome();
+            return "Datos actualizados con éxito";
+          } else {
+            throw new Error(
+              "Error en la actualización: " + response.data.message
+            );
+          }
+        }),
+      {
+        loading: "Guardando cambios...",
+        success: (msg) => msg,
+        error: (err) => err.message || "Error en la solicitud de actualización",
       }
-    } catch (error) {
-      console.error("Error en la solicitud de actualización:", error);
-    }
+    );
   }
 
   // ----------------------------- Update Aliados ---------------------------------

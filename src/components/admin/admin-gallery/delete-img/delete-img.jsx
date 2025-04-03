@@ -1,10 +1,17 @@
 /* eslint-disable react/prop-types */
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import AppContext from "@context/app/app-context";
 import Modal from "react-modal";
+import { toast } from "sonner";
 import axios from "axios";
 
-export default function DeleteImg({ isOpen, onClose, indice, urlS3, refreshCourses }) {
+export default function DeleteImg({
+  isOpen,
+  onClose,
+  indice,
+  urlS3,
+  refreshCourses,
+}) {
   const context = useContext(AppContext);
   const urlApi = context.urlApi;
   const apiKey = context.apiKey;
@@ -12,53 +19,53 @@ export default function DeleteImg({ isOpen, onClose, indice, urlS3, refreshCours
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  useEffect(() => {
+    setLoading(false);
+    setError("");
+  }, []);
+
   async function handleDeleteImg() {
     if (!indice) {
-      console.error("No hay un indice válido para actualizar");
+      setError("No hay un indice válido para actualizar");
       return;
     }
 
-    try {
-      const response = await axios.put(
-        `${urlApi}landing/d/delete-gallery/1`,
-        {
-          index: indice,
-          url: urlS3,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "api-key": apiKey,
-          },
-        }
-      );
-
-      if (response.data.success) {
-        console.log("Imagen actualizado con éxito:", response.data);
-        onClose();
-      } else {
-        console.error("Error al actualizar la imagen:", response.data.message);
-      }
-    } catch (error) {
-      console.error("Error en la solicitud de actualización:", error);
-    }
-  }
-
-  const handleDeleteReload = async () => {
     setLoading(true);
-    setError(null);
 
-    const success = await handleDeleteImg();
-
-    if (success) {
-      refreshCourses();
-      onClose();
-    } else {
-      setError("Error al eliminar el curso. Intenta de nuevo.");
-    }
-
-    setLoading(false);
-  };
+    toast.promise(
+      axios
+        .put(
+          `${urlApi}landing/d/delete-gallery/1`,
+          {
+            index: indice,
+            url: urlS3,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "api-key": apiKey,
+            },
+          }
+        )
+        .then((response) => {
+          if (response.data.success) {
+            setLoading(false);
+            refreshCourses();
+            onClose();
+            return "Imagen eliminada con éxito";
+          } else {
+            throw new Error(
+              "Error al eliminar la imagen: " + response.data.message
+            );
+          }
+        }),
+      {
+        loading: "Eliminando imagen...",
+        success: (msg) => msg,
+        error: (err) => err.message || "Error en la solicitud de eliminación",
+      }
+    );
+  }
 
   return (
     <>
@@ -92,7 +99,7 @@ export default function DeleteImg({ isOpen, onClose, indice, urlS3, refreshCours
 
           <button
             className="btn-delete__delete-course lg-margin-bottom"
-            onClick={handleDeleteReload}
+            onClick={handleDeleteImg}
             disabled={loading}
           >
             <div className="text-[white]">

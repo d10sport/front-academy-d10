@@ -4,6 +4,7 @@ import AppContext from "@context/app/app-context";
 import { Upload, Trash2 } from "lucide-react";
 import { useDropzone } from "react-dropzone";
 import Modal from "react-modal";
+import { toast } from "sonner";
 import axios from "axios";
 
 export default function AddNews({ isOpen, onClose, refreshCourses }) {
@@ -69,37 +70,38 @@ export default function AddNews({ isOpen, onClose, refreshCourses }) {
     setLoading(true);
     setError("");
 
-    try {
-      const formData = new FormData();
-      formData.append("file", formImageUpload);
-      formData.append("page", "landing");
-      formData.append("data", JSON.stringify(newNews));
+    const formData = new FormData();
+    formData.append("file", formImageUpload);
+    formData.append("page", "landing");
+    formData.append("data", JSON.stringify(newNews));
 
-      const response = await axios.put(
-        `${urlApi}landing/i/save-news-admin/1`,
-        formData,
-        {
+    toast.promise(
+      axios
+        .put(`${urlApi}landing/i/save-news-admin/1`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
             "api-key": apiKey,
           },
-        }
-      );
-
-      if (response.data.success) {
-        alert("Noticia guardada con éxito");
-        setNewNews({ date: "", image: "", title: "", description: "" });
-        refreshCourses();
-        onClose();
-      } else {
-        throw new Error("Error al guardar la noticia");
+        })
+        .then((response) => {
+          if (response.data.success) {
+            setNewNews({ date: "", image: "", title: "", description: "" });
+            setLoading(false);
+            refreshCourses();
+            onClose();
+            return "Noticia guardada con éxito";
+          } else {
+            throw new Error(
+              "Error al guardar la noticia: " + response.data.message
+            );
+          }
+        }),
+      {
+        loading: "Guardando cambios...",
+        success: (msg) => msg,
+        error: (err) => err.message || "Error en la solicitud de guardado",
       }
-    } catch (error) {
-      setError("Hubo un problema al guardar la noticia.");
-      console.error("Error:", error);
-    } finally {
-      setLoading(false);
-    }
+    );
   }
 
   return (
@@ -135,9 +137,7 @@ export default function AddNews({ isOpen, onClose, refreshCourses }) {
           required
         />
 
-        <label className="label__add-class sm-margin-bottom">
-          Imagen
-        </label>
+        <label className="label__add-class sm-margin-bottom">Imagen</label>
         {!imageOpen && (
           <>
             <div className="cntr-input__add-course lg-margin-bottom">

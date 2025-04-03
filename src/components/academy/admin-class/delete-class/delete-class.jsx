@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 // import Example from "../../assets/img/example-img.png";
 import AppContext from "@context/app/app-context";
 // import { Link } from "react-router-dom";
 import axios from "axios";
 import "./delete-class.css";
 import Modal from "react-modal";
+import { toast } from "sonner";
 
 export default function DeleteClass({
   isOpen,
@@ -13,7 +14,6 @@ export default function DeleteClass({
   classId,
   refreshCourses,
 }) {
-
   const context = useContext(AppContext);
   const urlApi = context.urlApi;
   const apiKey = context.apiKey;
@@ -21,41 +21,43 @@ export default function DeleteClass({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  async function deleteDateCourse() {
+  useEffect(() => {
+    setLoading(false);
+    setError("");
+  }, []);
+
+  async function handleDeleteDateClass() {
     if (!classId) return;
 
-    console.log("ID del curso a eliminar:", classId);
+    // console.log("ID del curso a eliminar:", classId);
 
-    try {
-      await axios.delete(`${urlApi}academy/d/delete-class/${classId}`, {
-        headers: {
-          "Content-Type": "application/json",
-          "api-key": apiKey,
-        },
-      });
-
-      return true;
-    } catch (error) {
-      console.error("Error eliminando la clase:", error);
-      return false;
-    }
+    toast.promise(
+      axios
+        .delete(`${urlApi}academy/d/delete-class/${classId}`, {
+          headers: {
+            "Content-Type": "application/json",
+            "api-key": apiKey,
+          },
+        })
+        .then((response) => {
+          if (response.data.success) {
+            setLoading(false);
+            refreshCourses();
+            onClose();
+            return "Clase eliminada con éxito";
+          } else {
+            throw new Error(
+              "Error al eliminar la clase: " + response.data.message
+            );
+          }
+        }),
+      {
+        loading: "Guardando cambios...",
+        success: (msg) => msg,
+        error: (err) => err.message || "Error en la solicitud de eliminado",
+      }
+    );
   }
-
-  const handleDelete = async () => {
-    setLoading(true);
-    setError(null);
-
-    const success = await deleteDateCourse();
-
-    if (success) {
-      refreshCourses();
-      onClose();
-    } else {
-      setError("Error al eliminar el curso. Intenta de nuevo.");
-    }
-
-    setLoading(false);
-  };
 
   return (
     <>
@@ -89,7 +91,7 @@ export default function DeleteClass({
 
           <button
             className="btn-delete__delete-course lg-margin-bottom"
-            onClick={handleDelete}
+            onClick={handleDeleteDateClass}
             disabled={loading}
           >
             <div className="text-[white]">

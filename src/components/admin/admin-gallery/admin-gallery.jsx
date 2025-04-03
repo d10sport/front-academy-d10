@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import DeleteImg from "./delete-img/delete-img.jsx";
 import AppContext from "@context/app/app-context";
-import EditImg from "./edit-img/edit-img.jsx";
+// import EditImg from "./edit-img/edit-img.jsx";
 import AddImg from "./add-img/add-img.jsx";
 import "./admin-gallery.css";
 import axios from "axios";
@@ -12,7 +12,7 @@ export default function Admin() {
   const apiKey = context.apiKey;
 
   const [modalIsOpenOne, setModalIsOpenOne] = useState(false);
-  const [modalIsOpenTwo, setModalIsOpenTwo] = useState(false);
+  // const [modalIsOpenTwo, setModalIsOpenTwo] = useState(false);
   const [modalIsOpenThree, setModalIsOpenThree] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(false);
   const [selectedUrlS3, setSelectedUrlS3] = useState(false);
@@ -97,14 +97,15 @@ export default function Admin() {
       <AddImg
         isOpen={modalIsOpenOne}
         onClose={() => setModalIsOpenOne(false)}
+        refreshCourses={() => getDataGallery()}
       ></AddImg>
 
-      <EditImg
+      {/* <EditImg
         isOpen={modalIsOpenTwo}
         onClose={() => setModalIsOpenTwo(false)}
         indice={selectedIndex}
         refreshCourses={() => getDataGallery()}
-      ></EditImg>
+      ></EditImg> */}
 
       <DeleteImg
         isOpen={modalIsOpenThree}

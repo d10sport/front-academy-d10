@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // import Example from "../../assets/img/example-img.png";
 import AppContext from "@context/app/app-context";
 // import { Link } from "react-router-dom";
 import { useContext } from "react";
-import axios from "axios";
 import Modal from "react-modal";
+import { toast } from "sonner";
+import axios from "axios";
 import "./delete-course.css";
 
 export default function DeleteCourse({
@@ -21,41 +22,43 @@ export default function DeleteCourse({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  async function deleteDateCourse() {
+  useEffect(() => {
+    setLoading(false);
+    setError("");
+  }, []);
+
+  async function handleDeleteDateCourse() {
     if (!courseId) return;
 
-    console.log("ID del curso a eliminar:", courseId);
+    // console.log("ID del curso a eliminar:", courseId);
 
-    try {
-      await axios.delete(`${urlApi}academy/d/delete-course/${courseId}`, {
-        headers: {
-          "Content-Type": "application/json",
-          "api-key": apiKey,
-        },
-      });
-
-      return true;
-    } catch (error) {
-      console.error("Error eliminando el curso:", error);
-      return false;
-    }
+    toast.promise(
+      axios
+        .delete(`${urlApi}academy/d/delete-course/${courseId}`, {
+          headers: {
+            "Content-Type": "application/json",
+            "api-key": apiKey,
+          },
+        })
+        .then((response) => {
+          if (response.data.success) {
+            setLoading(false);
+            refreshCourses();
+            onClose();
+            return "Curso eliminado con éxito";
+          } else {
+            throw new Error(
+              "Error al eliminar el curso: " + response.data.message
+            );
+          }
+        }),
+      {
+        loading: "Guardando cambios...",
+        success: (msg) => msg,
+        error: (err) => err.message || "Error en la solicitud de eliminación",
+      }
+    );
   }
-
-  const handleDelete = async () => {
-    setLoading(true);
-    setError(null);
-
-    const success = await deleteDateCourse();
-
-    if (success) {
-      refreshCourses();
-      onClose();
-    } else {
-      setError("Error al eliminar el curso. Intenta de nuevo.");
-    }
-
-    setLoading(false);
-  };
 
   return (
     <>
@@ -89,7 +92,7 @@ export default function DeleteCourse({
 
           <button
             className="btn-delete__delete-course lg-margin-bottom"
-            onClick={handleDelete}
+            onClick={handleDeleteDateCourse}
             disabled={loading}
           >
             <div className="text-[white]">

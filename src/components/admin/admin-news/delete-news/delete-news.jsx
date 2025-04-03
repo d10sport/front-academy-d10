@@ -2,6 +2,7 @@
 import { useContext, useState } from "react";
 import AppContext from "@context/app/app-context";
 import Modal from "react-modal";
+import { toast } from "sonner";
 import axios from "axios";
 
 export default function DeleteNews({
@@ -23,33 +24,36 @@ export default function DeleteNews({
       return;
     }
 
-    try {
-      const response = await axios.put(
-        `${urlApi}landing/d/delete-news-admin/1`,
-        { index: indice },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "api-key": apiKey,
-          },
-        }
-      );
-
-      if (response.data.success) {
-        alert("Noticia eliminada con éxito");
-        refreshCourses();
-        onClose();
-      } else {
-        throw new Error(
-          response.data.message || "Error al eliminar la noticia"
-        );
+    toast.promise(
+      axios
+        .put(
+          `${urlApi}landing/d/delete-news-admin/1`,
+          { index: indice },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "api-key": apiKey,
+            },
+          }
+        )
+        .then((response) => {
+          if (response.data.success) {
+            setLoading(false);
+            refreshCourses();
+            onClose();
+            return "Noticia eliminada con éxito";
+          } else {
+            throw new Error(
+              "Error al eliminar la noticia: " + response.data.message
+            );
+          }
+        }),
+      {
+        loading: "Guardando cambios...",
+        success: (msg) => msg,
+        error: (err) => err.message || "Error en la solicitud de eliminación",
       }
-    } catch (error) {
-      setError("Hubo un problema al eliminar la noticia.");
-      console.error("Error:", error);
-    } finally {
-      setLoading(false);
-    }
+    );
   }
 
   return (
