@@ -1,18 +1,18 @@
 import { jwtDecode } from "jwt-decode";
 
 async function isTokenValid(token) {
-  let msg = 'Token valid'
+  let msg = 'Token valido'
   try {
     const decoded = jwtDecode(token);
     const currentTime = Date.now() / 1000;
     if (decoded.exp < currentTime) {
       deleteToken();
-      msg = 'Token has expired';
+      msg = 'El token ha expirado';
       return msg;
     }
     return msg;
   } catch {
-    msg = 'Invalid token';
+    msg = 'Token invalido';
     return msg;
   }
 }
@@ -32,7 +32,7 @@ async function getToken() {
     return false;
   }
   const valid = await isTokenValid(token);
-  if (valid != 'Token valid') {
+  if (valid != 'Token valido') {
     return false;
   }
   return token;
@@ -46,7 +46,7 @@ async function saveToken(token) {
 async function updateToken(token) {
   const valid = await isTokenValid(token);
   if (!valid) {
-    console.error('Invalid token');
+    console.error('Token invalido');
     return false;
   }
   saveToken(token);
