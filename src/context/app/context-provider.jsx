@@ -330,6 +330,27 @@ const AppProvider = ({ children }) => {
     return data;
   }
 
+  async function fetchLoginUsers(id_user) {
+    const data = await axios.get(`${urlApi}academy/config/user/g/login/${id_user}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'api-key': apiKey
+        },
+      })
+      .then((response) => {
+        if (!response.data.success) {
+          console.error(`${response.data.message}`);
+          return
+        };
+        return response.data.data;
+      })
+      .catch(() => {
+        console.error('Error al obtener los paises');
+      });
+    return data;
+  }
+
   async function fetchPermissionsUser(){
     const userData = await fetchGetDataToken();
     setPermissionsUser(userData.permissions);
@@ -408,6 +429,7 @@ const AppProvider = ({ children }) => {
       fetchPermissionsRoles,
       fetchPermissionsUser,
       fetchUser,
+      fetchLoginUsers
     }}>
       {children}
     </AppContext.Provider>
