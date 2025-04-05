@@ -85,6 +85,41 @@ export default function Admin() {
     setImageUploadThree("");
   }
 
+  function cancelUploadImageOne() {
+    setImageOpenOne(false);
+    setFilesOne([]);
+    setImageUploadOne("");
+  }
+
+  function cancelUploadImageTwo() {
+    setImageOpenTwo(false);
+    setFilesTwo([]);
+    setImageUploadTwo("");
+  }
+
+  function cancelUploadImageThree() {
+    setImageOpenThree(false);
+    setFilesThree([]);
+    setImageUploadThree("");
+  }
+
+  function openOrCloseImage(e) {
+    const idBtn = e.target.id;
+    if (idBtn == "btn_one") {
+      setImageOpenOne(true);
+      cancelUploadImageTwo();
+      cancelUploadImageThree();
+    } else if (idBtn == "btn_two") {
+      setImageOpenTwo(true);
+      cancelUploadImageOne();
+      cancelUploadImageThree();
+    } else if (idBtn == "btn_three") {
+      setImageOpenThree(true);
+      cancelUploadImageOne();
+      cancelUploadImageTwo();
+    }
+  }
+
   // --------------------------------------
 
   const [sectionOneAboutUs, setSectionOneAboutUs] = useState({
@@ -495,7 +530,8 @@ export default function Admin() {
               </div>
               <div className="cntr-input__add-course lg-margin-bottom">
                 <button
-                  onClick={() => setImageOpenOne(true)}
+                  id="btn_one"
+                  onClick={(e) => openOrCloseImage(e)}
                   className="btn-upload__add-course"
                   style={{ cursor: !isEditingTwo ? "not-allowed" : "pointer" }}
                   disabled={!isEditingTwo}
@@ -706,7 +742,8 @@ export default function Admin() {
               </div>
               <div className="cntr-input__add-course lg-margin-bottom">
                 <button
-                  onClick={() => setImageOpenTwo(true)}
+                  id="btn_two"
+                  onClick={(e) => openOrCloseImage(e)}
                   className="btn-upload__add-course"
                   style={{ cursor: !isEditingFour ? "not-allowed" : "pointer" }}
                   disabled={!isEditingFour}
@@ -854,7 +891,8 @@ export default function Admin() {
               </div>
               <div className="cntr-input__add-course lg-margin-bottom">
                 <button
-                  onClick={() => setImageOpenThree(true)}
+                  id="btn_three"
+                  onClick={(e) => openOrCloseImage(e)}
                   className="btn-upload__add-course"
                   style={{ cursor: !isEditingFive ? "not-allowed" : "pointer" }}
                   disabled={!isEditingFive}

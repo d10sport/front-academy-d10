@@ -107,6 +107,71 @@ export default function Admin() {
     setImageUploadFive("");
   }
 
+  function cancelUploadImageOne() {
+    setImageOpenOne(false);
+    setFilesOne([]);
+    setImageUploadOne("");
+  }
+
+  function cancelUploadImageTwo() {
+    setImageOpenTwo(false);
+    setFilesTwo([]);
+    setImageUploadTwo("");
+  }
+
+  function cancelUploadImageThree() {
+    setImageOpenThree(false);
+    setFilesThree([]);
+    setImageUploadThree("");
+  }
+
+  function cancelUploadImageFour() {
+    setImageOpenFour(false);
+    setFilesFour([]);
+    setImageUploadFour("");
+  }
+
+  function cancelUploadImageFive() {
+    setImageOpenFive(false);
+    setFilesFive([]);
+    setImageUploadFive("");
+  }
+
+  function openOrCloseImage(e) {
+    const idBtn = e.target.id;
+    if (idBtn == "btn_one") {
+      setImageOpenOne(true);
+      cancelUploadImageTwo();
+      cancelUploadImageThree();
+      cancelUploadImageFour();
+      cancelUploadImageFive();
+    } else if (idBtn == "btn_two") {
+      setImageOpenTwo(true);
+      cancelUploadImageOne();
+      cancelUploadImageThree();
+      cancelUploadImageFour();
+      cancelUploadImageFive();
+    } else if (idBtn == "btn_three") {
+      setImageOpenThree(true);
+      cancelUploadImageOne();
+      cancelUploadImageTwo();
+      cancelUploadImageFour();
+      cancelUploadImageFive();
+    } else if (idBtn == "btn_four") {
+      setImageOpenFour(true);
+      cancelUploadImageOne();
+      cancelUploadImageTwo();
+      cancelUploadImageThree();
+      cancelUploadImageFive();
+    } else if (idBtn == "btn_five") {
+      setImageOpenFive(true);
+      cancelUploadImageOne();
+      cancelUploadImageTwo();
+      cancelUploadImageThree();
+      cancelUploadImageFour();
+    }
+  }
+
   // --------------------------------------
 
   const [sectionOne, setSectionOne] = useState({
@@ -515,7 +580,8 @@ export default function Admin() {
               </div>
               <div className="cntr-input__add-course lg-margin-bottom">
                 <button
-                  onClick={() => setImageOpenOne(true)}
+                  id="btn_one"
+                  onClick={(e) => openOrCloseImage(e)}
                   className="btn-upload__add-course"
                   style={{ cursor: !isEditingOne ? "not-allowed" : "pointer" }}
                   disabled={!isEditingOne}
@@ -599,7 +665,8 @@ export default function Admin() {
               </div>
               <div className="cntr-input__add-course lg-margin-bottom">
                 <button
-                  onClick={() => setImageOpenTwo(true)}
+                  id="btn_two"
+                  onClick={(e) => openOrCloseImage(e)}
                   className="btn-upload__add-course"
                   style={{ cursor: !isEditingOne ? "not-allowed" : "pointer" }}
                   disabled={!isEditingOne}
@@ -742,7 +809,8 @@ export default function Admin() {
               </div>
               <div className="cntr-input__add-course lg-margin-bottom">
                 <button
-                  onClick={() => setImageOpenThree(true)}
+                  id="btn_three"
+                  onClick={(e) => openOrCloseImage(e)}
                   className="btn-upload__add-course"
                   style={{ cursor: !isEditingTwo ? "not-allowed" : "pointer" }}
                   disabled={!isEditingTwo}
@@ -860,7 +928,8 @@ export default function Admin() {
               </div>
               <div className="cntr-input__add-course lg-margin-bottom">
                 <button
-                  onClick={() => setImageOpenFour(true)}
+                  id="btn_four"
+                  onClick={(e) => openOrCloseImage(e)}
                   className="btn-upload__add-course"
                   style={{
                     cursor: !isEditingThree ? "not-allowed" : "pointer",
@@ -1109,7 +1178,8 @@ export default function Admin() {
               </div>
               <div className="cntr-input__add-course lg-margin-bottom">
                 <button
-                  onClick={() => setImageOpenFive(true)}
+                  id="btn_five"
+                  onClick={(e) => openOrCloseImage(e)}
                   className="btn-upload__add-course"
                   style={{ cursor: !isEditingFive ? "not-allowed" : "pointer" }}
                   disabled={!isEditingFive}
