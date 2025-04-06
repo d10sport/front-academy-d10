@@ -67,6 +67,12 @@ export default function Login() {
     fetchLoginUser(data);
   }
 
+  function handleKeyDown(e) {
+    if (e.key === "Enter") {
+      handleLogin();
+    }
+  }
+
   function selectUserAgain() {
     navigate("/login-user");
   }
@@ -87,7 +93,7 @@ export default function Login() {
       return;
     }
 
-    handleLogin();
+    handleKeyDown();
   }, [loginLink]);
 
   async function getDecodeUrl() {
@@ -170,6 +176,7 @@ export default function Login() {
             placeholder="username@gmail.com"
             value={username}
             onChange={(e) => handleUsername(e)}
+            onKeyDown={(e) => handleKeyDown(e)}
           />
 
           <label htmlFor="password" className="label__login">
@@ -185,6 +192,7 @@ export default function Login() {
             placeholder="password"
             value={password}
             onChange={(e) => handlePassword(e)}
+            onKeyDown={(e) => handleKeyDown(e)}
           />
 
           {/* <Link to="/forgot" className="margin-top__login">
