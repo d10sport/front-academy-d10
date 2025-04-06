@@ -359,8 +359,11 @@ export default function Admin() {
                 <button
                   id="btn_one"
                   onClick={(e) => openOrCloseImage(e)}
-                  className="btn-upload__add-course"
-                  style={{ cursor: !isEditingOne ? "not-allowed" : "pointer" }}
+                  className={
+                    !isEditingOne
+                      ? "btn-cursor-disabled"
+                      : "btn-upload__add-course"
+                  }
                   disabled={!isEditingOne}
                 >
                   Cambiar imagen
@@ -524,8 +527,11 @@ export default function Admin() {
                 <button
                   id="btn_two"
                   onClick={(e) => openOrCloseImage(e)}
-                  className="btn-upload__add-course"
-                  style={{ cursor: !isEditingTwo ? "not-allowed" : "pointer" }}
+                  className={
+                    !isEditingTwo
+                      ? "btn-cursor-disabled"
+                      : "btn-upload__add-course"
+                  }
                   disabled={!isEditingTwo}
                 >
                   Cambiar imagen
@@ -689,10 +695,11 @@ export default function Admin() {
                 <button
                   id="btn_three"
                   onClick={(e) => openOrCloseImage(e)}
-                  className="btn-upload__add-course"
-                  style={{
-                    cursor: !isEditingThree ? "not-allowed" : "pointer",
-                  }}
+                  className={
+                    !isEditingThree
+                      ? "btn-cursor-disabled"
+                      : "btn-upload__add-course"
+                  }
                   disabled={!isEditingThree}
                 >
                   Cambiar imagen
