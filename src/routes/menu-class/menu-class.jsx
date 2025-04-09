@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import "./menu-class.css";
 import { ArrowLeft } from "lucide-react";
+import Loader from "../../ui/loaders/fake-load/loader.fake.jsx";
 
 export default function MenuClass() {
   const [modalIsOpenOne, setModalIsOpenOne] = useState(false);
@@ -16,6 +17,8 @@ export default function MenuClass() {
   // const [selectedClass, setSelectedClass] = useState(null);
   const [modalIsOpenThree, setModalIsOpenThree] = useState(false);
   const [selectedClassId, setSelectedClassId] = useState(null);
+
+  const [loading, setLoading] = useState(true);
 
   const { idCourse } = useParams();
   const context = useContext(AppContext);
@@ -50,31 +53,42 @@ export default function MenuClass() {
     }
   }, [context.token]);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <>
-      <section className="menu-class">
-        <div className="home__menu-class">
-          <Link to={"/menu-course"} className="btn-back__menu-class">
-            <ArrowLeft />
-          </Link>
-          <h1 className="title__menu-class">Manage Classes</h1>
-          <button
-            onClick={() => setModalIsOpenOne(true)}
-            className="btn-new__menu-class"
-          >
-            Add Class
-          </button>
-        </div>
+      {loading ? (
+        <Loader />
+      ) : (
+        <section className="menu-class">
+          <div className="home__menu-class">
+            <Link to={"/edit-courses"} className="btn-back__menu-class">
+              <ArrowLeft />
+            </Link>
+            <h1 className="title__menu-class">Manage Classes</h1>
+            <button
+              onClick={() => setModalIsOpenOne(true)}
+              className="btn-new__menu-class"
+            >
+              Add Class
+            </button>
+          </div>
 
-        <ul className="list__menu-class">
-          {classes.map((cls, index) => (
-            <li key={index} className="item__menu-class">
-              <div className="cntr-info__menu-class">
-                <h2 className="subtitle__menu-class">{cls.class_title}</h2>
-                <p className="text__menu-class">{cls.class_description}</p>
-              </div>
-              <div className="cntr-btn__menu-class">
-                {/* <button
+          <ul className="list__menu-class">
+            {classes.map((cls, index) => (
+              <li key={index} className="item__menu-class">
+                <div className="cntr-info__menu-class">
+                  <h2 className="subtitle__menu-class">{cls.class_title}</h2>
+                  <p className="text__menu-class">{cls.class_description}</p>
+                </div>
+                <div className="cntr-btn__menu-class">
+                  {/* <button
                   onClick={() => {
                     setSelectedClass(cls);
                     setModalIsOpenTwo(true);
@@ -84,20 +98,21 @@ export default function MenuClass() {
                   Edit
                 </button> */}
 
-                <button
-                  onClick={() => {
-                    setSelectedClassId(cls.class_id);
-                    setModalIsOpenThree(true);
-                  }}
-                  className="btn-delete__menu-course"
-                >
-                  Eliminar
-                </button>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </section>
+                  <button
+                    onClick={() => {
+                      setSelectedClassId(cls.class_id);
+                      setModalIsOpenThree(true);
+                    }}
+                    className="btn-delete__menu-course"
+                  >
+                    Eliminar
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <AddClass
         isOpen={modalIsOpenOne}

@@ -7,7 +7,14 @@ import { toast } from "sonner";
 import "./header.css";
 
 export default function Header() {
-  const { user, permissionsUser, fetchPermissionsUser, fetchUser, fetchPermissionsRoles, closeSession } = useContext(AppContext);
+  const {
+    user,
+    permissionsUser,
+    fetchPermissionsUser,
+    fetchUser,
+    fetchPermissionsRoles,
+    closeSession,
+  } = useContext(AppContext);
   const [permissionsSystem, setPermissionsSystem] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -25,17 +32,31 @@ export default function Header() {
       role_user = id_role;
     }
 
-    if(allPermissions == undefined || userPermissions == undefined || allPermissions.length == 0 && userPermissions.length > 0){
+    if (
+      allPermissions == undefined ||
+      userPermissions == undefined ||
+      (allPermissions.length == 0 && userPermissions.length > 0)
+    ) {
       setPermissionsSystem(userPermissions);
       return;
     }
 
-    const filteredPermissions = allPermissions.filter(permissionSystem =>
-      userPermissions.some(permissionUser => permissionUser.id_permission === permissionSystem.permission_id && permissionSystem.role_id == role_user)
+    const filteredPermissions = allPermissions.filter((permissionSystem) =>
+      userPermissions.some(
+        (permissionUser) =>
+          permissionUser.id_permission === permissionSystem.permission_id &&
+          permissionSystem.role_id == role_user
+      )
     );
 
     setPermissionsSystem(filteredPermissions);
-  }, [permissionsUser, fetchPermissionsUser, fetchPermissionsRoles, fetchUser, user?.id_role]);
+  }, [
+    permissionsUser,
+    fetchPermissionsUser,
+    fetchPermissionsRoles,
+    fetchUser,
+    user?.id_role,
+  ]);
 
   useEffect(() => {
     getPermissions();
@@ -49,13 +70,17 @@ export default function Header() {
     <nav id="nav_header" className="nav">
       <LogoHeader />
       <ul className="list__nav">
-        {permissionsSystem?.length > 0 && (
-          permissionsSystem.map(permission => (
-            <li key={permission.permission_id ?? permission.id_permission} className="item__nav">
-              <Link to={permission.link}>{permission.description_permission}</Link>
+        {permissionsSystem?.length > 0 &&
+          permissionsSystem.map((permission) => (
+            <li
+              key={permission.permission_id ?? permission.id_permission}
+              className="item__nav"
+            >
+              <Link to={permission.link}>
+                {permission.description_permission}
+              </Link>
             </li>
-          ))
-        )}
+          ))}
       </ul>
 
       <button className="button__button-nav" onClick={toggleVisibility}>
@@ -80,13 +105,15 @@ export default function Header() {
         <div className="cntr-two-item__info-user">
           <h1 className="title__info-user">Información de usuario</h1>
           <p className="text__info-user">
-            <b>Nombre: </b> {user?.first_names ?? user?.president} {user?.last_names ?? ""}
+            <b>Nombre: </b> {user?.first_names ?? user?.president}{" "}
+            {user?.last_names ?? ""}
           </p>
           <p className="text__info-user">
             <b>Email: </b> {user?.email}
           </p>
           <p className="text__info-user">
-            <b>Rol: </b> {user?.role.charAt(0).toUpperCase() + user?.role.slice(1)}
+            <b>Rol: </b>{" "}
+            {user?.role.charAt(0).toUpperCase() + user?.role.slice(1)}
           </p>
           <p className="text__info-user">
             <b>Club: </b> {user?.club?.name_club ?? user?.name_club}
@@ -94,10 +121,14 @@ export default function Header() {
         </div>
 
         <div className="cntr-three-item__info-user">
-          <button onClick={() => {
-            closeSession();
-            toast.success("Sesión cerrada correctamente");
-          }} className="button__info-user">
+          <button
+            onClick={() => {
+              toggleVisibility();
+              closeSession();
+              toast.success("Sesión cerrada correctamente");
+            }}
+            className="button__info-user"
+          >
             Log out
           </button>
         </div>

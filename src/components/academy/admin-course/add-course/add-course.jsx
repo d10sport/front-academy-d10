@@ -4,6 +4,7 @@ import AppContext from "@context/app/app-context";
 import { Upload, Trash2 } from "lucide-react";
 import { useDropzone } from "react-dropzone";
 import Modal from "react-modal";
+import { toast } from "sonner";
 import axios from "axios";
 import "./add-course.css";
 
@@ -62,48 +63,49 @@ export default function AddCourse({ isOpen, onClose, refreshCourses }) {
     setLoading(true);
     setError("");
 
-    try {
-      const formData = new FormData();
-      formData.append("file", formImageUpload);
-      formData.append("page", "academy");
-      formData.append(
-        "data",
-        JSON.stringify({
-          course_title: courseTitle,
-          main_photo: courseImage,
-          description_course: courseDescription,
-        })
-      );
+    const formData = new FormData();
+    formData.append("file", formImageUpload);
+    formData.append("page", "academy");
+    formData.append(
+      "data",
+      JSON.stringify({
+        course_title: courseTitle,
+        main_photo: courseImage,
+        description_course: courseDescription,
+      })
+    );
 
-      const response = await axios.post(
-        `${urlApi}academy/i/add-course`,
-        formData,
-        {
+    toast.promise(
+      axios
+        .post(`${urlApi}academy/i/add-course`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
             "api-key": apiKey,
           },
-        }
-      );
-
-      if (response.data.success) {
-        alert("Curso agregado con éxito");
-        setCourseTitle("");
-        setCourseImage("");
-        setImageUpload("");
-        setFormImageUpload("");
-        setCourseDescription("");
-      } else {
-        throw new Error("Error al agregar el curso");
+        })
+        .then((response) => {
+          if (response.data.success) {
+            setCourseTitle("");
+            setCourseImage("");
+            setImageUpload("");
+            setFormImageUpload("");
+            setCourseDescription("");
+            setLoading(false);
+            refreshCourses();
+            onClose();
+            return "Curso agregado con éxito";
+          } else {
+            throw new Error(
+              "Error al agregar el curso: " + response.data.message
+            );
+          }
+        }),
+      {
+        loading: "Guardando cambios...",
+        success: (msg) => msg,
+        error: (err) => err.message || "Error en la solicitud de guardado",
       }
-    } catch (error) {
-      setError("Hubo un problema al agregar el curso");
-      console.error("Error:", error);
-    } finally {
-      setLoading(false);
-      refreshCourses();
-      onClose();
-    }
+    );
   }
 
   return (
@@ -237,7 +239,7 @@ export default function AddCourse({ isOpen, onClose, refreshCourses }) {
 
           <button
             className="btn-add__add-course lg-margin-bottom"
-            onClick={handleAddCourse}
+            onClick={() => handleAddCourse()}
             disabled={loading}
           >
             {loading ? "Adding..." : "Add Course"}
