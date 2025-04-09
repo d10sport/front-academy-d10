@@ -20,7 +20,7 @@ export default function Login() {
   const query = useQuery();
 
   function handleUsername(e) {
-    setUsername(e.target.value);
+    setUsername(e.target.value.trim());
   }
 
   function handlePassword(e) {
@@ -67,6 +67,12 @@ export default function Login() {
     fetchLoginUser(data);
   }
 
+  function handleKeyDown(e) {
+    if (e.key === "Enter") {
+      handleLogin();
+    }
+  }
+
   function selectUserAgain() {
     navigate("/login-user");
   }
@@ -76,21 +82,26 @@ export default function Login() {
   }
 
   useEffect(() => {
-    if (username == "" || username == undefined ||
-      password == "" || password == undefined ||
-      context.typeUser == "" || context.typeUser == undefined) {
+    if (
+      username == "" ||
+      username == undefined ||
+      password == "" ||
+      password == undefined ||
+      context.typeUser == "" ||
+      context.typeUser == undefined
+    ) {
       return;
     }
 
-    handleLogin();
+    handleKeyDown();
   }, [loginLink]);
 
   async function getDecodeUrl() {
     const tokenUser = query.get("CwcfFzgQ50HM");
     if (tokenUser !== null && tokenUser !== undefined && tokenUser !== "") {
-      let user = '';
-      let pass = '';
-      let type = '';
+      let user = "";
+      let pass = "";
+      let type = "";
 
       const decode = await getTokenDecoded(tokenUser);
       if (decode.decoded && decode.msg == "Token valid") {
@@ -98,9 +109,14 @@ export default function Login() {
         let dUser = await getTokenDecoded(params.get("username"));
         let dPass = await getTokenDecoded(params.get("password"));
         let dType = await getTokenDecoded(params.get("role_user"));
-        if (dUser && dUser.msg == "Token valid" &&
-          dPass && dPass.msg == "Token valid" &&
-          dType && dType.msg == "Token valid") {
+        if (
+          dUser &&
+          dUser.msg == "Token valid" &&
+          dPass &&
+          dPass.msg == "Token valid" &&
+          dType &&
+          dType.msg == "Token valid"
+        ) {
           user = dUser.decoded;
           pass = dPass.decoded;
           type = dType.decoded;
@@ -114,7 +130,7 @@ export default function Login() {
         setUsername(user?.username);
         setPassword(pass?.password);
         context.setTypeUser(type?.role);
-        context.setPermissionsUser(type?.permissions)
+        context.setPermissionsUser(type?.permissions);
       } else {
         if (context.typeUser == "") {
           navigate("/login-user");
@@ -141,10 +157,10 @@ export default function Login() {
               {context.typeUser == "athlete"
                 ? "Deportista"
                 : context.typeUser == "coach"
-                  ? "Entrenador"
-                  : context.typeUser == "club"
-                    ? "Club"
-                    : ""}
+                ? "Entrenador"
+                : context.typeUser == "club"
+                ? "Club"
+                : ""}
             </button>
           </div>
 
@@ -160,6 +176,7 @@ export default function Login() {
             placeholder="username@gmail.com"
             value={username}
             onChange={(e) => handleUsername(e)}
+            onKeyDown={(e) => handleKeyDown(e)}
           />
 
           <label htmlFor="password" className="label__login">
@@ -175,6 +192,7 @@ export default function Login() {
             placeholder="password"
             value={password}
             onChange={(e) => handlePassword(e)}
+            onKeyDown={(e) => handleKeyDown(e)}
           />
 
           {/* <Link to="/forgot" className="margin-top__login">
