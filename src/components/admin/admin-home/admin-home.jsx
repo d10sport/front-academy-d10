@@ -3,6 +3,7 @@ import getTokenDecoded from "../../../token/token-data.js";
 import AppContext from "@context/app/app-context";
 import { Upload, Trash2 } from "lucide-react";
 import { useDropzone } from "react-dropzone";
+import { toast } from "sonner";
 import axios from "axios";
 
 export default function Admin() {
@@ -45,10 +46,11 @@ export default function Admin() {
   const [error, setError] = useState("");
 
   const onDrop = useCallback((acceptedFiles, rootRef, inputRef) => {
-    const parentIdDrag = inputRef.nativeEvent.srcElement.parentElement.parentElement.id;
+    const parentIdDrag =
+      inputRef.nativeEvent.srcElement.parentElement.parentElement.id;
     const parentIdDrop = inputRef.nativeEvent.srcElement.parentElement.id;
     let parentId = "";
-    if(parentIdDrag != ""){
+    if (parentIdDrag != "") {
       parentId = parentIdDrag;
     } else {
       parentId = parentIdDrop;
@@ -103,6 +105,69 @@ export default function Admin() {
     setImageUploadThree("");
     setImageUploadFour("");
     setImageUploadFive("");
+  }
+
+  function cancelUploadImageOne() {
+    setImageOpenOne(false);
+    setFilesOne([]);
+    setImageUploadOne("");
+  }
+
+  function cancelUploadImageTwo() {
+    setImageOpenTwo(false);
+    setFilesTwo([]);
+    setImageUploadTwo("");
+  }
+
+  function cancelUploadImageThree() {
+    setImageOpenThree(false);
+    setFilesThree([]);
+    setImageUploadThree("");
+  }
+
+  function cancelUploadImageFour() {
+    setImageOpenFour(false);
+    setFilesFour([]);
+    setImageUploadFour("");
+  }
+
+  function cancelUploadImageFive() {
+    setImageOpenFive(false);
+    setFilesFive([]);
+    setImageUploadFive("");
+  }
+
+  function openOrCloseImage(e) {
+    const idBtn = e.target.id;
+    if (idBtn == "btn_one") {
+      setImageOpenOne(true);
+      cancelUploadImageThree();
+      cancelUploadImageFour();
+      cancelUploadImageFive();
+    } else if (idBtn == "btn_two") {
+      setImageOpenTwo(true);
+      cancelUploadImageThree();
+      cancelUploadImageFour();
+      cancelUploadImageFive();
+    } else if (idBtn == "btn_three") {
+      setImageOpenThree(true);
+      cancelUploadImageOne();
+      cancelUploadImageTwo();
+      cancelUploadImageFour();
+      cancelUploadImageFive();
+    } else if (idBtn == "btn_four") {
+      setImageOpenFour(true);
+      cancelUploadImageOne();
+      cancelUploadImageTwo();
+      cancelUploadImageThree();
+      cancelUploadImageFive();
+    } else if (idBtn == "btn_five") {
+      setImageOpenFive(true);
+      cancelUploadImageOne();
+      cancelUploadImageTwo();
+      cancelUploadImageThree();
+      cancelUploadImageFour();
+    }
   }
 
   // --------------------------------------
@@ -183,6 +248,8 @@ export default function Admin() {
       });
   }
 
+  
+
   // ----------------------------- Update Home ---------------------------------
 
   async function handleUpdateHome() {
@@ -197,39 +264,39 @@ export default function Admin() {
     } else {
       setError("");
     }
-    try {
-      const formData = new FormData();
-      formData.append("file", formImageUploadOne);
-      formData.append("file", formImageUploadTwo);
-      formData.append("page", "landing");
-      formData.append("data", JSON.stringify(sectionOne));
 
-      const response = await axios.put(
-        `${urlApi}landing/u/update-home/1`,
-        formData,
-        {
+    const formData = new FormData();
+    formData.append("file", formImageUploadOne);
+    formData.append("file", formImageUploadTwo);
+    formData.append("page", "landing");
+    formData.append("data", JSON.stringify(sectionOne));
+
+    toast.promise(
+      axios
+        .put(`${urlApi}landing/u/update-home/1`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
             "api-key": apiKey,
           },
-        }
-      );
-
-      if (response.data.success) {
-        console.log("Datos actualizados con éxito:", response.data);
-        // setIsEditing(false);
-        setIsEditingOne(false);
-        setIsEditingTwo(false);
-        setIsEditingThree(false);
-        setIsEditingFour(false);
-        setIsEditingFive(false);
-        setIsEditingSix(false);
-      } else {
-        console.error("Error en la actualización:", response.data.message);
+        })
+        .then((response) => {
+          if (response.data.success) {
+            setIsEditingOne(false);
+            cancelUploadImage();
+            getDateHome();
+            return "Datos actualizados con éxito";
+          } else {
+            throw new Error(
+              "Error en la actualización: " + response.data.message
+            );
+          }
+        }),
+      {
+        loading: "Guardando cambios...",
+        success: (msg) => msg,
+        error: (err) => err.message || "Error en la solicitud de actualización",
       }
-    } catch (error) {
-      console.error("Error en la solicitud de actualización:", error);
-    }
+    );
   }
 
   // ----------------------------- Update Nosotros ---------------------------------
@@ -241,38 +308,38 @@ export default function Admin() {
     } else {
       setError("");
     }
-    try {
-      const formData = new FormData();
-      formData.append("file", formImageUploadThree);
-      formData.append("page", "landing");
-      formData.append("data", JSON.stringify(sectionTwo));
 
-      const response = await axios.put(
-        `${urlApi}landing/u/update-nosotros/1`,
-        formData,
-        {
+    const formData = new FormData();
+    formData.append("file", formImageUploadThree);
+    formData.append("page", "landing");
+    formData.append("data", JSON.stringify(sectionTwo));
+
+    toast.promise(
+      axios
+        .put(`${urlApi}landing/u/update-nosotros/1`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
             "api-key": apiKey,
           },
-        }
-      );
-
-      if (response.data.success) {
-        console.log("Datos actualizados con éxito:", response.data);
-        // setIsEditing(false);
-        setIsEditingOne(false);
-        setIsEditingTwo(false);
-        setIsEditingThree(false);
-        setIsEditingFour(false);
-        setIsEditingFive(false);
-        setIsEditingSix(false);
-      } else {
-        console.error("Error en la actualización:", response.data.message);
+        })
+        .then((response) => {
+          if (response.data.success) {
+            setIsEditingTwo(false);
+            cancelUploadImage();
+            getDateHome();
+            return "Datos actualizados con éxito";
+          } else {
+            throw new Error(
+              "Error en la actualización: " + response.data.message
+            );
+          }
+        }),
+      {
+        loading: "Guardando cambios...",
+        success: (msg) => msg,
+        error: (err) => err.message || "Error en la solicitud de actualización",
       }
-    } catch (error) {
-      console.error("Error en la solicitud de actualización:", error);
-    }
+    );
   }
 
   // ----------------------------- Update Comercial ---------------------------------
@@ -284,72 +351,75 @@ export default function Admin() {
     } else {
       setError("");
     }
-    try {
-      const formData = new FormData();
-      formData.append("file", formImageUploadFour);
-      formData.append("page", "landing");
-      formData.append("data", JSON.stringify(sectionThree));
 
-      const response = await axios.put(
-        `${urlApi}landing/u/update-comercial/1`,
-        formData,
-        {
+    const formData = new FormData();
+    formData.append("file", formImageUploadFour);
+    formData.append("page", "landing");
+    formData.append("data", JSON.stringify(sectionThree));
+
+    toast.promise(
+      axios
+        .put(`${urlApi}landing/u/update-comercial/1`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
             "api-key": apiKey,
           },
-        }
-      );
-
-      if (response.data.success) {
-        console.log("Datos actualizados con éxito:", response.data);
-        // setIsEditing(false);
-        setIsEditingOne(false);
-        setIsEditingTwo(false);
-        setIsEditingThree(false);
-        setIsEditingFour(false);
-        setIsEditingFive(false);
-        setIsEditingSix(false);
-      } else {
-        console.error("Error en la actualización:", response.data.message);
+        })
+        .then((response) => {
+          if (response.data.success) {
+            setIsEditingThree(false);
+            cancelUploadImage();
+            getDateHome();
+            return "Datos actualizados con éxito";
+          } else {
+            throw new Error(
+              "Error en la actualización: " + response.data.message
+            );
+          }
+        }),
+      {
+        loading: "Guardando cambios",
+        success: (msg) => msg,
+        error: (err) => err.message || "Error en la solicitud de actualización",
       }
-    } catch (error) {
-      console.error("Error en la solicitud de actualización:", error);
-    }
+    );
   }
 
   // ----------------------------- Update News ---------------------------------
 
   async function handleUpdateNews() {
-    try {
-      const { h1, title, description } = sectionFour.news;
+    const { h1, title, description } = sectionFour.news;
 
-      const response = await axios.put(
-        `${urlApi}landing/u/update-news/1`,
-        { h1, title, description },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "api-key": apiKey,
-          },
-        }
-      );
-
-      if (response.data.success) {
-        console.log("Datos actualizados con éxito:", response.data);
-        // setIsEditing(false);
-        setIsEditingOne(false);
-        setIsEditingTwo(false);
-        setIsEditingThree(false);
-        setIsEditingFour(false);
-        setIsEditingFive(false);
-        setIsEditingSix(false);
-      } else {
-        console.error("Error en la actualización:", response.data.message);
+    toast.promise(
+      axios
+        .put(
+          `${urlApi}landing/u/update-news/1`,
+          { h1, title, description },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "api-key": apiKey,
+            },
+          }
+        )
+        .then((response) => {
+          if (response.data.success) {
+            setIsEditingFour(false);
+            cancelUploadImage();
+            getDateHome();
+            return "Datos actualizados con éxito";
+          } else {
+            throw new Error(
+              "Error en la actualización: " + response.data.message
+            );
+          }
+        }),
+      {
+        loading: "Guardando cambios...",
+        success: (msg) => msg,
+        error: (err) => err.message || "Error en la solicitud de actualización",
       }
-    } catch (error) {
-      console.error("Error en la solicitud de actualización:", error);
-    }
+    );
   }
 
   // ----------------------------- Update Academia ---------------------------------
@@ -361,70 +431,69 @@ export default function Admin() {
     } else {
       setError("");
     }
-    try {
-      const formData = new FormData();
-      formData.append("file", formImageUploadFive);
-      formData.append("page", "landing");
-      formData.append("data", JSON.stringify(sectionFive));
 
-      const response = await axios.put(
-        `${urlApi}landing/u/update-academia/1`,
-        formData,
-        {
+    const formData = new FormData();
+    formData.append("file", formImageUploadFive);
+    formData.append("page", "landing");
+    formData.append("data", JSON.stringify(sectionFive));
+
+    toast.promise(
+      axios
+        .put(`${urlApi}landing/u/update-academia/1`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
             "api-key": apiKey,
           },
-        }
-      );
-
-      if (response.data.success) {
-        console.log("Datos actualizados con éxito:", response.data);
-        // setIsEditing(false);
-        setIsEditingOne(false);
-        setIsEditingTwo(false);
-        setIsEditingThree(false);
-        setIsEditingFour(false);
-        setIsEditingFive(false);
-        setIsEditingSix(false);
-      } else {
-        console.error("Error en la actualización:", response.data.message);
+        })
+        .then((response) => {
+          if (response.data.success) {
+            setIsEditingFive(false);
+            cancelUploadImage();
+            getDateHome();
+            return "Datos actualizados con éxito";
+          } else {
+            throw new Error(
+              "Error en la actualización: " + response.data.message
+            );
+          }
+        }),
+      {
+        loading: "Guardando cambios...",
+        success: (msg) => msg,
+        error: (err) => err.message || "Error en la solicitud de actualización",
       }
-    } catch (error) {
-      console.error("Error en la solicitud de actualización:", error);
-    }
+    );
   }
 
   // ----------------------------- Update Aliados ---------------------------------
 
   async function handleUpdateAliados() {
-    try {
-      const response = await axios.put(
-        `${urlApi}landing/u/update-aliados/1`,
-        sectionSix,
-        {
+    toast.promise(
+      axios
+        .put(`${urlApi}landing/u/update-aliados/1`, sectionSix, {
           headers: {
             "Content-Type": "application/json",
             "api-key": apiKey,
           },
-        }
-      );
-
-      if (response.data.success) {
-        console.log("Datos actualizados con éxito:", response.data);
-        // setIsEditing(false);
-        setIsEditingOne(false);
-        setIsEditingTwo(false);
-        setIsEditingThree(false);
-        setIsEditingFour(false);
-        setIsEditingFive(false);
-        setIsEditingSix(false);
-      } else {
-        console.error("Error en la actualización:", response.data.message);
+        })
+        .then((response) => {
+          if (response.data.success) {
+            setIsEditingSix(false);
+            cancelUploadImage();
+            getDateHome();
+            return "Datos actualizados con éxito";
+          } else {
+            throw new Error(
+              "Error en la actualización: " + response.data.message
+            );
+          }
+        }),
+      {
+        loading: "Guardando cambios...",
+        success: (msg) => msg,
+        error: (err) => err.message || "Error en la solicitud de actualización",
       }
-    } catch (error) {
-      console.error("Error en la solicitud de actualización:", error);
-    }
+    );
   }
 
   // -----------------------------------------------------------------------------
@@ -454,6 +523,8 @@ export default function Admin() {
             onChange={(e) =>
               setSectionOne({ ...sectionOne, company: e.target.value })
             }
+            style={{ cursor: !isEditingOne ? "not-allowed" : "text" }}
+            disabled={!isEditingOne}
           />
           <label htmlFor="" className="label__admin-section">
             Slogan #1:
@@ -465,6 +536,8 @@ export default function Admin() {
             onChange={(e) =>
               setSectionOne({ ...sectionOne, slogan: e.target.value })
             }
+            style={{ cursor: !isEditingOne ? "not-allowed" : "text" }}
+            disabled={!isEditingOne}
           />
           <label htmlFor="" className="label__admin-section">
             Slogan #2:
@@ -476,6 +549,8 @@ export default function Admin() {
             onChange={(e) =>
               setSectionOne({ ...sectionOne, slogan_two: e.target.value })
             }
+            style={{ cursor: !isEditingOne ? "not-allowed" : "text" }}
+            disabled={!isEditingOne}
           />
           <label htmlFor="" className="label__admin-section">
             Slogan #3:
@@ -487,6 +562,8 @@ export default function Admin() {
             onChange={(e) =>
               setSectionOne({ ...sectionOne, slogan_three: e.target.value })
             }
+            style={{ cursor: !isEditingOne ? "not-allowed" : "text" }}
+            disabled={!isEditingOne}
           />
           <label htmlFor="" className="label__admin-section">
             Imagen de fondo para monitores:
@@ -503,8 +580,14 @@ export default function Admin() {
               </div>
               <div className="cntr-input__add-course lg-margin-bottom">
                 <button
-                  onClick={() => setImageOpenOne(true)}
-                  className="btn-upload__add-course"
+                  id="btn_one"
+                  onClick={(e) => openOrCloseImage(e)}
+                  className={
+                    !isEditingOne
+                      ? "btn-cursor-disabled"
+                      : "btn-upload__add-course"
+                  }
+                  disabled={!isEditingOne}
                 >
                   Cambiar imagen
                 </button>
@@ -514,11 +597,6 @@ export default function Admin() {
 
           {imageOpenOne && (
             <section className="upload-section">
-              <h1 className="title__add-class sm-margin-bottom">
-                Añadir nueva imagen
-              </h1>
-              <br />
-
               {filesOne.length === 0 ? (
                 <div
                   id="dropzone-one"
@@ -590,8 +668,14 @@ export default function Admin() {
               </div>
               <div className="cntr-input__add-course lg-margin-bottom">
                 <button
-                  onClick={() => setImageOpenTwo(true)}
-                  className="btn-upload__add-course"
+                  id="btn_two"
+                  onClick={(e) => openOrCloseImage(e)}
+                  className={
+                    !isEditingOne
+                      ? "btn-cursor-disabled"
+                      : "btn-upload__add-course"
+                  }
+                  disabled={!isEditingOne}
                 >
                   Cambiar imagen
                 </button>
@@ -601,11 +685,6 @@ export default function Admin() {
 
           {imageOpenTwo && (
             <section className="upload-section">
-              <h1 className="title__add-class sm-margin-bottom">
-                Añadir nueva imagen
-              </h1>
-              <br />
-
               {filesTwo.length === 0 ? (
                 <div
                   id="dropzone-two"
@@ -664,16 +743,21 @@ export default function Admin() {
 
           {isEditingOne ? (
             <div className="confirm-edit__admin-section">
-              <p className="text__admin-section">¿Estás seguro de editarlo?</p>
+              <p className="text__admin-section">
+                ¿Estás seguro de guardar los cambios?
+              </p>
               <button
                 className="btn-confirm__admin-section"
-                onClick={handleUpdateHome}
+                onClick={() => handleUpdateHome()}
               >
                 Sí
               </button>
               <button
                 className="btn-cancel__admin-section"
-                onClick={() => setIsEditingOne(false)}
+                onClick={() => {
+                  setIsEditingOne(false);
+                  cancelUploadImage();
+                }}
               >
                 No
               </button>
@@ -700,6 +784,8 @@ export default function Admin() {
             onChange={(e) =>
               setSectionTwo({ ...sectionTwo, title: e.target.value })
             }
+            style={{ cursor: !isEditingTwo ? "not-allowed" : "text" }}
+            disabled={!isEditingTwo}
           />
           <label htmlFor="" className="label__admin-section">
             Descripción:
@@ -711,6 +797,8 @@ export default function Admin() {
             onChange={(e) =>
               setSectionTwo({ ...sectionTwo, description: e.target.value })
             }
+            style={{ cursor: !isEditingTwo ? "not-allowed" : "text" }}
+            disabled={!isEditingTwo}
           ></textarea>
           <label htmlFor="" className="label__admin-section">
             Imagen de fondo:
@@ -727,8 +815,14 @@ export default function Admin() {
               </div>
               <div className="cntr-input__add-course lg-margin-bottom">
                 <button
-                  onClick={() => setImageOpenThree(true)}
-                  className="btn-upload__add-course"
+                  id="btn_three"
+                  onClick={(e) => openOrCloseImage(e)}
+                  className={
+                    !isEditingTwo
+                      ? "btn-cursor-disabled"
+                      : "btn-upload__add-course"
+                  }
+                  disabled={!isEditingTwo}
                 >
                   Cambiar imagen
                 </button>
@@ -738,11 +832,6 @@ export default function Admin() {
 
           {imageOpenThree && (
             <section className="upload-section">
-              <h1 className="title__add-class sm-margin-bottom">
-                Añadir nueva imagen
-              </h1>
-              <br />
-
               {filesThree.length === 0 ? (
                 <div
                   id="dropzone-three"
@@ -801,16 +890,21 @@ export default function Admin() {
 
           {isEditingTwo ? (
             <div className="confirm-edit__admin-section">
-              <p className="text__admin-section">¿Estás seguro de editarlo?</p>
+              <p className="text__admin-section">
+                ¿Estás seguro de guardar los cambios?
+              </p>
               <button
                 className="btn-confirm__admin-section"
-                onClick={handleUpdateNosotros}
+                onClick={() => handleUpdateNosotros()}
               >
                 Sí
               </button>
               <button
                 className="btn-cancel__admin-section"
-                onClick={() => setIsEditingTwo(false)}
+                onClick={() => {
+                  setIsEditingTwo(false);
+                  cancelUploadImage();
+                }}
               >
                 No
               </button>
@@ -843,10 +937,16 @@ export default function Admin() {
               </div>
               <div className="cntr-input__add-course lg-margin-bottom">
                 <button
-                  onClick={() => setImageOpenFour(true)}
-                  className="btn-upload__add-course"
+                  id="btn_four"
+                  onClick={(e) => openOrCloseImage(e)}
+                  className={
+                    !isEditingThree
+                      ? "btn-cursor-disabled"
+                      : "btn-upload__add-course"
+                  }
+                  disabled={!isEditingThree}
                 >
-                  Cambiar imagen
+                  Cambiar video
                 </button>
               </div>
             </>
@@ -854,11 +954,6 @@ export default function Admin() {
 
           {imageOpenFour && (
             <section className="upload-section">
-              <h1 className="title__add-class sm-margin-bottom">
-                Añadir nueva imagen
-              </h1>
-              <br />
-
               {filesFour.length === 0 ? (
                 <div
                   id="dropzone-four"
@@ -917,16 +1012,21 @@ export default function Admin() {
 
           {isEditingThree ? (
             <div className="confirm-edit__admin-section">
-              <p className="text__admin-section">¿Estás seguro de editarlo?</p>
+              <p className="text__admin-section">
+                ¿Estás seguro de guardar los cambios?
+              </p>
               <button
                 className="btn-confirm__admin-section"
-                onClick={handleUpdateComercial}
+                onClick={() => handleUpdateComercial()}
               >
                 Sí
               </button>
               <button
                 className="btn-cancel__admin-section"
-                onClick={() => setIsEditingThree(false)}
+                onClick={() => {
+                  setIsEditingThree(false);
+                  cancelUploadImage();
+                }}
               >
                 No
               </button>
@@ -956,6 +1056,8 @@ export default function Admin() {
                 news: { ...sectionFour.news, h1: e.target.value },
               })
             }
+            style={{ cursor: !isEditingFour ? "not-allowed" : "text" }}
+            disabled={!isEditingFour}
           />
           <label htmlFor="" className="label__admin-section">
             Titulo:
@@ -970,6 +1072,8 @@ export default function Admin() {
                 news: { ...sectionFour.news, title: e.target.value },
               })
             }
+            style={{ cursor: !isEditingFour ? "not-allowed" : "text" }}
+            disabled={!isEditingFour}
           />
           <label htmlFor="" className="label__admin-section">
             Descripción:
@@ -984,14 +1088,18 @@ export default function Admin() {
                 news: { ...sectionFour.news, description: e.target.value },
               })
             }
+            style={{ cursor: !isEditingFour ? "not-allowed" : "text" }}
+            disabled={!isEditingFour}
           />
 
           {isEditingFour ? (
             <div className="confirm-edit__admin-section">
-              <p className="text__admin-section">¿Estás seguro de editarlo?</p>
+              <p className="text__admin-section">
+                ¿Estás seguro de guardar los cambios?
+              </p>
               <button
                 className="btn-confirm__admin-section"
-                onClick={handleUpdateNews}
+                onClick={() => handleUpdateNews()}
               >
                 Sí
               </button>
@@ -1024,6 +1132,8 @@ export default function Admin() {
             onChange={(e) =>
               setSectionFive({ ...sectionFive, link: e.target.value })
             }
+            style={{ cursor: !isEditingFive ? "not-allowed" : "text" }}
+            disabled={!isEditingFive}
           />
           <label htmlFor="" className="label__admin-section">
             Titulo #1:
@@ -1035,6 +1145,8 @@ export default function Admin() {
             onChange={(e) =>
               setSectionFive({ ...sectionFive, title_1: e.target.value })
             }
+            style={{ cursor: !isEditingFive ? "not-allowed" : "text" }}
+            disabled={!isEditingFive}
           />
           <label htmlFor="" className="label__admin-section">
             Titulo #2:
@@ -1046,6 +1158,8 @@ export default function Admin() {
             onChange={(e) =>
               setSectionFive({ ...sectionFive, title_2: e.target.value })
             }
+            style={{ cursor: !isEditingFive ? "not-allowed" : "text" }}
+            disabled={!isEditingFive}
           />
           <label htmlFor="" className="label__admin-section">
             Texto del link:
@@ -1057,6 +1171,8 @@ export default function Admin() {
             onChange={(e) =>
               setSectionFive({ ...sectionFive, text_link: e.target.value })
             }
+            style={{ cursor: !isEditingFive ? "not-allowed" : "text" }}
+            disabled={!isEditingFive}
           />
           <label htmlFor="" className="label__admin-section">
             Imagen de fondo:
@@ -1072,8 +1188,14 @@ export default function Admin() {
               </div>
               <div className="cntr-input__add-course lg-margin-bottom">
                 <button
-                  onClick={() => setImageOpenFive(true)}
-                  className="btn-upload__add-course"
+                  id="btn_five"
+                  onClick={(e) => openOrCloseImage(e)}
+                  className={
+                    !isEditingFive
+                      ? "btn-cursor-disabled"
+                      : "btn-upload__add-course"
+                  }
+                  disabled={!isEditingFive}
                 >
                   Cambiar imagen
                 </button>
@@ -1083,11 +1205,6 @@ export default function Admin() {
 
           {imageOpenFive && (
             <section className="upload-section">
-              <h1 className="title__add-class sm-margin-bottom">
-                Añadir nueva imagen
-              </h1>
-              <br />
-
               {filesFive.length === 0 ? (
                 <div
                   id="dropzone-five"
@@ -1146,16 +1263,21 @@ export default function Admin() {
 
           {isEditingFive ? (
             <div className="confirm-edit__admin-section">
-              <p className="text__admin-section">¿Estás seguro de editarlo?</p>
+              <p className="text__admin-section">
+                ¿Estás seguro de guardar los cambios?
+              </p>
               <button
                 className="btn-confirm__admin-section"
-                onClick={handleUpdateAcademia}
+                onClick={() => handleUpdateAcademia()}
               >
                 Sí
               </button>
               <button
                 className="btn-cancel__admin-section"
-                onClick={() => setIsEditingFive(false)}
+                onClick={() => {
+                  setIsEditingFive(false);
+                  cancelUploadImage();
+                }}
               >
                 No
               </button>
@@ -1182,14 +1304,18 @@ export default function Admin() {
             onChange={(e) =>
               setSectionSix({ ...sectionSix, tile: e.target.value })
             }
+            style={{ cursor: !isEditingSix ? "not-allowed" : "text" }}
+            disabled={!isEditingSix}
           />
 
           {isEditingSix ? (
             <div className="confirm-edit__admin-section">
-              <p className="text__admin-section">¿Estás seguro de editarlo?</p>
+              <p className="text__admin-section">
+                ¿Estás seguro de guardar los cambios?
+              </p>
               <button
                 className="btn-confirm__admin-section"
-                onClick={handleUpdateAliados}
+                onClick={() => handleUpdateAliados()}
               >
                 Sí
               </button>

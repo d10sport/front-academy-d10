@@ -18,6 +18,31 @@ export default function Home() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [strength, setStrength] = useState(0);
+
+  const handlePasswordChange = (e) => {
+    const value = e.target.value;
+    setPassword(value);
+    setStrength(getPasswordStrength(value));
+  };
+
+  function getPasswordStrength(password) {
+    let strength = 0;
+
+    if (password.length >= 8) strength++;
+    if (/[a-z]/.test(password)) strength++;
+    if (/[A-Z]/.test(password)) strength++;
+    if (/\d/.test(password)) strength++;
+    if (/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password)) strength++;
+
+    return strength;
+  }
+
+  const isFormValid =
+    oldPassword.trim() !== "" &&
+    password.trim() !== "" &&
+    confirmPassword.trim() !== "" &&
+    strength >= 4;
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -31,8 +56,29 @@ export default function Home() {
       toast.error("Las contraseñas no coinciden");
       return;
     }
+
+    const strength = getPasswordStrength(password);
+    if (strength < 3) {
+      toast.error(
+        "La contraseña es demasiado débil. Mejora su seguridad antes de continuar."
+      );
+      return;
+    }
+
+    const passwordRegex = new RegExp(
+      "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-=\\[\\]{};:'\",.<>/?]).{8,}$"
+    );
+
+    if (!passwordRegex.test(password)) {
+      toast.error(
+        "La contraseña no cumple con los requisitos mínimos: debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial."
+      );
+      return;
+    }
+
     try {
-      const response = await axios.post(`${urlApi}academy/config/user/p/login`,
+      const response = await axios.post(
+        `${urlApi}academy/config/user/p/login`,
         {
           user_id: user.id_login,
           username: user.email,
@@ -42,12 +88,15 @@ export default function Home() {
         },
         {
           headers: {
-            'Content-Type': 'application/json',
-            'api-key': apiKey
-          }
-        });
+            "Content-Type": "application/json",
+            "api-key": apiKey,
+          },
+        }
+      );
 
-      if (!response.data.success) throw new Error("Error al actualizar contraseña");
+      if (!response.data.success) {
+        throw new Error("Error al actualizar contraseña");
+      }
 
       toast.success("Contraseña actualizada con éxito");
       setIsOpen(false);
@@ -105,15 +154,15 @@ export default function Home() {
 
       <Modal
         isOpen={isOpen}
-        onRequestClose={() => { }}
+        onRequestClose={() => {}}
         shouldCloseOnOverlayClick={false}
         shouldCloseOnEsc={false}
         contentLabel="Actualizar contraseña"
         style={{
           overlay: { backgroundColor: "rgba(0,0,0,0.75)" },
           content: {
-            width: "60%",
-            height: "80%",
+            width: "fit-content",
+            height: "fit-content",
             margin: "auto",
             borderRadius: "12px",
             padding: "40px",
@@ -124,45 +173,95 @@ export default function Home() {
           },
         }}
       >
-        <h2 className="title__add-class sm-margin-bottom">
+        <h2 className="title__change-pass">
           Por favor actualice su contraseña
         </h2>
-        <form onSubmit={handleSubmit} className="form__add-class">
-          <div className="form__add-class__container">
-            <label className="label__add-class">Contraseña Anterior</label>
+        <section className="form__change-pass">
+          <div className="form__change-pass__container">
+            <label className="label__change-pass">Contraseña Anterior</label>
             <input
               type="password"
-              className="input__add-class"
+              className="input__change-pass"
               value={oldPassword}
               onChange={(e) => setOldPassword(e.target.value)}
               required
             />
           </div>
-          <div className="form__add-class__container">
-            <label className="label__add-class">Nueva Contraseña</label>
+          <div className="form__change-pass__container">
+            <label className="label__change-pass">Nueva Contraseña</label>
             <input
               type="password"
-              className="input__add-class"
+              className="input__change-pass"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={() => handlePasswordChange()}
               required
             />
           </div>
-          <div className="form__add-class__container">
-            <label className="label__add-class">Confirmar Nueva Contraseña</label>
+          <div className="form__change-pass__container">
+            <label className="label__change-pass">
+              Confirmar Nueva Contraseña
+            </label>
             <input
               type="password"
-              className="input__add-class"
+              className="input__change-pass"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
               minLength={8}
             />
           </div>
-          <button type="submit" className="btn__add-class">
+          <div style={{ marginTop: "10px" }}>
+            <div
+              style={{
+                height: "8px",
+                backgroundColor: "#ccc",
+                borderRadius: "4px",
+              }}
+            >
+              <div
+                style={{
+                  height: "100%",
+                  width: `${(strength / 5) * 100}%`,
+                  backgroundColor:
+                    strength <= 2 ? "red" : strength === 3 ? "orange" : "green",
+                  borderRadius: "4px",
+                  transition: "width 0.3s ease",
+                }}
+              />
+            </div>
+            <p
+              style={{
+                fontSize: "0.9rem",
+                marginTop: "5px",
+                color:
+                  strength <= 2 ? "red" : strength === 3 ? "orange" : "green",
+              }}
+            >
+              {strength <= 2
+                ? "Contraseña débil"
+                : strength === 3
+                ? "Contraseña media"
+                : "Contraseña fuerte"}
+            </p>
+          </div>
+
+          <button
+            disabled={!isFormValid}
+            className="btn__change-pass"
+            style={{
+              backgroundColor: isFormValid ? "#4CAF50" : "#ccc",
+              cursor: isFormValid ? "pointer" : "not-allowed",
+              padding: "10px 20px",
+              border: "none",
+              borderRadius: "5px",
+              color: "white",
+              transition: "background-color 0.3s ease",
+            }}
+            onClick={() => handleSubmit()}
+          >
             Actualizar Contraseña
           </button>
-        </form>
+        </section>
       </Modal>
     </>
   );
