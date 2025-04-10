@@ -24,9 +24,8 @@ export default function Home() {
   const [strength, setStrength] = useState(0);
 
   const handlePasswordChange = (e) => {
-    const value = e.target.value;
-    setPassword(value);
-    setStrength(getPasswordStrength(value));
+    setPassword(e);
+    setStrength(getPasswordStrength(e));
   };
 
   function getPasswordStrength(password) {
@@ -491,7 +490,7 @@ export default function Home() {
               type="password"
               className="input__change-pass"
               value={password}
-              onChange={() => handlePasswordChange()}
+              onChange={(e) => handlePasswordChange(e.target.value)}
               required
             />
           </div>
