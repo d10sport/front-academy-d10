@@ -1,8 +1,11 @@
+import { SubscriptionChart } from "@ui/charts/subscription"
 import { useEffect, useState, useContext } from "react";
+import { DataTable } from "@ui/charts/data-table";
 import AppContext from "@context/app/app-context";
 import AWSContext from "@context/aws/aws-context";
-import { toast } from "sonner";
+import { RevenueChart } from "@ui/charts/revenue";
 import Modal from "react-modal";
+import { toast } from "sonner";
 import axios from "axios";
 import "./home.css";
 
@@ -114,6 +117,273 @@ export default function Home() {
     }
   }
 
+
+  const data = [
+    {
+      id: "m5gr84i9",
+      amount: 316,
+      status: "success",
+      email: "ken99@example.com",
+    },
+    {
+      id: "3u1reuv4",
+      amount: 242,
+      status: "success",
+      email: "Abe45@example.com",
+    },
+    {
+      id: "derv1ws0",
+      amount: 837,
+      status: "processing",
+      email: "Monserrat44@example.com",
+    },
+    {
+      id: "5kma53ae",
+      amount: 874,
+      status: "success",
+      email: "Silas22@example.com",
+    },
+    {
+      id: "bhqecj4p",
+      amount: 721,
+      status: "failed",
+      email: "carmella@example.com",
+    },
+    {
+      id: "m5gr84i9",
+      amount: 316,
+      status: "success",
+      email: "ken99@example.com",
+    },
+    {
+      id: "3u1reuv4",
+      amount: 242,
+      status: "success",
+      email: "Abe45@example.com",
+    },
+    {
+      id: "derv1ws0",
+      amount: 837,
+      status: "processing",
+      email: "Monserrat44@example.com",
+    },
+    {
+      id: "5kma53ae",
+      amount: 874,
+      status: "success",
+      email: "Silas22@example.com",
+    },
+    {
+      id: "bhqecj4p",
+      amount: 721,
+      status: "failed",
+      email: "carmella@example.com",
+    }, {
+      id: "m5gr84i9",
+      amount: 316,
+      status: "success",
+      email: "ken99@example.com",
+    },
+    {
+      id: "3u1reuv4",
+      amount: 242,
+      status: "success",
+      email: "Abe45@example.com",
+    },
+    {
+      id: "derv1ws0",
+      amount: 837,
+      status: "processing",
+      email: "Monserrat44@example.com",
+    },
+    {
+      id: "5kma53ae",
+      amount: 874,
+      status: "success",
+      email: "Silas22@example.com",
+    },
+    {
+      id: "bhqecj4p",
+      amount: 721,
+      status: "failed",
+      email: "carmella@example.com",
+    }, {
+      id: "m5gr84i9",
+      amount: 316,
+      status: "success",
+      email: "ken99@example.com",
+    },
+    {
+      id: "3u1reuv4",
+      amount: 242,
+      status: "success",
+      email: "Abe45@example.com",
+    },
+    {
+      id: "derv1ws0",
+      amount: 837,
+      status: "processing",
+      email: "Monserrat44@example.com",
+    },
+    {
+      id: "5kma53ae",
+      amount: 874,
+      status: "success",
+      email: "Silas22@example.com",
+    },
+    {
+      id: "bhqecj4p",
+      amount: 721,
+      status: "failed",
+      email: "carmella@example.com",
+    }, {
+      id: "m5gr84i9",
+      amount: 316,
+      status: "success",
+      email: "ken99@example.com",
+    },
+    {
+      id: "3u1reuv4",
+      amount: 242,
+      status: "success",
+      email: "Abe45@example.com",
+    },
+    {
+      id: "derv1ws0",
+      amount: 837,
+      status: "processing",
+      email: "Monserrat44@example.com",
+    },
+    {
+      id: "5kma53ae",
+      amount: 874,
+      status: "success",
+      email: "Silas22@example.com",
+    },
+    {
+      id: "bhqecj4p",
+      amount: 721,
+      status: "failed",
+      email: "carmella@example.com",
+    }, {
+      id: "m5gr84i9",
+      amount: 316,
+      status: "success",
+      email: "ken99@example.com",
+    },
+    {
+      id: "3u1reuv4",
+      amount: 242,
+      status: "success",
+      email: "Abe45@example.com",
+    },
+    {
+      id: "derv1ws0",
+      amount: 837,
+      status: "processing",
+      email: "Monserrat44@example.com",
+    },
+    {
+      id: "5kma53ae",
+      amount: 874,
+      status: "success",
+      email: "Silas22@example.com",
+    },
+    {
+      id: "bhqecj4p",
+      amount: 721,
+      status: "failed",
+      email: "carmella@example.com",
+    }, {
+      id: "m5gr84i9",
+      amount: 316,
+      status: "success",
+      email: "ken99@example.com",
+    },
+    {
+      id: "3u1reuv4",
+      amount: 242,
+      status: "success",
+      email: "Abe45@example.com",
+    },
+    {
+      id: "derv1ws0",
+      amount: 837,
+      status: "processing",
+      email: "Monserrat44@example.com",
+    },
+    {
+      id: "5kma53ae",
+      amount: 874,
+      status: "success",
+      email: "Silas22@example.com",
+    },
+    {
+      id: "bhqecj4p",
+      amount: 721,
+      status: "failed",
+      email: "carmella@example.com",
+    }, {
+      id: "m5gr84i9",
+      amount: 316,
+      status: "success",
+      email: "ken99@example.com",
+    },
+    {
+      id: "3u1reuv4",
+      amount: 242,
+      status: "success",
+      email: "Abe45@example.com",
+    },
+    {
+      id: "derv1ws0",
+      amount: 837,
+      status: "processing",
+      email: "Monserrat44@example.com",
+    },
+    {
+      id: "5kma53ae",
+      amount: 874,
+      status: "success",
+      email: "Silas22@example.com",
+    },
+    {
+      id: "bhqecj4p",
+      amount: 721,
+      status: "failed",
+      email: "carmella@example.com",
+    }, {
+      id: "m5gr84i9",
+      amount: 316,
+      status: "success",
+      email: "ken99@example.com",
+    },
+    {
+      id: "3u1reuv4",
+      amount: 242,
+      status: "success",
+      email: "Abe45@example.com",
+    },
+    {
+      id: "derv1ws0",
+      amount: 837,
+      status: "processing",
+      email: "Monserrat44@example.com",
+    },
+    {
+      id: "5kma53ae",
+      amount: 874,
+      status: "success",
+      email: "Silas22@example.com",
+    },
+    {
+      id: "bhqecj4p",
+      amount: 721,
+      status: "failed",
+      email: "carmella@example.com",
+    },
+  ]
+
   useEffect(() => {
     if (!context.token) {
       context.fetchToken();
@@ -134,7 +404,9 @@ export default function Home() {
     <>
       <section className="section__home">
         <h1 className="title__home margin--space">
-          Bienvenido {user?.first_names}
+          Bienvenido {user?.first_names} a <span className="title--color__home">
+            D10 Academy
+          </span>
         </h1>
         <div className="cntr-big-img__home">
           {imageUrl ? (
@@ -143,6 +415,7 @@ export default function Home() {
             <p>Cargando imagen...</p>
           )}
         </div>
+
         <h1 className="title__home title--color__home margin--space">
           Explora nuestras secciones de curso:
         </h1>
@@ -152,9 +425,34 @@ export default function Home() {
         </h2>
       </section>
 
+      <section className="section__home">
+        <section className="w-full px-12 flex flex-col">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="rounded-xl p-4 text-white">
+              <h2 className="text-sm mb-2">Total Revenue</h2>
+              <div className="text-2xl font-bold">$15,231.89</div>
+              <div className="text-xs text-muted-foreground">+20.1% from last month</div>
+              <RevenueChart />
+            </div>
+            <div className="rounded-xl p-4 text-white">
+              <h2 className="text-sm mb-2">Subscriptions</h2>
+              <div className="text-2xl font-bold">+2350</div>
+              <div className="text-xs text-muted-foreground">+180.1% from last month</div>
+              <SubscriptionChart />
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section className="section__home">
+        <section className="w-full px-12 flex flex-col">
+          <DataTable data={data} />
+        </section>
+      </section>
+
       <Modal
         isOpen={isOpen}
-        onRequestClose={() => {}}
+        onRequestClose={() => { }}
         shouldCloseOnOverlayClick={false}
         shouldCloseOnEsc={false}
         contentLabel="Actualizar contraseña"
@@ -240,8 +538,8 @@ export default function Home() {
               {strength <= 2
                 ? "Contraseña débil"
                 : strength === 3
-                ? "Contraseña media"
-                : "Contraseña fuerte"}
+                  ? "Contraseña media"
+                  : "Contraseña fuerte"}
             </p>
           </div>
 

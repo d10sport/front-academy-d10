@@ -295,7 +295,7 @@ const AppProvider = ({ children }) => {
         },
       })
       .then((response) => {
-        if (!response.data.success) {
+        if (!response.data?.success) {
           console.error(`${response.data.message}`);
           return
         };

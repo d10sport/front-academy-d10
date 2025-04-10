@@ -149,8 +149,8 @@
 }
 
 .cntr-img__button-nav {
-  width: 40px;
-  height: 40px;
+  width: fit-content;
+  height: inherit;
   border-radius: 50%;
   margin: 2px;
   overflow: hidden;
