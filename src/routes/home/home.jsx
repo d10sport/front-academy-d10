@@ -1,4 +1,4 @@
-import { SubscriptionChart } from "@ui/charts/subscription"
+import { SubscriptionChart } from "@ui/charts/subscription";
 import { useEffect, useState, useContext } from "react";
 import { DataTable } from "@ui/charts/data-table";
 import AppContext from "@context/app/app-context";
@@ -22,6 +22,7 @@ export default function Home() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [strength, setStrength] = useState(0);
+  const [error, setError] = useState("");
 
   const handlePasswordChange = (e) => {
     setPassword(e);
@@ -45,6 +46,16 @@ export default function Home() {
     password.trim() !== "" &&
     confirmPassword.trim() !== "" &&
     strength >= 4;
+
+  const isPassValid = password == confirmPassword;
+
+  useEffect(() => {
+    if (password && confirmPassword && password !== confirmPassword) {
+      setError("Las contraseñas no coinciden");
+    } else {
+      setError("");
+    }
+  }, [password, confirmPassword]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -116,7 +127,6 @@ export default function Home() {
     }
   }
 
-
   const data = [
     {
       id: "m5gr84i9",
@@ -177,181 +187,8 @@ export default function Home() {
       amount: 721,
       status: "failed",
       email: "carmella@example.com",
-    }, {
-      id: "m5gr84i9",
-      amount: 316,
-      status: "success",
-      email: "ken99@example.com",
     },
     {
-      id: "3u1reuv4",
-      amount: 242,
-      status: "success",
-      email: "Abe45@example.com",
-    },
-    {
-      id: "derv1ws0",
-      amount: 837,
-      status: "processing",
-      email: "Monserrat44@example.com",
-    },
-    {
-      id: "5kma53ae",
-      amount: 874,
-      status: "success",
-      email: "Silas22@example.com",
-    },
-    {
-      id: "bhqecj4p",
-      amount: 721,
-      status: "failed",
-      email: "carmella@example.com",
-    }, {
-      id: "m5gr84i9",
-      amount: 316,
-      status: "success",
-      email: "ken99@example.com",
-    },
-    {
-      id: "3u1reuv4",
-      amount: 242,
-      status: "success",
-      email: "Abe45@example.com",
-    },
-    {
-      id: "derv1ws0",
-      amount: 837,
-      status: "processing",
-      email: "Monserrat44@example.com",
-    },
-    {
-      id: "5kma53ae",
-      amount: 874,
-      status: "success",
-      email: "Silas22@example.com",
-    },
-    {
-      id: "bhqecj4p",
-      amount: 721,
-      status: "failed",
-      email: "carmella@example.com",
-    }, {
-      id: "m5gr84i9",
-      amount: 316,
-      status: "success",
-      email: "ken99@example.com",
-    },
-    {
-      id: "3u1reuv4",
-      amount: 242,
-      status: "success",
-      email: "Abe45@example.com",
-    },
-    {
-      id: "derv1ws0",
-      amount: 837,
-      status: "processing",
-      email: "Monserrat44@example.com",
-    },
-    {
-      id: "5kma53ae",
-      amount: 874,
-      status: "success",
-      email: "Silas22@example.com",
-    },
-    {
-      id: "bhqecj4p",
-      amount: 721,
-      status: "failed",
-      email: "carmella@example.com",
-    }, {
-      id: "m5gr84i9",
-      amount: 316,
-      status: "success",
-      email: "ken99@example.com",
-    },
-    {
-      id: "3u1reuv4",
-      amount: 242,
-      status: "success",
-      email: "Abe45@example.com",
-    },
-    {
-      id: "derv1ws0",
-      amount: 837,
-      status: "processing",
-      email: "Monserrat44@example.com",
-    },
-    {
-      id: "5kma53ae",
-      amount: 874,
-      status: "success",
-      email: "Silas22@example.com",
-    },
-    {
-      id: "bhqecj4p",
-      amount: 721,
-      status: "failed",
-      email: "carmella@example.com",
-    }, {
-      id: "m5gr84i9",
-      amount: 316,
-      status: "success",
-      email: "ken99@example.com",
-    },
-    {
-      id: "3u1reuv4",
-      amount: 242,
-      status: "success",
-      email: "Abe45@example.com",
-    },
-    {
-      id: "derv1ws0",
-      amount: 837,
-      status: "processing",
-      email: "Monserrat44@example.com",
-    },
-    {
-      id: "5kma53ae",
-      amount: 874,
-      status: "success",
-      email: "Silas22@example.com",
-    },
-    {
-      id: "bhqecj4p",
-      amount: 721,
-      status: "failed",
-      email: "carmella@example.com",
-    }, {
-      id: "m5gr84i9",
-      amount: 316,
-      status: "success",
-      email: "ken99@example.com",
-    },
-    {
-      id: "3u1reuv4",
-      amount: 242,
-      status: "success",
-      email: "Abe45@example.com",
-    },
-    {
-      id: "derv1ws0",
-      amount: 837,
-      status: "processing",
-      email: "Monserrat44@example.com",
-    },
-    {
-      id: "5kma53ae",
-      amount: 874,
-      status: "success",
-      email: "Silas22@example.com",
-    },
-    {
-      id: "bhqecj4p",
-      amount: 721,
-      status: "failed",
-      email: "carmella@example.com",
-    }, {
       id: "m5gr84i9",
       amount: 316,
       status: "success",
@@ -381,7 +218,187 @@ export default function Home() {
       status: "failed",
       email: "carmella@example.com",
     },
-  ]
+    {
+      id: "m5gr84i9",
+      amount: 316,
+      status: "success",
+      email: "ken99@example.com",
+    },
+    {
+      id: "3u1reuv4",
+      amount: 242,
+      status: "success",
+      email: "Abe45@example.com",
+    },
+    {
+      id: "derv1ws0",
+      amount: 837,
+      status: "processing",
+      email: "Monserrat44@example.com",
+    },
+    {
+      id: "5kma53ae",
+      amount: 874,
+      status: "success",
+      email: "Silas22@example.com",
+    },
+    {
+      id: "bhqecj4p",
+      amount: 721,
+      status: "failed",
+      email: "carmella@example.com",
+    },
+    {
+      id: "m5gr84i9",
+      amount: 316,
+      status: "success",
+      email: "ken99@example.com",
+    },
+    {
+      id: "3u1reuv4",
+      amount: 242,
+      status: "success",
+      email: "Abe45@example.com",
+    },
+    {
+      id: "derv1ws0",
+      amount: 837,
+      status: "processing",
+      email: "Monserrat44@example.com",
+    },
+    {
+      id: "5kma53ae",
+      amount: 874,
+      status: "success",
+      email: "Silas22@example.com",
+    },
+    {
+      id: "bhqecj4p",
+      amount: 721,
+      status: "failed",
+      email: "carmella@example.com",
+    },
+    {
+      id: "m5gr84i9",
+      amount: 316,
+      status: "success",
+      email: "ken99@example.com",
+    },
+    {
+      id: "3u1reuv4",
+      amount: 242,
+      status: "success",
+      email: "Abe45@example.com",
+    },
+    {
+      id: "derv1ws0",
+      amount: 837,
+      status: "processing",
+      email: "Monserrat44@example.com",
+    },
+    {
+      id: "5kma53ae",
+      amount: 874,
+      status: "success",
+      email: "Silas22@example.com",
+    },
+    {
+      id: "bhqecj4p",
+      amount: 721,
+      status: "failed",
+      email: "carmella@example.com",
+    },
+    {
+      id: "m5gr84i9",
+      amount: 316,
+      status: "success",
+      email: "ken99@example.com",
+    },
+    {
+      id: "3u1reuv4",
+      amount: 242,
+      status: "success",
+      email: "Abe45@example.com",
+    },
+    {
+      id: "derv1ws0",
+      amount: 837,
+      status: "processing",
+      email: "Monserrat44@example.com",
+    },
+    {
+      id: "5kma53ae",
+      amount: 874,
+      status: "success",
+      email: "Silas22@example.com",
+    },
+    {
+      id: "bhqecj4p",
+      amount: 721,
+      status: "failed",
+      email: "carmella@example.com",
+    },
+    {
+      id: "m5gr84i9",
+      amount: 316,
+      status: "success",
+      email: "ken99@example.com",
+    },
+    {
+      id: "3u1reuv4",
+      amount: 242,
+      status: "success",
+      email: "Abe45@example.com",
+    },
+    {
+      id: "derv1ws0",
+      amount: 837,
+      status: "processing",
+      email: "Monserrat44@example.com",
+    },
+    {
+      id: "5kma53ae",
+      amount: 874,
+      status: "success",
+      email: "Silas22@example.com",
+    },
+    {
+      id: "bhqecj4p",
+      amount: 721,
+      status: "failed",
+      email: "carmella@example.com",
+    },
+    {
+      id: "m5gr84i9",
+      amount: 316,
+      status: "success",
+      email: "ken99@example.com",
+    },
+    {
+      id: "3u1reuv4",
+      amount: 242,
+      status: "success",
+      email: "Abe45@example.com",
+    },
+    {
+      id: "derv1ws0",
+      amount: 837,
+      status: "processing",
+      email: "Monserrat44@example.com",
+    },
+    {
+      id: "5kma53ae",
+      amount: 874,
+      status: "success",
+      email: "Silas22@example.com",
+    },
+    {
+      id: "bhqecj4p",
+      amount: 721,
+      status: "failed",
+      email: "carmella@example.com",
+    },
+  ];
 
   useEffect(() => {
     if (!context.token) {
@@ -403,9 +420,8 @@ export default function Home() {
     <>
       <section className="section__home">
         <h1 className="title__home margin--space">
-          Bienvenido {user?.first_names} a <span className="title--color__home">
-            D10 Academy
-          </span>
+          Bienvenido {user?.first_names} a{" "}
+          <span className="title--color__home">D10 Academy</span>
         </h1>
         <div className="cntr-big-img__home">
           {imageUrl ? (
@@ -430,13 +446,17 @@ export default function Home() {
             <div className="rounded-xl p-4 text-white">
               <h2 className="text-sm mb-2">Total Revenue</h2>
               <div className="text-2xl font-bold">$15,231.89</div>
-              <div className="text-xs text-muted-foreground">+20.1% from last month</div>
+              <div className="text-xs text-muted-foreground">
+                +20.1% from last month
+              </div>
               <RevenueChart />
             </div>
             <div className="rounded-xl p-4 text-white">
               <h2 className="text-sm mb-2">Subscriptions</h2>
               <div className="text-2xl font-bold">+2350</div>
-              <div className="text-xs text-muted-foreground">+180.1% from last month</div>
+              <div className="text-xs text-muted-foreground">
+                +180.1% from last month
+              </div>
               <SubscriptionChart />
             </div>
           </div>
@@ -451,7 +471,7 @@ export default function Home() {
 
       <Modal
         isOpen={isOpen}
-        onRequestClose={() => { }}
+        onRequestClose={() => {}}
         shouldCloseOnOverlayClick={false}
         shouldCloseOnEsc={false}
         contentLabel="Actualizar contraseña"
@@ -507,6 +527,9 @@ export default function Home() {
               minLength={8}
             />
           </div>
+
+          {error && <p style={{ color: "red" }}>{error}</p>}
+
           <div style={{ marginTop: "10px" }}>
             <div
               style={{
@@ -530,6 +553,7 @@ export default function Home() {
               style={{
                 fontSize: "0.9rem",
                 marginTop: "5px",
+                marginBottom: "5px",
                 color:
                   strength <= 2 ? "red" : strength === 3 ? "orange" : "green",
               }}
@@ -537,17 +561,17 @@ export default function Home() {
               {strength <= 2
                 ? "Contraseña débil"
                 : strength === 3
-                  ? "Contraseña media"
-                  : "Contraseña fuerte"}
+                ? "Contraseña media"
+                : "Contraseña fuerte"}
             </p>
           </div>
 
           <button
-            disabled={!isFormValid}
+            disabled={!isFormValid && !isPassValid}
             className="btn__change-pass"
             style={{
-              backgroundColor: isFormValid ? "#4CAF50" : "#ccc",
-              cursor: isFormValid ? "pointer" : "not-allowed",
+              backgroundColor: isFormValid && isPassValid ? "#4CAF50" : "#ccc",
+              cursor: isFormValid && isPassValid ? "pointer" : "not-allowed",
               padding: "10px 20px",
               border: "none",
               borderRadius: "5px",
