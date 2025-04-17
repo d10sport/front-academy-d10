@@ -320,6 +320,7 @@ const AppProvider = ({ children }) => {
           console.error(`${response.data.message}`);
           return
         };
+        return response.data.data;
         const users = response.data.data.splice(response.data.data, 3)
         setRoleSystem(users);
         return users;

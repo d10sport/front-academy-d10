@@ -20,7 +20,9 @@ export default function LoginUser() {
 
   async function getDataRole() {
     const data = await context.fetchRoleUsers();
-    setRoles(data);
+    const usersRol = data.splice(data, 3)
+    context.setRoleSystem(usersRol);
+    setRoles(usersRol);
     context.setIsLoading(false);
   }
 

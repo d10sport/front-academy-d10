@@ -1,8 +1,3 @@
-// import AppContext from "@context/app/app-context";
-// import { useNavigate } from "react-router-dom";
-// import { useContext } from "react";
-// import { toast } from "sonner";
-// import axios from "axios";
 import "./config-user.css";
 
 export default function ConfigUser() {
