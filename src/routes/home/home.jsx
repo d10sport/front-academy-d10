@@ -15,8 +15,6 @@ export default function Home() {
   const urlApi = context.urlApi;
   const apiKey = context.apiKey;
   const user = context.user;
-  debugger
-
   const [imageUrl, setImageUrl] = useState("");
   const [oldPassword, setOldPassword] = useState("");
   const [password, setPassword] = useState("");
@@ -26,6 +24,7 @@ export default function Home() {
   const [dataDataTable, setDataDataTable] = useState([]);
   const [dataGraphicBarChart, setDataGraphicBarChart] = useState([]);
   const [dataLineChart, setDataLineChart] = useState([]);
+  const [error, setError] = useState("");
 
   const handlePasswordChange = (e) => {
     setPassword(e);
@@ -49,6 +48,16 @@ export default function Home() {
     password.trim() !== "" &&
     confirmPassword.trim() !== "" &&
     strength >= 4;
+
+  const isPassValid = password == confirmPassword;
+
+  useEffect(() => {
+    if (password && confirmPassword && password !== confirmPassword) {
+      setError("Las contraseñas no coinciden");
+    } else {
+      setError("");
+    }
+  }, [password, confirmPassword]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -202,9 +211,8 @@ export default function Home() {
     <>
       <section className="section__home">
         <h1 className="title__home margin--space">
-          Bienvenido {user?.first_names} a <span className="title--color__home">
-            D10 Academy
-          </span>
+          Bienvenido {user?.first_names} a{" "}
+          <span className="title--color__home">D10 Academy</span>
         </h1>
         <div className="cntr-big-img__home">
           {imageUrl ? (
@@ -305,7 +313,7 @@ export default function Home() {
 
       <Modal
         isOpen={isOpen}
-        onRequestClose={() => { }}
+        onRequestClose={() => {}}
         shouldCloseOnOverlayClick={false}
         shouldCloseOnEsc={false}
         contentLabel="Actualizar contraseña"
@@ -361,6 +369,9 @@ export default function Home() {
               minLength={8}
             />
           </div>
+
+          {error && <p style={{ color: "red" }}>{error}</p>}
+
           <div style={{ marginTop: "10px" }}>
             <div
               style={{
@@ -384,6 +395,7 @@ export default function Home() {
               style={{
                 fontSize: "0.9rem",
                 marginTop: "5px",
+                marginBottom: "5px",
                 color:
                   strength <= 2 ? "red" : strength === 3 ? "orange" : "green",
               }}
@@ -391,17 +403,17 @@ export default function Home() {
               {strength <= 2
                 ? "Contraseña débil"
                 : strength === 3
-                  ? "Contraseña media"
-                  : "Contraseña fuerte"}
+                ? "Contraseña media"
+                : "Contraseña fuerte"}
             </p>
           </div>
 
           <button
-            disabled={!isFormValid}
+            disabled={!isFormValid && !isPassValid}
             className="btn__change-pass"
             style={{
-              backgroundColor: isFormValid ? "#4CAF50" : "#ccc",
-              cursor: isFormValid ? "pointer" : "not-allowed",
+              backgroundColor: isFormValid && isPassValid ? "#4CAF50" : "#ccc",
+              cursor: isFormValid && isPassValid ? "pointer" : "not-allowed",
               padding: "10px 20px",
               border: "none",
               borderRadius: "5px",
