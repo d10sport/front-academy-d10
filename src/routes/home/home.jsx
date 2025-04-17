@@ -1,9 +1,9 @@
-import { SubscriptionChart } from "@ui/charts/subscription"
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useCallback } from "react";
+import { GraphicLineBarChart } from "@ui/charts/line-chart";
+import { GraphicBarChart } from "@ui/charts/bar-chart";
 import { DataTable } from "@ui/charts/data-table";
 import AppContext from "@context/app/app-context";
 import AWSContext from "@context/aws/aws-context";
-import { RevenueChart } from "@ui/charts/revenue";
 import Modal from "react-modal";
 import { toast } from "sonner";
 import axios from "axios";
@@ -15,13 +15,16 @@ export default function Home() {
   const urlApi = context.urlApi;
   const apiKey = context.apiKey;
   const user = context.user;
-
   const [imageUrl, setImageUrl] = useState("");
   const [oldPassword, setOldPassword] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [strength, setStrength] = useState(0);
+  const [dataDataTable, setDataDataTable] = useState([]);
+  const [dataGraphicBarChart, setDataGraphicBarChart] = useState([]);
+  const [dataLineChart, setDataLineChart] = useState([]);
+  const [error, setError] = useState("");
 
   const handlePasswordChange = (e) => {
     setPassword(e);
@@ -45,6 +48,16 @@ export default function Home() {
     password.trim() !== "" &&
     confirmPassword.trim() !== "" &&
     strength >= 4;
+
+  const isPassValid = password == confirmPassword;
+
+  useEffect(() => {
+    if (password && confirmPassword && password !== confirmPassword) {
+      setError("Las contraseñas no coinciden");
+    } else {
+      setError("");
+    }
+  }, [password, confirmPassword]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -107,287 +120,82 @@ export default function Home() {
     }
   }
 
-  async function validFirstSession() {
+  const validFirstSession = useCallback(async () => {
     if (user?.length === 0 || user == undefined) return;
 
     const dataLoginUser = await context.fetchLoginUsers(user.id_login);
     if (dataLoginUser[0].verify === 0) {
       setIsOpen(true);
     }
-  }
+  }, [user, context]);
 
+  const fetchAllUserForClub = useCallback((id) => {
+    if (id == undefined) {
+      setDataDataTable([]);
+      return;
+    }
+    axios
+      .get(`${urlApi}academy/g/users-from-club/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          "api-key": apiKey,
+        },
+      })
+      .then((response) => {
+        if (response.data.success) {
+          setDataDataTable(response.data.data);
+        }
+      })
+      .catch(() => {
+        setDataDataTable([]);
+      });
+  }, [urlApi, apiKey]);
 
-  const data = [
-    {
-      id: "m5gr84i9",
-      amount: 316,
-      status: "success",
-      email: "ken99@example.com",
-    },
-    {
-      id: "3u1reuv4",
-      amount: 242,
-      status: "success",
-      email: "Abe45@example.com",
-    },
-    {
-      id: "derv1ws0",
-      amount: 837,
-      status: "processing",
-      email: "Monserrat44@example.com",
-    },
-    {
-      id: "5kma53ae",
-      amount: 874,
-      status: "success",
-      email: "Silas22@example.com",
-    },
-    {
-      id: "bhqecj4p",
-      amount: 721,
-      status: "failed",
-      email: "carmella@example.com",
-    },
-    {
-      id: "m5gr84i9",
-      amount: 316,
-      status: "success",
-      email: "ken99@example.com",
-    },
-    {
-      id: "3u1reuv4",
-      amount: 242,
-      status: "success",
-      email: "Abe45@example.com",
-    },
-    {
-      id: "derv1ws0",
-      amount: 837,
-      status: "processing",
-      email: "Monserrat44@example.com",
-    },
-    {
-      id: "5kma53ae",
-      amount: 874,
-      status: "success",
-      email: "Silas22@example.com",
-    },
-    {
-      id: "bhqecj4p",
-      amount: 721,
-      status: "failed",
-      email: "carmella@example.com",
-    }, {
-      id: "m5gr84i9",
-      amount: 316,
-      status: "success",
-      email: "ken99@example.com",
-    },
-    {
-      id: "3u1reuv4",
-      amount: 242,
-      status: "success",
-      email: "Abe45@example.com",
-    },
-    {
-      id: "derv1ws0",
-      amount: 837,
-      status: "processing",
-      email: "Monserrat44@example.com",
-    },
-    {
-      id: "5kma53ae",
-      amount: 874,
-      status: "success",
-      email: "Silas22@example.com",
-    },
-    {
-      id: "bhqecj4p",
-      amount: 721,
-      status: "failed",
-      email: "carmella@example.com",
-    }, {
-      id: "m5gr84i9",
-      amount: 316,
-      status: "success",
-      email: "ken99@example.com",
-    },
-    {
-      id: "3u1reuv4",
-      amount: 242,
-      status: "success",
-      email: "Abe45@example.com",
-    },
-    {
-      id: "derv1ws0",
-      amount: 837,
-      status: "processing",
-      email: "Monserrat44@example.com",
-    },
-    {
-      id: "5kma53ae",
-      amount: 874,
-      status: "success",
-      email: "Silas22@example.com",
-    },
-    {
-      id: "bhqecj4p",
-      amount: 721,
-      status: "failed",
-      email: "carmella@example.com",
-    }, {
-      id: "m5gr84i9",
-      amount: 316,
-      status: "success",
-      email: "ken99@example.com",
-    },
-    {
-      id: "3u1reuv4",
-      amount: 242,
-      status: "success",
-      email: "Abe45@example.com",
-    },
-    {
-      id: "derv1ws0",
-      amount: 837,
-      status: "processing",
-      email: "Monserrat44@example.com",
-    },
-    {
-      id: "5kma53ae",
-      amount: 874,
-      status: "success",
-      email: "Silas22@example.com",
-    },
-    {
-      id: "bhqecj4p",
-      amount: 721,
-      status: "failed",
-      email: "carmella@example.com",
-    }, {
-      id: "m5gr84i9",
-      amount: 316,
-      status: "success",
-      email: "ken99@example.com",
-    },
-    {
-      id: "3u1reuv4",
-      amount: 242,
-      status: "success",
-      email: "Abe45@example.com",
-    },
-    {
-      id: "derv1ws0",
-      amount: 837,
-      status: "processing",
-      email: "Monserrat44@example.com",
-    },
-    {
-      id: "5kma53ae",
-      amount: 874,
-      status: "success",
-      email: "Silas22@example.com",
-    },
-    {
-      id: "bhqecj4p",
-      amount: 721,
-      status: "failed",
-      email: "carmella@example.com",
-    }, {
-      id: "m5gr84i9",
-      amount: 316,
-      status: "success",
-      email: "ken99@example.com",
-    },
-    {
-      id: "3u1reuv4",
-      amount: 242,
-      status: "success",
-      email: "Abe45@example.com",
-    },
-    {
-      id: "derv1ws0",
-      amount: 837,
-      status: "processing",
-      email: "Monserrat44@example.com",
-    },
-    {
-      id: "5kma53ae",
-      amount: 874,
-      status: "success",
-      email: "Silas22@example.com",
-    },
-    {
-      id: "bhqecj4p",
-      amount: 721,
-      status: "failed",
-      email: "carmella@example.com",
-    }, {
-      id: "m5gr84i9",
-      amount: 316,
-      status: "success",
-      email: "ken99@example.com",
-    },
-    {
-      id: "3u1reuv4",
-      amount: 242,
-      status: "success",
-      email: "Abe45@example.com",
-    },
-    {
-      id: "derv1ws0",
-      amount: 837,
-      status: "processing",
-      email: "Monserrat44@example.com",
-    },
-    {
-      id: "5kma53ae",
-      amount: 874,
-      status: "success",
-      email: "Silas22@example.com",
-    },
-    {
-      id: "bhqecj4p",
-      amount: 721,
-      status: "failed",
-      email: "carmella@example.com",
-    }, {
-      id: "m5gr84i9",
-      amount: 316,
-      status: "success",
-      email: "ken99@example.com",
-    },
-    {
-      id: "3u1reuv4",
-      amount: 242,
-      status: "success",
-      email: "Abe45@example.com",
-    },
-    {
-      id: "derv1ws0",
-      amount: 837,
-      status: "processing",
-      email: "Monserrat44@example.com",
-    },
-    {
-      id: "5kma53ae",
-      amount: 874,
-      status: "success",
-      email: "Silas22@example.com",
-    },
-    {
-      id: "bhqecj4p",
-      amount: 721,
-      status: "failed",
-      email: "carmella@example.com",
-    },
-  ]
+  const fetchAllRegistersVerifiedByDate = useCallback(() => {
+    axios
+      .get(`${urlApi}academy/graphics/registers/mounth/year`, {
+        headers: {
+          "Content-Type": "application/json",
+          "api-key": apiKey,
+        },
+      })
+      .then((response) => {
+        if (response.data.success) {
+          setDataLineChart(response.data.data);
+        }
+      })
+      .catch(() => {
+        setDataLineChart([]);
+      });
+  }, [urlApi, apiKey]);
+
+  const fetchAllCountUsers = useCallback(() => {
+    axios
+      .get(`${urlApi}academy/graphics/role/registers/club`, {
+        headers: {
+          "Content-Type": "application/json",
+          "api-key": apiKey,
+        },
+      })
+      .then((response) => {
+        if (response.data.success) {
+          setDataGraphicBarChart(response.data.data);
+        }
+      })
+      .catch(() => {
+        setDataGraphicBarChart([]);
+      });
+  }, [urlApi, apiKey]);
+
 
   useEffect(() => {
     if (!context.token) {
       context.fetchToken();
     } else {
       validFirstSession();
+      fetchAllUserForClub(context?.user?.id);
+      fetchAllCountUsers();
+      fetchAllRegistersVerifiedByDate();
     }
   }, [context.token]);
 
@@ -403,9 +211,8 @@ export default function Home() {
     <>
       <section className="section__home">
         <h1 className="title__home margin--space">
-          Bienvenido {user?.first_names} a <span className="title--color__home">
-            D10 Academy
-          </span>
+          Bienvenido {user?.first_names} a{" "}
+          <span className="title--color__home">D10 Academy</span>
         </h1>
         <div className="cntr-big-img__home">
           {imageUrl ? (
@@ -424,34 +231,89 @@ export default function Home() {
         </h2>
       </section>
 
-      <section className="section__home">
-        <section className="w-full px-12 flex flex-col">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="rounded-xl p-4 text-white">
-              <h2 className="text-sm mb-2">Total Revenue</h2>
-              <div className="text-2xl font-bold">$15,231.89</div>
-              <div className="text-xs text-muted-foreground">+20.1% from last month</div>
-              <RevenueChart />
-            </div>
-            <div className="rounded-xl p-4 text-white">
-              <h2 className="text-sm mb-2">Subscriptions</h2>
-              <div className="text-2xl font-bold">+2350</div>
-              <div className="text-xs text-muted-foreground">+180.1% from last month</div>
-              <SubscriptionChart />
-            </div>
-          </div>
-        </section>
-      </section>
+      {context.permissionsUser[0].name_role == "admin" && user.role == "admin" && (
+        <>
+          <section className="section__home">
+            <section className="w-full px-12 flex flex-col">
+              <div className="grid grid-cols-1 items-center justify-center md:grid-cols-2 gap-4">
+                <div className="rounded-xl p-4 flex flex-col justify-center text-white">
+                  <div className="pl-16">
+                    <h2 className="text-lg mb-2">Total registros por año: <span className="text-2xl font-bold">{dataGraphicBarChart.length}</span> </h2>
+                    <div className="text-xs text-muted-foreground">+20.1% desde el último mes</div>
+                  </div>
+                  <GraphicLineBarChart data={dataLineChart} />
+                </div>
+                <div className="rounded-xl p-4 flex flex-col justify-center text-white">
+                  <div className="pl-16">
+                    <h2 className="text-lg mb-2">Total de roles: <span className="text-2xl font-bold">{dataGraphicBarChart.length}</span> </h2>
+                    <div className="text-xs text-muted-foreground">+180.1% desde el último mes</div>
+                  </div>
+                  <GraphicBarChart data={dataGraphicBarChart} />
+                </div>
+              </div>
+            </section>
+          </section>
 
-      <section className="section__home">
-        <section className="w-full px-12 flex flex-col">
-          <DataTable data={data} />
-        </section>
-      </section>
+          {dataDataTable.length > 0 && (
+            <>
+              <section className="section__home pt-4">
+                <div className="w-full text-center">
+                  <h1 className="text-2xl" >Lista de usuarios</h1>
+                </div>
+              </section>
+              <section className="section__home">
+                <section className="w-full px-12 flex flex-col">
+                  <DataTable data={dataDataTable} />
+                </section>
+              </section>
+            </>
+          )}
+        </>
+      )}
+
+      {context.permissionsUser[0].name_role == "club" && user.role == "club" && (
+        <>
+          <section className="section__home">
+            <section className="w-full px-12 flex flex-col">
+              <div className="grid grid-cols-1 items-center justify-center md:grid-cols-2 gap-4">
+                <div className="rounded-xl p-4 flex flex-col justify-center text-white">
+                  <div className="pl-16">
+                    <h2 className="text-lg mb-2">Total registros por año: <span className="text-2xl font-bold">{dataGraphicBarChart.length}</span> </h2>
+                    <div className="text-xs text-muted-foreground">+20.1% desde el último mes</div>
+                  </div>
+                  <GraphicLineBarChart data={dataLineChart} />
+                </div>
+                <div className="rounded-xl p-4 flex flex-col justify-center text-white">
+                  <div className="pl-16">
+                    <h2 className="text-lg mb-2">Total de roles: <span className="text-2xl font-bold">{dataGraphicBarChart.length}</span> </h2>
+                    <div className="text-xs text-muted-foreground">+180.1% desde el último mes</div>
+                  </div>
+                  <GraphicBarChart data={dataGraphicBarChart} />
+                </div>
+              </div>
+            </section>
+          </section>
+
+          {dataDataTable.length > 0 && (
+            <>
+              <section className="section__home pt-4">
+                <div className="w-full text-center">
+                  <h1 className="text-2xl" >Lista de usuarios</h1>
+                </div>
+              </section>
+              <section className="section__home">
+                <section className="w-full px-12 flex flex-col">
+                  <DataTable data={dataDataTable} />
+                </section>
+              </section>
+            </>
+          )}
+        </>
+      )}
 
       <Modal
         isOpen={isOpen}
-        onRequestClose={() => { }}
+        onRequestClose={() => {}}
         shouldCloseOnOverlayClick={false}
         shouldCloseOnEsc={false}
         contentLabel="Actualizar contraseña"
@@ -507,6 +369,9 @@ export default function Home() {
               minLength={8}
             />
           </div>
+
+          {error && <p style={{ color: "red" }}>{error}</p>}
+
           <div style={{ marginTop: "10px" }}>
             <div
               style={{
@@ -530,6 +395,7 @@ export default function Home() {
               style={{
                 fontSize: "0.9rem",
                 marginTop: "5px",
+                marginBottom: "5px",
                 color:
                   strength <= 2 ? "red" : strength === 3 ? "orange" : "green",
               }}
@@ -537,17 +403,17 @@ export default function Home() {
               {strength <= 2
                 ? "Contraseña débil"
                 : strength === 3
-                  ? "Contraseña media"
-                  : "Contraseña fuerte"}
+                ? "Contraseña media"
+                : "Contraseña fuerte"}
             </p>
           </div>
 
           <button
-            disabled={!isFormValid}
+            disabled={!isFormValid && !isPassValid}
             className="btn__change-pass"
             style={{
-              backgroundColor: isFormValid ? "#4CAF50" : "#ccc",
-              cursor: isFormValid ? "pointer" : "not-allowed",
+              backgroundColor: isFormValid && isPassValid ? "#4CAF50" : "#ccc",
+              cursor: isFormValid && isPassValid ? "pointer" : "not-allowed",
               padding: "10px 20px",
               border: "none",
               borderRadius: "5px",

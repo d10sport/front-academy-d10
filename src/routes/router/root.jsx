@@ -13,6 +13,7 @@ import ClubRequest from "@routes/club-request/club-request.jsx";
 import MenuCourse from "@routes/menu-course/menu-course.jsx";
 import MenuClass from "@routes/menu-class/menu-class.jsx";
 import LoginUser from "@routes/login-user/login-user.jsx";
+import LoginAdmin from "@routes/login-admin/login-admin.jsx";
 import Register from "@routes/register/register.jsx";
 import Courses from "@routes/courses/courses.jsx";
 import { Route, Routes } from "react-router-dom";
@@ -47,6 +48,7 @@ export default function Router() {
       <Route path="/club/solitudes" element={<ClubRequest />} />
       <Route path="/login-user" element={<LoginUser />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/login-admin" element={<LoginAdmin />} />
       <Route path="/login" element={<Login />} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>
