@@ -231,7 +231,7 @@ export default function Home() {
         </h2>
       </section>
 
-      {context.permissionsUser[0].name_role == "admin" && user.role == "admin" && (
+      {context?.permissionsUser[0]?.name_role == "admin" && user?.role == "admin" && (
         <>
           <section className="section__home">
             <section className="w-full px-12 flex flex-col">
@@ -271,7 +271,7 @@ export default function Home() {
         </>
       )}
 
-      {context.permissionsUser[0].name_role == "club" && user.role == "club" && (
+      {context?.permissionsUser[0]?.name_role == "club" && user?.role == "club" && (
         <>
           <section className="section__home">
             <section className="w-full px-12 flex flex-col">
