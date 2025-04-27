@@ -8,7 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    if: github.repository == 'd10sport/front-academy-d10-sport'
+    if: github.repository == 'd10sport/front-academy-d10'
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -28,7 +28,7 @@ jobs:
             rm -rf /var/www/html/d10/academy/* /var/www/html/d10/academy/.*
 
             # Clona el repositorio
-            git clone https://github.com/d10sport/front-academy-d10-sport.git .
+            git clone https://github.com/d10sport/front-academy-d10.git .
 
             #Importar variables de entorno
             cp /var/www/html/params/d10/env_academy/.env /var/www/html/d10/academy
