@@ -248,8 +248,6 @@ export default function Admin() {
       });
   }
 
-  
-
   // ----------------------------- Update Home ---------------------------------
 
   async function handleUpdateHome() {

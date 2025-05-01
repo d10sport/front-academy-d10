@@ -1,9 +1,9 @@
-import LoaderAuth from '@ui/loaders/auth/loader.auth'
-import Header from '@layouts/header/header'
-import Footer from '@layouts/footer/footer'
-import Router  from '@routes/router/root'
-import { Toaster } from 'sonner'
-import './App.css'
+import LoaderAuth from "@ui/loaders/auth/loader.auth";
+import Header from "@layouts/header/header";
+import Footer from "@layouts/footer/footer";
+import Router from "@routes/router/root";
+import { Toaster } from "sonner";
+import "./App.css";
 
 function App() {
   return (
@@ -14,6 +14,7 @@ function App() {
       <Footer />
       <Toaster richColors />
     </>
-  )
+  );
 }
-export default App
+
+export default App;
