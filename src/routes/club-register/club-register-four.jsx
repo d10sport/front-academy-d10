@@ -98,14 +98,14 @@ export default function ClubRegisterFour() {
           navigate("/success-register");
           return "Solicitud de Registro realizada";
         } else {
-          throw Error('Error al registrarte')
+          throw Error("Error al registrarte");
         }
       },
       error: (msg) => {
-        console.error(msg)
+        console.error(msg);
         button.disabled = false;
         button.classList.remove("opacity-50", "cursor-not-allowed");
-        return 'Error al registrarte'
+        return "Error al registrarte";
       },
     });
   }

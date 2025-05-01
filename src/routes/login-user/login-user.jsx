@@ -13,17 +13,17 @@ export default function LoginUser() {
     context.setTypeUser({
       role_id: role.id,
       name_role: role.description_role,
-      description_role: role.name_role
-    })
-    navigate('/login');
-  }
+      description_role: role.name_role,
+    });
+    navigate("/login");
+  };
 
   async function getDataRole() {
     const data = await context.fetchRoleUsers();
     if (data == undefined) {
       return;
     }
-    const usersRol = data.splice(data, 3)
+    const usersRol = data.splice(data, 3);
     context.setRoleSystem(usersRol);
     setRoles(usersRol);
     context.setIsLoading(false);
@@ -52,7 +52,12 @@ export default function LoginUser() {
                   <h1 className="title__login-user">{role.description_role}</h1>
                 </div>
                 <img
-                  src={new URL(`../../assets/img/${role.name_role}.png`, import.meta.url).href}
+                  src={
+                    new URL(
+                      `../../assets/img/${role.name_role}.png`,
+                      import.meta.url
+                    ).href
+                  }
                   alt={`Img ${role.description_role}`}
                   className="img__login-user"
                 />
@@ -61,7 +66,9 @@ export default function LoginUser() {
           </div>
           <div className="cntr-menu__login-user">
             <div className="cntr-title__login-user alt-black-cntr-title--design cntr-title--responsive">
-              <h1 className="title__login-user neon-text--color">Iniciar Sesión</h1>
+              <h1 className="title__login-user neon-text--color">
+                Iniciar Sesión
+              </h1>
             </div>
             <div className="cntr-text__login-user alt-black-cntr-title--design">
               <p className="text__login-user">¿No tienes una cuenta?</p>
@@ -69,7 +76,7 @@ export default function LoginUser() {
               <Link
                 to="/register"
                 className="text__login-user text--color"
-                onClick={() => navigate('/register')}
+                onClick={() => navigate("/register")}
               >
                 Regístrate
               </Link>

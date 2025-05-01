@@ -13,7 +13,7 @@ export default function Header() {
     fetchPermissionsUser,
     fetchUser,
     fetchPermissionsRoles,
-    closeSession
+    closeSession,
   } = useContext(AppContext);
   const [permissionsSystem, setPermissionsSystem] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
@@ -22,7 +22,7 @@ export default function Header() {
 
   const getPermissions = useCallback(async () => {
     let userPermissions = permissionsUser;
-    if (userPermissions?.length === 0 || userPermissions == undefined ) {
+    if (userPermissions?.length === 0 || userPermissions == undefined) {
       userPermissions = await fetchPermissionsUser();
     }
     const allPermissions = await fetchPermissionsRoles();

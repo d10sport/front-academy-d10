@@ -83,7 +83,7 @@ export default function LoginAdmin() {
 
   async function getDataRole() {
     const data = await context.fetchRoleUsers();
-    const usersRol = data.splice(-1)
+    const usersRol = data.splice(-1);
     if (usersRol.length == 0) {
       toast.error("No se encontro el rol de administrador");
       return;
@@ -92,8 +92,8 @@ export default function LoginAdmin() {
     context.setTypeUser({
       role_id: usersRol[0].id,
       name_role: usersRol[0].description_role,
-      description_role: usersRol[0].name_role
-    })
+      description_role: usersRol[0].name_role,
+    });
   }
 
   useEffect(() => {

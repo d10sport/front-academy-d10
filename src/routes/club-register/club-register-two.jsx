@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from "react";
-import photoUser from "@assets/icons/photo_user.png"
+import photoUser from "@assets/icons/photo_user.png";
 import AppContext from "@context/app/app-context";
 import { useNavigate } from "react-router-dom";
-import { toast } from 'sonner';
+import { toast } from "sonner";
 import axios from "axios";
 import "./club-register.css";
 
@@ -18,25 +18,24 @@ export default function ClubRegisterTwo() {
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   function handleCountry(event) {
     let countryId = context.registerClub.countryID;
     if (event.target?.selectedOptions != undefined) {
-      countryId = event.target.selectedOptions[0].id
+      countryId = event.target.selectedOptions[0].id;
     }
     context.setRegisterClub((prev) => ({
       ...prev,
-      city: '',
-      cityID: ''
-    }))
+      city: "",
+      cityID: "",
+    }));
     context.setRegisterClub((prev) => ({
       ...prev,
       country: event.target.value,
-      countryID: countryId
-    })
-    )
-    if (countryId != '') {
+      countryID: countryId,
+    }));
+    if (countryId != "") {
       fetchCities(event.target.selectedOptions[0].id);
     }
   }
@@ -44,82 +43,78 @@ export default function ClubRegisterTwo() {
   function handleCity(event) {
     let cityId = context.registerClub.cityID;
     if (event.target?.selectedOptions != undefined) {
-      cityId = event.target.selectedOptions[0].id
+      cityId = event.target.selectedOptions[0].id;
     }
     context.setRegisterClub((prev) => ({
       ...prev,
       city: event.target.value,
-      cityID: cityId
-    })
-    )
+      cityID: cityId,
+    }));
   }
 
   function handleEmail(event) {
     context.setRegisterClub((prev) => ({
       ...prev,
       mail: event.target.value,
-    })
-    )
+    }));
   }
 
   function handleCellPhone(event) {
     let number = parseInt(event.target.value);
     if (isNaN(number)) {
-      event.target.value = '';
+      event.target.value = "";
       number = 0;
     }
     context.setRegisterClub((prev) => ({
       ...prev,
       contact: parseInt(event.target.value),
-    })
-    )
+    }));
   }
 
   function handleSocialNetworks(user) {
     context.setRegisterClub((prev) => ({
       ...prev,
       social_networks: { instagram: user },
-    })
-    )
+    }));
   }
 
   async function fetchCountries() {
-    axios.get(`${urlApi}external/g/rest/countries/america`,
-      {
+    axios
+      .get(`${urlApi}external/g/rest/countries/america`, {
         headers: {
-          'Content-Type': 'application/json',
-          'api-key': apiKey
+          "Content-Type": "application/json",
+          "api-key": apiKey,
         },
       })
       .then((response) => {
         if (!response.data.success) {
           console.error(`${response.data.message}`);
-          return
-        };
+          return;
+        }
         setCountries(response.data.data);
       })
       .catch(() => {
-        console.error('Error al obtener los paises');
+        console.error("Error al obtener los paises");
       });
   }
 
   function fetchCities(countryId) {
-    axios.get(`${urlApi}external/g/geon/cities/${countryId}`,
-      {
+    axios
+      .get(`${urlApi}external/g/geon/cities/${countryId}`, {
         headers: {
-          'Content-Type': 'application/json',
-          'api-key': apiKey
+          "Content-Type": "application/json",
+          "api-key": apiKey,
         },
       })
       .then((response) => {
         if (!response.data.success) {
           console.error(`${response.data.message}`);
-          return
-        };
+          return;
+        }
         setCities(response.data.data);
       })
       .catch(() => {
-        console.error('Error al obtener las ciudades');
+        console.error("Error al obtener las ciudades");
       });
   }
 
@@ -132,7 +127,7 @@ export default function ClubRegisterTwo() {
       country: "",
       countryID: "",
       city: "",
-      cityID: ""
+      cityID: "",
     });
   }
 
@@ -142,22 +137,21 @@ export default function ClubRegisterTwo() {
     context.setRegisterClub((prev) => ({
       ...prev,
       instagram: "",
-    })
-    )
-  }
+    }));
+  };
 
   const handleInstagramSearch = () => {
     if (userIntagram.length >= 2) {
       toast.promise(fetchFilterInstragram(userIntagram), {
-        loading: 'Cargando...',
+        loading: "Cargando...",
         success: (data) => {
           if (data.length > 0) {
-            return 'Filtro realizado con exito'
+            return "Filtro realizado con exito";
           } else {
-            return 'No se encontraron resultados'
+            return "No se encontraron resultados";
           }
         },
-        error: 'Error al filtrar entrenadores',
+        error: "Error al filtrar entrenadores",
       });
     } else {
       setSuggestions([]);
@@ -167,22 +161,25 @@ export default function ClubRegisterTwo() {
   async function fetchFilterInstragram() {
     setIsLoading(true);
     try {
-      const response = await axios.get(`https://${apiHostRapidIntagram}/v1/info?username_or_id_or_url=${userIntagram}`, {
-        headers: {
-          "x-rapidapi-key": apiKeyRapidApi,
-          "x-rapidapi-host": apiHostRapidIntagram,
-        },
-      });
+      const response = await axios.get(
+        `https://${apiHostRapidIntagram}/v1/info?username_or_id_or_url=${userIntagram}`,
+        {
+          headers: {
+            "x-rapidapi-key": apiKeyRapidApi,
+            "x-rapidapi-host": apiHostRapidIntagram,
+          },
+        }
+      );
       if (!response?.data?.data) {
         setSuggestions([]);
-        return []
+        return [];
       } else {
         setSuggestions([response.data.data]);
         return [response.data.data];
       }
     } catch (error) {
       console.error("Error al filtrar entrenadores:", error);
-      return []
+      return [];
     } finally {
       setIsLoading(false);
     }
@@ -190,8 +187,13 @@ export default function ClubRegisterTwo() {
 
   const handleUserInstagram = async (e) => {
     let value = e.target.value;
-    if (Object.keys(context.registerClub.social_networks).length > 0 && context.registerClub.social_networks?.instagram != "") {
-      let newValue = value.replace(context.registerClub.social_networks?.instagram, "").trim();
+    if (
+      Object.keys(context.registerClub.social_networks).length > 0 &&
+      context.registerClub.social_networks?.instagram != ""
+    ) {
+      let newValue = value
+        .replace(context.registerClub.social_networks?.instagram, "")
+        .trim();
       value = newValue;
       clearSelectInstagram();
     }
@@ -203,23 +205,29 @@ export default function ClubRegisterTwo() {
       setUserInstagram(username.full_name);
       handleSocialNetworks(username.full_name);
     } else {
-      setUserInstagram(username.username)
+      setUserInstagram(username.username);
       handleSocialNetworks(username.username);
     }
     setSuggestions([]);
   };
 
   async function nextStep() {
-    if (!context.registerClub.country || !context.registerClub.city || !context.registerClub.mail || !context.registerClub.contact || !Object.keys(context.registerClub.social_networks).length > 0) {
-      toast.error('Por favor, complete todos los campos');
-      return
+    if (
+      !context.registerClub.country ||
+      !context.registerClub.city ||
+      !context.registerClub.mail ||
+      !context.registerClub.contact ||
+      !Object.keys(context.registerClub.social_networks).length > 0
+    ) {
+      toast.error("Por favor, complete todos los campos");
+      return;
     }
-    navigate('/register/club/step-three')
+    navigate("/register/club/step-three");
   }
 
   useEffect(() => {
-    fetchCountries()
-  }, [])
+    fetchCountries();
+  }, []);
 
   return (
     <>
@@ -232,81 +240,95 @@ export default function ClubRegisterTwo() {
           <label htmlFor="pais" className="label__login">
             País
           </label>
-          {countries.length === 0 ?
-            (
-              <input
-                type="text"
-                id="country"
-                name="country"
-                autoComplete="off"
-                className="input__login"
-                placeholder="País"
-                defaultValue={context.registerClub.country}
-                onClick={(e) => handleCountry(e)}
-              />
-            ) :
-            (
-              <select
-                key={context.registerClub.countryID}
-                name="country"
-                id="country"
-                className="input__login"
-                defaultValue={context.registerClub.country}
-                onChange={(e) => handleCountry(e)}
-              >
-                <option selected>
-                  Seleccionar...
+          {countries.length === 0 ? (
+            <input
+              type="text"
+              id="country"
+              name="country"
+              autoComplete="off"
+              className="input__login"
+              placeholder="País"
+              defaultValue={context.registerClub.country}
+              onClick={(e) => handleCountry(e)}
+            />
+          ) : (
+            <select
+              key={context.registerClub.countryID}
+              name="country"
+              id="country"
+              className="input__login"
+              defaultValue={context.registerClub.country}
+              onChange={(e) => handleCountry(e)}
+            >
+              <option selected>Seleccionar...</option>
+              {countries.map((country) => (
+                <option
+                  key={country.id}
+                  id={country.code}
+                  defaultValue={country.name}
+                >
+                  {country.name}
                 </option>
-                {countries.map((country) => (
-                  <option key={country.id} id={country.code} defaultValue={country.name}>
-                    {country.name}
-                  </option>
-                ))}
-              </select>
-            )}
+              ))}
+            </select>
+          )}
 
           <label htmlFor="ciudad" className="label__login">
             Ciudad
           </label>
-          {cities.length === 0 && countries.length === 0 ||
-            context.registerClub.city != '' && context.registerClub.country != '' ?
-            (
-              <div className="w-full flex justify-between gap-2">
-                <input
-                  type="text"
-                  id="city"
-                  name="city"
-                  autoComplete="off"
-                  className="input__login cursor-no-drop outline-none"
-                  placeholder="Ciudad"
-                  defaultValue={context.registerClub.city}
-                  disabled
-                />
-                <button className="input-btn" onClick={() => clearCity()}>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                  </svg>
-                </button>
-              </div>
-            ) : (
-              <select
-                name="country"
-                id="country"
-                className="input__login"
+          {(cities.length === 0 && countries.length === 0) ||
+          (context.registerClub.city != "" &&
+            context.registerClub.country != "") ? (
+            <div className="w-full flex justify-between gap-2">
+              <input
+                type="text"
+                id="city"
+                name="city"
+                autoComplete="off"
+                className="input__login cursor-no-drop outline-none"
+                placeholder="Ciudad"
                 defaultValue={context.registerClub.city}
-                onChange={(e) => handleCity(e)}
-                disabled={cities.length === 0 && !context.registerClub.city ? true : false}
-              >
-                <option selected>
-                  Seleccionar...
+                disabled
+              />
+              <button className="input-btn" onClick={() => clearCity()}>
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#000000"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M4 7l16 0" />
+                  <path d="M10 11l0 6" />
+                  <path d="M14 11l0 6" />
+                  <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                  <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                </svg>
+              </button>
+            </div>
+          ) : (
+            <select
+              name="country"
+              id="country"
+              className="input__login"
+              defaultValue={context.registerClub.city}
+              onChange={(e) => handleCity(e)}
+              disabled={
+                cities.length === 0 && !context.registerClub.city ? true : false
+              }
+            >
+              <option selected>Seleccionar...</option>
+              {cities.map((city) => (
+                <option key={city.id} id={city.code} defaultValue={city.name}>
+                  {city.name}
                 </option>
-                {cities.map((city) => (
-                  <option key={city.id} id={city.code} defaultValue={city.name}>
-                    {city.name}
-                  </option>
-                ))}
-              </select>
-            )}
+              ))}
+            </select>
+          )}
 
           <label htmlFor="email" className="label__login">
             Email
@@ -334,10 +356,13 @@ export default function ClubRegisterTwo() {
             className="input__login"
             pattern="[0-9]{10}"
             placeholder="Numero celular"
-            defaultValue={context.registerClub.contact == 0 ? '' : context.registerClub.contact}
+            defaultValue={
+              context.registerClub.contact == 0
+                ? ""
+                : context.registerClub.contact
+            }
             onChange={(e) => handleCellPhone(e)}
           />
-
 
           <label htmlFor="user-instagram" className="label__login">
             Usuario Instagram
@@ -351,12 +376,27 @@ export default function ClubRegisterTwo() {
                 autoComplete="off"
                 className="input__login"
                 placeholder="Usuario Instagram"
-                defaultValue={userIntagram || context.registerClub.social_networks?.instagram || ''}
+                defaultValue={
+                  userIntagram ||
+                  context.registerClub.social_networks?.instagram ||
+                  ""
+                }
                 onChange={(e) => handleUserInstagram(e)}
               />
               <button className="input-btn" onClick={handleInstagramSearch}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" />
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#000000"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                  <path d="M21 21l-6 -6" />
                 </svg>
               </button>
             </div>
@@ -371,7 +411,9 @@ export default function ClubRegisterTwo() {
                   onClick={() => handleSuggestionClick(user)}
                 >
                   <div className="suggestion-info">
-                    <p className="suggestion-fullname">{user.full_name != "" ? user.full_name : user.username}</p>
+                    <p className="suggestion-fullname">
+                      {user.full_name != "" ? user.full_name : user.username}
+                    </p>
                   </div>
                   <img
                     // src={user.hd_profile_pic_url_info.url}
@@ -386,10 +428,12 @@ export default function ClubRegisterTwo() {
             </ul>
           )}
 
-          <button onClick={() => nextStep()} className="button-three__login">Siguiente</button>
+          <button onClick={() => nextStep()} className="button-three__login">
+            Siguiente
+          </button>
           <button
             className="cursor-pointer link__login center-text__login"
-            onClick={() => navigate('/register/club/step-one')}
+            onClick={() => navigate("/register/club/step-one")}
           >
             Regresar
           </button>

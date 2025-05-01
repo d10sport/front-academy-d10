@@ -31,19 +31,15 @@ export default function Maintenance() {
       {dataMaintenance !== undefined && (
         <div
           id="section_maintenance"
-          className={`h-screen w-full select-none z-[60] left-0 top-0 bottom-0 right-0 ${dataMaintenance.active ? "fixed" : "hidden"
-            }`}
+          className={`h-screen w-full select-none z-[60] left-0 top-0 bottom-0 right-0 ${
+            dataMaintenance.active ? "fixed" : "hidden"
+          }`}
         >
           <div className="w-full h-full absolute top-0 left-0 bottom-0">
             {data.bg_photo != "" ? (
-              <img
-                className="h-full w-full"
-                src={imageFondo}
-                alt="bgPhoto"
-              />
+              <img className="h-full w-full" src={imageFondo} alt="bgPhoto" />
             ) : (
-              <img className="h-full w-full" src={imageFondo}
-                alt="bgPhoto" />
+              <img className="h-full w-full" src={imageFondo} alt="bgPhoto" />
             )}
           </div>
           <div className="w-full h-full absolute top-0 left-0 bottom-0 bg-transparent user-select-none">

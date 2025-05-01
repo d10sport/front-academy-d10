@@ -129,27 +129,30 @@ export default function Home() {
     }
   }, [user, context]);
 
-  const fetchAllUserForClub = useCallback((id) => {
-    if (id == undefined) {
-      setDataDataTable([]);
-      return;
-    }
-    axios
-      .get(`${urlApi}academy/g/users-from-club/${id}`, {
-        headers: {
-          "Content-Type": "application/json",
-          "api-key": apiKey,
-        },
-      })
-      .then((response) => {
-        if (response.data.success) {
-          setDataDataTable(response.data.data);
-        }
-      })
-      .catch(() => {
+  const fetchAllUserForClub = useCallback(
+    (id) => {
+      if (id == undefined) {
         setDataDataTable([]);
-      });
-  }, [urlApi, apiKey]);
+        return;
+      }
+      axios
+        .get(`${urlApi}academy/g/users-from-club/${id}`, {
+          headers: {
+            "Content-Type": "application/json",
+            "api-key": apiKey,
+          },
+        })
+        .then((response) => {
+          if (response.data.success) {
+            setDataDataTable(response.data.data);
+          }
+        })
+        .catch(() => {
+          setDataDataTable([]);
+        });
+    },
+    [urlApi, apiKey]
+  );
 
   const fetchAllRegistersVerifiedByDate = useCallback(() => {
     axios
@@ -186,7 +189,6 @@ export default function Home() {
         setDataGraphicBarChart([]);
       });
   }, [urlApi, apiKey]);
-
 
   useEffect(() => {
     if (!context.token) {
@@ -231,85 +233,115 @@ export default function Home() {
         </h2>
       </section>
 
-      {context?.permissionsUser[0]?.name_role == "admin" && user?.role == "admin" && (
-        <>
-          <section className="section__home">
-            <section className="w-full px-12 flex flex-col">
-              <div className="grid grid-cols-1 items-center justify-center md:grid-cols-2 gap-4">
-                <div className="rounded-xl p-4 flex flex-col justify-center text-white">
-                  <div className="pl-16">
-                    <h2 className="text-lg mb-2">Total registros por año: <span className="text-2xl font-bold">{dataGraphicBarChart.length}</span> </h2>
-                    <div className="text-xs text-muted-foreground">+20.1% desde el último mes</div>
+      {context?.permissionsUser[0]?.name_role == "admin" &&
+        user?.role == "admin" && (
+          <>
+            <section className="section__home">
+              <section className="w-full px-12 flex flex-col">
+                <div className="grid grid-cols-1 items-center justify-center md:grid-cols-2 gap-4">
+                  <div className="rounded-xl p-4 flex flex-col justify-center text-white">
+                    <div className="pl-16">
+                      <h2 className="text-lg mb-2">
+                        Total registros por año:{" "}
+                        <span className="text-2xl font-bold">
+                          {dataGraphicBarChart.length}
+                        </span>{" "}
+                      </h2>
+                      <div className="text-xs text-muted-foreground">
+                        +20.1% desde el último mes
+                      </div>
+                    </div>
+                    <GraphicLineBarChart data={dataLineChart} />
                   </div>
-                  <GraphicLineBarChart data={dataLineChart} />
-                </div>
-                <div className="rounded-xl p-4 flex flex-col justify-center text-white">
-                  <div className="pl-16">
-                    <h2 className="text-lg mb-2">Total de roles: <span className="text-2xl font-bold">{dataGraphicBarChart.length}</span> </h2>
-                    <div className="text-xs text-muted-foreground">+180.1% desde el último mes</div>
+                  <div className="rounded-xl p-4 flex flex-col justify-center text-white">
+                    <div className="pl-16">
+                      <h2 className="text-lg mb-2">
+                        Total de roles:{" "}
+                        <span className="text-2xl font-bold">
+                          {dataGraphicBarChart.length}
+                        </span>{" "}
+                      </h2>
+                      <div className="text-xs text-muted-foreground">
+                        +180.1% desde el último mes
+                      </div>
+                    </div>
+                    <GraphicBarChart data={dataGraphicBarChart} />
                   </div>
-                  <GraphicBarChart data={dataGraphicBarChart} />
                 </div>
-              </div>
+              </section>
             </section>
-          </section>
 
-          {dataDataTable.length > 0 && (
-            <>
-              <section className="section__home pt-4">
-                <div className="w-full text-center">
-                  <h1 className="text-2xl" >Lista de usuarios</h1>
-                </div>
-              </section>
-              <section className="section__home">
-                <section className="w-full px-12 flex flex-col">
-                  <DataTable data={dataDataTable} />
+            {dataDataTable.length > 0 && (
+              <>
+                <section className="section__home pt-4">
+                  <div className="w-full text-center">
+                    <h1 className="text-2xl">Lista de usuarios</h1>
+                  </div>
                 </section>
-              </section>
-            </>
-          )}
-        </>
-      )}
+                <section className="section__home">
+                  <section className="w-full px-12 flex flex-col">
+                    <DataTable data={dataDataTable} />
+                  </section>
+                </section>
+              </>
+            )}
+          </>
+        )}
 
-      {context?.permissionsUser[0]?.name_role == "club" && user?.role == "club" && (
-        <>
-          <section className="section__home">
-            <section className="w-full px-12 flex flex-col">
-              <div className="grid grid-cols-1 items-center justify-center md:grid-cols-2 gap-4">
-                <div className="rounded-xl p-4 flex flex-col justify-center text-white">
-                  <div className="pl-16">
-                    <h2 className="text-lg mb-2">Total registros por año: <span className="text-2xl font-bold">{dataGraphicBarChart.length}</span> </h2>
-                    <div className="text-xs text-muted-foreground">+20.1% desde el último mes</div>
+      {context?.permissionsUser[0]?.name_role == "club" &&
+        user?.role == "club" && (
+          <>
+            <section className="section__home">
+              <section className="w-full px-12 flex flex-col">
+                <div className="grid grid-cols-1 items-center justify-center md:grid-cols-2 gap-4">
+                  <div className="rounded-xl p-4 flex flex-col justify-center text-white">
+                    <div className="pl-16">
+                      <h2 className="text-lg mb-2">
+                        Total registros por año:{" "}
+                        <span className="text-2xl font-bold">
+                          {dataGraphicBarChart.length}
+                        </span>{" "}
+                      </h2>
+                      <div className="text-xs text-muted-foreground">
+                        +20.1% desde el último mes
+                      </div>
+                    </div>
+                    <GraphicLineBarChart data={dataLineChart} />
                   </div>
-                  <GraphicLineBarChart data={dataLineChart} />
-                </div>
-                <div className="rounded-xl p-4 flex flex-col justify-center text-white">
-                  <div className="pl-16">
-                    <h2 className="text-lg mb-2">Total de roles: <span className="text-2xl font-bold">{dataGraphicBarChart.length}</span> </h2>
-                    <div className="text-xs text-muted-foreground">+180.1% desde el último mes</div>
+                  <div className="rounded-xl p-4 flex flex-col justify-center text-white">
+                    <div className="pl-16">
+                      <h2 className="text-lg mb-2">
+                        Total de roles:{" "}
+                        <span className="text-2xl font-bold">
+                          {dataGraphicBarChart.length}
+                        </span>{" "}
+                      </h2>
+                      <div className="text-xs text-muted-foreground">
+                        +180.1% desde el último mes
+                      </div>
+                    </div>
+                    <GraphicBarChart data={dataGraphicBarChart} />
                   </div>
-                  <GraphicBarChart data={dataGraphicBarChart} />
                 </div>
-              </div>
+              </section>
             </section>
-          </section>
 
-          {dataDataTable.length > 0 && (
-            <>
-              <section className="section__home pt-4">
-                <div className="w-full text-center">
-                  <h1 className="text-2xl" >Lista de usuarios</h1>
-                </div>
-              </section>
-              <section className="section__home">
-                <section className="w-full px-12 flex flex-col">
-                  <DataTable data={dataDataTable} />
+            {dataDataTable.length > 0 && (
+              <>
+                <section className="section__home pt-4">
+                  <div className="w-full text-center">
+                    <h1 className="text-2xl">Lista de usuarios</h1>
+                  </div>
                 </section>
-              </section>
-            </>
-          )}
-        </>
-      )}
+                <section className="section__home">
+                  <section className="w-full px-12 flex flex-col">
+                    <DataTable data={dataDataTable} />
+                  </section>
+                </section>
+              </>
+            )}
+          </>
+        )}
 
       <Modal
         isOpen={isOpen}
