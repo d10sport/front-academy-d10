@@ -108,6 +108,14 @@ const AppProvider = ({ children }) => {
     bg_photo: ''
   });
 
+  const [dataMaintenance, setDataMaintenance] = useState({
+    active: false,
+    title: "",
+    subtitle: "",
+    description: "",
+    bg_photo: "",
+  });
+
   function clearRegisterAthlete() {
     setRegisterAthlete({
       first_names: '',
@@ -430,7 +438,9 @@ const AppProvider = ({ children }) => {
       fetchPermissionsRoles,
       fetchPermissionsUser,
       fetchUser,
-      fetchLoginUsers
+      fetchLoginUsers,
+      dataMaintenance,
+      setDataMaintenance
     }}>
       {children}
     </AppContext.Provider>

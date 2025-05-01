@@ -17,13 +17,15 @@ export default function Header() {
   } = useContext(AppContext);
   const [permissionsSystem, setPermissionsSystem] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
+  const [cantRequests, setCantRequests] = useState(0);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
   const getPermissions = useCallback(async () => {
     let userPermissions = permissionsUser;
-    if (userPermissions?.length === 0 || userPermissions == undefined) {
+    if (userPermissions?.length === 0 || userPermissions == undefined && cantRequests < 3) {
       userPermissions = await fetchPermissionsUser();
+      setCantRequests(cantRequests + 1);
     }
     const allPermissions = await fetchPermissionsRoles();
     let role_user = user?.id_role;
