@@ -324,6 +324,13 @@ const AppProvider = ({ children }) => {
       })
       .catch(() => {
         console.error("Error al obtener los permisos");
+        setDataMaintenance({
+          active: true,
+          title: "D10 Academy",
+          subtitle: "!!Llegaremos pronto!!",
+          description: "Estamos trabajando para mejorar tu experiencia",
+          bg_photo: "/assets/fondo_home_d10_academy.png",
+        });
       });
     return data;
   }
