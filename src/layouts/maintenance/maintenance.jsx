@@ -1,48 +1,49 @@
 import imageFondo from "@assets/img/fondo_home_d10_academy.png";
+import AppContext from "@context/app/app-context";
 import logo from "@assets/img/logo_sin_fondo.png";
-import { useEffect, useState } from "react";
-import PropTypes from "prop-types";
+import { useEffect, useState, useContext } from "react";
 import "./maintenance.css";
 
 export default function Maintenance() {
-    const { maintenance } = useContext(AppContext);
+  const { dataMaintenance } = useContext(AppContext);
+  const [data, setData] = useState(dataMaintenance);
 
   useEffect(() => {
-    if (maintenance == undefined) return;
+    if (dataMaintenance == undefined) return;
     if (
-      maintenance?.description != "" &&
-      maintenance?.subtitle != "" &&
-      maintenance?.title != ""
+      dataMaintenance?.description != "" &&
+      dataMaintenance?.subtitle != "" &&
+      dataMaintenance?.title != ""
     ) {
-      if (maintenance.active) {
+      if (dataMaintenance.active) {
         document.title = "Mantenimiento";
         document.body.style.overflow = "hidden";
-        setData(maintenance);
+        setData(dataMaintenance);
       } else {
         document.title = "D10";
         document.body.style.overflow = "auto";
       }
     }
-  }, [maintenance]);
+  }, [dataMaintenance]);
 
   return (
     <>
-      {maintenance !== undefined && (
+      {dataMaintenance !== undefined && (
         <div
           id="section_maintenance"
-          className={`h-screen w-full select-none z-[60] ${
-            maintenance.active ? "relative" : "hidden"
-          }`}
+          className={`h-screen w-full select-none z-[60] left-0 top-0 bottom-0 right-0 ${dataMaintenance.active ? "fixed" : "hidden"
+            }`}
         >
           <div className="w-full h-full absolute top-0 left-0 bottom-0">
             {data.bg_photo != "" ? (
               <img
                 className="h-full w-full"
-                src={data.bg_photo}
+                src={imageFondo}
                 alt="bgPhoto"
               />
             ) : (
-              <img className="h-full w-full" src={imageFondo} alt="bgPhoto" />
+              <img className="h-full w-full" src={imageFondo}
+                alt="bgPhoto" />
             )}
           </div>
           <div className="w-full h-full absolute top-0 left-0 bottom-0 bg-transparent user-select-none">

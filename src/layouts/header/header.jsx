@@ -14,6 +14,8 @@ export default function Header() {
     fetchUser,
     fetchPermissionsRoles,
     closeSession,
+    dataMaintenance,
+    setDataMaintenance
   } = useContext(AppContext);
   const [permissionsSystem, setPermissionsSystem] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
@@ -23,9 +25,18 @@ export default function Header() {
 
   const getPermissions = useCallback(async () => {
     let userPermissions = permissionsUser;
-    if (userPermissions?.length === 0 || userPermissions == undefined && cantRequests < 3) {
+    if(dataMaintenance.active) return;
+    if (userPermissions?.length === 0 && cantRequests < 1 || userPermissions == undefined && cantRequests < 1) {
       userPermissions = await fetchPermissionsUser();
       setCantRequests(cantRequests + 1);
+    } else if (userPermissions?.length === 0 && cantRequests >= 1 || userPermissions == undefined && cantRequests >= 1) {
+      setDataMaintenance({
+        active: true,
+        title: "D10 Academy",
+        subtitle: "!!Llegaremos pronto!!",
+        description: "Estamos trabajando para mejorar tu experiencia",
+        bg_photo: "/assets/fondo_home_d10_academy.png",
+      });
     }
     const allPermissions = await fetchPermissionsRoles();
     let role_user = user?.id_role;
@@ -58,6 +69,8 @@ export default function Header() {
     fetchPermissionsRoles,
     fetchUser,
     user?.id_role,
+    cantRequests,
+    setDataMaintenance,
   ]);
 
   useEffect(() => {
