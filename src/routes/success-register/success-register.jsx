@@ -1,14 +1,14 @@
-import imageAthlete from "@assets/img/athlete.png"
+import imageAthlete from "@assets/img/athlete.png";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 export default function SucessRegister() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     setTimeout(() => {
-      navigate('/login-user')
-    }, 5000)
+      navigate("/login-user");
+    }, 5000);
   }, []);
 
   return (
@@ -24,11 +24,7 @@ export default function SucessRegister() {
             Sera notificado cuando se apruebe el ingreso
           </p>
           <div className="cntr-img__login">
-            <img
-              src={imageAthlete}
-              alt="img"
-              className="img__login"
-            />
+            <img src={imageAthlete} alt="img" className="img__login" />
           </div>
         </form>
       </section>

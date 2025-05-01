@@ -1,4 +1,4 @@
-import './loader.basic.css'
+import "./loader.basic.css";
 
 function LoaderBasic() {
   return (
@@ -16,7 +16,7 @@ function LoaderBasic() {
       <div className="bar11"></div>
       <div className="bar12"></div>
     </div>
-  )
+  );
 }
 
-export default LoaderBasic
+export default LoaderBasic;

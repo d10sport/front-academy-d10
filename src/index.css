@@ -3,14 +3,14 @@
 @tailwind utilities;
 
 :root {
-  --text-100: #FFFFFF;
+  --text-100: #ffffff;
   --text-200: #000000;
-  --text-300: #FFC702;
-  --text-400: #5A5A5A;
+  --text-300: #ffc702;
+  --text-400: #5a5a5a;
 
-  --bg-100: #1A1A1A;
-  --bg-200: #5A5A5A;
-  --bg-300: #FFFFFF;
+  --bg-100: #1a1a1a;
+  --bg-200: #5a5a5a;
+  --bg-300: #ffffff;
   --bg-400: #000000;
 }
 
@@ -39,7 +39,11 @@ body {
 .bg-color__login {
   overflow-y: auto;
   overflow-x: hidden;
-  background: linear-gradient(135deg, rgba(24, 24, 24, 1) 0%, rgba(61, 61, 61, 1) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(24, 24, 24, 1) 0%,
+    rgba(61, 61, 61, 1) 100%
+  );
 }
 
 .text_100 {
@@ -88,8 +92,8 @@ body {
   cursor: pointer;
   transition: 0.4s;
   color: #000;
-  border: 2px solid #FFC702;
-  background-color: #FFC702;
+  border: 2px solid #ffc702;
+  background-color: #ffc702;
 }
 
 .btn_yellow_active {
@@ -102,7 +106,7 @@ body {
   display: flex;
   justify-content: center;
   border-radius: 8px;
-  background: #FFC702;
+  background: #ffc702;
   transition: 1s all ease;
 }
 
@@ -111,8 +115,6 @@ body {
   opacity: 0.5;
   transform: scale(1.1);
 }
-
-
 
 /* LOGIN STYLES */
 
@@ -158,14 +160,14 @@ select {
   /* text-shadow: 2px 4px 6px rgba(70, 70, 70, 0.5); */
 }
 
-.text-decoration__login{
+.text-decoration__login {
   color: white;
   background-color: #1f2937;
   padding: 2px 4px;
   border-radius: 4px;
 }
 
-.button__type-user{
+.button__type-user {
   position: relative;
   color: #1f2937;
   font-weight: bold;
@@ -229,7 +231,7 @@ select {
   padding: 0px 10px;
 }
 
-.input__login[disabled]{
+.input__login[disabled] {
   background-color: #f2f2f2;
   color: #a0a0a0;
   cursor: not-allowed;
@@ -357,7 +359,7 @@ select {
   padding: 6px 12px;
 }
 
-.button-three__login:hover{
+.button-three__login:hover {
   transition: 250ms;
   background-color: #364153;
 }
@@ -389,8 +391,6 @@ select {
 }
 
 /* ---------------------------------------- */
-
-
 
 @layer base {
   :root {
@@ -447,8 +447,6 @@ select {
     --chart-5: 340 75% 55%;
   }
 }
-
-
 
 @layer base {
   * {

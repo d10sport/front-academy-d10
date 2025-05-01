@@ -14,14 +14,14 @@ export default function Register() {
     context.setTypeUser({
       role_id: role.id,
       name_role: role.description_role,
-      description_role: role.name_role
-    })
+      description_role: role.name_role,
+    });
     navigate(`/register/${role.name_role}/step-one`);
-  }
+  };
 
   async function getDataRole() {
     const data = await context.fetchRoleUsers();
-    const usersRol = data.splice(data, 3)
+    const usersRol = data.splice(data, 3);
     context.setRoleSystem(usersRol);
     setRoles(usersRol);
     context.setIsLoading(false);
@@ -49,7 +49,12 @@ export default function Register() {
                   <h1 className="title__register">{role.description_role}</h1>
                 </div>
                 <img
-                  src={new URL(`../../assets/img/${role.name_role}.png`, import.meta.url).href}
+                  src={
+                    new URL(
+                      `../../assets/img/${role.name_role}.png`,
+                      import.meta.url
+                    ).href
+                  }
                   alt={`Img ${role.description_role}`}
                   className="img__register"
                 />
@@ -65,7 +70,7 @@ export default function Register() {
               <Link
                 to="/login-user"
                 className="text__register text--color"
-                onClick={() => navigate('/login-user')}
+                onClick={() => navigate("/login-user")}
               >
                 Iniciar Sesión
               </Link>

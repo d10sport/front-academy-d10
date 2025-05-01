@@ -83,12 +83,12 @@ export default function ClubRegisterThree() {
 
   useEffect(() => {
     const event = {
-      target : {
-        value : "no"
-      }
-    }
-    handleNationalLeague(event)
-    handleLocalLeague(event)
+      target: {
+        value: "no",
+      },
+    };
+    handleNationalLeague(event);
+    handleLocalLeague(event);
   }, []);
 
   return (
