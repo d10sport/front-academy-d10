@@ -13,30 +13,17 @@ export default function Header() {
     fetchPermissionsUser,
     fetchUser,
     fetchPermissionsRoles,
-    closeSession,
-    dataMaintenance,
-    setDataMaintenance
+    closeSession
   } = useContext(AppContext);
   const [permissionsSystem, setPermissionsSystem] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
-  const [cantRequests, setCantRequests] = useState(0);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
   const getPermissions = useCallback(async () => {
     let userPermissions = permissionsUser;
-    if(dataMaintenance.active) return;
-    if (userPermissions?.length === 0 && cantRequests < 1 || userPermissions == undefined && cantRequests < 1) {
+    if (userPermissions?.length === 0 || userPermissions == undefined ) {
       userPermissions = await fetchPermissionsUser();
-      setCantRequests(cantRequests + 1);
-    } else if (userPermissions?.length === 0 && cantRequests >= 1 || userPermissions == undefined && cantRequests >= 1) {
-      setDataMaintenance({
-        active: true,
-        title: "D10 Academy",
-        subtitle: "!!Llegaremos pronto!!",
-        description: "Estamos trabajando para mejorar tu experiencia",
-        bg_photo: "/assets/fondo_home_d10_academy.png",
-      });
     }
     const allPermissions = await fetchPermissionsRoles();
     let role_user = user?.id_role;
@@ -69,13 +56,11 @@ export default function Header() {
     fetchPermissionsRoles,
     fetchUser,
     user?.id_role,
-    cantRequests,
-    setDataMaintenance,
   ]);
 
   useEffect(() => {
     getPermissions();
-  }, [getPermissions, isVisible]);
+  }, [isVisible]);
 
   if (!user || Object.keys(user).length === 0) {
     return <div className="relative bg-transparent top-0 left-0"></div>;
