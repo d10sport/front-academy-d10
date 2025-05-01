@@ -1,0 +1,27 @@
+/* .full-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('../../assets/img/fondo_home_d10_academy.png');
+  opacity: 0;
+  transition: opacity 1s ease;
+  z-index: 5;
+} */
+
+.div_img {
+  display: flex;
+  height: 100%;
+  position: fixed;
+  bottom: 0;
+  top: 15px;
+  left: 24%;
+  z-index: 15;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
