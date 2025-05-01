@@ -1,43 +1,39 @@
 import AppContext from "@context/app/app-context";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import { toast } from 'sonner';
-import './coach-register.css'
+import { toast } from "sonner";
+import "./coach-register.css";
 
 export default function CoachOne() {
   const context = useContext(AppContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   function handleName(event) {
     context.setRegisterCoach((prev) => ({
       ...prev,
       first_names: event.target.value,
-    })
-    )
+    }));
   }
 
   function handleLastName(event) {
     context.setRegisterCoach((prev) => ({
       ...prev,
       last_names: event.target.value,
-    })
-    )
+    }));
   }
 
   function handleGender(event) {
     context.setRegisterCoach((prev) => ({
       ...prev,
       gender: event.target.value,
-    })
-    )
+    }));
   }
 
   function handleDateBirth(event) {
     context.setRegisterCoach((prev) => ({
       ...prev,
       date_birth: event.target.value,
-    })
-    )
+    }));
   }
 
   function nextStep() {
@@ -45,12 +41,17 @@ export default function CoachOne() {
     context.setRegisterCoach((prev) => ({
       ...prev,
       role: context.typeUser,
-    }))
-    if (!context.registerCoach.first_names || !context.registerCoach.last_names || !context.registerCoach.gender || !context.registerCoach.date_birth) {
-      toast.error('Por favor, complete todos los campos');
-      return
+    }));
+    if (
+      !context.registerCoach.first_names ||
+      !context.registerCoach.last_names ||
+      !context.registerCoach.gender ||
+      !context.registerCoach.date_birth
+    ) {
+      toast.error("Por favor, complete todos los campos");
+      return;
     }
-    navigate('/register/coach/step-two')
+    navigate("/register/coach/step-two");
   }
 
   return (
@@ -58,10 +59,20 @@ export default function CoachOne() {
       <section className="section__login">
         <div className="form__login">
           <h1 className="title__login">D10+ Academy</h1>
-          <h2 className="subtitle__login">Regístrate como <span className="text-decoration__login">{context.typeUser.name_role}</span></h2>
+          <h2 className="subtitle__login">
+            Regístrate como{" "}
+            <span className="text-decoration__login">
+              {context.typeUser.name_role}
+            </span>
+          </h2>
           <div className="cntr-img__login">
             <img
-              src={new URL(`../../assets/img/${context.typeUser.description_role}.png`, import.meta.url).href}
+              src={
+                new URL(
+                  `../../assets/img/${context.typeUser.description_role}.png`,
+                  import.meta.url
+                ).href
+              }
               alt="img"
               className="img__login"
             />
@@ -127,10 +138,12 @@ export default function CoachOne() {
             onChange={handleDateBirth}
           />
 
-          <button onClick={() => nextStep()} className="button-three__login">Siguiente</button>
+          <button onClick={() => nextStep()} className="button-three__login">
+            Siguiente
+          </button>
           <button
             className="cursor-pointer link__login center-text__login"
-            onClick={() => navigate('/register')}
+            onClick={() => navigate("/register")}
           >
             Cancelar
           </button>

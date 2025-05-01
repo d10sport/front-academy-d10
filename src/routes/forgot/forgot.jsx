@@ -1,5 +1,3 @@
 export default function Forgot() {
-  return (
-    <div>forgot</div>
-  )
+  return <div>forgot</div>;
 }
