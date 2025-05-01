@@ -65,17 +65,20 @@
   font-size: 24px;
   width: 40%;
   height: 60px;
-  color: #1e2939;
+  color: black;
   font-weight: bold;
   justify-content: center;
   align-items: center;
-  background: white;
   border-radius: 8px;
   pointer-events: auto;
 }
 
-.alt-cntr-title--design {
-  background: #1e2939;
+.alt-white-cntr-title--design {
+  background: white;
+}
+
+.alt-black-cntr-title--design {
+  background: black;
 }
 
 .cntr-text__login-user {
@@ -87,7 +90,6 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background: #1e2939;
   padding: 10px 10px;
   border-radius: 8px;
   pointer-events: auto;
