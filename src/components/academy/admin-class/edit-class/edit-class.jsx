@@ -32,7 +32,6 @@ export default function EditClass({
   }, [classCourse]);
 
   async function handleUpdateClass() {
-
     if (!classCourse || !classCourse.class_id) {
       setError("Los campos no pueden estar vacíos");
       console.error("No hay un curso válido para actualizar");

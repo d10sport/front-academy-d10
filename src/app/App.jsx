@@ -16,6 +16,7 @@ function App() {
       <Toaster richColors />
       <Maintenance />
     </>
-  )
+  );
 }
-export default App
+
+export default App;
