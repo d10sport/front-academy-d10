@@ -48,7 +48,7 @@ export default function LoginUser() {
                 onClick={() => handleUserSelection(role)}
                 className="link__login-user"
               >
-                <div className="cntr-title__login-user index--position">
+                <div className="cntr-title__login-user alt-white-cntr-title--design index--position">
                   <h1 className="title__login-user">{role.description_role}</h1>
                 </div>
                 <img
@@ -60,10 +60,10 @@ export default function LoginUser() {
             ))}
           </div>
           <div className="cntr-menu__login-user">
-            <div className="cntr-title__login-user alt-cntr-title--design cntr-title--responsive">
+            <div className="cntr-title__login-user alt-black-cntr-title--design cntr-title--responsive">
               <h1 className="title__login-user neon-text--color">Iniciar Sesión</h1>
             </div>
-            <div className="cntr-text__login-user">
+            <div className="cntr-text__login-user alt-black-cntr-title--design">
               <p className="text__login-user">¿No tienes una cuenta?</p>
 
               <Link
