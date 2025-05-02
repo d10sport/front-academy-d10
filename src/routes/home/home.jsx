@@ -452,7 +452,7 @@ export default function Home() {
               color: "white",
               transition: "background-color 0.3s ease",
             }}
-            onClick={() => handleSubmit()}
+            onClick={(e) => handleSubmit(e)}
           >
             Actualizar Contraseña
           </button>
