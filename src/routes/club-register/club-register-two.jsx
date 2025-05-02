@@ -41,14 +41,14 @@ export default function ClubRegisterTwo() {
   }
 
   function handleCity(event) {
-    let cityId = context.registerClub.cityID;
-    if (event.target?.selectedOptions != undefined) {
-      cityId = event.target.selectedOptions[0].id;
-    }
+    // let cityId = context.registerClub.cityID;
+    // if (event.target?.selectedOptions != undefined) {
+    //   cityId = event.target.selectedOptions[0].id;
+    // }
     context.setRegisterClub((prev) => ({
       ...prev,
       city: event.target.value,
-      cityID: cityId,
+      cityID: 1,
     }));
   }
 
@@ -276,7 +276,7 @@ export default function ClubRegisterTwo() {
           <label htmlFor="ciudad" className="label__login">
             Ciudad
           </label>
-          {(cities.length === 0 && countries.length === 0) ||
+          {/* {(cities.length === 0 && countries.length === 0) ||
           (context.registerClub.city != "" &&
             context.registerClub.country != "") ? (
             <div className="w-full flex justify-between gap-2">
@@ -328,7 +328,15 @@ export default function ClubRegisterTwo() {
                 </option>
               ))}
             </select>
-          )}
+          )} */}
+          <input
+            type="text"
+            name="country"
+            id="country"
+            className="input__login"
+            defaultValue={context.registerClub.city}
+            onChange={(e) => handleCity(e)}
+          />
 
           <label htmlFor="email" className="label__login">
             Email
