@@ -41,7 +41,6 @@ export default function ClubRegisterTwo() {
   }
 
   function handleCity(event) {
-    debugger
     // let cityId = context.registerClub.cityID;
     // if (event.target?.selectedOptions != undefined) {
     //   cityId = event.target.selectedOptions[0].id;
