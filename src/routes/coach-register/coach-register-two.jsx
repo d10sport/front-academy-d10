@@ -43,14 +43,14 @@ export default function CoachRegisterTwo() {
   }
 
   function handleCity(event) {
-    let cityId = context.registerCoach.cityID;
-    if (event.target?.selectedOptions != undefined) {
-      cityId = event.target.selectedOptions[0].id;
-    }
+    // let cityId = context.registerCoach.cityID;
+    // if (event.target?.selectedOptions != undefined) {
+    //   cityId = event.target.selectedOptions[0].id;
+    // }
     context.setRegisterCoach((prev) => ({
       ...prev,
       city: event.target.value,
-      cityID: cityId,
+      cityID: 1,
     }));
   }
 
@@ -428,7 +428,7 @@ export default function CoachRegisterTwo() {
           <label htmlFor="ciudad" className="label__login">
             Ciudad
           </label>
-          {(cities.length === 0 && countries.length === 0) ||
+          {/* {(cities.length === 0 && countries.length === 0) ||
           (context.registerCoach.city != "" &&
             context.registerCoach.country != "") ? (
             <div className="w-full flex justify-between gap-2">
@@ -482,7 +482,15 @@ export default function CoachRegisterTwo() {
                 </option>
               ))}
             </select>
-          )}
+          )} */}
+           <input
+            type="text"
+            name="country"
+            id="country"
+            className="input__login"
+            defaultValue={context.registerCoach.city}
+            onChange={(e) => handleCity(e)}
+          />
 
           <label htmlFor="club" className="label__login">
             Club Actual
