@@ -13,7 +13,7 @@ export default function SucessRegister() {
 
   return (
     <>
-      <section className="section__login">
+      <section className="section__login_academy">
         <h1 className="title__login">D10+ Academy</h1>
         <form action="" className="form__login">
           <h2 className="subtitle__login">

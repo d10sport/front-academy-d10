@@ -40,10 +40,7 @@ export default function Router() {
       <Route path="/register/club/step-four" element={<ClubRegisterFour />} />
       <Route path="/register/coach/step-one" element={<CoachRegisterOne />} />
       <Route path="/register/coach/step-two" element={<CoachregisterTwo />} />
-      <Route
-        path="/register/athlete/step-one"
-        element={<AthleteRegisterOne />}
-      />
+      <Route path="/register/athlete/step-one" element={<AthleteRegisterOne />} />
       <Route path="/register/athlete/step-two" element={<AthleteTwo />} />
       <Route path="/register/athlete/step-three" element={<AthleteThree />} />
       <Route path="/club-request" element={<ClubRequest />} />
