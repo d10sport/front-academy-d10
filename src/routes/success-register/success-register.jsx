@@ -16,11 +16,11 @@ export default function SucessRegister() {
       <section className="section__login">
         <h1 className="title__login">D10+ Academy</h1>
         <form action="" className="form__login">
-          <h2 className="subtitle__login margin-general__login">
+          <h2 className="subtitle__login">
             Solicitud de registro exitosa
           </h2>
 
-          <p className="text__login link--color__login margin-general__login">
+          <p className="text__login link--color__login">
             Sera notificado cuando se apruebe el ingreso
           </p>
           <div className="cntr-img__login">

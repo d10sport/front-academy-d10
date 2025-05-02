@@ -96,7 +96,7 @@ export default function ClubRegisterThree() {
       <section className="section__login">
         <div className="form__login">
           <h1 className="title__login">D10+ Academy</h1>
-          <h2 className="subtitle__login margin-general__login">
+          <h2 className="subtitle__login">
             Regístrate como <span className="text-decoration__login">Club</span>
           </h2>
 
@@ -243,15 +243,17 @@ export default function ClubRegisterThree() {
             </div>
           </div>
 
-          <button onClick={() => nextStep()} className="button-three__login">
-            Siguiente
-          </button>
-          <button
-            className="link__login center-text__login"
-            onClick={() => navigate("/register/club/step-two")}
-          >
-            Regresar
-          </button>
+          <div className="flex-col gap-2 flex">
+            <button onClick={() => nextStep()} className="button-three__login">
+              Siguiente
+            </button>
+            <button
+              className="link__login center-text__login"
+              onClick={() => navigate("/register/club/step-two")}
+            >
+              Regresar
+            </button>
+          </div>
         </div>
       </section>
     </>

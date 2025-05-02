@@ -3,6 +3,7 @@ import getTokenDecoded from "@lib/token/token-url";
 import AppContext from "@context/app/app-context";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import axios from "axios";
 import "./login.css";
@@ -87,8 +88,8 @@ export default function Login() {
       username == undefined ||
       password == "" ||
       password == undefined ||
-      context.typeUser == "" ||
-      context.typeUser == undefined
+      context.typeUser?.description_role == "" ||
+      context.typeUser?.description_role == undefined
     ) {
       return;
     }
@@ -145,26 +146,26 @@ export default function Login() {
   return (
     <>
       {/* <Header /> */}
-      <section className="section__login">
+      <section className="section__login_academy">
         <div action="" className="form__login">
-          <h1 className="title__login">D10+ Academy</h1>
-          <h2 className="subtitle__login">Iniciar Sesión</h2>
-          <div className="container__type-user">
+          <div className="flex flex-col items-center justify-center">
+            <h1 className="title__login">D10+ Academy</h1>
+            <h2 className="subtitle__login">Iniciar Sesión</h2>
             <button
               className="button__type-user"
               onClick={() => selectUserAgain()}
             >
-              {context.typeUser == "athlete"
+              {context.typeUser?.description_role == "athlete"
                 ? "Deportista"
-                : context.typeUser == "coach"
-                ? "Entrenador"
-                : context.typeUser == "club"
-                ? "Club"
-                : ""}
+                : context.typeUser?.description_role == "coach"
+                  ? "Entrenador"
+                  : context.typeUser?.description_role == "club"
+                    ? "Club"
+                    : ""}
             </button>
           </div>
 
-          <label htmlFor="email" className="label__login">
+          <label htmlFor="email" className="label__login font-medium">
             Correo
           </label>
           <input
@@ -179,7 +180,7 @@ export default function Login() {
             onKeyDown={(e) => handleKeyDown(e)}
           />
 
-          <label htmlFor="password" className="label__login">
+          <label htmlFor="password" className="label__login font-medium">
             Contraseña
           </label>
 
@@ -195,22 +196,23 @@ export default function Login() {
             onKeyDown={(e) => handleKeyDown(e)}
           />
 
+
+          <button className="button__login" onClick={() => handleLogin()}>
+            Iniciar Sesión
+          </button>
+
           {/* <Link to="/forgot" className="margin-top__login">
             <span className="link__login">
               Recordar contraseña
             </span>
           </Link> */}
 
-          <button className="button__login" onClick={() => handleLogin()}>
-            Iniciar Sesión
-          </button>
-
-          {/* <p className="text__login">
+          <p className="text__login p-0 m-0">
             ¿No tienes una cuenta? &nbsp;
-            <Link to="/register" className="link__login link--color__login">
-              Regístrate ahora
-            </Link>
-          </p> */}
+          </p>
+          <Link to="/register" className="link__login">
+            Regístrate ahora
+          </Link>
         </div>
       </section>
     </>
