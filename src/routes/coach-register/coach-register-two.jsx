@@ -384,7 +384,7 @@ export default function CoachRegisterTwo() {
       <section className="section__login">
         <div className="form__login">
           <h2 className="title__login">D10+ Academy</h2>
-          <h2 className="subtitle__login margin-general__login">
+          <h2 className="subtitle__login">
             Regístrate como{" "}
             <span className="text-decoration__login">Entrenador</span>
           </h2>
@@ -536,7 +536,7 @@ export default function CoachRegisterTwo() {
             {isLoading && <p>Cargando...</p>}
             {clubResults.length > 0 && (
               <>
-                <p>Resultados</p>
+                <p className="font-black">Resultados:</p>
                 <select
                   className="select__login input__login"
                   onChange={(e) => handleOnChangeClub(e)}
