@@ -161,22 +161,16 @@ export default function LoginAdmin() {
   return (
     <>
       {/* <Header /> */}
-      <section className="section__login">
+      <section className="section__login_academy">
         <div action="" className="form__login">
-          <h1 className="title__login">D10+ Academy</h1>
-          <h2 className="subtitle__login">Iniciar Sesión</h2>
-          <div className="container__type-user">
+          <div className="flex flex-col items-center justify-center">
+            <h1 className="title__login">D10+ Academy</h1>
+            <h2 className="subtitle__login">Iniciar Sesión</h2>
             <button
               className="button__type-user"
               onClick={() => selectUserAgain()}
             >
-              {context.typeUser == "athlete"
-                ? "Deportista"
-                : context.typeUser == "coach"
-                ? "Entrenador"
-                : context.typeUser == "club"
-                ? "Club"
-                : ""}
+              Admin
             </button>
           </div>
 

@@ -85,6 +85,8 @@ export default function Header() {
 
       <button className="button__button-nav" onClick={toggleVisibility}>
         <p>{user?.first_names ?? user?.president}</p>
+        &nbsp;
+        &nbsp;
         <div className="cntr-img__button-nav">
           <img src={Example} alt="img" className="img__button-nav" />
         </div>

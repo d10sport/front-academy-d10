@@ -115,7 +115,7 @@ export default function ClubRegisterFour() {
       <section className="section__login">
         <div className="form__login">
           <h2 className="title__login">D10+ Academy</h2>
-          <h2 className="subtitle__login margin-general__login">
+          <h2 className="subtitle__login">
             Regístrate como <span className="text-decoration__login">Club</span>
           </h2>
 

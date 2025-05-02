@@ -70,17 +70,6 @@ export default function LoginUser() {
                 Iniciar Sesión
               </h1>
             </div>
-            <div className="cntr-text__login-user alt-black-cntr-title--design">
-              <p className="text__login-user">¿No tienes una cuenta?</p>
-
-              <Link
-                to="/register"
-                className="text__login-user text--color"
-                onClick={() => navigate("/register")}
-              >
-                Regístrate
-              </Link>
-            </div>
           </div>
         </section>
       )}
