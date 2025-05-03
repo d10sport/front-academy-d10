@@ -264,8 +264,17 @@ export default function Admin() {
     }
 
     const formData = new FormData();
-    formData.append("file", formImageUploadOne);
-    formData.append("file", formImageUploadTwo);
+
+    if (formImageUploadOne) {
+      formData.append("file", formImageUploadOne);
+      formData.append("fileType", "bg_photo");
+    }
+
+    if (formImageUploadTwo) {
+      formData.append("file", formImageUploadTwo);
+      formData.append("fileType", "bg_photo_res");
+    }
+
     formData.append("page", "landing");
     formData.append("data", JSON.stringify(sectionOne));
 
