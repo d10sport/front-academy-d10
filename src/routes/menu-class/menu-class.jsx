@@ -17,7 +17,7 @@ export default function MenuClass() {
   const [selectedClass, setSelectedClass] = useState(null);
   const [modalIsOpenThree, setModalIsOpenThree] = useState(false);
   const [selectedClassId, setSelectedClassId] = useState(null);
-  // const [selectedClassContent, setSelectedClassContent] = useState(null);
+  const [selectedClassContent, setSelectedClassContent] = useState(null);
 
   const [loading, setLoading] = useState(true);
 
@@ -102,7 +102,7 @@ export default function MenuClass() {
                   <button
                     onClick={() => {
                       setSelectedClassId(cls.class_id);
-                      // setSelectedClassContent(cls.class_content.video);
+                      setSelectedClassContent(cls.class_content.video);
                       setModalIsOpenThree(true);
                     }}
                     className="btn-delete__menu-course"
@@ -134,7 +134,7 @@ export default function MenuClass() {
         isOpen={modalIsOpenThree}
         onClose={() => setModalIsOpenThree(false)}
         classId={selectedClassId}
-        // classContent={selectedClassContent}
+        classContent={selectedClassContent}
         refreshCourses={() => getClassMenu()}
       />
     </>
