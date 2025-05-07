@@ -24,17 +24,22 @@ export default function AddClass({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // Nueva subida de image
-  const [imageOpen, setImageOpen] = useState(false);
-  const [imageUpload, setImageUpload] = useState("");
-  const [formImageUpload, setFormImageUpload] = useState("");
+  // Nueva subida de video
+  const [videoOpen, setVideoOpen] = useState(false);
+  const [videoUpload, setVideoUpload] = useState("");
+  const [formVideoUpload, setFormVideoUpload] = useState("");
   const [files, setFiles] = useState([]);
 
   const onDrop = useCallback((acceptedFiles) => {
+    const maxSize = 5 * 1024 * 1024; // 5 MB
     if (acceptedFiles.length > 0) {
+      if (acceptedFiles[0].size > maxSize) {
+        setError("El archivo es demasiado grande. Máximo 400KB.");
+        return;
+      }
       setFiles(acceptedFiles);
-      setImageUpload(URL.createObjectURL(acceptedFiles[0]));
-      setFormImageUpload(acceptedFiles[0]);
+      setVideoUpload(URL.createObjectURL(acceptedFiles[0]));
+      setFormVideoUpload(acceptedFiles[0]);
       setError("");
     }
   }, []);
@@ -44,27 +49,28 @@ export default function AddClass({
     accept: "image/jpeg, image/png, image/webp, video/mp4",
   });
 
-  function cancelUploadImage() {
-    setImageOpen(false);
+  function cancelUploadVideo() {
+    setVideoOpen(false);
     setFiles([]);
-    setImageUpload("");
+    setVideoUpload("");
   }
 
   // --------------------------------------
 
   async function handleAddClass() {
-    if (imageOpen && imageUpload.length == 0) {
-      setError("Por favor, suba una imagen");
+    if (videoOpen && videoUpload.length == 0) {
+      setError("Por favor, suba un video");
       return;
     } else {
       setError("");
     }
 
-    if (
-      !classTitle.trim() ||
-      !classDescription.trim() ||
-      !classContent.trim()
-    ) {
+    if (videoOpen && !formVideoUpload) {
+      setError("Por favor, suba un archivo multimedia");
+      return;
+    }
+
+    if (!classTitle.trim() || !classDescription.trim()) {
       setError("Los campos no pueden estar vacíos");
       return;
     }
@@ -73,7 +79,7 @@ export default function AddClass({
     setError("");
 
     const formData = new FormData();
-    formData.append("file", formImageUpload);
+    formData.append("file", formVideoUpload);
     formData.append("page", "academy");
     formData.append(
       "data",
@@ -97,8 +103,8 @@ export default function AddClass({
           if (response.data.success) {
             setClassTitle("");
             setClassDescription("");
-            setImageUpload("");
-            setFormImageUpload("");
+            setVideoUpload("");
+            setFormVideoUpload("");
             setClassContent("");
             setLoading(false);
             refreshCourses();
@@ -138,12 +144,14 @@ export default function AddClass({
         }}
       >
         <section className="add-class">
-          <h1 className="title__add-class sm-margin-bottom">Add New Class</h1>
+          <h1 className="title__add-class sm-margin-bottom">
+            Agregar nueva clase
+          </h1>
           <p className="text__add-class lg-margin-bottom">
-            Create a new class.
+            Crear una nueva clase.
           </p>
           <label className="label__add-class sm-margin-bottom" htmlFor="">
-            Class Title
+            Título de la clase
           </label>
           <input
             className="input__add-class sm-margin-bottom"
@@ -154,7 +162,7 @@ export default function AddClass({
             required
           />
           <label className="label__add-class sm-margin-bottom" htmlFor="">
-            Class Description
+            Descripción de la clase
           </label>
           <textarea
             className="textarea__add-class sm-margin-bottom"
@@ -165,25 +173,25 @@ export default function AddClass({
           ></textarea>
 
           <label className="label__add-class sm-margin-bottom" htmlFor="">
-            Image Upload
+            Carga de video
           </label>
-          {!imageOpen && (
+          {!videoOpen && (
             <>
               <div className="cntr-input__add-course lg-margin-bottom">
                 <button
-                  onClick={() => setImageOpen(true)}
+                  onClick={() => setVideoOpen(true)}
                   className="btn-upload__add-course"
                 >
-                  Cambiar imagen
+                  Agregar video
                 </button>
               </div>
             </>
           )}
 
-          {imageOpen && (
+          {videoOpen && (
             <section className="upload-section">
               <h1 className="title__add-class sm-margin-bottom">
-                Añadir nueva imagen
+                Añadir nuevo video
               </h1>
               <br />
 
@@ -202,25 +210,25 @@ export default function AddClass({
                         ? "Suelta los archivos aquí"
                         : "Arrastre y suelte archivos aquí"}
                     </p>
-                    <p className="mb-4 text-sm text-neutral-500">or</p>
+                    <p className="mb-4 text-sm text-neutral-500">o</p>
                     <button className="px-4 py-2 text-sm font-medium text-neutral-200 bg-neutral-800 rounded-md hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-600">
-                      Select Files
+                      Seleccionar archivos
                     </button>
                   </div>
                 </div>
               ) : (
                 <div className="mt-4 flex flex-col items-center">
-                  {imageUpload && (
-                    <img
-                      src={imageUpload}
+                  {videoUpload && (
+                    <video
+                      src={videoUpload}
                       alt="Preview"
                       className="w-full h-50 max-h-52 object-cover rounded-md mb-4"
-                    />
+                    ></video>
                   )}
                   <button
                     onClick={() => {
                       setFiles([]);
-                      setImageUpload("");
+                      setVideoUpload("");
                     }}
                     className="px-4 py-2 text-sm font-medium text-red-600 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-red-400 flex items-center"
                   >
@@ -233,7 +241,7 @@ export default function AddClass({
               <br />
               <div className="flex justify-center mt-4 items-center gap-8">
                 <button
-                  onClick={() => cancelUploadImage()}
+                  onClick={() => cancelUploadVideo()}
                   className="btn-back__edit-course"
                 >
                   Cancelar
@@ -249,7 +257,7 @@ export default function AddClass({
             onClick={() => handleAddClass()}
             disabled={loading}
           >
-            {loading ? "Adding..." : "Add Class"}
+            {loading ? "Añadiendo..." : "Agregar clase"}
           </button>
 
           <button onClick={onClose} className="btn-back__edit-course">
