@@ -273,7 +273,8 @@ const AppProvider = ({ children }) => {
 
   async function fetchToken() {
     const token = await getToken();
-    if (!token) {
+    const url = window.location.hash;
+    if (!token && url !== "#/login-admin") {
       navigate("/login-user");
     }
     const dataToken = await fetchGetDataToken();
