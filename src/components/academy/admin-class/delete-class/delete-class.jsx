@@ -12,6 +12,7 @@ export default function DeleteClass({
   isOpen,
   onClose,
   classId,
+  classContent,
   refreshCourses,
 }) {
   const context = useContext(AppContext);
@@ -27,6 +28,7 @@ export default function DeleteClass({
   }, []);
 
   async function handleDeleteDateClass() {
+    debugger;
     if (!classId) return;
 
     // console.log("ID del curso a eliminar:", classId);
@@ -37,6 +39,9 @@ export default function DeleteClass({
           headers: {
             "Content-Type": "application/json",
             "api-key": apiKey,
+          },
+          data: {
+            url: classContent,
           },
         })
         .then((response) => {
