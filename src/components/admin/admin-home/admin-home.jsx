@@ -359,6 +359,11 @@ export default function Admin() {
       setError("");
     }
 
+    if (imageOpenFour && !formImageUploadFour) {
+      setError("Por favor, suba un archivo multimedia");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("file", formImageUploadFour);
     formData.append("page", "landing");
@@ -986,11 +991,11 @@ export default function Admin() {
               ) : (
                 <div className="mt-4 flex flex-col items-center">
                   {imageUploadFour && (
-                    <img
+                    <video
                       src={imageUploadFour}
                       alt="Preview"
                       className="w-full h-50 max-h-52 object-cover rounded-md mb-4"
-                    />
+                    ></video>
                   )}
                   <button
                     onClick={() => {
