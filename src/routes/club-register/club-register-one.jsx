@@ -78,7 +78,7 @@ export default function ClubRegisterOne() {
             />
           </div>
           <label htmlFor="nombre-club" className="label__login">
-            Nombre club
+            Nombre club <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
           <input
             type="text"
@@ -92,7 +92,7 @@ export default function ClubRegisterOne() {
           />
 
           <label htmlFor="president" className="label__login">
-            Presidente
+            Presidente <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
           <input
             type="text"
@@ -106,7 +106,7 @@ export default function ClubRegisterOne() {
           />
 
           <label htmlFor="date_founded" className="label__login">
-            Fecha de fundación
+            Fecha de fundación <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
           <input
             type="date"
@@ -129,7 +129,7 @@ export default function ClubRegisterOne() {
             name="comet"
             autoComplete="off"
             className="input__login"
-            placeholder="10"
+            placeholder="12353253"
             min={1}
             max={100}
             step={1}
@@ -144,7 +144,7 @@ export default function ClubRegisterOne() {
           </button>
           <button
             className="cursor-pointer link__login center-text__login"
-            onClick={() => navigate("/register")}
+            onClick={() => navigate("/login-user")}
           >
             Cancelar
           </button>

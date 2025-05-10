@@ -248,7 +248,7 @@ export default function AthleteRegisterOne() {
           </button>
           <button
             className="cursor-pointer link__login center-text__login"
-            onClick={() => navigate("/register")}
+            onClick={() => navigate("/login-user")}
           >
             Cancelar
           </button>

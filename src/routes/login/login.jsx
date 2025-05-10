@@ -155,13 +155,13 @@ export default function Login() {
               className="button__type-user"
               onClick={() => selectUserAgain()}
             >
-              {context.typeUser?.description_role == "athlete"
+              {context.typeUser?.role_id == 3
                 ? "Deportista"
-                : context.typeUser?.description_role == "coach"
+                : context.typeUser?.role_id == 2
                   ? "Entrenador"
-                  : context.typeUser?.description_role == "club"
+                  : context.typeUser?.role_id == 1
                     ? "Club"
-                    : ""}
+                    : "Administrador"}
             </button>
           </div>
 
@@ -210,9 +210,25 @@ export default function Login() {
           <p className="text__login p-0 m-0">
             ¿No tienes una cuenta? &nbsp;
           </p>
-          <Link to="/register" className="link__login">
-            Regístrate ahora
-          </Link>
+          {context.typeUser?.role_id == 3
+            ? (
+              <Link to="/register/athlete/step-one" className="link__login">
+                Regístrate ahora
+              </Link>
+            )
+            : context.typeUser?.role_id == 2
+            ? (
+              <Link to="/register/coach/step-one" className="link__login">
+                Regístrate ahora
+              </Link>
+            )
+            : context.typeUser?.role_id == 1
+            ? (
+              <Link to="/register/club/step-one" className="link__login">
+                Regístrate ahora
+              </Link>
+            )
+            : ""}
         </div>
       </section>
     </>

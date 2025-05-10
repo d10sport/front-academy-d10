@@ -214,13 +214,6 @@ export default function LoginAdmin() {
           <button className="button__login" onClick={() => handleLogin()}>
             Iniciar Sesión
           </button>
-
-          {/* <p className="text__login">
-            ¿No tienes una cuenta? &nbsp;
-            <Link to="/register" className="link__login link--color__login">
-              Regístrate ahora
-            </Link>
-          </p> */}
         </div>
       </section>
     </>

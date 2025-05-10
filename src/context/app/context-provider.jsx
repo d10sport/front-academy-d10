@@ -99,9 +99,7 @@ const AppProvider = ({ children }) => {
     national_tournament: "",
     number_coaches: 0,
     assistants: 0,
-    interns: 0,
-    venues: 0,
-    sites: 0,
+    venues: 0
   });
 
   const [dataHeader, setDataHeader] = useState({
@@ -185,9 +183,7 @@ const AppProvider = ({ children }) => {
       national_tournament: "",
       number_coaches: 0,
       assistants: 0,
-      interns: 0,
-      venues: 0,
-      sites: 0,
+      venues: 0
     });
   }
 
@@ -250,20 +246,15 @@ const AppProvider = ({ children }) => {
       registerClub.city != "" &&
       registerClub.cityID != "" &&
       registerClub.president != "" &&
-      registerClub.comet != 0 &&
       registerClub.contact != 0 &&
       registerClub.mail != "" &&
-      Object.keys(registerClub.social_networks).length > 0 &&
-      registerClub.website != "" &&
       registerClub.number_athletes != 0 &&
       registerClub.categories.length > 0 &&
       registerClub.local_league !== "" &&
       registerClub.national_tournament !== "" &&
       registerClub.number_coaches != 0 &&
       registerClub.assistants != 0 &&
-      registerClub.interns != 0 &&
-      registerClub.venues != 0 &&
-      registerClub.sites != 0
+      registerClub.venues != 0
     ) {
       return true;
     } else {
