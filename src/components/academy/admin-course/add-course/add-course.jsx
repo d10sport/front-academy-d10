@@ -87,6 +87,7 @@ export default function AddCourse({ isOpen, onClose, refreshCourses }) {
           if (response.data.success) {
             setCourseTitle("");
             setCourseImage("");
+            setFiles([]);
             setImageUpload("");
             setFormImageUpload("");
             setCourseDescription("");
