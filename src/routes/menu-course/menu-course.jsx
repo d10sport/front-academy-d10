@@ -1,6 +1,6 @@
 // import Example from "../../assets/img/example-img.png";
 import AddCourse from "../../components/academy/admin-course/add-course/add-course.jsx";
-// import EditCourse from "../../components/academy/admin-course/edit-course/edit-course.jsx";
+import EditCourse from "../../components/academy/admin-course/edit-course/edit-course.jsx";
 import DeleteCourse from "../../components/academy/admin-course/delete-course/delete-course.jsx";
 import { useEffect, useContext, useState } from "react";
 import AppContext from "@context/app/app-context";
@@ -11,8 +11,8 @@ import Loader from "../../ui/loaders/fake-load/loader.fake.jsx";
 
 export default function MenuCourse() {
   const [modalIsOpenOne, setModalIsOpenOne] = useState(false);
-  // const [modalIsOpenTwo, setModalIsOpenTwo] = useState(false);
-  // const [selectedCourse, setSelectedCourse] = useState(null);
+  const [modalIsOpenTwo, setModalIsOpenTwo] = useState(false);
+  const [selectedCourse, setSelectedCourse] = useState(null);
   const [modalIsOpenThree, setModalIsOpenThree] = useState(false);
   const [selectedCourseId, setSelectedCourseId] = useState(null);
 
@@ -61,12 +61,12 @@ export default function MenuCourse() {
       ) : (
         <section className="menu-course">
           <div className="home__menu-course">
-            <h1 className="title__menu-course">Course Management</h1>
+            <h1 className="title__menu-course">Gestión de cursos</h1>
             <button
               onClick={() => setModalIsOpenOne(true)}
               className="btn-new__menu-course"
             >
-              Add Course
+              Agregar curso
             </button>
           </div>
 
@@ -82,15 +82,15 @@ export default function MenuCourse() {
                   </p>
                 </div>
                 <div className="cntr-btn__menu-course">
-                  {/* <button
-                  onClick={() => {
-                    setSelectedCourse(course);
-                    setModalIsOpenTwo(true);
-                  }}
-                  className="btn-edit__menu-course"
-                >
-                  Edit
-                </button> */}
+                  <button
+                    onClick={() => {
+                      setSelectedCourse(course);
+                      setModalIsOpenTwo(true);
+                    }}
+                    className="btn-edit__menu-course"
+                  >
+                    Editar
+                  </button>
 
                   <button
                     onClick={() => {
@@ -106,7 +106,7 @@ export default function MenuCourse() {
                     to={`/menu-class/${course.id}`}
                     className="btn-manage__menu-course"
                   >
-                    Manage Classes
+                    Administrar clases
                   </Link>
                 </div>
               </li>
@@ -121,12 +121,12 @@ export default function MenuCourse() {
         refreshCourses={() => getDateCourses()}
       ></AddCourse>
 
-      {/* <EditCourse
+      <EditCourse
         isOpen={modalIsOpenTwo}
         onClose={() => setModalIsOpenTwo(false)}
         course={selectedCourse}
         refreshCourses={() => getDateCourses()}
-      /> */}
+      />
 
       <DeleteCourse
         isOpen={modalIsOpenThree}
