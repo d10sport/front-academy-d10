@@ -9,6 +9,7 @@ export default function DeleteNews({
   isOpen,
   onClose,
   indice,
+  newsContent,
   refreshCourses,
 }) {
   const context = useContext(AppContext);
@@ -28,7 +29,7 @@ export default function DeleteNews({
       axios
         .put(
           `${urlApi}landing/d/delete-news-admin/1`,
-          { index: indice },
+          { index: indice, url: newsContent },
           {
             headers: {
               "Content-Type": "application/json",
