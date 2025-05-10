@@ -19,7 +19,7 @@ export default function Home() {
   const [oldPassword, setOldPassword] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false);
   const [strength, setStrength] = useState(0);
   const [dataDataTable, setDataDataTable] = useState([]);
   const [dataGraphicBarChart, setDataGraphicBarChart] = useState([]);
@@ -114,7 +114,7 @@ export default function Home() {
       }
 
       toast.success("Contraseña actualizada con éxito");
-      setIsOpen(false);
+      setIsOpenModal(false);
     } catch (error) {
       toast.error("Error al actualizar la contraseña: " + error.message);
     }
@@ -125,7 +125,7 @@ export default function Home() {
 
     const dataLoginUser = await context.fetchLoginUsers(user.id_login);
     if (dataLoginUser[0].verify === 0) {
-      setIsOpen(true);
+      setIsOpenModal(true);
     }
   }, [user, context]);
 
@@ -344,7 +344,7 @@ export default function Home() {
         )}
 
       <Modal
-        isOpen={isOpen}
+        isOpen={isOpenModal}
         onRequestClose={() => { }}
         shouldCloseOnOverlayClick={false}
         shouldCloseOnEsc={false}
