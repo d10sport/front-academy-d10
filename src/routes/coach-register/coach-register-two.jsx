@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import photoUser from "@assets/icons/photo_user.png";
 import AppContext from "@context/app/app-context";
 import { useNavigate } from "react-router-dom";
+import Modal from "react-modal";
 import { toast } from "sonner";
 import axios from "axios";
 import "./coach-register.css";
@@ -14,6 +15,7 @@ export default function CoachRegisterTwo() {
   const apiHostRapidIntagram = context.apiHostRapidIntagram;
 
   const [userIntagram, setUserInstagram] = useState("");
+  const [isOpenModal, setIsOpenModal] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
   const [clubResults, setClubResults] = useState([]);
   const [inputCity, setInputCity] = useState(false);
@@ -139,6 +141,15 @@ export default function CoachRegisterTwo() {
           console.error(`${response.data.message}`);
           return;
         }
+        response.data.data.sort((a, b) => {
+          if (a.name < b.name) {
+            return -1;
+          }
+          if (a.name > b.name) {
+            return 1;
+          }
+          return 0;
+        });
         setCountries(response.data.data);
       })
       .catch(() => {
@@ -159,6 +170,15 @@ export default function CoachRegisterTwo() {
           console.error(`${response.data.message}`);
           return;
         }
+        response.data.data.sort((a, b) => {
+          if (a.name < b.name) {
+            return -1;
+          }
+          if (a.name > b.name) {
+            return 1;
+          }
+          return 0;
+        });
         setCities(response.data.data);
       })
       .catch(() => {
@@ -219,6 +239,15 @@ export default function CoachRegisterTwo() {
     }));
   }
 
+  function clearUserInstagram() {
+    setUserInstagram("");
+    setSuggestions([]);
+    context.setRegisterCoach((prev) => ({
+      ...prev,
+      social_networks: { instagram: "" },
+    }));
+  }
+
   function changeShowInputCity() {
     setCities([]);
     setInputCity(!inputCity);
@@ -244,6 +273,7 @@ export default function CoachRegisterTwo() {
         loading: "Cargando...",
         success: (data) => {
           if (data.length > 0) {
+            setIsOpenModal(true);
             return "Filtro realizado con exito";
           } else {
             return "No se encontraron resultados";
@@ -338,12 +368,13 @@ export default function CoachRegisterTwo() {
   const handleSuggestionClick = (username) => {
     if (username.full_name != "") {
       setUserInstagram(username.full_name);
-      handleSocialNetworks(username.full_name);
+      handleSocialNetworks({ username: username.username, name: username.full_name });
     } else {
       setUserInstagram(username.username);
-      handleSocialNetworks(username.username);
+      handleSocialNetworks({ username: username.username, name: username.full_name });
     }
     setSuggestions([]);
+    setIsOpenModal(false);
   };
 
   async function saveRegisterCoach(data) {
@@ -369,7 +400,7 @@ export default function CoachRegisterTwo() {
   }
 
   async function nextStep() {
-    if(!validateEmail(context.registerCoach.mail)){
+    if (!validateEmail(context.registerCoach.mail)) {
       toast.error("Por favor, ingrese un email valido");
       return;
     }
@@ -412,7 +443,7 @@ export default function CoachRegisterTwo() {
   }, [filterClub]);
 
   return (
-    <div className="container__login fixed top-0 left-0 right-0 bottom-0 bg-color__login">
+    <>
       <section className="section__login">
         <div className="form__login">
           <h2 className="title__login">D10+ Academy</h2>
@@ -447,6 +478,7 @@ export default function CoachRegisterTwo() {
               <option selected>Seleccionar...</option>
               {countries.map((country) => (
                 <option
+                  className="cursor-pointer"
                   key={country.id}
                   id={country.code}
                   defaultValue={country.name}
@@ -528,7 +560,8 @@ export default function CoachRegisterTwo() {
                 >
                   <option selected>Seleccionar...</option>
                   {cities.map((city) => (
-                    <option key={city.id} id={city.code} defaultValue={city.name}>
+                    <option className="cursor-pointer"
+                      key={city.id} id={city.code} defaultValue={city.name}>
                       {city.name}
                     </option>
                   ))}
@@ -703,40 +736,136 @@ export default function CoachRegisterTwo() {
             Usuario Instagram
           </label>
           <div className="input-container">
-            <div className="w-full flex justify-between gap-2">
-              <input
-                type="text"
-                id="user-instagram"
-                name="user-instagram"
-                autoComplete="off"
-                className="input__login"
-                placeholder="Usuario Instagram"
-                defaultValue={
-                  userIntagram ||
-                  context.registerCoach.social_networks?.instagram ||
-                  ""
-                }
-                onChange={(e) => handleUserInstagram(e)}
-              />
-              <button className="input-btn" onClick={handleInstagramSearch}>
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#000000"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                  <path d="M21 21l-6 -6" />
-                </svg>
-              </button>
-            </div>
+            {context.registerCoach.social_networks?.instagram?.name != undefined ? (
+              <div className="w-full flex justify-between gap-2">
+                <input
+                  type="text"
+                  id="user-instagram"
+                  name="user-instagram"
+                  autoComplete="off"
+                  className="input__login"
+                  placeholder="Usuario Instagram"
+                  value={context.registerCoach.social_networks?.instagram?.name || ""}
+                  disabled
+                />
+                <button className="input-btn" onClick={() => clearUserInstagram()}>
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#000000"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M4 7l16 0" />
+                    <path d="M10 11l0 6" />
+                    <path d="M14 11l0 6" />
+                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                  </svg>
+                </button>
+              </div>
+            ) : (
+              <div className="w-full flex justify-between gap-2">
+                <input
+                  type="text"
+                  id="user-instagram"
+                  name="user-instagram"
+                  autoComplete="off"
+                  className="input__login"
+                  placeholder="Usuario Instagram"
+                  defaultValue={
+                    userIntagram ||
+                    context.registerCoach.social_networks?.instagram ||
+                    ""
+                  }
+                  onChange={(e) => handleUserInstagram(e)}
+                />
+                <button className="input-btn" onClick={handleInstagramSearch}>
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#000000"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                    <path d="M21 21l-6 -6" />
+                  </svg>
+                </button>
+              </div>
+            )}
           </div>
-          {isLoading && <p>Cargando...</p>}
+
+          <button onClick={() => nextStep()} className="button-three__login">
+            Registrar
+          </button>
+          <button
+            className="cursor-pointer link__login center-text__login"
+            onClick={() => navigate("/register/coach/step-one")}
+          >
+            Cancelar
+          </button>
+        </div>
+      </section>
+
+      <Modal
+        isOpen={isOpenModal}
+        onRequestClose={() => { }}
+        shouldCloseOnOverlayClick={false}
+        shouldCloseOnEsc={false}
+        contentLabel="Actualizar contraseña"
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0,0,0,0.75)",
+            zIndex: 1000,
+          },
+          content: {
+            width: "fit-content",
+            height: "fit-content",
+            margin: "auto",
+            borderRadius: "12px",
+            padding: "40px",
+            backgroundColor: "white",
+            display: "flex",
+            flexDirection: "column",
+            overflowY: "auto",
+          },
+        }}
+      >
+        <button
+          className="cursor-pointer absolute top-4 right-4"
+          onClick={() => {
+            setIsOpenModal(false);
+            setSuggestions([]);
+          }}
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#000000"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M18 6l-12 12" />
+            <path d="M6 6l12 12" />
+          </svg>
+        </button>
+        <div className="flex mx-8 my-2 justify-between items-center">
+          <h2 className="text-2xl font-semibold text-black">Selecciona un usuario</h2>
+        </div>
+        <section className="flex flex-col gap-2 mt-4">
           {suggestions.length > 0 && (
             <ul className="suggestions-list">
               {suggestions.map((user) => (
@@ -762,18 +891,8 @@ export default function CoachRegisterTwo() {
               ))}
             </ul>
           )}
-
-          <button onClick={() => nextStep()} className="button-three__login">
-            Registrar
-          </button>
-          <button
-            className="cursor-pointer link__login center-text__login"
-            onClick={() => navigate("/register/coach/step-one")}
-          >
-            Cancelar
-          </button>
-        </div>
-      </section>
-    </div>
+        </section>
+      </Modal>
+    </>
   );
 }
