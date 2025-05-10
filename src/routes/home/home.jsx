@@ -345,12 +345,15 @@ export default function Home() {
 
       <Modal
         isOpen={isOpen}
-        onRequestClose={() => {}}
+        onRequestClose={() => { }}
         shouldCloseOnOverlayClick={false}
         shouldCloseOnEsc={false}
         contentLabel="Actualizar contraseña"
         style={{
-          overlay: { backgroundColor: "rgba(0,0,0,0.75)" },
+          overlay: {
+            backgroundColor: "rgba(0,0,0,0.75)",
+            zIndex: 1000,
+          },
           content: {
             width: "fit-content",
             height: "fit-content",
@@ -435,8 +438,8 @@ export default function Home() {
               {strength <= 2
                 ? "Contraseña débil"
                 : strength === 3
-                ? "Contraseña media"
-                : "Contraseña fuerte"}
+                  ? "Contraseña media"
+                  : "Contraseña fuerte"}
             </p>
           </div>
 
