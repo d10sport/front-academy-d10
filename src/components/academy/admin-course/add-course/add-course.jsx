@@ -130,12 +130,14 @@ export default function AddCourse({ isOpen, onClose, refreshCourses }) {
         }}
       >
         <section className="add-course">
-          <h1 className="title__add-course sm-margin-bottom">Add New Class</h1>
+          <h1 className="title__add-course sm-margin-bottom">
+            Agregar nueva clase
+          </h1>
           <p className="text__add-course lg-margin-bottom">
-            Create a new course.
+            Crear un nuevo curso.
           </p>
           <label className="label__add-course sm-margin-bottom" htmlFor="">
-            Course Title
+            Título del curso
           </label>
           <input
             className="input__add-course sm-margin-bottom"
@@ -146,7 +148,7 @@ export default function AddCourse({ isOpen, onClose, refreshCourses }) {
             required
           />
           <label className="label__add-course sm-margin-bottom" htmlFor="">
-            Course Description
+            Descripción del curso
           </label>
           <textarea
             className="textarea__add-course sm-margin-bottom"
@@ -157,7 +159,7 @@ export default function AddCourse({ isOpen, onClose, refreshCourses }) {
           ></textarea>
 
           <label className="label__add-course sm-margin-bottom" htmlFor="">
-            Image Upload
+            Carga de imagen
           </label>
 
           {!imageOpen && (
@@ -167,7 +169,7 @@ export default function AddCourse({ isOpen, onClose, refreshCourses }) {
                   onClick={() => setImageOpen(true)}
                   className="btn-upload__add-course"
                 >
-                  Cambiar imagen
+                  Agregar imagen
                 </button>
               </div>
             </>
@@ -195,9 +197,9 @@ export default function AddCourse({ isOpen, onClose, refreshCourses }) {
                         ? "Suelta los archivos aquí"
                         : "Arrastre y suelte archivos aquí"}
                     </p>
-                    <p className="mb-4 text-sm text-neutral-500">or</p>
+                    <p className="mb-4 text-sm text-neutral-500">o</p>
                     <button className="px-4 py-2 text-sm font-medium text-neutral-200 bg-neutral-800 rounded-md hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-600">
-                      Select Files
+                      Seleccionar archivos
                     </button>
                   </div>
                 </div>
@@ -242,7 +244,7 @@ export default function AddCourse({ isOpen, onClose, refreshCourses }) {
             onClick={() => handleAddCourse()}
             disabled={loading}
           >
-            {loading ? "Adding..." : "Add Course"}
+            {loading ? "Añadiendo..." : "Agregar curso"}
           </button>
 
           <button onClick={onClose} className="btn-back__edit-course">

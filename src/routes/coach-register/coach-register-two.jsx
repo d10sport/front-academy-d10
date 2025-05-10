@@ -15,11 +15,12 @@ export default function CoachRegisterTwo() {
 
   const [userIntagram, setUserInstagram] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+  const [clubResults, setClubResults] = useState([]);
+  const [inputCity, setInputCity] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [filterClub, setFilterClub] = useState("");
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
-  const [filterClub, setFilterClub] = useState("");
-  const [clubResults, setClubResults] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   function handleCountry(event) {
@@ -42,15 +43,23 @@ export default function CoachRegisterTwo() {
     }
   }
 
-  function handleCity(event) {
-    // let cityId = context.registerCoach.cityID;
-    // if (event.target?.selectedOptions != undefined) {
-    //   cityId = event.target.selectedOptions[0].id;
-    // }
+  function handleCityInput(event) {
     context.setRegisterCoach((prev) => ({
       ...prev,
       city: event.target.value,
       cityID: 1,
+    }));
+  }
+
+  function handleCity(event) {
+    let cityId = context.registerCoach.cityID;
+    if (event.target?.selectedOptions != undefined) {
+      cityId = event.target.selectedOptions[0].id;
+    }
+    context.setRegisterCoach((prev) => ({
+      ...prev,
+      city: event.target.value,
+      cityID: cityId,
     }));
   }
 
@@ -193,12 +202,25 @@ export default function CoachRegisterTwo() {
     setCities([]);
     fetchCountries();
     context.setRegisterCoach({
-      ...context.registerAthlete,
+      ...context.registerCoach,
       country: "",
       countryID: "",
+    });
+    context.setRegisterCoach((prev) => ({
+      ...prev,
       city: "",
       cityID: "",
-    });
+    }));
+  }
+
+  function changeShowInputCity() {
+    setCities([]);
+    setInputCity(!inputCity);
+    context.setRegisterCoach((prev) => ({
+      ...prev,
+      city: "",
+      cityID: "",
+    }));
   }
 
   const clearSelectInstagram = () => {
@@ -428,75 +450,94 @@ export default function CoachRegisterTwo() {
           <label htmlFor="ciudad" className="label__login">
             Ciudad
           </label>
-          {/* {(cities.length === 0 && countries.length === 0) ||
-          (context.registerCoach.city != "" &&
-            context.registerCoach.country != "") ? (
+          {inputCity ? (
             <div className="w-full flex justify-between gap-2">
               <input
                 type="text"
-                id="city"
-                name="city"
-                autoComplete="off"
-                className="input__login cursor-no-drop outline-none"
-                placeholder="Ciudad"
+                name="country"
+                id="country"
+                className="input__login"
                 defaultValue={context.registerCoach.city}
-                disabled
+                onChange={(e) => handleCityInput(e)}
               />
-              <button className="input-btn" onClick={() => clearCity()}>
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#000000"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M4 7l16 0" />
-                  <path d="M10 11l0 6" />
-                  <path d="M14 11l0 6" />
-                  <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                  <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+              <button className="input-btn" onClick={() => changeShowInputCity()}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000"
+                  strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 18m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M19 6m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M19 8v5a5 5 0 0 1 -5 5h-3l3 -3m0 6l-3 -3" /><path d="M5 16v-5a5 5 0 0 1 5 -5h3l-3 -3m0 6l3 -3" />
                 </svg>
               </button>
             </div>
           ) : (
-            <select
-              name="country"
-              id="country"
-              className="input__login"
-              defaultValue={context.registerCoach.city}
-              onChange={(e) => handleCity(e)}
-              disabled={
-                cities.length === 0 && !context.registerCoach.city
-                  ? true
-                  : false
-              }
-            >
-              <option selected>Seleccionar...</option>
-              {cities.map((city) => (
-                <option key={city.id} id={city.code} defaultValue={city.name}>
-                  {city.name}
-                </option>
-              ))}
-            </select>
-          )} */}
-           <input
-            type="text"
-            name="country"
-            id="country"
-            className="input__login"
-            defaultValue={context.registerCoach.city}
-            onChange={(e) => handleCity(e)}
-          />
+            (cities.length === 0 && countries.length === 0) ||
+              (context.registerCoach.city != "" &&
+                context.registerCoach.country != "") ? (
+              <div className="w-full flex justify-between gap-2">
+                <input
+                  type="text"
+                  id="city"
+                  name="city"
+                  autoComplete="off"
+                  className="input__login cursor-no-drop outline-none"
+                  placeholder="Ciudad"
+                  defaultValue={context.registerCoach.city}
+                  disabled
+                />
+                <button className="input-btn" onClick={() => clearCity()}>
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#000000"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M4 7l16 0" />
+                    <path d="M10 11l0 6" />
+                    <path d="M14 11l0 6" />
+                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                  </svg>
+                </button>
+              </div>
+            ) : (
+              <div className="w-full flex justify-between gap-2">
+                <select
+                  name="country"
+                  id="country"
+                  className="input__login"
+                  defaultValue={context.registerCoach.city}
+                  onChange={(e) => handleCity(e)}
+                  disabled={
+                    cities.length === 0 && !context.registerCoach.city
+                      ? true
+                      : false
+                  }
+                >
+                  <option selected>Seleccionar...</option>
+                  {cities.map((city) => (
+                    <option key={city.id} id={city.code} defaultValue={city.name}>
+                      {city.name}
+                    </option>
+                  ))}
+                </select>
+                <button className="input-btn" onClick={() => changeShowInputCity()}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000"
+                    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 18m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M19 6m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M19 8v5a5 5 0 0 1 -5 5h-3l3 -3m0 6l-3 -3" /><path d="M5 16v-5a5 5 0 0 1 5 -5h3l-3 -3m0 6l3 -3" />
+                  </svg>
+                </button>
+              </div>
+            )
+          )}
 
           <label htmlFor="club" className="label__login">
             Club Actual
           </label>
           {context.registerCoach.current_club != "" &&
-          context.registerCoach.id_club != 0 ? (
+            context.registerCoach.id_club != 0 ? (
             <div className="w-full flex justify-between gap-2">
               <input
                 type="text"
@@ -540,6 +581,7 @@ export default function CoachRegisterTwo() {
               onChange={(e) => handleClubSearch(e)}
             />
           )}
+
           <div className="input-container">
             {isLoading && <p>Cargando...</p>}
             {clubResults.length > 0 && (

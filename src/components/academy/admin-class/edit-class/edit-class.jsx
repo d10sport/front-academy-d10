@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useContext, useState } from "react";
-// import Example from "../../assets/img/example-img.png";
+import { useEffect, useContext, useState, useCallback } from "react";
 import AppContext from "@context/app/app-context";
-// import { Link } from "react-router-dom";
+import { Upload, Trash2 } from "lucide-react";
+import { useDropzone } from "react-dropzone";
 import Modal from "react-modal";
+import { toast } from "sonner";
 import axios from "axios";
 import "./edit-class.css";
 
@@ -23,6 +24,37 @@ export default function EditClass({
   const urlApi = context.urlApi;
   const apiKey = context.apiKey;
 
+  // Nueva subida de video
+  const [videoOpen, setVideoOpen] = useState(false);
+  const [videoUpload, setVideoUpload] = useState("");
+  const [formVideoUpload, setFormVideoUpload] = useState("");
+  const [files, setFiles] = useState([]);
+
+  const onDrop = useCallback((acceptedFiles) => {
+    const maxSize = 5 * 1024 * 1024; // 5 MB
+    if (acceptedFiles.length > 0) {
+      if (acceptedFiles[0].size > maxSize) {
+        setError("El archivo es demasiado grande. Máximo 400KB.");
+        return;
+      }
+      setFiles(acceptedFiles);
+      setVideoUpload(URL.createObjectURL(acceptedFiles[0]));
+      setFormVideoUpload(acceptedFiles[0]);
+      setError("");
+    }
+  }, []);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: "image/jpeg, image/png, image/webp, video/mp4",
+  });
+
+  function cancelUploadVideo() {
+    setVideoOpen(false);
+    setFiles([]);
+    setVideoUpload("");
+  }
+
   useEffect(() => {
     if (classCourse) {
       setTitle(classCourse.class_title || "");
@@ -31,46 +63,70 @@ export default function EditClass({
     }
   }, [classCourse]);
 
+  // --------------------------------------
+
   async function handleUpdateClass() {
     if (!classCourse || !classCourse.class_id) {
-      setError("Los campos no pueden estar vacíos");
-      console.error("No hay un curso válido para actualizar");
+      setError("No hay un curso válido para actualizar");
+      return;
+    }
+
+    if (videoOpen && videoUpload.length == 0) {
+      setError("Por favor, suba un video");
+      return;
+    } else {
+      setError("");
+    }
+
+    if (videoOpen && !formVideoUpload) {
+      setError("Por favor, suba un archivo multimedia");
       return;
     }
 
     setLoading(true);
     setError("");
 
-    try {
-      const response = await axios.put(
-        `${urlApi}academy/u/update-class/${classCourse.class_id}`,
-        {
-          class_title: title,
-          class_description: description,
-          class_content: content,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "api-key": apiKey,
-          },
-        }
-      );
+    const formData = new FormData();
+    formData.append("file", formVideoUpload);
+    formData.append("page", "academy");
+    formData.append(
+      "data",
+      JSON.stringify({
+        id_course: classCourse.class_id,
+        class_title: title,
+        class_description: description,
+        class_content: content,
+      })
+    );
 
-      if (response.data.success) {
-        console.log("Curso actualizado con éxito:", response.data);
-        onClose();
-      } else {
-        console.error("Error al actualizar el curso:", response.data.message);
+    toast.promise(
+      axios
+        .put(
+          `${urlApi}academy/u/update-class/${classCourse.class_id}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              "api-key": apiKey,
+            },
+          }
+        )
+        .then((response) => {
+          if (response.data.success) {
+            setLoading(false);
+            refreshCourses();
+            onClose();
+            return "Curso actualizado con éxito";
+          } else {
+            throw new Error("Error al actualizar el curso");
+          }
+        }),
+      {
+        loading: "Editando cambios...",
+        success: (msg) => msg,
+        error: (err) => err.message || "Error en la solicitud de edición",
       }
-    } catch (error) {
-      setError("Hubo un problema al actualizar la clase");
-      console.error("Error en la solicitud de actualización:", error);
-    } finally {
-      setLoading(false);
-      refreshCourses();
-      onClose();
-    }
+    );
   }
 
   return (
@@ -94,12 +150,12 @@ export default function EditClass({
         }}
       >
         <section className="edit-class">
-          <h1 className="title__edit-class lg-margin-bottom">Edit Class</h1>
+          <h1 className="title__edit-class lg-margin-bottom">Editar clase</h1>
           <label
             htmlFor="course-title-edit"
             className="label__edit-class sm-margin-bottom"
           >
-            Class Title
+            Título de la clase
           </label>
           <input
             id="course-title-edit"
@@ -113,7 +169,7 @@ export default function EditClass({
             htmlFor="course-description-edit"
             className="label__edit-class sm-margin-bottom"
           >
-            Class Description
+            Descripción de la clase
           </label>
           <textarea
             id="course-description-edit"
@@ -124,31 +180,83 @@ export default function EditClass({
             onChange={(e) => setDescription(e.target.value)}
           ></textarea>
 
-          {/* Borrar según lo requerido */}
-
           <label className="label__add-class sm-margin-bottom" htmlFor="">
-            Class Url Img
+            Carga de video
           </label>
-          <input
-            className="input__add-class sm-margin-bottom"
-            type="text"
-            placeholder="Enter course title"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            required
-          />
+          {!videoOpen && (
+            <>
+              <div className="cntr-input__add-course lg-margin-bottom">
+                <button
+                  onClick={() => setVideoOpen(true)}
+                  className="btn-upload__add-course"
+                >
+                  Cambiar video
+                </button>
+              </div>
+            </>
+          )}
 
-          {/* Quitar el disabled en caso de eliminar el anterior */}
+          {videoOpen && (
+            <section className="upload-section">
+              <h1 className="title__add-class sm-margin-bottom">
+                Añadir nueva video
+              </h1>
+              <br />
 
-          <label className="label__add-class sm-margin-bottom" htmlFor="">
-            Image Upload
-          </label>
-          <div className="cntr-input__add-class lg-margin-bottom">
-            <input className="file__add-class" type="file" disabled />
-            <button className="btn-upload__add-class" disabled>
-              ⬆
-            </button>
-          </div>
+              {files.length === 0 ? (
+                <div
+                  {...getRootProps()}
+                  className={`w-full max-w-md p-8 rounded-lg border-2 border-dashed transition-colors ${
+                    isDragActive ? "border-neutral-400" : "border-neutral-600"
+                  }`}
+                >
+                  <input {...getInputProps()} />
+                  <div className="flex flex-col items-center text-center">
+                    <Upload className="w-12 h-12 mb-4 text-neutral-400" />
+                    <p className="mb-2 text-lg font-medium text-neutral-300">
+                      {isDragActive
+                        ? "Suelta los archivos aquí"
+                        : "Arrastre y suelte archivos aquí"}
+                    </p>
+                    <p className="mb-4 text-sm text-neutral-500">o</p>
+                    <button className="px-4 py-2 text-sm font-medium text-neutral-200 bg-neutral-800 rounded-md hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-600">
+                      Seleccionar archivos
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="mt-4 flex flex-col items-center">
+                  {videoUpload && (
+                    <video
+                      src={videoUpload}
+                      alt="Preview"
+                      className="w-full h-50 max-h-52 object-cover rounded-md mb-4"
+                    ></video>
+                  )}
+                  <button
+                    onClick={() => {
+                      setFiles([]);
+                      setVideoUpload("");
+                    }}
+                    className="px-4 py-2 text-sm font-medium text-red-600 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-red-400 flex items-center"
+                  >
+                    <Trash2 className="w-4 h-4 mr-2" /> Eliminar archivo
+                  </button>
+                </div>
+              )}
+
+              {error && <p style={{ color: "red" }}>{error}</p>}
+              <br />
+              <div className="flex justify-center mt-4 items-center gap-8">
+                <button
+                  onClick={() => cancelUploadVideo()}
+                  className="btn-back__edit-course"
+                >
+                  Cancelar
+                </button>
+              </div>
+            </section>
+          )}
 
           {error && <p style={{ color: "red" }}>{error}</p>}
 
@@ -157,7 +265,7 @@ export default function EditClass({
             onClick={handleUpdateClass}
             disabled={loading}
           >
-            {loading ? "Editing..." : "Edit Course"}
+            {loading ? "Editando..." : "Editar clase"}
           </button>
 
           <button onClick={onClose} className="btn-back__edit-class">
