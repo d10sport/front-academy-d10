@@ -10,6 +10,7 @@ import ClubRegisterTwo from "@routes/club-register/club-register-two.jsx";
 import ClubRegisterOne from "@routes/club-register/club-register-one.jsx";
 import Success from "@routes/success-register/success-register.jsx";
 import ClubRequest from "@routes/club-request/club-request.jsx";
+import AdminRequest from "@routes/admin-request/admin-request.jsx";
 import MenuCourse from "@routes/menu-course/menu-course.jsx";
 import MenuClass from "@routes/menu-class/menu-class.jsx";
 import LoginUser from "@routes/login-user/login-user.jsx";
@@ -43,8 +44,10 @@ export default function Router() {
       <Route path="/register/athlete/step-one" element={<AthleteRegisterOne />} />
       <Route path="/register/athlete/step-two" element={<AthleteTwo />} />
       <Route path="/register/athlete/step-three" element={<AthleteThree />} />
+      <Route path="/admin-request" element={<AdminRequest />} />
       <Route path="/club-request" element={<ClubRequest />} />
       <Route path="/success-register" element={<Success />} />
+      <Route path="/admin/solitudes" element={<AdminRequest />} />
       <Route path="/club/solitudes" element={<ClubRequest />} />
       <Route path="/login-user" element={<LoginUser />} />
       <Route path="/register" element={<Register />} />
