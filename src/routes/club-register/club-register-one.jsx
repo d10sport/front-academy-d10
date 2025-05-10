@@ -30,15 +30,11 @@ export default function ClubRegisterOne() {
   }
 
   function handleComet(event) {
-    const maxLength = 4;
     const inputValue = event.target.value;
-
-    if (inputValue.length <= maxLength) {
-      context.setRegisterClub((prev) => ({
-        ...prev,
-        comet: inputValue,
-      }));
-    }
+    context.setRegisterClub((prev) => ({
+      ...prev,
+      comet: inputValue,
+    }));
   }
 
   function nextStep() {

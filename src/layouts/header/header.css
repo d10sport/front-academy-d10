@@ -12,7 +12,7 @@
   z-index: 31;
   top: 0;
   left: 0;
-  background: url(../../assets/img/fondo_nav.png), #000;
+  background: url(../../assets/img/fondo_nav.webp), #000;
 }
 
 .logo {
