@@ -23,6 +23,23 @@ export default function ClubRegisterOne() {
   }
 
   function handleDateFounded(event) {
+     const age = calculateAge(event.target.value);
+    if (age < 0) {
+      toast.error("La fecha de fundación no puede ser futura");
+      context.setRegisterClub((prev) => ({
+        ...prev,
+        date_founded: "",
+      }));
+      return;
+    }
+    if (age < 1) {
+      toast.error("La fecha de fundación debe tener al menos 1 año de vigencia");
+      context.setRegisterClub((prev) => ({
+        ...prev,
+        date_founded: "",
+      }));
+      return;
+    }
     context.setRegisterClub((prev) => ({
       ...prev,
       date_founded: event.target.value,
@@ -36,6 +53,18 @@ export default function ClubRegisterOne() {
       comet: inputValue,
     }));
   }
+
+  const calculateAge = (date) => {
+    const birth = new Date(date);
+    const today = new Date();
+    let age = today.getFullYear() - birth.getFullYear();
+    const m = today.getMonth() - birth.getMonth();
+
+    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
+      age--;
+    }
+    return age;
+  };
 
   function nextStep() {
     context.setRegisterClub((prev) => ({

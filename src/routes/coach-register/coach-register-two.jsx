@@ -139,6 +139,15 @@ export default function CoachRegisterTwo() {
           console.error(`${response.data.message}`);
           return;
         }
+        response.data.data.sort((a, b) => {
+          if (a.name < b.name) {
+            return -1;
+          }
+          if (a.name > b.name) {
+            return 1;
+          }
+          return 0;
+        });
         setCountries(response.data.data);
       })
       .catch(() => {
@@ -159,6 +168,15 @@ export default function CoachRegisterTwo() {
           console.error(`${response.data.message}`);
           return;
         }
+        response.data.data.sort((a, b) => {
+          if (a.name < b.name) {
+            return -1;
+          }
+          if (a.name > b.name) {
+            return 1;
+          }
+          return 0;
+        });
         setCities(response.data.data);
       })
       .catch(() => {
@@ -369,7 +387,7 @@ export default function CoachRegisterTwo() {
   }
 
   async function nextStep() {
-    if(!validateEmail(context.registerCoach.mail)){
+    if (!validateEmail(context.registerCoach.mail)) {
       toast.error("Por favor, ingrese un email valido");
       return;
     }
@@ -412,7 +430,7 @@ export default function CoachRegisterTwo() {
   }, [filterClub]);
 
   return (
-    <div className="container__login fixed top-0 left-0 right-0 bottom-0 bg-color__login">
+    <>
       <section className="section__login">
         <div className="form__login">
           <h2 className="title__login">D10+ Academy</h2>
@@ -447,6 +465,7 @@ export default function CoachRegisterTwo() {
               <option selected>Seleccionar...</option>
               {countries.map((country) => (
                 <option
+                  className="cursor-pointer"
                   key={country.id}
                   id={country.code}
                   defaultValue={country.name}
@@ -528,7 +547,8 @@ export default function CoachRegisterTwo() {
                 >
                   <option selected>Seleccionar...</option>
                   {cities.map((city) => (
-                    <option key={city.id} id={city.code} defaultValue={city.name}>
+                    <option className="cursor-pointer"
+                      key={city.id} id={city.code} defaultValue={city.name}>
                       {city.name}
                     </option>
                   ))}
@@ -774,6 +794,6 @@ export default function CoachRegisterTwo() {
           </button>
         </div>
       </section>
-    </div>
+    </>
   );
 }

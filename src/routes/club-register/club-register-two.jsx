@@ -106,6 +106,15 @@ export default function ClubRegisterTwo() {
           console.error(`${response.data.message}`);
           return;
         }
+        response.data.data.sort((a, b) => {
+          if (a.name < b.name) {
+            return -1;
+          }
+          if (a.name > b.name) {
+            return 1;
+          }
+          return 0;
+        });
         setCountries(response.data.data);
       })
       .catch(() => {
@@ -126,6 +135,15 @@ export default function ClubRegisterTwo() {
           console.error(`${response.data.message}`);
           return;
         }
+        response.data.data.sort((a, b) => {
+          if (a.name < b.name) {
+            return -1;
+          }
+          if (a.name > b.name) {
+            return 1;
+          }
+          return 0;
+        });
         setCities(response.data.data);
       })
       .catch(() => {
@@ -294,6 +312,7 @@ export default function ClubRegisterTwo() {
               <option selected>Seleccionar...</option>
               {countries.map((country) => (
                 <option
+                  className="cursor-pointer"
                   key={country.id}
                   id={country.code}
                   defaultValue={country.name}
@@ -373,7 +392,8 @@ export default function ClubRegisterTwo() {
                 >
                   <option selected>Seleccionar...</option>
                   {cities.map((city) => (
-                    <option key={city.id} id={city.code} defaultValue={city.name}>
+                    <option className="cursor-pointer"
+                      key={city.id} id={city.code} defaultValue={city.name}>
                       {city.name}
                     </option>
                   ))}

@@ -222,6 +222,15 @@ export default function AthleteRegisterTwo() {
           console.error(`${response.data.message}`);
           return;
         }
+        response.data.data.sort((a, b) => {
+          if (a.name < b.name) {
+            return -1;
+          }
+          if (a.name > b.name) {
+            return 1;
+          }
+          return 0;
+        });
         setCountries(response.data.data);
       })
       .catch(() => {
@@ -242,6 +251,15 @@ export default function AthleteRegisterTwo() {
           console.error(`${response.data.message}`);
           return;
         }
+        response.data.data.sort((a, b) => {
+          if (a.name < b.name) {
+            return -1;
+          }
+          if (a.name > b.name) {
+            return 1;
+          }
+          return 0;
+        });
         setCities(response.data.data);
       })
       .catch(() => {
@@ -302,7 +320,8 @@ export default function AthleteRegisterTwo() {
                 Seleccionar...
               </option>
               {countries.map((country) => (
-                <option key={country.id} id={country.code} value={country.name}>
+                <option className="cursor-pointer"
+                  key={country.id} id={country.code} value={country.name}>
                   {country.name}
                 </option>
               ))}
@@ -383,7 +402,8 @@ export default function AthleteRegisterTwo() {
                 >
                   <option selected>Seleccionar...</option>
                   {cities.map((city) => (
-                    <option key={city.id} id={city.code} defaultValue={city.name}>
+                    <option className="cursor-pointer"
+                      key={city.id} id={city.code} defaultValue={city.name}>
                       {city.name}
                     </option>
                   ))}
