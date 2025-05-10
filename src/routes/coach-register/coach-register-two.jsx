@@ -63,10 +63,16 @@ export default function CoachRegisterTwo() {
     }));
   }
 
+  const validateEmail = (value) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(value);
+  };
+
   function handleEmail(event) {
+    const email = event.target.value;
     context.setRegisterCoach((prev) => ({
       ...prev,
-      mail: event.target.value,
+      mail: email,
     }));
   }
 
@@ -363,6 +369,10 @@ export default function CoachRegisterTwo() {
   }
 
   async function nextStep() {
+    if(!validateEmail(context.registerCoach.mail)){
+      toast.error("Por favor, ingrese un email valido");
+      return;
+    }
     const validRegister = await context.validateEmptyCoach();
     if (!validRegister) {
       toast.error("Por favor, complete todos los campos");
@@ -412,7 +422,7 @@ export default function CoachRegisterTwo() {
           </h2>
 
           <label htmlFor="pais" className="label__login">
-            País
+            País <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
           {countries.length === 0 ? (
             <input
@@ -448,7 +458,7 @@ export default function CoachRegisterTwo() {
           )}
 
           <label htmlFor="ciudad" className="label__login">
-            Ciudad
+            Ciudad <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
           {inputCity ? (
             <div className="w-full flex justify-between gap-2">
@@ -534,7 +544,7 @@ export default function CoachRegisterTwo() {
           )}
 
           <label htmlFor="club" className="label__login">
-            Club Actual
+            Club Actual <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
           {context.registerCoach.current_club != "" &&
             context.registerCoach.id_club != 0 ? (
@@ -606,7 +616,7 @@ export default function CoachRegisterTwo() {
           </div>
 
           <label htmlFor="email" className="label__login">
-            Email
+            Email <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
           <input
             type="email"
@@ -620,7 +630,7 @@ export default function CoachRegisterTwo() {
           />
 
           <label htmlFor="number_phone" className="label__login">
-            Numero celular
+            Numero celular <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
           <input
             maxLength={10}
@@ -640,7 +650,7 @@ export default function CoachRegisterTwo() {
           />
 
           <label htmlFor="grado-academico" className="label__login">
-            Grado Académico
+            Grado Académico <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
           <select
             name="academic_level"

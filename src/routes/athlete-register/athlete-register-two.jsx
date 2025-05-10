@@ -61,10 +61,16 @@ export default function AthleteRegisterTwo() {
     }));
   }
 
+  const validateEmail = (value) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(value);
+  };
+
   function handleEmail(event) {
+    const email = event.target.value;
     context.setRegisterAthlete((prev) => ({
       ...prev,
-      mail: event.target.value,
+      mail: email,
     }));
   }
 
@@ -249,10 +255,13 @@ export default function AthleteRegisterTwo() {
       !context.registerAthlete.city ||
       !context.registerAthlete.mail ||
       !context.registerAthlete.contact ||
-      !context.registerAthlete.academic_level ||
-      !Object.keys(context.registerAthlete.social_networks).length > 0
+      !context.registerAthlete.academic_level
     ) {
       toast.error("Por favor, complete todos los campos");
+      return;
+    }
+    if (!validateEmail(context.registerAthlete.mail)) {
+      toast.error("Por favor, ingrese un email válido");
       return;
     }
     navigate("/register/athlete/step-three");
@@ -263,11 +272,11 @@ export default function AthleteRegisterTwo() {
   }, []);
 
   return (
-    <div className="container__login fixed top-0 left-0 right-0 bottom-0 bg-color__login">
+    <>
       <section className="section__login">
         <div className="form__login">
           <label htmlFor="pais" className="label__login cursor-pointer">
-            País
+            País <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
           {countries.length === 0 ? (
             <input
@@ -301,7 +310,7 @@ export default function AthleteRegisterTwo() {
           )}
 
           <label htmlFor="ciudad" className="label__login cursor-pointer">
-            Ciudad
+            Ciudad <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
 
           {inputCity ? (
@@ -389,7 +398,7 @@ export default function AthleteRegisterTwo() {
             ))}
 
           <label htmlFor="email" className="label__login ">
-            Email
+            Email <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
           <input
             type="email"
@@ -406,7 +415,7 @@ export default function AthleteRegisterTwo() {
             htmlFor="numero-celular"
             className="label__login cursor-pointer"
           >
-            Numero celular
+            Numero celular <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
           <input
             type="text"
@@ -428,7 +437,7 @@ export default function AthleteRegisterTwo() {
             htmlFor="academic_level"
             className="label__login cursor-pointer"
           >
-            Grado Académico
+            Grado Académico <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
           <select
             id="academic_level"
@@ -524,6 +533,6 @@ export default function AthleteRegisterTwo() {
           </button>
         </div>
       </section>
-    </div>
+    </>
   );
 }

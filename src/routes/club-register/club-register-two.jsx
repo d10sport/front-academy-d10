@@ -61,10 +61,16 @@ export default function ClubRegisterTwo() {
     }));
   }
 
+  const validateEmail = (value) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(value);
+  };
+
   function handleEmail(event) {
+    const email = event.target.value;
     context.setRegisterClub((prev) => ({
       ...prev,
-      mail: event.target.value,
+      mail: email,
     }));
   }
 
@@ -238,10 +244,13 @@ export default function ClubRegisterTwo() {
       !context.registerClub.country ||
       !context.registerClub.city ||
       !context.registerClub.mail ||
-      !context.registerClub.contact ||
-      !Object.keys(context.registerClub.social_networks).length > 0
+      !context.registerClub.contact
     ) {
       toast.error("Por favor, complete todos los campos");
+      return;
+    }
+    if (!validateEmail(context.registerClub.mail)) {
+      toast.error("Por favor, ingrese un email válido");
       return;
     }
     navigate("/register/club/step-three");
@@ -260,7 +269,7 @@ export default function ClubRegisterTwo() {
             Regístrate como <span className="text-decoration__login">Club</span>
           </h2>
           <label htmlFor="pais" className="label__login">
-            País
+            País <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
           {countries.length === 0 ? (
             <input
@@ -296,7 +305,7 @@ export default function ClubRegisterTwo() {
           )}
 
           <label htmlFor="ciudad" className="label__login">
-            Ciudad
+            Ciudad <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
           {inputCity ? (
             <div className="w-full flex justify-between gap-2">
@@ -380,7 +389,7 @@ export default function ClubRegisterTwo() {
           )}
 
           <label htmlFor="email" className="label__login">
-            Email
+            Email <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
           <input
             type="email"
@@ -394,7 +403,7 @@ export default function ClubRegisterTwo() {
           />
 
           <label htmlFor="number_phone" className="label__login">
-            Numero celular
+            Numero celular <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
           <input
             maxLength={10}
