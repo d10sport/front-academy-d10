@@ -15,6 +15,7 @@ export default function MenuCourse() {
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [modalIsOpenThree, setModalIsOpenThree] = useState(false);
   const [selectedCourseId, setSelectedCourseId] = useState(null);
+  const [selectedCourseUrl, setSelectedCourseUrl] = useState(null);
 
   const [loading, setLoading] = useState(true);
 
@@ -95,6 +96,7 @@ export default function MenuCourse() {
                   <button
                     onClick={() => {
                       setSelectedCourseId(course.id);
+                      setSelectedCourseUrl(course.main_photo.bg_photo);
                       setModalIsOpenThree(true);
                     }}
                     className="btn-delete__menu-course"
@@ -132,6 +134,7 @@ export default function MenuCourse() {
         isOpen={modalIsOpenThree}
         onClose={() => setModalIsOpenThree(false)}
         courseId={selectedCourseId}
+        courseUrl={selectedCourseUrl}
         refreshCourses={() => getDateCourses()}
       />
     </>
