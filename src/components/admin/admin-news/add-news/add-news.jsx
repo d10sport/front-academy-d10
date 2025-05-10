@@ -59,7 +59,6 @@ export default function AddNews({ isOpen, onClose, refreshCourses }) {
 
     if (
       !newNews.date.trim() ||
-      !newNews.image.trim() ||
       !newNews.title.trim() ||
       !newNews.description.trim()
     ) {
