@@ -1,4 +1,4 @@
-import imageFondo from "@assets/img/fondo_home_d10_academy.png";
+import imageFondo from "@assets/img/fondo_home_d10_academy.webp";
 import AppContext from "@context/app/app-context";
 import logo from "@assets/img/logo_sin_fondo.png";
 import { useEffect, useState, useContext } from "react";

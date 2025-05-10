@@ -23,18 +23,6 @@ export default function ClubRegisterFour() {
     }
   }
 
-  function handleCountInterns(event) {
-    const maxLength = 4;
-    const inputValue = event.target.value;
-
-    if (inputValue.length <= maxLength) {
-      context.setRegisterClub((prev) => ({
-        ...prev,
-        interns: inputValue,
-      }));
-    }
-  }
-
   function handleCountVenues(event) {
     const maxLength = 4;
     const inputValue = event.target.value;
@@ -43,18 +31,6 @@ export default function ClubRegisterFour() {
       context.setRegisterClub((prev) => ({
         ...prev,
         venues: inputValue,
-      }));
-    }
-  }
-
-  function handleCountSites(event) {
-    const maxLength = 4;
-    const inputValue = event.target.value;
-
-    if (inputValue.length <= maxLength) {
-      context.setRegisterClub((prev) => ({
-        ...prev,
-        sites: inputValue,
       }));
     }
   }
@@ -120,7 +96,7 @@ export default function ClubRegisterFour() {
           </h2>
 
           <label htmlFor="ayudantes" className="label__login">
-            Cantidad Ayudantes
+            Entrenadores de Apoyo
           </label>
           <input
             type="number"
@@ -137,27 +113,6 @@ export default function ClubRegisterFour() {
               context.registerClub.assistants == 0
                 ? ""
                 : context.registerClub.assistants
-            }
-          />
-
-          <label htmlFor="pasantes" className="label__login">
-            Cantidad Pasantes
-          </label>
-          <input
-            type="number"
-            id="pasantes"
-            name="pasantes"
-            autoComplete="off"
-            className="input__login"
-            placeholder="20"
-            min={1}
-            max={100}
-            step={1}
-            onChange={(e) => handleCountInterns(e)}
-            value={
-              context.registerClub.interns == 0
-                ? ""
-                : context.registerClub.interns
             }
           />
 
@@ -179,25 +134,6 @@ export default function ClubRegisterFour() {
               context.registerClub.venues == 0
                 ? ""
                 : context.registerClub.venues
-            }
-          />
-
-          <label htmlFor="sitios" className="label__login">
-            Sitios
-          </label>
-          <input
-            type="number"
-            id="sitios"
-            name="sitios"
-            autoComplete="off"
-            className="input__login"
-            placeholder="4"
-            min={1}
-            max={100}
-            step={1}
-            onChange={(e) => handleCountSites(e)}
-            value={
-              context.registerClub.sites == 0 ? "" : context.registerClub.sites
             }
           />
 

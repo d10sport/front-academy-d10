@@ -28,11 +28,7 @@ export default function DeleteClass({
   }, []);
 
   async function handleDeleteDateClass() {
-    debugger;
     if (!classId) return;
-
-    // console.log("ID del curso a eliminar:", classId);
-
     toast.promise(
       axios
         .delete(`${urlApi}academy/d/delete-class/${classId}`, {

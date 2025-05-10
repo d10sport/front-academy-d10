@@ -79,7 +79,7 @@ export default function CoachOne() {
           </div>
 
           <label htmlFor="nombre" className="label__login">
-            Nombres
+            Nombre <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
           <input
             type="text"
@@ -93,7 +93,7 @@ export default function CoachOne() {
           />
 
           <label htmlFor="apellido" className="label__login">
-            Apellidos
+            Apellido <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
           <input
             type="text"
@@ -107,7 +107,7 @@ export default function CoachOne() {
           />
 
           <label htmlFor="genero" className="label__login">
-            Genero
+            Genero <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
           <select
             id="gender"
@@ -124,7 +124,7 @@ export default function CoachOne() {
           </select>
 
           <label htmlFor="fecha-nacimiento" className="label__login">
-            Fecha de Nacimiento:
+            Fecha de Nacimiento: <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
           <input
             type="date"
@@ -143,7 +143,7 @@ export default function CoachOne() {
           </button>
           <button
             className="cursor-pointer link__login center-text__login"
-            onClick={() => navigate("/register")}
+            onClick={() => navigate("/login-user")}
           >
             Cancelar
           </button>

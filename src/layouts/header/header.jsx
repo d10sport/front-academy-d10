@@ -60,7 +60,7 @@ export default function Header() {
 
   useEffect(() => {
     getPermissions();
-  }, [isVisible]);
+  }, [user, isVisible, permissionsUser]);
 
   if (!user || Object.keys(user).length === 0) {
     return <div className="relative bg-transparent top-0 left-0"></div>;
