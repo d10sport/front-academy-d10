@@ -58,6 +58,7 @@ const AppProvider = ({ children }) => {
     first_names_family: "",
     last_names_family: "",
     contact_family: 0,
+    categories: []
   });
 
   const [registerCoach, setRegisterCoach] = useState({
@@ -93,10 +94,9 @@ const AppProvider = ({ children }) => {
     social_networks: {},
     website: "",
     number_athletes: "",
-    categories: "",
+    categories: [],
     local_league: "",
     national_tournament: "",
-    u13_u15_u17_u20: "",
     number_coaches: 0,
     assistants: 0,
     interns: 0,
@@ -140,6 +140,7 @@ const AppProvider = ({ children }) => {
       first_names_family: "",
       last_names_family: "",
       contact_family: 0,
+      categories: [],
     });
   }
 
@@ -179,10 +180,9 @@ const AppProvider = ({ children }) => {
       social_networks: {},
       website: "",
       number_athletes: "",
-      categories: "",
+      categories: [],
       local_league: "",
       national_tournament: "",
-      u13_u15_u17_u20: "",
       number_coaches: 0,
       assistants: 0,
       interns: 0,
@@ -207,7 +207,8 @@ const AppProvider = ({ children }) => {
       registerAthlete.academic_level != "" &&
       registerAthlete.first_names_family != "" &&
       registerAthlete.last_names_family != "" &&
-      registerAthlete.contact_family != 0
+      registerAthlete.contact_family != 0 &&
+      registerAthlete.categories.length > 0
     ) {
       return true;
     } else {
@@ -255,10 +256,9 @@ const AppProvider = ({ children }) => {
       Object.keys(registerClub.social_networks).length > 0 &&
       registerClub.website != "" &&
       registerClub.number_athletes != 0 &&
-      registerClub.categories != "" &&
+      registerClub.categories.length > 0 &&
       registerClub.local_league !== "" &&
       registerClub.national_tournament !== "" &&
-      registerClub.u13_u15_u17_u20 != "" &&
       registerClub.number_coaches != 0 &&
       registerClub.assistants != 0 &&
       registerClub.interns != 0 &&

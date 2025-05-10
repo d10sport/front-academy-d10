@@ -1,12 +1,23 @@
+import { useContext, useEffect, useState, useCallback } from "react";
 import AppContext from "@context/app/app-context";
 import { useNavigate } from "react-router-dom";
-import { useContext, useEffect } from "react";
 import { toast } from "sonner";
 import "./club-register.css";
+import axios from "axios";
 
 export default function ClubRegisterThree() {
   const context = useContext(AppContext);
+  const urlApi = context.urlApi;
+  const apiKey = context.apiKey;
   const navigate = useNavigate();
+
+  const [isOpenCategories, setIsOpenCategories] = useState(false);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [optionsCategories, setOptionsCategories] = useState([]);
+
+  const handleClickOutsideCategories = () => {
+    setIsOpenCategories(false);
+  };
 
   function handleCountCoaches(event) {
     const maxLength = 4;
@@ -39,18 +50,24 @@ export default function ClubRegisterThree() {
     }));
   }
 
-  function handleCategories(event) {
-    context.setRegisterClub((prev) => ({
-      ...prev,
-      categories: event.target.value,
-    }));
-  }
+  function handleCategories(option) {
+    const name_category = option.category;
+    const id_category = option.id;
 
-  function handle_U13_U15_U17_U20_(event) {
-    context.setRegisterClub((prev) => ({
-      ...prev,
-      u13_u15_u17_u20: event.target.value,
-    }));
+    setSelectedCategories((prev) =>
+      prev.includes(name_category)
+        ? prev.filter((v) => v !== name_category)
+        : [...prev, name_category]
+    );
+    context.setRegisterClub((prev) => {
+      const exists = prev.categories.some((cat) => cat.id === id_category);
+      return {
+        ...prev,
+        categories: exists
+          ? prev.categories.filter((cat) => cat.id !== id_category)
+          : [...prev.categories, { id: id_category, category: name_category }],
+      };
+    });
   }
 
   function handleLocalLeague(event) {
@@ -67,13 +84,31 @@ export default function ClubRegisterThree() {
     }));
   }
 
+  const fetchAllCategories = useCallback(() => {
+    axios
+      .get(`${urlApi}academy/user/categories`, {
+        headers: {
+          "Content-Type": "application/json",
+          "api-key": apiKey,
+        },
+      })
+      .then((response) => {
+        if (response.data.success) {
+          setOptionsCategories(response.data.data);
+        }
+      })
+      .catch(() => {
+        setOptionsCategories([]);
+      });
+  }, [urlApi, apiKey]);
+
   async function nextStep() {
     if (
       context.registerClub.number_coaches == 0 ||
       context.registerClub.number_athletes == 0 ||
-      !context.registerClub.categories ||
       context.registerClub.local_league === "" ||
-      context.registerClub.national_tournament === ""
+      context.registerClub.national_tournament === "" ||
+      context.registerClub.categories.length == 0
     ) {
       toast.error("Por favor, complete todos los campos");
       return;
@@ -89,6 +124,7 @@ export default function ClubRegisterThree() {
     };
     handleNationalLeague(event);
     handleLocalLeague(event);
+    fetchAllCategories();
   }, []);
 
   return (
@@ -156,38 +192,52 @@ export default function ClubRegisterThree() {
             onChange={(e) => handleWebSite(e)}
           />
 
-          <label htmlFor="u13_u15_u17_u20" className="label__login">
-            U13_ U15_ U17_ U20_
-          </label>
-          <input
-            type="text"
-            id="u13_u15_u17_u20"
-            name="u13_u15_u17_u20"
-            autoComplete="off"
-            className="input__login"
-            placeholder="U13"
-            value={context.registerClub.u13_u15_u17_u20}
-            onChange={(e) => handle_U13_U15_U17_U20_(e)}
-          />
-
           <label id="categoria" className="label__login">
             Categorías
           </label>
-          <select
-            name="categoria"
-            id="categoria"
-            className="input__login"
-            value={context.registerClub.categories}
-            onChange={(e) => handleCategories(e)}
-          >
-            <option value="" disabled>
-              Seleccionar...
-            </option>
-            <option value="u13">U13</option>
-            <option value="u15">U15</option>
-            <option value="u17">U17</option>
-            <option value="u20">U20</option>
-          </select>
+          <div className="flex flex-row items-center relative input__login" style={{ padding: '0' }} onBlur={() => handleClickOutsideCategories()} tabIndex={0}>
+            <div className="absolute inset-y-0 right-0 flex items-center pl-3 pointer-events-none">
+              <svg width="24" height="24" viewBox="0 5 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M67 20l0 -10" /><path d="M12 20l4 -4" /><path d="M12 20l-4 -4" /><path d="M1 4l16 0" />
+              </svg>
+            </div>
+            <div
+              className="w-full h-full flex items-center text-start text-black cursor-pointer px-3"
+              onClick={() => setIsOpenCategories(!isOpenCategories)}
+            >
+              {selectedCategories.length === 0
+                ? 'Selecciona opciones'
+                : selectedCategories.join(', ')}
+            </div>
+
+            {isOpenCategories && optionsCategories.length > 0 && (
+              <div className="absolute text-black z-10 mt-1 top-8 w-full border rounded bg-white shadow max-h-60 overflow-y-auto">
+                {optionsCategories.map((option) => (
+                  <label
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleCategories(option);
+                    }}
+                    key={option.id}
+                    className="relative z-20 flex items-center p-2 text-black hover:bg-gray-100 cursor-pointer"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={selectedCategories.includes(option.category)}
+                      onChange={(e) => {
+                        e.stopPropagation();
+                        handleCategories(option);
+                      }}
+                      className="mr-2 relative z-10 cursor-pointer"
+                    />
+                    {option.category}
+                  </label>
+                ))}
+              </div>
+            )}
+          </div>
+
+
           <div className="cntr-label__login">
             <p className="label__login">Liga Local</p>
             <div className="subcntr-label__login">

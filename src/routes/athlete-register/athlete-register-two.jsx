@@ -61,10 +61,16 @@ export default function AthleteRegisterTwo() {
     }));
   }
 
+  const validateEmail = (value) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(value);
+  };
+
   function handleEmail(event) {
+    const email = event.target.value;
     context.setRegisterAthlete((prev) => ({
       ...prev,
-      mail: event.target.value,
+      mail: email,
     }));
   }
 
@@ -255,6 +261,10 @@ export default function AthleteRegisterTwo() {
       toast.error("Por favor, complete todos los campos");
       return;
     }
+    if (!validateEmail(context.registerAthlete.mail)) {
+      toast.error("Por favor, ingrese un email válido");
+      return;
+    }
     navigate("/register/athlete/step-three");
   }
 
@@ -263,7 +273,7 @@ export default function AthleteRegisterTwo() {
   }, []);
 
   return (
-    <div className="container__login fixed top-0 left-0 right-0 bottom-0 bg-color__login">
+    <>
       <section className="section__login">
         <div className="form__login">
           <label htmlFor="pais" className="label__login cursor-pointer">
@@ -524,6 +534,6 @@ export default function AthleteRegisterTwo() {
           </button>
         </div>
       </section>
-    </div>
+    </>
   );
 }

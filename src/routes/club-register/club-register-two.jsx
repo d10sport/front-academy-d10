@@ -61,10 +61,16 @@ export default function ClubRegisterTwo() {
     }));
   }
 
+  const validateEmail = (value) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(value);
+  };
+
   function handleEmail(event) {
+    const email = event.target.value;
     context.setRegisterClub((prev) => ({
       ...prev,
-      mail: event.target.value,
+      mail: email,
     }));
   }
 
@@ -242,6 +248,10 @@ export default function ClubRegisterTwo() {
       !Object.keys(context.registerClub.social_networks).length > 0
     ) {
       toast.error("Por favor, complete todos los campos");
+      return;
+    }
+    if (!validateEmail(context.registerClub.mail)) {
+      toast.error("Por favor, ingrese un email válido");
       return;
     }
     navigate("/register/club/step-three");

@@ -89,8 +89,8 @@ export default function AthleteRegisterThree() {
   }
 
   return (
-    <div className="container__login fixed top-0 left-0 right-0 bottom-0 bg-color__login">
-      <section className="section__login">
+    <>
+      <section className="section__login bg-gradient-to-r from-black via-gray-500 to-white">
         <div className="form__login">
           <label htmlFor="nombre-familia" className="label__login">
             Nombres del Padre o Madre
@@ -151,6 +151,6 @@ export default function AthleteRegisterThree() {
           </button>
         </div>
       </section>
-    </div>
+    </>
   );
 }

@@ -63,10 +63,16 @@ export default function CoachRegisterTwo() {
     }));
   }
 
+  const validateEmail = (value) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(value);
+  };
+
   function handleEmail(event) {
+    const email = event.target.value;
     context.setRegisterCoach((prev) => ({
       ...prev,
-      mail: event.target.value,
+      mail: email,
     }));
   }
 
@@ -363,6 +369,10 @@ export default function CoachRegisterTwo() {
   }
 
   async function nextStep() {
+    if(!validateEmail(context.registerCoach.mail)){
+      toast.error("Por favor, ingrese un email valido");
+      return;
+    }
     const validRegister = await context.validateEmptyCoach();
     if (!validRegister) {
       toast.error("Por favor, complete todos los campos");

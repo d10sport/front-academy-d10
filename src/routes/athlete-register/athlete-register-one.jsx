@@ -1,12 +1,18 @@
+import { useContext, useState, useEffect, useCallback } from "react";
 import AppContext from "@context/app/app-context";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import { toast } from "sonner";
 import "./athlete-register.css";
+import { toast } from "sonner";
+import axios from "axios";
 
 export default function AthleteRegisterOne() {
   const context = useContext(AppContext);
+  const urlApi = context.urlApi;
+  const apiKey = context.apiKey;
   const navigate = useNavigate();
+
+  const [selectedCategories, setSelectedCategories] = useState('');
+  const [optionsCategories, setOptionsCategories] = useState([]);
 
   function handleName(event) {
     context.setRegisterAthlete((prev) => ({
@@ -30,14 +36,84 @@ export default function AthleteRegisterOne() {
   }
 
   function handleDateBirth(event) {
+    const age = calculateAge(event.target.value);
+    if (age < 0) {
+      toast.error("La fecha de nacimiento no puede ser futura");
+      context.setRegisterAthlete((prev) => ({
+        ...prev,
+        date_birth: "",
+      }));
+      return;
+    }
+    if (age < 6) {
+      toast.error("El atleta debe tener al menos 6 años");
+      context.setRegisterAthlete((prev) => ({
+        ...prev,
+        date_birth: "",
+      }));
+      return;
+    }
     context.setRegisterAthlete((prev) => ({
       ...prev,
       date_birth: event.target.value,
     }));
+    if (age >= 6) {
+      const filterdCategoriByAge = optionsCategories.filter(cat => cat.category == "sub" + age);
+      if (filterdCategoriByAge.length > 0) {
+        handleCategories(filterdCategoriByAge[0]);
+      } else {
+        toast.error("No existe una categoría para esta edad");
+      }
+    }
   }
 
+  function handleCategories(option) {
+    const name_category = option.category;
+    const id_category = option.id;
+
+    setSelectedCategories(name_category);
+    context.setRegisterAthlete((prev) => {
+      const exists = prev.categories.some((cat) => cat.id === id_category);
+      return {
+        ...prev,
+        categories: exists
+          ? prev.categories.filter((cat) => cat.id !== id_category)
+          : [...prev.categories, { id: id_category, category: name_category }],
+      };
+    });
+  }
+
+  const calculateAge = (date) => {
+    const birth = new Date(date);
+    const today = new Date();
+    let age = today.getFullYear() - birth.getFullYear();
+    const m = today.getMonth() - birth.getMonth();
+
+    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
+      age--;
+    }
+    return age;
+  };
+
+  const fetchAllCategories = useCallback(() => {
+    axios
+      .get(`${urlApi}academy/user/categories`, {
+        headers: {
+          "Content-Type": "application/json",
+          "api-key": apiKey,
+        },
+      })
+      .then((response) => {
+        if (response.data.success) {
+          setOptionsCategories(response.data.data);
+        }
+      })
+      .catch(() => {
+        setOptionsCategories([]);
+      });
+  }, [urlApi, apiKey]);
+
   function nextStep() {
-    //Añadir rol de usuario seleccionado
     context.setRegisterAthlete((prev) => ({
       ...prev,
       role: context.typeUser,
@@ -46,7 +122,8 @@ export default function AthleteRegisterOne() {
       !context.registerAthlete.first_names ||
       !context.registerAthlete.last_names ||
       !context.registerAthlete.gender ||
-      !context.registerAthlete.date_birth
+      !context.registerAthlete.date_birth ||
+      context.registerAthlete.categories.length == 0
     ) {
       toast.error("Por favor, complete todos los campos");
       return;
@@ -54,9 +131,13 @@ export default function AthleteRegisterOne() {
     navigate("/register/athlete/step-two");
   }
 
+  useEffect(() => {
+    fetchAllCategories();
+  }, []);
+
   return (
-    <div className="container__login fixed top-0 left-0 right-0 bottom-0 bg-color__login">
-      <section className="section__login bg-gradient-to-r from-black via-gray-500 to-white ">
+    <>
+      <section className="section__login">
         <div className="form__login">
           <h1 className="title__login">D10+ Academy</h1>
           <h2 className="subtitle__login">
@@ -138,6 +219,30 @@ export default function AthleteRegisterOne() {
             onChange={handleDateBirth}
           />
 
+          <label id="categoria" className="label__login">
+            Categoría
+          </label>
+          <div className="flex flex-row items-center relative input__login" style={{ padding: '0' }}>
+            {selectedCategories == '' ? (
+              <div
+                disabled={true}
+                className="w-full h-full flex items-center text-start text-black cursor-not-allowed px-3"
+              >
+                Selecciona tu edad
+              </div>
+            )
+              : (
+                <input
+                  id="categoria"
+                  disabled={true}
+                  type="text"
+                  autoComplete="off"
+                  className="input__login"
+                  value={selectedCategories}
+                />
+              )}
+          </div>
+
           <button onClick={() => nextStep()} className="button-three__login">
             Siguiente
           </button>
@@ -149,6 +254,6 @@ export default function AthleteRegisterOne() {
           </button>
         </div>
       </section>
-    </div>
+    </>
   );
 }

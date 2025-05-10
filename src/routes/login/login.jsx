@@ -88,13 +88,13 @@ export default function Login() {
       username == undefined ||
       password == "" ||
       password == undefined ||
-      context.typeUser?.description_role == "" ||
-      context.typeUser?.description_role == undefined
+      context.typeUser == "" ||
+      context.typeUser == undefined
     ) {
       return;
     }
 
-    handleKeyDown();
+    handleLogin();
   }, [loginLink]);
 
   async function getDecodeUrl() {
@@ -105,18 +105,18 @@ export default function Login() {
       let type = "";
 
       const decode = await getTokenDecoded(tokenUser);
-      if (decode.decoded && decode.msg == "Token valid") {
+      if (decode.decoded && decode.msg == "Token valido") {
         const params = new URLSearchParams(decode.decoded.token);
         let dUser = await getTokenDecoded(params.get("username"));
         let dPass = await getTokenDecoded(params.get("password"));
         let dType = await getTokenDecoded(params.get("role_user"));
         if (
           dUser &&
-          dUser.msg == "Token valid" &&
+          dUser.msg == "Token valido" &&
           dPass &&
-          dPass.msg == "Token valid" &&
+          dPass.msg == "Token valido" &&
           dType &&
-          dType.msg == "Token valid"
+          dType.msg == "Token valido"
         ) {
           user = dUser.decoded;
           pass = dPass.decoded;
@@ -130,7 +130,7 @@ export default function Login() {
       if (user && pass && type) {
         setUsername(user?.username);
         setPassword(pass?.password);
-        context.setTypeUser(type?.role);
+        context.setTypeUser(type?.role_user);
         context.setPermissionsUser(type?.permissions);
       } else {
         if (context.typeUser == "") {
