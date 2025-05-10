@@ -244,8 +244,7 @@ export default function ClubRegisterTwo() {
       !context.registerClub.country ||
       !context.registerClub.city ||
       !context.registerClub.mail ||
-      !context.registerClub.contact ||
-      !Object.keys(context.registerClub.social_networks).length > 0
+      !context.registerClub.contact
     ) {
       toast.error("Por favor, complete todos los campos");
       return;

@@ -160,7 +160,7 @@ export default function AthleteRegisterOne() {
           </div>
 
           <label htmlFor="name" className="label__login cursor-pointer">
-            Nombres
+            Nombre <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
           <input
             type="text"
@@ -174,7 +174,7 @@ export default function AthleteRegisterOne() {
           />
 
           <label htmlFor="lastname" className="label__login cursor-pointer">
-            Apellidos
+            Apellido <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
           <input
             type="text"
@@ -188,7 +188,7 @@ export default function AthleteRegisterOne() {
           />
 
           <label htmlFor="gender" className="label__login cursor-pointer">
-            Genero
+            Genero <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
           <select
             id="gender"
@@ -205,7 +205,7 @@ export default function AthleteRegisterOne() {
           </select>
 
           <label htmlFor="date_birth" className="label__login cursor-pointer">
-            Fecha de Nacimiento:
+            Fecha de Nacimiento: <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
           <input
             type="date"
@@ -220,7 +220,7 @@ export default function AthleteRegisterOne() {
           />
 
           <label id="categoria" className="label__login">
-            Categoría
+            Categoría <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
           <div className="flex flex-row items-center relative input__login" style={{ padding: '0' }}>
             {selectedCategories == '' ? (

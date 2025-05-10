@@ -93,7 +93,7 @@ export default function AthleteRegisterThree() {
       <section className="section__login bg-gradient-to-r from-black via-gray-500 to-white">
         <div className="form__login">
           <label htmlFor="nombre-familia" className="label__login">
-            Nombres del Padre o Madre
+            Nombres del acudiente <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
           <input
             type="text"
@@ -106,7 +106,7 @@ export default function AthleteRegisterThree() {
             onChange={(e) => handleNameFamily(e)}
           />
           <label htmlFor="apellido-familia" className="label__login">
-            Apellidos del Padre o Madre
+            Apellido del acudiente <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
           <input
             type="text"
@@ -119,7 +119,7 @@ export default function AthleteRegisterThree() {
             onChange={(e) => handleLastNameFamily(e)}
           />
           <label htmlFor="contacto-familia" className="label__login">
-            Contacto del Padre o Madre
+            Contacto del acudiente <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
           <input
             type="text"

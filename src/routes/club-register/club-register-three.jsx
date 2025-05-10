@@ -158,7 +158,7 @@ export default function ClubRegisterThree() {
           />
 
           <label htmlFor="number_athletes" className="label__login">
-            Cantidad de Deportistas
+            Cantidad de Deportistas <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
           <input
             type="number"

@@ -199,7 +199,6 @@ const AppProvider = ({ children }) => {
       registerAthlete.city != "" &&
       registerAthlete.cityID != "" &&
       registerAthlete.contact != 0 &&
-      Object.keys(registerAthlete.social_networks).length > 0 &&
       registerAthlete.academic_level != "" &&
       registerAthlete.first_names_family != "" &&
       registerAthlete.last_names_family != "" &&
@@ -226,10 +225,7 @@ const AppProvider = ({ children }) => {
       registerCoach.city != "" &&
       registerCoach.cityID != "" &&
       registerCoach.contact != 0 &&
-      Object.keys(registerCoach.social_networks).length > 0 &&
-      registerCoach.academic_level != "" &&
-      registerCoach.licenses_obtained != "" &&
-      registerCoach.other != ""
+      registerCoach.academic_level != ""
     ) {
       return true;
     } else {

@@ -45,8 +45,7 @@ export default function ClubRegisterOne() {
     if (
       !context.registerClub.name_club ||
       !context.registerClub.date_founded ||
-      !context.registerClub.president ||
-      !context.registerClub.comet
+      !context.registerClub.president
     ) {
       toast.error("Por favor, complete todos los campos");
       return;
