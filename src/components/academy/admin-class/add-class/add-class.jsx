@@ -103,6 +103,7 @@ export default function AddClass({
           if (response.data.success) {
             setClassTitle("");
             setClassDescription("");
+            setFiles([]);
             setVideoUpload("");
             setFormVideoUpload("");
             setClassContent("");

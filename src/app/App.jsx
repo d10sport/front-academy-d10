@@ -5,8 +5,10 @@ import Footer from "@layouts/footer/footer";
 import Router from "@routes/router/root";
 import { Toaster } from "sonner";
 import "./App.css";
+// import Modal from "react-modal";
 
 function App() {
+  // Modal.setAppElement("#root");
   return (
     <>
       <LoaderAuth />
