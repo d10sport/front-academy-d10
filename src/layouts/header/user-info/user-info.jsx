@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 // import { useContext, useState, useCallback } from "react";
 // import AppContext from "@context/app/app-context";
+import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import { toast } from "sonner";
 import "./user-info.css";
@@ -66,6 +67,9 @@ export default function AddCourse({
             <p className="text__info-user text--color__modal">
               <b>Club: </b> {userInfo?.club?.name_club ?? userInfo?.name_club}
             </p>
+            <Link to={`/change-pass`} className="text__info-user">
+              Cambiar contraseña
+            </Link>
           </div>
 
           <div className="cntr-three-item__info-user">
