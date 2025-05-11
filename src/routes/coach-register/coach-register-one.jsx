@@ -30,11 +30,40 @@ export default function CoachOne() {
   }
 
   function handleDateBirth(event) {
+     const age = calculateAge(event.target.value);
+    if (age < 0) {
+      toast.error("La fecha de nacimiento no puede ser futura");
+      context.setRegisterCoach((prev) => ({
+        ...prev,
+        date_birth: "",
+      }));
+      return;
+    }
+    if (age < 18) {
+      toast.error("El Entrenador debe tener al menos 18 años");
+      context.setRegisterCoach((prev) => ({
+        ...prev,
+        date_birth: "",
+      }));
+      return;
+    }
     context.setRegisterCoach((prev) => ({
       ...prev,
       date_birth: event.target.value,
     }));
   }
+
+   const calculateAge = (date) => {
+    const birth = new Date(date);
+    const today = new Date();
+    let age = today.getFullYear() - birth.getFullYear();
+    const m = today.getMonth() - birth.getMonth();
+
+    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
+      age--;
+    }
+    return age;
+  };
 
   function nextStep() {
     //Añadir rol de usuario seleccionado
@@ -55,7 +84,7 @@ export default function CoachOne() {
   }
 
   return (
-    <div className="container__login fixed top-0 left-0 right-0 bottom-0 bg-color__login">
+    <>
       <section className="section__login">
         <div className="form__login">
           <h1 className="title__login">D10+ Academy</h1>
@@ -149,6 +178,6 @@ export default function CoachOne() {
           </button>
         </div>
       </section>
-    </div>
+    </>
   );
 }
