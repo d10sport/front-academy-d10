@@ -25,15 +25,9 @@
   color: black;
   background-color: white;
   border-radius: 4px;
-  border: 1px solid rgb(136, 136, 136);
   padding: 4px;
   margin: 1rem 0;
   cursor: pointer;
-}
-
-.suggestions-list:hover {
-  background-color: #ffc702;
-  color: #000;
 }
 
 .suggestion-username {

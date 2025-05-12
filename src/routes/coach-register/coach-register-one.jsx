@@ -7,6 +7,7 @@ import "./coach-register.css";
 export default function CoachOne() {
   const context = useContext(AppContext);
   const navigate = useNavigate();
+  const maxDate = `${new Date().getFullYear()}-${new Date().getMonth() + 1 < 10 ? "0" + new Date().getMonth() + 1 : new Date().getMonth() + 1}-${ new Date().getDate() < 10 ? "0" +  new Date().getDate() :  new Date().getDate()}`;
 
   function handleName(event) {
     context.setRegisterCoach((prev) => ({
@@ -161,10 +162,10 @@ export default function CoachOne() {
             name="date_birth"
             autoComplete="off"
             className="input__login"
-            min="1900-01-01"
-            max="2099-12-31"
+            min="1925-01-01"
+            max={maxDate}
             value={context.registerCoach.date_birth}
-            onChange={handleDateBirth}
+            onChange={(e) => handleDateBirth(e)}
           />
 
           <button onClick={() => nextStep()} className="button-three__login">
