@@ -21,6 +21,7 @@ export default function Header() {
   const toggleVisibility = () => setIsVisible(!isVisible);
 
   const getPermissions = useCallback(async () => {
+    if(permissionsSystem.length > 0) return;
     let userPermissions = permissionsUser;
     if (userPermissions?.length === 0 || userPermissions == undefined) {
       userPermissions = await fetchPermissionsUser();
@@ -55,12 +56,13 @@ export default function Header() {
     fetchPermissionsUser,
     fetchPermissionsRoles,
     fetchUser,
+    user,
     user?.id_role,
   ]);
 
   useEffect(() => {
     getPermissions();
-  }, [user, isVisible, permissionsUser]);
+  }, [user, isVisible]);
 
   if (!user || Object.keys(user).length === 0) {
     return <div className="relative bg-transparent top-0 left-0"></div>;
