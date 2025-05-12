@@ -1,5 +1,4 @@
 import { useState, useEffect, useContext } from "react";
-import photoUser from "@assets/icons/photo_user.png";
 import AppContext from "@context/app/app-context";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
@@ -552,7 +551,8 @@ export default function ClubRegisterTwo() {
             height: "fit-content",
             margin: "auto",
             borderRadius: "12px",
-            padding: "40px",
+            paddingLeft: "40px",
+            paddingRight: "40px",
             backgroundColor: "white",
             display: "flex",
             flexDirection: "column",
@@ -582,31 +582,41 @@ export default function ClubRegisterTwo() {
             <path d="M6 6l12 12" />
           </svg>
         </button>
-        <div className="flex mx-8 my-2 justify-between items-center">
-          <h2 className="text-2xl font-semibold text-black">Selecciona un usuario</h2>
+        <div className="flex mx-8 justify-center items-center">
+          <h2 className="text-xl text-center font-semibold text-black">Selecciona tu usuario</h2>
         </div>
-        <section className="flex flex-col gap-2 mt-4">
+        <section className="flex flex-col gap-2 mt-2 mb-4">
           {suggestions.length > 0 && (
             <ul className="suggestions-list">
               {suggestions.map((user) => (
                 <li
                   key={user.id}
-                  className="suggestion-item"
                   onClick={() => handleSuggestionClick(user)}
+                  className="bg-white rounded-3xl p-4 shadow-xl flex items-center gap-6 cursor-pointer hover:scale-105 transition-transform duration-300"
                 >
-                  <div className="suggestion-info">
-                    <p className="suggestion-fullname">
-                      {user.full_name != "" ? user.full_name : user.username}
+                  <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 p-[3px]">
+                    <div className="bg-white rounded-xl w-full h-full flex items-center justify-center overflow-hidden">
+                      <img
+                        src={`${urlApi}external/g/instagram/proxy-img?url=${encodeURIComponent(user?.hd_profile_pic_url_info.url)}`}
+                        alt={user.username}
+                        className="w-full h-full object-cover rounded-xl"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col text-left">
+                    <h3 className="text-lg font-bold text-pink-600">{user.full_name || user.username}</h3>
+                    <p className="text-sm text-gray-900">@{user.username}</p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      {(user.biography || "No hay biografía disponible")
+                        .split("\n")
+                        .map((line, index) => (
+                          <span key={index} className="block text-xs text-gray-500 mt-1">
+                            {line}
+                          </span>
+                        ))}
                     </p>
                   </div>
-                  <img
-                    // src={user.hd_profile_pic_url_info.url}
-                    src={photoUser}
-                    width="24"
-                    height="24"
-                    alt={user.username}
-                    className="suggestion-avatar"
-                  />
                 </li>
               ))}
             </ul>

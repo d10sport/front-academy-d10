@@ -9,6 +9,7 @@ export default function AthleteRegisterOne() {
   const context = useContext(AppContext);
   const urlApi = context.urlApi;
   const apiKey = context.apiKey;
+  const maxDate = `${new Date().getFullYear()}-${new Date().getMonth() + 1 < 10 ? "0" + new Date().getMonth() + 1 : new Date().getMonth() + 1}-${ new Date().getDate() < 10 ? "0" +  new Date().getDate() :  new Date().getDate()}`;
   const navigate = useNavigate();
 
   const [selectedCategories, setSelectedCategories] = useState('');
@@ -213,10 +214,10 @@ export default function AthleteRegisterOne() {
             name="date_birth"
             autoComplete="off"
             className="input__login"
-            min="1900-01-01"
-            max="2099-12-31"
+            min="1925-01-01"
+            max={maxDate}
             value={context.registerAthlete.date_birth}
-            onChange={handleDateBirth}
+            onChange={(e) => handleDateBirth(e)}
           />
 
           <label id="categoria" className="label__login">
