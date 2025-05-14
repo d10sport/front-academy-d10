@@ -6,7 +6,8 @@ import "./club-register.css";
 
 export default function ClubRegisterOne() {
   const context = useContext(AppContext);
-  const navigate = useNavigate();
+  const navigate = useNavigate();;
+  const maxDate = `${new Date().getFullYear()}-${new Date().getMonth() + 1 < 10 ? "0" + new Date().getMonth() + 1 : new Date().getMonth() + 1}-${ new Date().getDate() < 10 ? "0" +  new Date().getDate() :  new Date().getDate()}`;
 
   function handleName(event) {
     context.setRegisterClub((prev) => ({
@@ -142,9 +143,9 @@ export default function ClubRegisterOne() {
             name="date_founded"
             autoComplete="off"
             className="input__login"
-            min="1900-01-01"
-            max="2099-12-31"
-            value={context.registerAthlete.date_founded}
+            min="1925-01-01"
+            max={maxDate}
+            value={context.registerClub.date_founded}
             onChange={(e) => handleDateFounded(e)}
           />
 
