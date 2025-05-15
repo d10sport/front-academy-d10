@@ -1,6 +1,8 @@
 .menu-container__request {
   font-family: Arial, sans-serif;
   max-width: 600px;
+  min-height: 100vh;
+  height: fit-content;
   margin: 0 auto;
 }
 
