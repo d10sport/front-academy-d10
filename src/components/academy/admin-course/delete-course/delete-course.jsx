@@ -47,7 +47,6 @@ export default function DeleteCourse({
   }
 
   async function handleDeleteDateCourse() {
-    debugger;
     if (!courseId) return;
 
     const videos = await getClassVideos();
