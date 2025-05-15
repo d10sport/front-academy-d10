@@ -13,6 +13,7 @@ export default function DeleteCourse({
   isOpen,
   onClose,
   courseId,
+  courseUrl,
   refreshCourses,
 }) {
   const context = useContext(AppContext);
@@ -27,10 +28,29 @@ export default function DeleteCourse({
     setError("");
   }, []);
 
+  async function getClassVideos() {
+    try {
+      const response = await axios.get(
+        `${urlApi}academy/g/admin-class-videos/${courseId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "api-key": apiKey,
+          },
+        }
+      );
+      return response.data || [];
+    } catch (error) {
+      console.error("Error al obtener los cursos:", error);
+      return [];
+    }
+  }
+
   async function handleDeleteDateCourse() {
+    debugger;
     if (!courseId) return;
 
-    // console.log("ID del curso a eliminar:", courseId);
+    const videos = await getClassVideos();
 
     toast.promise(
       axios
@@ -38,6 +58,10 @@ export default function DeleteCourse({
           headers: {
             "Content-Type": "application/json",
             "api-key": apiKey,
+          },
+          data: {
+            url: courseUrl,
+            urlClassVideos: videos,
           },
         })
         .then((response) => {

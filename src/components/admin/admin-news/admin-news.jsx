@@ -13,6 +13,7 @@ export default function NewsAdmin() {
   const [modalIsOpenOne, setModalIsOpenOne] = useState(false);
   const [modalIsOpenThree, setModalIsOpenThree] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(false);
+  const [contentNews, setContentNews] = useState(false);
 
   const [sectionNews, setSectionNews] = useState({
     gallery: "",
@@ -105,6 +106,7 @@ export default function NewsAdmin() {
                   <button
                     onClick={() => {
                       setSelectedIndex(parseInt(key.match(/\d+/)[0]));
+                      setContentNews(item.image);
                       setModalIsOpenThree(true);
                     }}
                     className="btn-delete__news"
@@ -130,6 +132,7 @@ export default function NewsAdmin() {
         isOpen={modalIsOpenThree}
         onClose={() => setModalIsOpenThree(false)}
         indice={selectedIndex}
+        newsContent={contentNews}
         refreshCourses={() => getNews()}
       ></DeleteNews>
     </>
