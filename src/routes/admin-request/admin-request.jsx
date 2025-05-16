@@ -1,18 +1,19 @@
-import axios from "axios";
-import AppContext from "@context/app/app-context";
-import { useState, useEffect, useContext } from "react";
 import Loader from "../../ui/loaders/fake-load/loader.fake.jsx";
+import { useState, useEffect, useContext } from "react";
+import AppContext from "@context/app/app-context";
+import { toast } from "sonner";
+import axios from "axios";
 import "./admin-request.css";
 
 export default function ClubRequest() {
-  const [visibleDetails, setVisibleDetails] = useState(null);
   const context = useContext(AppContext);
   const urlApi = context.urlApi;
   const apiKey = context.apiKey;
 
-  // ---------------------------------------------------------------
-  // ------------------- Obtención de Usuario ----------------------
-  // ---------------------------------------------------------------
+  const [visibleDetails, setVisibleDetails] = useState(null);
+  const [disabled, setDisabled] = useState(false);
+
+  // ------------- Obtención de Usuario --------------
 
   const [menuItems, setMenuItems] = useState([]);
 
@@ -36,82 +37,94 @@ export default function ClubRequest() {
       });
   }
 
-  // ---------------------------------------------------------------
-  // ------------------- Aprobación de Usuario ---------------------
-  // ---------------------------------------------------------------
+  // ------------ Aprobación de Usuario -------------
 
   function approveUser(item) {
-    axios
-      .post(
-        `${urlApi}academy/solitude/approved`,
-        {
-          id_solitude: item.id_solitude,
-          id_user: item.id_user,
-          role_user: item.role_user,
-          nombre: item.nombre,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "api-key": apiKey,
+    setDisabled(true);
+
+    toast.promise(
+      axios
+        .post(
+          `${urlApi}academy/solitude/approved`,
+          {
+            id_solitude: item.id_solitude,
+            id_user: item.id_user,
+            role_user: item.role_user,
+            nombre: item.nombre,
           },
-        }
-      )
-      .then((response) => {
-        if (response.data?.success) {
-          alert(`Has aprobado a '${item.nombre}'`);
-          // Actualiza la lista local de solicitudes, eliminando la aprobada
-          setMenuItems((prevMenuItems) =>
-            prevMenuItems.filter(
-              (menuItem) => menuItem.id_solitude !== item.id_solitude
-            )
-          );
-        } else {
-          console.warn("No se pudo aprobar al usuario");
-        }
-      })
-      .catch((error) => {
-        console.error("Error al aprobar al usuario:", error);
-      });
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "api-key": apiKey,
+            },
+          }
+        )
+        .then((response) => {
+          if (response.data?.success) {
+            // setDisabled(false);
+            setMenuItems((prevMenuItems) =>
+              prevMenuItems.filter(
+                (menuItem) => menuItem.id_solitude !== item.id_solitude
+              )
+            );
+            return `Has aprobado a '${item.nombre}'`;
+          } else {
+            throw new Error(
+              "No se pudo aprobar al club: " + response.data.message
+            );
+          }
+        }),
+      {
+        loading: "Denegando club...",
+        success: (msg) => msg,
+        error: (err) => err.message || "Error en la solicitud de aprobación",
+      }
+    );
   }
 
-  // ---------------------------------------------------------------
-  // ------------------- Denegación de Usuario ---------------------
-  // ---------------------------------------------------------------
+  // ---------- Denegación de Usuario --------------
 
   function denyUser(item) {
-    axios
-      .post(
-        `${urlApi}academy/solitude/denied`,
-        {
-          id_solitude: item.id_solitude,
-          id_user: item.id_user,
-          role_user: item.role_user,
-          nombre: item.nombre,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "api-key": apiKey,
+    setDisabled(true);
+
+    toast.promise(
+      axios
+        .post(
+          `${urlApi}academy/solitude/denied`,
+          {
+            id_solitude: item.id_solitude,
+            id_user: item.id_user,
+            role_user: item.role_user,
+            nombre: item.nombre,
           },
-        }
-      )
-      .then((response) => {
-        if (response.data?.success) {
-          alert(`Has denegado a '${item.nombre}'`);
-          // Actualiza la lista local eliminando el usuario denegado
-          setMenuItems((prevMenuItems) =>
-            prevMenuItems.filter(
-              (menuItem) => menuItem.id_solitude !== item.id_solitude
-            )
-          );
-        } else {
-          console.warn("No se pudo denegar al usuario");
-        }
-      })
-      .catch((error) => {
-        console.error("Error al denegar al usuario:", error);
-      });
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "api-key": apiKey,
+            },
+          }
+        )
+        .then((response) => {
+          if (response.data?.success) {
+            // setDisabled(false);
+            setMenuItems((prevMenuItems) =>
+              prevMenuItems.filter(
+                (menuItem) => menuItem.id_solitude !== item.id_solitude
+              )
+            );
+            return `Has denegado a '${item.nombre}'`;
+          } else {
+            throw new Error(
+              "No se pudo denegar al club: " + response.data.message
+            );
+          }
+        }),
+      {
+        loading: "Denegando club...",
+        success: (msg) => msg,
+        error: (err) => err.message || "Error en la solicitud de denegación",
+      }
+    );
   }
 
   useEffect(() => {
@@ -186,15 +199,17 @@ export default function ClubRequest() {
                       <button
                         className="button__request accept__request"
                         onClick={() => approveUser(item)}
+                        disabled={disabled}
                       >
-                        Aceptar
+                        {disabled ? "Procesando..." : "Aceptar"}
                       </button>
 
                       <button
                         className="button__request deny__request"
                         onClick={() => denyUser(item)}
+                        disabled={disabled}
                       >
-                        Denegar
+                        {disabled ? "Procesando..." : "Denegar"}
                       </button>
                     </div>
                   </div>
