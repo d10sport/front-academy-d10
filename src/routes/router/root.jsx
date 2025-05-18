@@ -19,6 +19,7 @@ import Courses from "@routes/courses/courses.jsx";
 import { Route, Routes } from "react-router-dom";
 import ErrorPage from "@routes/router/error.jsx";
 import Forgot from "@routes/forgot/forgot.jsx";
+import ChangePass from "@routes/change-pass/change-pass.jsx";
 import Admin from "@routes/admin/admin.jsx";
 import Login from "@routes/login/login.jsx";
 import Home from "@routes/home/home.jsx";
@@ -34,6 +35,7 @@ export default function Router() {
       <Route path="/class/:idCourse" element={<VideoClass />} />
       <Route path="/courses" element={<Courses />} />
       <Route path="/forgot" element={<Forgot />} />
+      <Route path="/change-pass" element={<ChangePass />} />
       <Route path="/register/club/step-one" element={<ClubRegisterOne />} />
       <Route path="/register/club/step-two" element={<ClubRegisterTwo />} />
       <Route path="/register/club/step-three" element={<ClubRegisterThree />} />

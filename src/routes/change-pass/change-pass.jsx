@@ -1,39 +1,53 @@
-// import AppContext from "@context/app/app-context";
+// import { useState, useContext, useEffect } from "react";
+// import getTokenDecoded from "@lib/token/token-url";
 // import { useNavigate } from "react-router-dom";
-// import { useContext } from "react";
+// import { useLocation } from "react-router-dom";
 // import { toast } from "sonner";
 // import axios from "axios";
 import "./change-pass.css";
 
-export default function ChangePass() {
+export default function LoginAdmin() {
+  // const context = useContext(AppContext);
+  // const urlApi = context.urlApi;
+  // const apiKey = context.apiKey;
+
   return (
     <>
-      <div className="cntr-form__change-password">
-        <form action="" className="form__change-password">
-          <h1 className="title__change-password">Cambiar Contraseña</h1>
-          <label htmlFor="new-pass" className="label__change-password">
-            Nueva Contraseña
+      <section className="section__login_academy">
+        <div action="" className="form__login">
+          <div className="flex flex-col items-center justify-center">
+            <h1 className="title__login">D10+ Academy</h1>
+            <h2 className="subtitle__login">Cambiar Contraseña</h2>
+          </div>
+
+          <label htmlFor="new_pass" className="label__login">
+            Nueva contraseña
           </label>
           <input
-            type="password"
-            className="input__change-password"
-            placeholder="Ingrese su nueva contraseña"
-            id="new-pass"
+            type="text"
+            id="new_pass"
+            name="new_pass"
+            autoComplete="off"
+            className="input__login"
+            placeholder="Nueva contraseña"
           />
-          <label htmlFor="confirm-pass" className="label__change-password">
-            Repite la Nueva Contraseña
+
+          <label htmlFor="password" className="label__login">
+            Confirmar nueva contraseña
           </label>
+
           <input
             type="password"
-            className="input__change-password"
-            placeholder="Confirma tu nueva contraseña"
-            id="confirm-pass"
+            id="confirm_new_pass"
+            name="confirm_new_pass"
+            autoComplete="off"
+            className="input__login"
+            placeholder="Confirmar nueva contraseña"
           />
-          <button className="button__change-password">
-            Actualizar Contraseña
-          </button>
-        </form>
-      </div>
+
+          <button className="button__login">Cambiar contraseña</button>
+        </div>
+      </section>
     </>
   );
 }
