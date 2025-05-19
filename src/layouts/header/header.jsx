@@ -106,7 +106,7 @@ export default function Header() {
     fetchPermissionsRoles,
     fetchUser,
     user,
-    user?.id_role,
+    permissionsSystem.length,
   ]);
 
   useEffect(() => {
