@@ -194,6 +194,12 @@ export default function Header() {
           <p className="text__info-user">
             <b>Club: </b> {user?.club?.name_club ?? user?.name_club}
           </p>
+          <Link
+            to={`/change-pass`}
+            className="text__info-user"
+          >
+            Cambiar contraseña
+          </Link>
         </div>
 
         <div className="cntr-three-item__info-user">

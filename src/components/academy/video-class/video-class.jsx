@@ -61,7 +61,7 @@ export default function VideoClass() {
           : response.data.data[0].class_id;
         setUnlockedClass(lastUnlocked);
         getClassContent(lastUnlocked);
-        getClassComments(lastUnlocked);
+        getClassComments(selectedClass.id_comments);
       }
     } catch (error) {
       console.error("Error al obtener el menú de clases:", error);
@@ -69,6 +69,7 @@ export default function VideoClass() {
   }
 
   async function getClassComments(classId) {
+    // debugger;
     try {
       const response = await axios.get(`${urlApi}academy/g/class/comments`, {
         params: { id_class: classId },
@@ -132,7 +133,7 @@ export default function VideoClass() {
   function handleClassSelector(id) {
     if (id === unlockedClass) {
       getClassContent(id);
-      getClassComments(id);
+      getClassComments(selectedClass.id_comments);
     }
   }
 
@@ -145,7 +146,7 @@ export default function VideoClass() {
       setUnlockedClass(previousClassId);
       localStorage.setItem(`unlockedClass_${idCourse}`, previousClassId);
       getClassContent(previousClassId);
-      getClassComments(previousClassId);
+      getClassComments(selectedClass.id_comments);
     }
   }
 
@@ -158,7 +159,7 @@ export default function VideoClass() {
       setUnlockedClass(nextClassId);
       localStorage.setItem(`unlockedClass_${idCourse}`, nextClassId);
       getClassContent(nextClassId);
-      getClassComments(nextClassId);
+      getClassComments(selectedClass.id_comments);
     }
   }
 
@@ -182,6 +183,7 @@ export default function VideoClass() {
 
   useEffect(() => {
     getClassMenu();
+
     const handleResize = () => {
       const width = window.innerWidth;
       if (width <= 768) {
@@ -349,7 +351,7 @@ export default function VideoClass() {
             />
             <button
               className="btn__class"
-              onClick={() => handleSubmit(selectedClass.id, id_user)}
+              onClick={() => handleSubmit(selectedClass.id_comments, id_user)}
               disabled={loading}
             >
               {loading ? "Publicando..." : "Publicar"}
