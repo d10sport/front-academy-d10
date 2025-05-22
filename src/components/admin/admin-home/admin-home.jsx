@@ -21,25 +21,21 @@ export default function Admin() {
   // Nueva subida de image
   const [imageOpenOne, setImageOpenOne] = useState(false);
   const [imageOpenTwo, setImageOpenTwo] = useState(false);
-  const [imageOpenThree, setImageOpenThree] = useState(false);
   const [imageOpenFour, setImageOpenFour] = useState(false);
   const [imageOpenFive, setImageOpenFive] = useState(false);
 
   const [imageUploadOne, setImageUploadOne] = useState("");
   const [imageUploadTwo, setImageUploadTwo] = useState("");
-  const [imageUploadThree, setImageUploadThree] = useState("");
   const [imageUploadFour, setImageUploadFour] = useState("");
   const [imageUploadFive, setImageUploadFive] = useState("");
 
   const [formImageUploadOne, setFormImageUploadOne] = useState("");
   const [formImageUploadTwo, setFormImageUploadTwo] = useState("");
-  const [formImageUploadThree, setFormImageUploadThree] = useState("");
   const [formImageUploadFour, setFormImageUploadFour] = useState("");
   const [formImageUploadFive, setFormImageUploadFive] = useState("");
 
   const [filesOne, setFilesOne] = useState([]);
   const [filesTwo, setFilesTwo] = useState([]);
-  const [filesThree, setFilesThree] = useState([]);
   const [filesFour, setFilesFour] = useState([]);
   const [filesFive, setFilesFive] = useState([]);
 
@@ -64,10 +60,6 @@ export default function Admin() {
         setFilesTwo(acceptedFiles);
         setImageUploadTwo(URL.createObjectURL(acceptedFiles[0]));
         setFormImageUploadTwo(acceptedFiles[0]);
-      } else if (parentId === "dropzone-three") {
-        setFilesThree(acceptedFiles);
-        setImageUploadThree(URL.createObjectURL(acceptedFiles[0]));
-        setFormImageUploadThree(acceptedFiles[0]);
       } else if (parentId === "dropzone-four") {
         setFilesFour(acceptedFiles);
         setImageUploadFour(URL.createObjectURL(acceptedFiles[0]));
@@ -92,17 +84,14 @@ export default function Admin() {
   function cancelUploadImage() {
     setImageOpenOne(false);
     setImageOpenTwo(false);
-    setImageOpenThree(false);
     setImageOpenFour(false);
     setImageOpenFive(false);
     setFilesOne([]);
     setFilesTwo([]);
-    setFilesThree([]);
     setFilesFour([]);
     setFilesFive([]);
     setImageUploadOne("");
     setImageUploadTwo("");
-    setImageUploadThree("");
     setImageUploadFour("");
     setImageUploadFive("");
   }
@@ -117,12 +106,6 @@ export default function Admin() {
     setImageOpenTwo(false);
     setFilesTwo([]);
     setImageUploadTwo("");
-  }
-
-  function cancelUploadImageThree() {
-    setImageOpenThree(false);
-    setFilesThree([]);
-    setImageUploadThree("");
   }
 
   function cancelUploadImageFour() {
@@ -141,16 +124,13 @@ export default function Admin() {
     const idBtn = e.target.id;
     if (idBtn == "btn_one") {
       setImageOpenOne(true);
-      cancelUploadImageThree();
       cancelUploadImageFour();
       cancelUploadImageFive();
     } else if (idBtn == "btn_two") {
       setImageOpenTwo(true);
-      cancelUploadImageThree();
       cancelUploadImageFour();
       cancelUploadImageFive();
     } else if (idBtn == "btn_three") {
-      setImageOpenThree(true);
       cancelUploadImageOne();
       cancelUploadImageTwo();
       cancelUploadImageFour();
@@ -159,13 +139,11 @@ export default function Admin() {
       setImageOpenFour(true);
       cancelUploadImageOne();
       cancelUploadImageTwo();
-      cancelUploadImageThree();
       cancelUploadImageFive();
     } else if (idBtn == "btn_five") {
       setImageOpenFive(true);
       cancelUploadImageOne();
       cancelUploadImageTwo();
-      cancelUploadImageThree();
       cancelUploadImageFour();
     }
   }
@@ -188,7 +166,9 @@ export default function Admin() {
   });
 
   const [sectionThree, setSectionThree] = useState({
+    title: "",
     video: "",
+    description: "",
   });
 
   const [sectionFour, setSectionFour] = useState({
@@ -200,8 +180,10 @@ export default function Admin() {
       },
     ],
     news: {
-      h1: "",
-      title: "",
+      label: "",
+      title1: "",
+      title2: "",
+      title3: "",
       description: "",
       link: "",
     },
@@ -209,11 +191,9 @@ export default function Admin() {
 
   const [sectionFive, setSectionFive] = useState({
     link: "",
-    title_1: "",
-    title_2: "",
-    bg_photo: "",
-    text_link: "",
     logo: "",
+    title: "",
+    description: "",
   });
 
   const [sectionSix, setSectionSix] = useState({
@@ -309,23 +289,11 @@ export default function Admin() {
   // ----------------------------- Update Nosotros ---------------------------------
 
   async function handleUpdateNosotros() {
-    if (imageOpenThree && imageUploadThree.length == 0) {
-      setError("Por favor, suba una imagen");
-      return;
-    } else {
-      setError("");
-    }
-
-    const formData = new FormData();
-    formData.append("file", formImageUploadThree);
-    formData.append("page", "landing");
-    formData.append("data", JSON.stringify(sectionTwo));
-
     toast.promise(
       axios
-        .put(`${urlApi}landing/u/update-nosotros/1`, formData, {
+        .put(`${urlApi}landing/u/update-nosotros/1`, sectionTwo, {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
             "api-key": apiKey,
           },
         })
@@ -400,13 +368,13 @@ export default function Admin() {
   // ----------------------------- Update News ---------------------------------
 
   async function handleUpdateNews() {
-    const { h1, title, description } = sectionFour.news;
+    const { label, title1, title2, title3, description } = sectionFour.news;
 
     toast.promise(
       axios
         .put(
           `${urlApi}landing/u/update-news/1`,
-          { h1, title, description },
+          { label, title1, title2, title3, description },
           {
             headers: {
               "Content-Type": "application/json",
@@ -812,93 +780,6 @@ export default function Admin() {
             style={{ cursor: !isEditingTwo ? "not-allowed" : "text" }}
             disabled={!isEditingTwo}
           ></textarea>
-          <label htmlFor="" className="label__admin-section">
-            Imagen de fondo:
-          </label>
-
-          {!imageOpenThree && (
-            <>
-              <div className="cntr-img__admin-section sm-margin-bottom">
-                <img
-                  className="img__admin-section"
-                  src={sectionTwo.bg_photo}
-                  alt={`Img`}
-                />
-              </div>
-              <div className="cntr-input__add-course lg-margin-bottom">
-                <button
-                  id="btn_three"
-                  onClick={(e) => openOrCloseImage(e)}
-                  className={
-                    !isEditingTwo
-                      ? "btn-cursor-disabled"
-                      : "btn-upload__add-course"
-                  }
-                  disabled={!isEditingTwo}
-                >
-                  Cambiar imagen
-                </button>
-              </div>
-            </>
-          )}
-
-          {imageOpenThree && (
-            <section className="upload-section">
-              {filesThree.length === 0 ? (
-                <div
-                  id="dropzone-three"
-                  {...getRootProps()}
-                  className={`w-full max-w-md p-8 rounded-lg border-2 border-dashed transition-colors ${
-                    isDragActive ? "border-neutral-400" : "border-neutral-600"
-                  }`}
-                >
-                  <input {...getInputProps()} />
-                  <div className="flex flex-col items-center text-center">
-                    <Upload className="w-12 h-12 mb-4 text-neutral-400" />
-                    <p className="mb-2 text-lg font-medium text-neutral-300">
-                      {isDragActive
-                        ? "Suelta los archivos aquí"
-                        : "Arrastre y suelte archivos aquí"}
-                    </p>
-                    <p className="mb-4 text-sm text-neutral-500">or</p>
-                    <button className="px-4 py-2 text-sm font-medium text-neutral-200 bg-neutral-800 rounded-md hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-600">
-                      Select Files
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <div className="mt-4 flex flex-col items-center">
-                  {imageUploadThree && (
-                    <img
-                      src={imageUploadThree}
-                      alt="Preview"
-                      className="w-full h-50 max-h-52 object-cover rounded-md mb-4"
-                    />
-                  )}
-                  <button
-                    onClick={() => {
-                      setFilesThree([]);
-                      setImageUploadThree("");
-                    }}
-                    className="px-4 py-2 text-sm font-medium text-red-600 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-red-400 flex items-center"
-                  >
-                    <Trash2 className="w-4 h-4 mr-2" /> Eliminar archivo
-                  </button>
-                </div>
-              )}
-
-              {error && <p style={{ color: "red" }}>{error}</p>}
-              <br />
-              <div className="flex justify-center mt-4 items-center gap-8">
-                <button
-                  onClick={() => cancelUploadImage()}
-                  className="btn-back__edit-course"
-                >
-                  Cancelar
-                </button>
-              </div>
-            </section>
-          )}
 
           {isEditingTwo ? (
             <div className="confirm-edit__admin-section">
@@ -913,10 +794,7 @@ export default function Admin() {
               </button>
               <button
                 className="btn-cancel__admin-section"
-                onClick={() => {
-                  setIsEditingTwo(false);
-                  cancelUploadImage();
-                }}
+                onClick={() => setIsEditingTwo(false)}
               >
                 No
               </button>
@@ -933,6 +811,32 @@ export default function Admin() {
 
         <li className="item__admin-section">
           <h1 className="subtitle__admin-section">Comercial</h1>
+          <label htmlFor="" className="label__admin-section">
+            Titulo:
+          </label>
+          <input
+            type="text"
+            className="input__admin-section sm-margin-bottom"
+            value={sectionThree.title}
+            onChange={(e) =>
+              setSectionThree({ ...sectionThree, title: e.target.value })
+            }
+            style={{ cursor: !isEditingThree ? "not-allowed" : "text" }}
+            disabled={!isEditingThree}
+          />
+          <label htmlFor="" className="label__admin-section">
+            Descripción:
+          </label>
+          <textarea
+            type="text"
+            className="textarea__admin-section sm-margin-bottom"
+            value={sectionThree.description}
+            onChange={(e) =>
+              setSectionThree({ ...sectionThree, description: e.target.value })
+            }
+            style={{ cursor: !isEditingThree ? "not-allowed" : "text" }}
+            disabled={!isEditingThree}
+          ></textarea>
           <label htmlFor="" className="label__admin-section">
             Video comercial:
           </label>
@@ -1054,34 +958,66 @@ export default function Admin() {
         </li>
 
         <li className="item__admin-section">
-          <h1 className="subtitle__admin-section">News</h1>
+          <h1 className="subtitle__admin-section">Noticias</h1>
           <label htmlFor="" className="label__admin-section">
-            Titulo de sección:
+            Label:
           </label>
           <input
             type="text"
             className="input__admin-section sm-margin-bottom"
-            value={sectionFour.news.h1}
+            value={sectionFour.news.label}
             onChange={(e) =>
               setSectionFour({
                 ...sectionFour,
-                news: { ...sectionFour.news, h1: e.target.value },
+                news: { ...sectionFour.news, label: e.target.value },
               })
             }
             style={{ cursor: !isEditingFour ? "not-allowed" : "text" }}
             disabled={!isEditingFour}
           />
           <label htmlFor="" className="label__admin-section">
-            Titulo:
+            Titulo #1:
           </label>
           <input
             type="text"
             className="input__admin-section sm-margin-bottom"
-            value={sectionFour.news.title}
+            value={sectionFour.news.title1}
             onChange={(e) =>
               setSectionFour({
                 ...sectionFour,
-                news: { ...sectionFour.news, title: e.target.value },
+                news: { ...sectionFour.news, title1: e.target.value },
+              })
+            }
+            style={{ cursor: !isEditingFour ? "not-allowed" : "text" }}
+            disabled={!isEditingFour}
+          />
+          <label htmlFor="" className="label__admin-section">
+            Titulo #2:
+          </label>
+          <input
+            type="text"
+            className="input__admin-section sm-margin-bottom"
+            value={sectionFour.news.title2}
+            onChange={(e) =>
+              setSectionFour({
+                ...sectionFour,
+                news: { ...sectionFour.news, title2: e.target.value },
+              })
+            }
+            style={{ cursor: !isEditingFour ? "not-allowed" : "text" }}
+            disabled={!isEditingFour}
+          />
+          <label htmlFor="" className="label__admin-section">
+            Titulo #3:
+          </label>
+          <input
+            type="text"
+            className="input__admin-section sm-margin-bottom"
+            value={sectionFour.news.title3}
+            onChange={(e) =>
+              setSectionFour({
+                ...sectionFour,
+                news: { ...sectionFour.news, title3: e.target.value },
               })
             }
             style={{ cursor: !isEditingFour ? "not-allowed" : "text" }}
@@ -1090,9 +1026,9 @@ export default function Admin() {
           <label htmlFor="" className="label__admin-section">
             Descripción:
           </label>
-          <input
+          <textarea
             type="text"
-            className="input__admin-section sm-margin-bottom"
+            className="textarea__admin-section sm-margin-bottom"
             value={sectionFour.news.description}
             onChange={(e) =>
               setSectionFour({
@@ -1102,7 +1038,7 @@ export default function Admin() {
             }
             style={{ cursor: !isEditingFour ? "not-allowed" : "text" }}
             disabled={!isEditingFour}
-          />
+          ></textarea>
 
           {isEditingFour ? (
             <div className="confirm-edit__admin-section">
@@ -1135,7 +1071,7 @@ export default function Admin() {
         <li className="item__admin-section">
           <h1 className="subtitle__admin-section">Academia</h1>
           <label htmlFor="" className="label__admin-section">
-            Link de redireccion:
+            Dirección Web de la academia:
           </label>
           <input
             type="text"
@@ -1148,53 +1084,40 @@ export default function Admin() {
             disabled={!isEditingFive}
           />
           <label htmlFor="" className="label__admin-section">
-            Titulo #1:
+            Titulo:
           </label>
           <input
             type="text"
             className="input__admin-section sm-margin-bottom"
-            value={sectionFive.title_1}
+            value={sectionFive.title}
             onChange={(e) =>
-              setSectionFive({ ...sectionFive, title_1: e.target.value })
+              setSectionFive({ ...sectionFive, title: e.target.value })
             }
             style={{ cursor: !isEditingFive ? "not-allowed" : "text" }}
             disabled={!isEditingFive}
           />
           <label htmlFor="" className="label__admin-section">
-            Titulo #2:
+            Descripción:
           </label>
-          <input
+          <textarea
             type="text"
-            className="input__admin-section sm-margin-bottom"
-            value={sectionFive.title_2}
+            className="textarea__admin-section sm-margin-bottom"
+            value={sectionFive.description}
             onChange={(e) =>
-              setSectionFive({ ...sectionFive, title_2: e.target.value })
+              setSectionFive({ ...sectionFive, description: e.target.value })
             }
             style={{ cursor: !isEditingFive ? "not-allowed" : "text" }}
             disabled={!isEditingFive}
-          />
+          ></textarea>
           <label htmlFor="" className="label__admin-section">
-            Texto del link:
-          </label>
-          <input
-            type="text"
-            className="input__admin-section sm-margin-bottom"
-            value={sectionFive.text_link}
-            onChange={(e) =>
-              setSectionFive({ ...sectionFive, text_link: e.target.value })
-            }
-            style={{ cursor: !isEditingFive ? "not-allowed" : "text" }}
-            disabled={!isEditingFive}
-          />
-          <label htmlFor="" className="label__admin-section">
-            Imagen de fondo:
+            Logo:
           </label>
           {!imageOpenFive && (
             <>
               <div className="cntr-img__admin-section sm-margin-bottom">
                 <img
                   className="img__admin-section"
-                  src={sectionFive.bg_photo}
+                  src={sectionFive.logo}
                   alt={`Img`}
                 />
               </div>
