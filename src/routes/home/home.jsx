@@ -203,7 +203,9 @@ export default function Home() {
 
   useEffect(() => {
     async function loadImage() {
-      const url = await fetchFiles("academy/images/soccer-ball-home.png");
+      const url = await fetchFiles(
+        "academy/images/1747425831633-4dcf8317c839a6b8.png"
+      );
       setImageUrl(url);
     }
     loadImage();
@@ -211,26 +213,37 @@ export default function Home() {
 
   return (
     <>
-      <section className="section__home">
-        <h1 className="title__home margin--space">
-          Bienvenido {user?.first_names} a{" "}
-          <span className="title--color__home">D10 Academy</span>
-        </h1>
-        <div className="cntr-big-img__home">
+      <section className="relative h-96 flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0">
           {imageUrl ? (
-            <img src={imageUrl} alt="Soccer Ball" className="img__home" />
+            <img
+              alt="Learning background"
+              loading="lazy"
+              decoding="async"
+              data-nimg="fill"
+              className="object-cover opacity-30"
+              src={imageUrl}
+              style={{
+                position: "absolute",
+                height: "100%",
+                width: "100%",
+                inset: 0,
+                color: "transparent",
+              }}
+            />
           ) : (
             <p>Cargando imagen...</p>
           )}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-black/20"></div>
         </div>
-
-        <h1 className="title__home title--color__home margin--space">
-          Explora nuestras secciones de curso:
-        </h1>
-        <h2 className="subtitle__home">
-          Explora nuestras secciones de cursos. Ideales para encontrar la
-          formación perfecta en todo tipo de ámbito deportivo
-        </h2>
+        <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+            Bienvenido a{" "}
+            <span className="bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+              D10Academy
+            </span>
+          </h1>
+        </div>
       </section>
 
       {context?.permissionsUser[0]?.name_role == "admin" &&
@@ -345,7 +358,7 @@ export default function Home() {
 
       <Modal
         isOpen={isOpenModal}
-        onRequestClose={() => { }}
+        onRequestClose={() => {}}
         shouldCloseOnOverlayClick={false}
         shouldCloseOnEsc={false}
         contentLabel="Actualizar contraseña"
@@ -438,8 +451,8 @@ export default function Home() {
               {strength <= 2
                 ? "Contraseña débil"
                 : strength === 3
-                  ? "Contraseña media"
-                  : "Contraseña fuerte"}
+                ? "Contraseña media"
+                : "Contraseña fuerte"}
             </p>
           </div>
 
