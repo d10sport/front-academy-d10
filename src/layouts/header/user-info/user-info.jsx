@@ -4,7 +4,6 @@
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import { toast } from "sonner";
-import "./user-info.css";
 
 export default function AddCourse({
   isOpen,
