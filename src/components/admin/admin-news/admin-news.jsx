@@ -16,7 +16,12 @@ export default function NewsAdmin() {
   const [contentNews, setContentNews] = useState(false);
 
   const [sectionNews, setSectionNews] = useState({
-    gallery: "",
+    id: "",
+    title: "",
+    description: "",
+    image: "",
+    date: "",
+    category_id: "",
   });
 
   function getNews() {
@@ -28,7 +33,7 @@ export default function NewsAdmin() {
         },
       })
       .then((response) => {
-        setSectionNews(Object.entries(response.data[0].section_one.news));
+        setSectionNews(response.data);
       })
       .catch((error) => {
         console.error(error);
@@ -51,12 +56,15 @@ export default function NewsAdmin() {
           onClick={() => setModalIsOpenOne(true)}
           className="btn-add__news"
         >
-          Add News
+          Agregar Noticias
         </button>
         <ul className="list__admin-section">
           {sectionNews.length > 0 ? (
-            sectionNews.map(([key, item], index) => (
-              <li key={key} className="item__admin-section">
+            sectionNews.map((item, index) => (
+              <li key={index} className="item__admin-section">
+                <label htmlFor="" className="label__admin-section">
+                  ID #{item.id}
+                </label>
                 <label htmlFor="" className="label__admin-section">
                   Pre-visualización de imagen:
                 </label>
@@ -74,15 +82,6 @@ export default function NewsAdmin() {
                   type="text"
                   className="text-[black] input__admin-section sm-margin-bottom"
                   value={item.date}
-                  disabled
-                />
-                <label htmlFor="" className="label__admin-section">
-                  Imagen:
-                </label>
-                <input
-                  type="text"
-                  className="text-[black] input__admin-section sm-margin-bottom"
-                  value={item.image}
                   disabled
                 />
                 <label htmlFor="" className="label__admin-section">
@@ -105,7 +104,7 @@ export default function NewsAdmin() {
                 <div className="cntr-btn__news">
                   <button
                     onClick={() => {
-                      setSelectedIndex(parseInt(key.match(/\d+/)[0]));
+                      setSelectedIndex(item.id);
                       setContentNews(item.image);
                       setModalIsOpenThree(true);
                     }}
@@ -117,7 +116,7 @@ export default function NewsAdmin() {
               </li>
             ))
           ) : (
-            <p>No hay imágenes disponibles</p>
+            <p>No hay noticias disponibles</p>
           )}
         </ul>
       </section>
