@@ -13,6 +13,7 @@ export default function Admin() {
   const [isEditingOne, setIsEditingOne] = useState(false);
   const [isEditingTwo, setIsEditingTwo] = useState(false);
   const [isEditingThree, setIsEditingThree] = useState(false);
+  const [isEditingFour, setIsEditingFour] = useState(false);
 
   const [imageOpenOne, setImageOpenOne] = useState(false);
   const [imageOpenTwo, setImageOpenTwo] = useState(false);
@@ -32,24 +33,26 @@ export default function Admin() {
 
   const [error, setError] = useState("");
 
+  const [sectionOneServices, setSectionOneServices] = useState({
+    title: "",
+    description: "",
+  });
+
   const [sectionTwoServices, setSectionTwoServices] = useState({
     photo: "",
     title: "",
-    subtitle: "",
     description: "",
   });
 
   const [sectionThreeServices, setSectionThreeServices] = useState({
     photo: "",
     title: "",
-    subtitle: "",
     description: "",
   });
 
   const [sectionFourServices, setSectionFourServices] = useState({
     photo: "",
     title: "",
-    subtitle: "",
     description: "",
   });
 
@@ -144,6 +147,7 @@ export default function Admin() {
         },
       })
       .then((response) => {
+        setSectionOneServices(response.data[0].section_one);
         setSectionTwoServices(response.data[0].section_two);
         setSectionThreeServices(response.data[0].section_three);
         setSectionFourServices(response.data[0].section_four);
@@ -151,6 +155,35 @@ export default function Admin() {
       .catch((error) => {
         console.error(error);
       });
+  }
+
+  async function handleUpdateServicesInfo() {
+    toast.promise(
+      axios
+        .put(`${urlApi}landing/u/update-services-info/1`, sectionOneServices, {
+          headers: {
+            "Content-Type": "application/json",
+            "api-key": apiKey,
+          },
+        })
+        .then((response) => {
+          if (response.data.success) {
+            setIsEditingFour(false);
+            cancelUploadImage();
+            getServices();
+            return "Datos actualizados con éxito";
+          } else {
+            throw new Error(
+              "Error en la actualización: " + response.data.message
+            );
+          }
+        }),
+      {
+        loading: "Guardando cambios...",
+        success: (msg) => msg,
+        error: (err) => err.message || "Error en la solicitud de actualización",
+      }
+    );
   }
 
   async function handleUpdateServicesOne() {
@@ -294,9 +327,75 @@ export default function Admin() {
 
       <ul className="list__admin-section">
         <li className="item__admin-section">
+          <h1 className="subtitle__admin-section">Información</h1>
+          <label htmlFor="" className="label__admin-section">
+            Titulo:
+          </label>
+          <input
+            type="text"
+            className="input__admin-section sm-margin-bottom"
+            value={sectionOneServices.title}
+            onChange={(e) =>
+              setSectionOneServices({
+                ...sectionOneServices,
+                title: e.target.value,
+              })
+            }
+            style={{ cursor: !isEditingFour ? "not-allowed" : "text" }}
+            disabled={!isEditingFour}
+          />
+          <label htmlFor="" className="label__admin-section">
+            Descripción:
+          </label>
+          <textarea
+            type="text"
+            className="textarea__admin-section sm-margin-bottom"
+            value={sectionOneServices.description}
+            onChange={(e) =>
+              setSectionOneServices({
+                ...sectionOneServices,
+                description: e.target.value,
+              })
+            }
+            style={{ cursor: !isEditingFour ? "not-allowed" : "text" }}
+            disabled={!isEditingFour}
+          ></textarea>
+
+          {isEditingFour ? (
+            <div className="confirm-edit__admin-section">
+              <p className="text__admin-section">
+                ¿Estás seguro de guardar los cambios?
+              </p>
+              <button
+                className="btn-confirm__admin-section"
+                onClick={() => handleUpdateServicesInfo()}
+              >
+                Sí
+              </button>
+              <button
+                className="btn-cancel__admin-section"
+                onClick={() => {
+                  setIsEditingFour(false);
+                  cancelUploadImage();
+                }}
+              >
+                No
+              </button>
+            </div>
+          ) : (
+            <button
+              className="btn-edit__admin-section"
+              onClick={() => setIsEditingFour(true)}
+            >
+              Editar
+            </button>
+          )}
+        </li>
+
+        <li className="item__admin-section">
           <h1 className="subtitle__admin-section">Vestuario</h1>
           <label htmlFor="" className="label__admin-section">
-            Title:
+            Titulo:
           </label>
           <input
             type="text"
@@ -306,22 +405,6 @@ export default function Admin() {
               setSectionTwoServices({
                 ...sectionTwoServices,
                 title: e.target.value,
-              })
-            }
-            style={{ cursor: !isEditingOne ? "not-allowed" : "text" }}
-            disabled={!isEditingOne}
-          />
-          <label htmlFor="" className="label__admin-section">
-            Subtitle:
-          </label>
-          <input
-            type="text"
-            className="input__admin-section sm-margin-bottom"
-            value={sectionTwoServices.subtitle}
-            onChange={(e) =>
-              setSectionTwoServices({
-                ...sectionTwoServices,
-                subtitle: e.target.value,
               })
             }
             style={{ cursor: !isEditingOne ? "not-allowed" : "text" }}
@@ -464,7 +547,7 @@ export default function Admin() {
         <li className="item__admin-section">
           <h1 className="subtitle__admin-section">Entrenamiento</h1>
           <label htmlFor="" className="label__admin-section">
-            Title:
+            Titulo:
           </label>
           <input
             type="text"
@@ -474,22 +557,6 @@ export default function Admin() {
               setSectionThreeServices({
                 ...sectionThreeServices,
                 title: e.target.value,
-              })
-            }
-            style={{ cursor: !isEditingTwo ? "not-allowed" : "text" }}
-            disabled={!isEditingTwo}
-          />
-          <label htmlFor="" className="label__admin-section">
-            Subtitle:
-          </label>
-          <input
-            type="text"
-            className="input__admin-section sm-margin-bottom"
-            value={sectionThreeServices.subtitle}
-            onChange={(e) =>
-              setSectionThreeServices({
-                ...sectionThreeServices,
-                subtitle: e.target.value,
               })
             }
             style={{ cursor: !isEditingTwo ? "not-allowed" : "text" }}
@@ -632,7 +699,7 @@ export default function Admin() {
         <li className="item__admin-section">
           <h1 className="subtitle__admin-section">Capacitación</h1>
           <label htmlFor="" className="label__admin-section">
-            Title:
+            Titulo:
           </label>
           <input
             type="text"
@@ -642,22 +709,6 @@ export default function Admin() {
               setSectionFourServices({
                 ...sectionFourServices,
                 title: e.target.value,
-              })
-            }
-            style={{ cursor: !isEditingThree ? "not-allowed" : "text" }}
-            disabled={!isEditingThree}
-          />
-          <label htmlFor="" className="label__admin-section">
-            Subtitle:
-          </label>
-          <input
-            type="text"
-            className="input__admin-section sm-margin-bottom"
-            value={sectionFourServices.subtitle}
-            onChange={(e) =>
-              setSectionFourServices({
-                ...sectionFourServices,
-                subtitle: e.target.value,
               })
             }
             style={{ cursor: !isEditingThree ? "not-allowed" : "text" }}

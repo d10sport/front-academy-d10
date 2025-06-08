@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import AddNews from "./add-news/add-news.jsx";
+import EditNews from "./edit-news/edit-news.jsx";
 import DeleteNews from "./delete-news/delete-news.jsx";
 import AppContext from "@context/app/app-context";
 import axios from "axios";
@@ -11,12 +12,19 @@ export default function NewsAdmin() {
   const apiKey = context.apiKey;
 
   const [modalIsOpenOne, setModalIsOpenOne] = useState(false);
+  const [modalIsOpenTwo, setModalIsOpenTwo] = useState(false);
   const [modalIsOpenThree, setModalIsOpenThree] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(false);
   const [contentNews, setContentNews] = useState(false);
+  const [contentNewsTwo, setContentNewsTwo] = useState(false);
 
   const [sectionNews, setSectionNews] = useState({
-    gallery: "",
+    id: "",
+    title: "",
+    description: "",
+    image: "",
+    date: "",
+    category_id: "",
   });
 
   function getNews() {
@@ -28,7 +36,7 @@ export default function NewsAdmin() {
         },
       })
       .then((response) => {
-        setSectionNews(Object.entries(response.data[0].section_one.news));
+        setSectionNews(response.data);
       })
       .catch((error) => {
         console.error(error);
@@ -51,12 +59,15 @@ export default function NewsAdmin() {
           onClick={() => setModalIsOpenOne(true)}
           className="btn-add__news"
         >
-          Add News
+          Agregar Noticias
         </button>
         <ul className="list__admin-section">
           {sectionNews.length > 0 ? (
-            sectionNews.map(([key, item], index) => (
-              <li key={key} className="item__admin-section">
+            sectionNews.map((item, index) => (
+              <li key={index} className="item__admin-section">
+                <label htmlFor="" className="label__admin-section">
+                  ID #{item.id}
+                </label>
                 <label htmlFor="" className="label__admin-section">
                   Pre-visualización de imagen:
                 </label>
@@ -74,15 +85,6 @@ export default function NewsAdmin() {
                   type="text"
                   className="text-[black] input__admin-section sm-margin-bottom"
                   value={item.date}
-                  disabled
-                />
-                <label htmlFor="" className="label__admin-section">
-                  Imagen:
-                </label>
-                <input
-                  type="text"
-                  className="text-[black] input__admin-section sm-margin-bottom"
-                  value={item.image}
                   disabled
                 />
                 <label htmlFor="" className="label__admin-section">
@@ -105,7 +107,16 @@ export default function NewsAdmin() {
                 <div className="cntr-btn__news">
                   <button
                     onClick={() => {
-                      setSelectedIndex(parseInt(key.match(/\d+/)[0]));
+                      setContentNewsTwo(item);
+                      setModalIsOpenTwo(true);
+                    }}
+                    className="btn-update__news"
+                  >
+                    Editar
+                  </button>
+                  <button
+                    onClick={() => {
+                      setSelectedIndex(item.id);
                       setContentNews(item.image);
                       setModalIsOpenThree(true);
                     }}
@@ -117,7 +128,7 @@ export default function NewsAdmin() {
               </li>
             ))
           ) : (
-            <p>No hay imágenes disponibles</p>
+            <p>No hay noticias disponibles</p>
           )}
         </ul>
       </section>
@@ -127,6 +138,13 @@ export default function NewsAdmin() {
         onClose={() => setModalIsOpenOne(false)}
         refreshCourses={() => getNews()}
       ></AddNews>
+
+      <EditNews
+        isOpen={modalIsOpenTwo}
+        onClose={() => setModalIsOpenTwo(false)}
+        newsContent={contentNewsTwo}
+        refreshCourses={() => getNews()}
+      ></EditNews>
 
       <DeleteNews
         isOpen={modalIsOpenThree}
