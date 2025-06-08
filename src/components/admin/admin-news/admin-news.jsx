@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import AddNews from "./add-news/add-news.jsx";
+import EditNews from "./edit-news/edit-news.jsx";
 import DeleteNews from "./delete-news/delete-news.jsx";
 import AppContext from "@context/app/app-context";
 import axios from "axios";
@@ -11,9 +12,11 @@ export default function NewsAdmin() {
   const apiKey = context.apiKey;
 
   const [modalIsOpenOne, setModalIsOpenOne] = useState(false);
+  const [modalIsOpenTwo, setModalIsOpenTwo] = useState(false);
   const [modalIsOpenThree, setModalIsOpenThree] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(false);
   const [contentNews, setContentNews] = useState(false);
+  const [contentNewsTwo, setContentNewsTwo] = useState(false);
 
   const [sectionNews, setSectionNews] = useState({
     id: "",
@@ -104,6 +107,15 @@ export default function NewsAdmin() {
                 <div className="cntr-btn__news">
                   <button
                     onClick={() => {
+                      setContentNewsTwo(item);
+                      setModalIsOpenTwo(true);
+                    }}
+                    className="btn-update__news"
+                  >
+                    Editar
+                  </button>
+                  <button
+                    onClick={() => {
                       setSelectedIndex(item.id);
                       setContentNews(item.image);
                       setModalIsOpenThree(true);
@@ -126,6 +138,13 @@ export default function NewsAdmin() {
         onClose={() => setModalIsOpenOne(false)}
         refreshCourses={() => getNews()}
       ></AddNews>
+
+      <EditNews
+        isOpen={modalIsOpenTwo}
+        onClose={() => setModalIsOpenTwo(false)}
+        newsContent={contentNewsTwo}
+        refreshCourses={() => getNews()}
+      ></EditNews>
 
       <DeleteNews
         isOpen={modalIsOpenThree}
