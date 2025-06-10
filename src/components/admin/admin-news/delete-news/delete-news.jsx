@@ -27,16 +27,13 @@ export default function DeleteNews({
 
     toast.promise(
       axios
-        .put(
-          `${urlApi}landing/d/delete-news-admin/1`,
-          { index: indice, url: newsContent },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              "api-key": apiKey,
-            },
-          }
-        )
+        .delete(`${urlApi}landing/d/delete-news-admin/${indice}`, {
+          data: { url: newsContent },
+          headers: {
+            "Content-Type": "application/json",
+            "api-key": apiKey,
+          },
+        })
         .then((response) => {
           if (response.data.success) {
             setLoading(false);
@@ -78,7 +75,7 @@ export default function DeleteNews({
     >
       <section className="delete-course">
         <h1 className="title__delete-course sm-margin-bottom">
-          ¿Estás seguro de que quieres eliminar esta noticia?
+          ¿Estás seguro de que quieres eliminar esta noticia con ID #{indice}?
         </h1>
         <p className="text__delete-course lg-margin-bottom">
           Esta acción no se puede deshacer.

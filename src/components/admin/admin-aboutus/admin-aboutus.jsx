@@ -12,7 +12,6 @@ export default function Admin() {
 
   // const [isEditing, setIsEditing] = useState(false);
 
-  const [isEditingOne, setIsEditingOne] = useState(false);
   const [isEditingTwo, setIsEditingTwo] = useState(false);
   const [isEditingThree, setIsEditingThree] = useState(false);
   const [isEditingFour, setIsEditingFour] = useState(false);
@@ -122,11 +121,6 @@ export default function Admin() {
 
   // --------------------------------------
 
-  const [sectionOneAboutUs, setSectionOneAboutUs] = useState({
-    title: "",
-    description: "",
-  });
-
   const [sectionTwoAboutUs, setSectionTwoAboutUs] = useState({
     title1: "",
     title2: "",
@@ -162,7 +156,6 @@ export default function Admin() {
       })
       .then((response) => {
         if (response.data?.length == 0 || response.data[0] == undefined) return;
-        setSectionOneAboutUs(response.data[0].section_one);
         setSectionTwoAboutUs(response.data[0].section_two);
         setSectionThreeAboutUs(response.data[0].section_three);
         setSectionFourAboutUs(response.data[0].section_four);
@@ -171,41 +164,6 @@ export default function Admin() {
       .catch((error) => {
         console.error(error);
       });
-  }
-
-  // ----------------------------- Update About Us Conócenos ---------------------------------
-
-  async function handleUpdateAboutUsConocenos() {
-    toast.promise(
-      axios
-        .put(
-          `${urlApi}landing/u/update-aboutus-conocenos/1`,
-          sectionOneAboutUs,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              "api-key": apiKey,
-            },
-          }
-        )
-        .then((response) => {
-          if (response.data.success) {
-            setIsEditingOne(false);
-            cancelUploadImage();
-            getDataAbout();
-            return "Datos actualizados con éxito";
-          } else {
-            throw new Error(
-              "Error en la actualización: " + response.data.message
-            );
-          }
-        }),
-      {
-        loading: "Guardando cambios...",
-        success: (msg) => msg,
-        error: (err) => err.message || "Error en la solicitud de actualización",
-      }
-    );
   }
 
   // ----------------------------- Update About Us Fundador ---------------------------------
@@ -387,69 +345,6 @@ export default function Admin() {
       <h1 className="title__admin-section">Nosotros</h1>
 
       <ul className="list__admin-section">
-        <li className="item__admin-section">
-          <h1 className="subtitle__admin-section">Conócenos</h1>
-          <label htmlFor="" className="label__admin-section">
-            Title:
-          </label>
-          <input
-            type="text"
-            className="input__admin-section sm-margin-bottom"
-            value={sectionOneAboutUs.title}
-            onChange={(e) =>
-              setSectionOneAboutUs({
-                ...sectionOneAboutUs,
-                title: e.target.value,
-              })
-            }
-            style={{ cursor: !isEditingOne ? "not-allowed" : "text" }}
-            disabled={!isEditingOne}
-          />
-          <label htmlFor="" className="label__admin-section">
-            Descripción:
-          </label>
-          <textarea
-            type="text"
-            className="textarea__admin-section sm-margin-bottom"
-            value={sectionOneAboutUs.description}
-            onChange={(e) =>
-              setSectionOneAboutUs({
-                ...sectionOneAboutUs,
-                description: e.target.value,
-              })
-            }
-            style={{ cursor: !isEditingOne ? "not-allowed" : "text" }}
-            disabled={!isEditingOne}
-          ></textarea>
-
-          {isEditingOne ? (
-            <div className="confirm-edit__admin-section">
-              <p className="text__admin-section">
-                ¿Estás seguro de guardar los cambios?
-              </p>
-              <button
-                className="btn-confirm__admin-section"
-                onClick={() => handleUpdateAboutUsConocenos()}
-              >
-                Sí
-              </button>
-              <button
-                className="btn-cancel__admin-section"
-                onClick={() => setIsEditingOne(false)}
-              >
-                No
-              </button>
-            </div>
-          ) : (
-            <button
-              className="btn-edit__admin-section"
-              onClick={() => setIsEditingOne(true)}
-            >
-              Editar
-            </button>
-          )}
-        </li>
-
         <li className="item__admin-section">
           <h1 className="subtitle__admin-section">Fundador</h1>
           <label htmlFor="" className="label__admin-section">
