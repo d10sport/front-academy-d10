@@ -190,7 +190,6 @@ export default function Admin() {
   });
 
   const [sectionFive, setSectionFive] = useState({
-    link: "",
     logo: "",
     title: "",
     description: "",
@@ -1071,19 +1070,6 @@ export default function Admin() {
         <li className="item__admin-section">
           <h1 className="subtitle__admin-section">Academia</h1>
           <label htmlFor="" className="label__admin-section">
-            Dirección Web de la academia:
-          </label>
-          <input
-            type="text"
-            className="input__admin-section sm-margin-bottom"
-            value={sectionFive.link}
-            onChange={(e) =>
-              setSectionFive({ ...sectionFive, link: e.target.value })
-            }
-            style={{ cursor: !isEditingFive ? "not-allowed" : "text" }}
-            disabled={!isEditingFive}
-          />
-          <label htmlFor="" className="label__admin-section">
             Titulo:
           </label>
           <input
@@ -1230,7 +1216,7 @@ export default function Admin() {
         <li className="item__admin-section">
           <h1 className="subtitle__admin-section">Aliados</h1>
           <label htmlFor="" className="label__admin-section">
-            Title:
+            Titulo:
           </label>
           <input
             type="text"

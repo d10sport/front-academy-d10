@@ -43,10 +43,11 @@ export default function AddNews({ isOpen, onClose, refreshCourses }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [newNews, setNewNews] = useState({
-    date: "",
-    image: "",
     title: "",
     description: "",
+    image: "",
+    date: "",
+    category_id: "",
   });
 
   async function handleSaveNews() {
@@ -58,9 +59,10 @@ export default function AddNews({ isOpen, onClose, refreshCourses }) {
     }
 
     if (
-      !newNews.date.trim() ||
       !newNews.title.trim() ||
-      !newNews.description.trim()
+      !newNews.description.trim() ||
+      !newNews.date.trim() ||
+      !newNews.category_id.toString().trim()
     ) {
       setError("Todos los campos son obligatorios.");
       return;
@@ -72,11 +74,19 @@ export default function AddNews({ isOpen, onClose, refreshCourses }) {
     const formData = new FormData();
     formData.append("file", formImageUpload);
     formData.append("page", "landing");
-    formData.append("data", JSON.stringify(newNews));
+    formData.append(
+      "data",
+      JSON.stringify({
+        title: newNews.title,
+        description: newNews.description,
+        date: newNews.date,
+        category_id: newNews.category_id,
+      })
+    );
 
     toast.promise(
       axios
-        .put(`${urlApi}landing/i/save-news-admin/1`, formData, {
+        .post(`${urlApi}landing/i/save-news-admin/1`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
             "api-key": apiKey,
@@ -84,7 +94,14 @@ export default function AddNews({ isOpen, onClose, refreshCourses }) {
         })
         .then((response) => {
           if (response.data.success) {
-            setNewNews({ date: "", image: "", title: "", description: "" });
+            setNewNews({
+              title: "",
+              description: "",
+              image: "",
+              date: "",
+              category_id: "",
+            });
+            setImageUpload("");
             setLoading(false);
             refreshCourses();
             onClose();
@@ -129,7 +146,7 @@ export default function AddNews({ isOpen, onClose, refreshCourses }) {
         <label className="label__add-class sm-margin-bottom">Fecha</label>
         <input
           className="input__add-class sm-margin-bottom"
-          type="text"
+          type="date"
           placeholder="Ej: 2025-03 (Año - mes)"
           value={newNews.date}
           onChange={(e) => setNewNews({ ...newNews, date: e.target.value })}
@@ -227,6 +244,18 @@ export default function AddNews({ isOpen, onClose, refreshCourses }) {
           }
           required
         ></textarea>
+
+        <label className="label__add-class sm-margin-bottom">Categoría</label>
+        <input
+          className="input__add-class sm-margin-bottom"
+          type="number"
+          placeholder="Ej: General"
+          value={newNews.category_id}
+          onChange={(e) =>
+            setNewNews({ ...newNews, category_id: e.target.value })
+          }
+          required
+        />
 
         {error && <p style={{ color: "red" }}>{error}</p>}
 
