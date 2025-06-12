@@ -1,7 +1,10 @@
-import { useParams } from "react-router-dom";
 import { useEffect, useState, useContext, useMemo } from "react";
-import axios from "axios";
 import AppContext from "@context/app/app-context";
+import { LogoHeader } from "@utils/icons/icons";
+import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { toast } from "sonner";
+import axios from "axios";
 import "./video-class.css";
 
 export default function VideoClass() {
@@ -37,6 +40,7 @@ export default function VideoClass() {
 
       if (response.data && response.data.data) {
         setSelectedClass(response.data.data[0]);
+        getClassComments(response.data.data[0].id_comments);
       }
     } catch (error) {
       console.error("Error al obtener el contenido de la clase:", error);
@@ -61,7 +65,6 @@ export default function VideoClass() {
           : response.data.data[0].class_id;
         setUnlockedClass(lastUnlocked);
         getClassContent(lastUnlocked);
-        getClassComments(selectedClass.id_comments);
       }
     } catch (error) {
       console.error("Error al obtener el menú de clases:", error);
@@ -69,7 +72,6 @@ export default function VideoClass() {
   }
 
   async function getClassComments(classId) {
-    // debugger;
     try {
       const response = await axios.get(`${urlApi}academy/g/class/comments`, {
         params: { id_class: classId },
@@ -117,8 +119,9 @@ export default function VideoClass() {
       );
 
       if (response.data.success) {
-        alert("Comentario publicado con éxito");
+        toast.success("Comentario publicado con éxito");
         setComment("");
+        getClassComments(class_id);
       } else {
         throw new Error("Error al publicar el comentario");
       }
@@ -195,6 +198,10 @@ export default function VideoClass() {
       }
     };
 
+    setTimeout(() => {
+      context.getElementHeader();
+    }, 500);
+
     handleResize();
     window.addEventListener("resize", handleResize);
 
@@ -218,7 +225,7 @@ export default function VideoClass() {
                     <ul className="list__class">
                       {classes.map((cls) => (
                         <li
-                          key={cls.class_id}
+                          key={parseInt(cls.class_id)}
                           className="list-item__class"
                           onClick={() => handleClassSelector(cls.class_id)}
                         >
@@ -235,42 +242,39 @@ export default function VideoClass() {
                   <h1 className="title__class">Clases</h1>
                   <ul className="list__class">
                     {classes.map((cls) => (
-                      <>
-                        <li
-                          key={cls.class_id}
-                          className={`list-item__class relative ${
-                            cls.class_id === unlockedClass
-                              ? "unlocked_class"
-                              : "locked_class"
+                      <li
+                        key={parseInt(cls.class_id)}
+                        className={`list-item__class relative ${cls.class_id === unlockedClass
+                          ? "unlocked_class"
+                          : "locked_class"
                           }`}
-                          onClick={() => handleClassSelector(cls.class_id)}
-                          style={{
-                            cursor:
-                              cls.class_id === unlockedClass
-                                ? "pointer"
-                                : "not-allowed",
-                          }}
-                        >
-                          {cls.class_id !== unlockedClass && (
-                            <div className="lock_icon absolute z-20 bottom-[0.6rem] grid justify-center items-center right-3">
-                              <svg
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="#000000"
-                              >
-                                <path
-                                  stroke="none"
-                                  d="M0 0h24v24H0z"
-                                  fill="none"
-                                />
-                                <path d="M12 2a5 5 0 0 1 5 5v3a3 3 0 0 1 3 3v6a3 3 0 0 1 -3 3h-10a3 3 0 0 1 -3 -3v-6a3 3 0 0 1 3 -3v-3a5 5 0 0 1 5 -5m0 12a2 2 0 0 0 -1.995 1.85l-.005 .15a2 2 0 1 0 2 -2m0 -10a3 3 0 0 0 -3 3v3h6v-3a3 3 0 0 0 -3 -3" />
-                              </svg>
-                            </div>
-                          )}
-                          {cls.class_title}
-                        </li>
-                      </>
+                        onClick={() => handleClassSelector(cls.class_id)}
+                        style={{
+                          cursor:
+                            cls.class_id === unlockedClass
+                              ? "pointer"
+                              : "not-allowed",
+                        }}
+                      >
+                        {cls.class_id !== unlockedClass && (
+                          <div className="lock_icon absolute z-20 bottom-[0.6rem] grid justify-center items-center right-3">
+                            <svg
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="#000000"
+                            >
+                              <path
+                                stroke="none"
+                                d="M0 0h24v24H0z"
+                                fill="none"
+                              />
+                              <path d="M12 2a5 5 0 0 1 5 5v3a3 3 0 0 1 3 3v6a3 3 0 0 1 -3 3h-10a3 3 0 0 1 -3 -3v-6a3 3 0 0 1 3 -3v-3a5 5 0 0 1 5 -5m0 12a2 2 0 0 0 -1.995 1.85l-.005 .15a2 2 0 1 0 2 -2m0 -10a3 3 0 0 0 -3 3v3h6v-3a3 3 0 0 0 -3 -3" />
+                            </svg>
+                          </div>
+                        )}
+                        {cls.class_title}
+                      </li>
                     ))}
                   </ul>
                 </div>
@@ -279,6 +283,18 @@ export default function VideoClass() {
           </div>
         </div>
         <div className="cntr-video__class relative">
+          <div className="absolute top-2 left-7 w-fit h-fulL z-10">
+            <Link className="select-none w-full font-bold" to={"/"}>
+              <LogoHeader />
+            </Link>
+          </div>
+          <div className="absolute top-2 right-7">
+            <Link className="select-none text-xl font-bold" to={"/courses"}>
+              <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" /><path d="M21 12h-13l3 -3" /><path d="M11 15l-3 -3" />
+              </svg>
+            </Link>
+          </div>
           <div
             className="absolute left-7 bottom-5 cursor-pointer"
             onClick={() => unlockBeforeClass()}
@@ -350,7 +366,7 @@ export default function VideoClass() {
               disabled={loading}
             />
             <button
-              className="btn__class"
+              className="btn__class w-full"
               onClick={() => handleSubmit(selectedClass.id_comments, id_user)}
               disabled={loading}
             >

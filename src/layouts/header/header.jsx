@@ -1,8 +1,8 @@
-import UserInfo from "./user-info/user-info.jsx";
 import { useContext, useEffect, useState, useCallback, useMemo } from "react";
-import Example from "../../assets/img/example-img.png";
-import { LogoHeader } from "../../utils/icons/icons";
 import AppContext from "@context/app/app-context";
+import Example from "@assets/img/example-img.png";
+import UserInfo from "./user-info/user-info.jsx";
+import { LogoHeader } from "@utils/icons/icons";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { toast } from "sonner";
@@ -61,7 +61,7 @@ export default function Header() {
   const toggleVisibility = () => setIsVisible(!isVisible);
 
   const getPermissions = useCallback(async () => {
-    if (permissionsSystem.length > 0) return;
+    if (permissionsSystem?.length > 0) return;
     let userPermissions = permissionsUser;
     if (userPermissions?.length === 0 || userPermissions == undefined) {
       userPermissions = await fetchPermissionsUser();
@@ -97,7 +97,7 @@ export default function Header() {
     fetchPermissionsRoles,
     fetchUser,
     user,
-    user?.id_role,
+    permissionsSystem?.length,
   ]);
 
   useEffect(() => {
@@ -124,7 +124,7 @@ export default function Header() {
 
   return (
     <>
-      <nav className="fixed top-4 left-0 right-0 z-50 mx-auto w-[95%] max-w-7xl">
+      <nav id="header_academy" className="fixed top-4 left-0 right-0 z-50 mx-auto w-[95%] max-w-7xl">
         <div
           className={`mx-auto flex h-15 items-center justify-between rounded-full px-6 shadow-lg backdrop-blur-sm transition-all duration-300 ${
             scrolled ? "bg-black/40" : "bg-black/80"
@@ -132,15 +132,6 @@ export default function Header() {
         >
           <Link className="select-none text-xl font-bold" to={"/"}>
             <LogoHeader />
-            {/* {data.logo == "" ? (
-              <ImageLogo style={{ maxWidth: "50px" }} alt="Logo" />
-            ) : (
-              <img
-                src={data.logo}
-                alt="logo D10"
-                className="logo max-w-[50px]"
-              />
-            )} */}
           </Link>
           <div className="hidden space-x-8 md:flex">
             {permissionsSystem?.length > 0 &&
