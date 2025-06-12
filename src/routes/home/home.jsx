@@ -198,6 +198,9 @@ export default function Home() {
       fetchAllUserForClub(context?.user?.id);
       fetchAllCountUsers();
       fetchAllRegistersVerifiedByDate();
+      setTimeout(() => {
+        context.getElementHeader();
+      }, 500);
     }
   }, [context.token]);
 
@@ -209,7 +212,6 @@ export default function Home() {
       setImageUrl(url);
     }
     loadImage();
-    context.getElementHeader()
   }, []);
 
   return (
@@ -359,7 +361,7 @@ export default function Home() {
 
       <Modal
         isOpen={isOpenModal}
-        onRequestClose={() => {}}
+        onRequestClose={() => { }}
         shouldCloseOnOverlayClick={false}
         shouldCloseOnEsc={false}
         contentLabel="Actualizar contraseña"
@@ -452,8 +454,8 @@ export default function Home() {
               {strength <= 2
                 ? "Contraseña débil"
                 : strength === 3
-                ? "Contraseña media"
-                : "Contraseña fuerte"}
+                  ? "Contraseña media"
+                  : "Contraseña fuerte"}
             </p>
           </div>
 

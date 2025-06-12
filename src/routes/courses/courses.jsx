@@ -36,6 +36,9 @@ export default function Courses() {
       context.fetchToken();
     } else {
       getDateCourses();
+      setTimeout(() => {
+        context.getElementHeader();
+      }, 500);
     }
   }, [context.token]);
 

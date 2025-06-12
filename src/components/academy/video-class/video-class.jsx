@@ -198,10 +198,6 @@ export default function VideoClass() {
       }
     };
 
-    setTimeout(() => {
-      context.getElementHeader();
-    }, 500);
-
     handleResize();
     window.addEventListener("resize", handleResize);
 
@@ -209,6 +205,16 @@ export default function VideoClass() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    if (!context.token) {
+      context.fetchToken();
+    } else {
+      setTimeout(() => {
+        context.getElementHeader();
+      }, 500);
+    }
+  }, [context.token]);
 
   return (
     <>
