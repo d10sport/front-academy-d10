@@ -209,6 +209,7 @@ export default function Home() {
       setImageUrl(url);
     }
     loadImage();
+    context.getElementHeader()
   }, []);
 
   return (

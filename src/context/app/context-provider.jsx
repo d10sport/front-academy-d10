@@ -394,8 +394,22 @@ const AppProvider = ({ children }) => {
     navigate("/login-user");
   }
 
+  const getElementHeader = () => {
+    const rute = window.location.hash;
+    const header = document.getElementById("header_academy");
+    if (header.classList.contains("hidden") && !rute.includes("#/class/")) {
+      header.classList.remove("hidden");
+    } else if(rute.includes("#/class/") && !header.classList.contains("hidden")) {
+      header.classList.add("hidden");
+    }
+  }
+
   useEffect(() => {
     fetchToken();
+
+    setTimeout(() => {
+      getElementHeader();
+    }, 500);
   }, []);
 
   return (
@@ -447,6 +461,7 @@ const AppProvider = ({ children }) => {
         fetchLoginUsers,
         dataMaintenance,
         setDataMaintenance,
+        getElementHeader
       }}
     >
       {children}
