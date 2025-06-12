@@ -269,6 +269,10 @@ const AppProvider = ({ children }) => {
     delete dataToken.permissions;
     setUser(dataToken);
     setToken(token);
+
+    setTimeout(() => {
+      getElementHeader();
+    }, 500);
   }
 
   async function fetchGetDataToken() {
@@ -406,10 +410,6 @@ const AppProvider = ({ children }) => {
 
   useEffect(() => {
     fetchToken();
-
-    setTimeout(() => {
-      getElementHeader();
-    }, 500);
   }, []);
 
   return (
