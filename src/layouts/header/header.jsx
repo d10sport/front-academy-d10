@@ -1,8 +1,8 @@
-import UserInfo from "./user-info/user-info.jsx";
 import { useContext, useEffect, useState, useCallback, useMemo } from "react";
-import Example from "../../assets/img/example-img.png";
-import { LogoHeader } from "../../utils/icons/icons";
 import AppContext from "@context/app/app-context";
+import Example from "@assets/img/example-img.png";
+import UserInfo from "./user-info/user-info.jsx";
+import { LogoHeader } from "@utils/icons/icons";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { toast } from "sonner";
@@ -124,7 +124,7 @@ export default function Header() {
 
   return (
     <>
-      <nav className="fixed top-4 left-0 right-0 z-50 mx-auto w-[95%] max-w-7xl">
+      <nav id="header_academy" className="fixed top-4 left-0 right-0 z-50 mx-auto w-[95%] max-w-7xl">
         <div
           className={`mx-auto flex h-15 items-center justify-between rounded-full px-6 shadow-lg backdrop-blur-sm transition-all duration-300 ${
             scrolled ? "bg-black/40" : "bg-black/80"

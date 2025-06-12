@@ -172,6 +172,13 @@ export default function Home() {
       });
   }, [urlApi, apiKey]);
 
+  const getElementHeader = () => {
+    const header = document.getElementById("header_academy");
+    if (header.classList.contains("hidden")) {
+      header.classList.remove("hidden");
+    }
+  }
+
   const fetchAllCountUsers = useCallback(() => {
     axios
       .get(`${urlApi}academy/graphics/role/registers/club`, {
@@ -209,6 +216,11 @@ export default function Home() {
       setImageUrl(url);
     }
     loadImage();
+
+    setTimeout(() => {
+      getElementHeader();
+    }, 1000);
+
   }, []);
 
   return (
@@ -358,7 +370,7 @@ export default function Home() {
 
       <Modal
         isOpen={isOpenModal}
-        onRequestClose={() => {}}
+        onRequestClose={() => { }}
         shouldCloseOnOverlayClick={false}
         shouldCloseOnEsc={false}
         contentLabel="Actualizar contraseña"
@@ -451,8 +463,8 @@ export default function Home() {
               {strength <= 2
                 ? "Contraseña débil"
                 : strength === 3
-                ? "Contraseña media"
-                : "Contraseña fuerte"}
+                  ? "Contraseña media"
+                  : "Contraseña fuerte"}
             </p>
           </div>
 

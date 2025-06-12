@@ -1,7 +1,9 @@
-import { useParams } from "react-router-dom";
 import { useEffect, useState, useContext, useMemo } from "react";
-import axios from "axios";
 import AppContext from "@context/app/app-context";
+import { LogoHeader } from "@utils/icons/icons";
+import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import axios from "axios";
 import "./video-class.css";
 
 export default function VideoClass() {
@@ -180,6 +182,11 @@ export default function VideoClass() {
     }
   }, [deviceType]);
 
+  const getElementHeader = () => {
+    const header = document.getElementById("header_academy");
+    header.classList.add("hidden");
+  }
+
   useEffect(() => {
     getClassMenu();
 
@@ -193,6 +200,10 @@ export default function VideoClass() {
         setDeviceType("desktop");
       }
     };
+
+    setTimeout(() => {
+      getElementHeader();
+    }, 500);
 
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -237,11 +248,10 @@ export default function VideoClass() {
                       <>
                         <li
                           key={cls.class_id}
-                          className={`list-item__class relative ${
-                            cls.class_id === unlockedClass
-                              ? "unlocked_class"
-                              : "locked_class"
-                          }`}
+                          className={`list-item__class relative ${cls.class_id === unlockedClass
+                            ? "unlocked_class"
+                            : "locked_class"
+                            }`}
                           onClick={() => handleClassSelector(cls.class_id)}
                           style={{
                             cursor:
@@ -278,6 +288,16 @@ export default function VideoClass() {
           </div>
         </div>
         <div className="cntr-video__class relative">
+          <div className="absolute top-2 left-7 w-full h-fulL z-10">
+            <Link className="select-none text-xl font-bold" to={"/"}>
+              <LogoHeader />
+            </Link>
+          </div>
+          <div className="absolute top-2 right-7 cursor-pointer">
+            <Link className="select-none text-xl font-bold" to={"/"}>
+              <LogoHeader />
+            </Link>
+          </div>
           <div
             className="absolute left-7 bottom-5 cursor-pointer"
             onClick={() => unlockBeforeClass()}
