@@ -69,7 +69,6 @@ export default function VideoClass() {
   }
 
   async function getClassComments(classId) {
-    // debugger;
     try {
       const response = await axios.get(`${urlApi}academy/g/class/comments`, {
         params: { id_class: classId },

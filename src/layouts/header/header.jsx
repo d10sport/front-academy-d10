@@ -61,7 +61,7 @@ export default function Header() {
   const toggleVisibility = () => setIsVisible(!isVisible);
 
   const getPermissions = useCallback(async () => {
-    if (permissionsSystem.length > 0) return;
+    if (permissionsSystem?.length > 0) return;
     let userPermissions = permissionsUser;
     if (userPermissions?.length === 0 || userPermissions == undefined) {
       userPermissions = await fetchPermissionsUser();
@@ -97,7 +97,7 @@ export default function Header() {
     fetchPermissionsRoles,
     fetchUser,
     user,
-    permissionsSystem.length,
+    permissionsSystem?.length,
   ]);
 
   useEffect(() => {
