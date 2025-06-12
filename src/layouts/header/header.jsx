@@ -132,15 +132,6 @@ export default function Header() {
         >
           <Link className="select-none text-xl font-bold" to={"/"}>
             <LogoHeader />
-            {/* {data.logo == "" ? (
-              <ImageLogo style={{ maxWidth: "50px" }} alt="Logo" />
-            ) : (
-              <img
-                src={data.logo}
-                alt="logo D10"
-                className="logo max-w-[50px]"
-              />
-            )} */}
           </Link>
           <div className="hidden space-x-8 md:flex">
             {permissionsSystem?.length > 0 &&
