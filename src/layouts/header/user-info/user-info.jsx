@@ -43,7 +43,7 @@ export default function AddCourse({
               <img src={imgExample} alt="img" className="img__info-user" />
             </div>
             <div className="items__info-user">
-              <p className="text__info-user text--color__modal">
+              <p className="font-bold ml-2.5 text-black">
                 {userInfo?.first_names ?? userInfo?.name_club}{" "}
                 {userInfo?.last_names ?? ""}
               </p>
@@ -51,22 +51,24 @@ export default function AddCourse({
           </div>
 
           <div className="cntr-two-item__info-user">
-            <h1 className="title__info-user">Información de usuario</h1>
-            <p className="text__info-user text--color__modal">
+            <h1 className="text-[1.2rem] font-bold mx-0 my-2.5 text-black">
+              Información de usuario
+            </h1>
+            <p className="text-black text-sm">
               <b>Nombre: </b> {userInfo?.first_names ?? userInfo?.president}{" "}
               {userInfo?.last_names ?? ""}
             </p>
-            <p className="text__info-user text--color__modal">
+            <p className="text-black text-sm">
               <b>Email: </b> {userInfo?.email}
             </p>
-            <p className="text__info-user text--color__modal">
+            <p className="text-black text-sm">
               <b>Rol: </b>{" "}
               {userInfo?.role.charAt(0).toUpperCase() + userInfo?.role.slice(1)}
             </p>
-            <p className="text__info-user text--color__modal">
+            <p className="text-black text-sm">
               <b>Club: </b> {userInfo?.club?.name_club ?? userInfo?.name_club}
             </p>
-            <Link to={`/change-pass`} className="text__info-user">
+            <Link to={`/change-pass`} className="text-[#4b5563] text-sm hover:underline">
               Cambiar contraseña
             </Link>
           </div>

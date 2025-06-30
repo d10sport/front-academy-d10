@@ -258,7 +258,7 @@
 }
 
 .button__info-user:hover {
-  background-color: white;
+  background-color: rgb(233, 233, 233);
   color: black;
   transition: 250ms;
   font-weight: bold;
