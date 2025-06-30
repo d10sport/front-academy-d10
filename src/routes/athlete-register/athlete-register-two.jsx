@@ -478,6 +478,8 @@ export default function AthleteRegisterTwo() {
             <option defaultValue="" selected>
               Seleccionar...
             </option>
+            <option defaultValue="primaria">Primaria</option>
+            <option defaultValue="secundaria">Secundaria</option>
             <option defaultValue="bachiller">Bachiller</option>
             <option defaultValue="tecnico">Técnico</option>
             <option defaultValue="tecnologico">Tecnológico</option>
