@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState, useCallback, useMemo } from "react";
 import AppContext from "@context/app/app-context";
-import Example from "@assets/img/example-img.png";
+// import Example from "@assets/img/example-img.png";
+import Example from "@assets/img/User_No_Found.png";
 import UserInfo from "./user-info/user-info.jsx";
 import { LogoHeader } from "@utils/icons/icons";
 import { Link } from "react-router-dom";
@@ -124,7 +125,10 @@ export default function Header() {
 
   return (
     <>
-      <nav id="header_academy" className="fixed top-4 left-0 right-0 z-50 mx-auto w-[95%] max-w-7xl">
+      <nav
+        id="header_academy"
+        className="fixed top-4 left-0 right-0 z-50 mx-auto w-[95%] max-w-7xl"
+      >
         <div
           className={`mx-auto flex h-15 items-center justify-between rounded-full px-6 shadow-lg backdrop-blur-sm transition-all duration-300 ${
             scrolled ? "bg-black/40" : "bg-black/80"
@@ -147,24 +151,6 @@ export default function Header() {
               ))}
           </div>
 
-          {/* Start btn menu */}
-
-          <button
-            className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input hover:bg-accent hover:text-accent-foreground h-10 w-10 md:hidden"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            <span className="sr-only">
-              {isMenuOpen ? "Close menu" : "Open menu"}
-            </span>
-            {isMenuOpen ? (
-              <X className="h-4 w-4" />
-            ) : (
-              <Menu className="h-4 w-4" />
-            )}
-          </button>
-
-          {/* End btn menu */}
-
           {/* Start btn user info */}
 
           {changeBtnInfoUser.show ? (
@@ -179,8 +165,8 @@ export default function Header() {
                   className="w-full h-full rounded"
                 />
               </div>
-              &nbsp;
-              <p>{user?.first_names ?? user?.president}</p>
+              {/* &nbsp;
+              <p>{user?.first_names ?? user?.president}</p> */}
             </button>
           ) : (
             <button
@@ -256,6 +242,24 @@ export default function Header() {
           </div>
 
           {/* End user info */}
+
+          {/* Start btn menu */}
+
+          <button
+            className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input hover:bg-accent hover:text-accent-foreground h-10 w-10 md:hidden"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            <span className="sr-only">
+              {isMenuOpen ? "Close menu" : "Open menu"}
+            </span>
+            {isMenuOpen ? (
+              <X className="h-4 w-4" />
+            ) : (
+              <Menu className="h-4 w-4" />
+            )}
+          </button>
+
+          {/* End btn menu */}
         </div>
 
         <UserInfo
