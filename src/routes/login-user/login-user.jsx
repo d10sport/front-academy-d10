@@ -106,19 +106,19 @@ export default function LoginUser() {
         <Loader />
       ) : (
         <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black">
-          <div className="container mx-auto px-6 py-16">
+          <div className="container mx-auto px-6 py-10">
             <div className="max-w-6xl mx-auto">
-              <div className="text-center mb-20">
-                <h1 className="text-6xl md:text-7xl font-bold text-white mb-6 tracking-tight">
+              <div className="text-center mb-12">
+                <h1 className="text-5xl select-none md:text-6xl font-bold text-white mb-6 tracking-tight">
                   Inicio de sesión
                 </h1>
                 <div className="w-24 h-1 bg-white mx-auto mb-8"></div>
-                <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
+                <p className="text-lg select-none  text-gray-300 max-w-2xl mx-auto leading-relaxed">
                   Selecciona tu perfil para acceder a la plataforma deportiva
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-3 gap-8 mb-16">
+              <div className="grid md:grid-cols-3 gap-8 mb-12">
                 {roles.map((role) => {
                   const IconComponent = iconMap[role.description_role];
                   const DescriptionComponent =
@@ -133,11 +133,10 @@ export default function LoginUser() {
                       onClick={() => handleOptionSelect(role)}
                       onMouseEnter={() => setHoveredOption(role.id)}
                       onMouseLeave={() => setHoveredOption(null)}
-                      className={`group relative p-12 border-2 transition-all duration-500 ease-out hover:scale-105 hover:shadow-2xl hover:shadow-white/10 active:scale-95 ${
-                        isSelected
+                      className={`group relative p-12 border-2 transition-all duration-500 ease-out hover:scale-105 hover:shadow-2xl hover:shadow-white/10 active:scale-95 ${isSelected
                           ? "border-white bg-gray-800 shadow-xl shadow-white/20 scale-105"
                           : "border-gray-600 bg-gray-900 hover:border-gray-400 hover:bg-gray-800"
-                      } `}
+                        } `}
                     >
                       {/* Patrón de fondo */}
                       <div className="absolute inset-0 opacity-5">
@@ -148,33 +147,30 @@ export default function LoginUser() {
                       <div className="relative z-10 text-center space-y-6">
                         {/* Icono */}
                         <div
-                          className={`flex justify-center transition-all duration-300 ${
-                            isHovered || isSelected
+                          className={`flex justify-center transition-all duration-300 ${isHovered || isSelected
                               ? "text-white scale-110"
                               : "text-gray-300"
-                          }`}
+                            }`}
                         >
                           {IconComponent ? <IconComponent /> : null}
                         </div>
 
                         {/* Label */}
                         <h3
-                          className={`text-3xl font-bold transition-colors duration-300 ${
-                            isSelected
+                          className={`text-2xl font-bold transition-colors duration-300 ${isSelected
                               ? "text-white"
                               : "text-gray-200 group-hover:text-white"
-                          } `}
+                            } `}
                         >
                           {role.description_role}
                         </h3>
 
                         {/* Descripción */}
                         <p
-                          className={`text-base leading-relaxed transition-colors duration-300 ${
-                            isSelected
+                          className={`text-base leading-relaxed transition-colors duration-300 ${isSelected
                               ? "text-gray-300"
                               : "text-gray-400 group-hover:text-gray-300"
-                          }`}
+                            }`}
                         >
                           {DescriptionComponent}
                         </p>
@@ -189,38 +185,37 @@ export default function LoginUser() {
 
                       {/* Hover Glow Effect */}
                       <div
-                        className={`absolute inset-0 border-2 border-transparent transition-all duration-300 ${
-                          isHovered ? "shadow-inner shadow-white/10" : ""
-                        }`}
+                        className={`absolute inset-0 border-2 border-transparent transition-all duration-300 ${isHovered ? "shadow-inner shadow-white/10" : ""
+                          }`}
                       ></div>
                     </button>
                   );
                 })}
               </div>
 
-              {selectedOption && (
-                <div className="text-center animate-in fade-in slide-in-from-bottom-8 duration-700">
-                  <button
-                    onClick={() => handleUserSelection(selectedOption)}
-                    className="inline-flex items-center px-12 py-4 bg-white text-black text-lg font-semibold hover:bg-gray-200 active:bg-gray-300 transition-all duration-300 ease-out hover:shadow-xl hover:shadow-white/20 active:shadow-lg hover:scale-105 active:scale-95 border-2 border-white hover:border-gray-200 group"
-                  >
-                    <span>Continuar</span>
-                    <svg
-                      className="ml-3 w-5 h-5 transition-transform group-hover:translate-x-1"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+              <div className="text-center mt-8 pt-6 border-t border-gray-700">
+                {selectedOption ? (
+                  <div className="text-center animate-in fade-in slide-in-from-bottom-8 duration-700">
+                    <button
+                      onClick={() => handleUserSelection(selectedOption)}
+                      className="inline-flex items-center px-12 py-4 bg-white rounded-lg text-black text-lg font-semibold hover:bg-gray-200 active:bg-gray-300 transition-all duration-300 ease-out hover:shadow-xl hover:shadow-white/20 active:shadow-lg hover:scale-105 active:scale-95 border-2 border-white hover:border-gray-200 group"
                     >
-                      <ArrowRight />
-                    </svg>
-                  </button>
-                </div>
-              )}
-
-              <div className="text-center mt-20 pt-12 border-t border-gray-700">
-                <p className="text-sm text-gray-500">
-                  ¿Necesitas ayuda? Contacta con nuestro equipo de soporte
-                </p>
+                      <span>Continuar</span>
+                      <svg
+                        className="ml-3 w-5 h-5 transition-transform group-hover:translate-x-1"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <ArrowRight />
+                      </svg>
+                    </button>
+                  </div>
+                ) : (
+                  <p className="text-sm select-none text-gray-500">
+                    ¿Necesitas ayuda? Contacta con nuestro equipo de soporte
+                  </p>
+                )}
               </div>
             </div>
           </div>

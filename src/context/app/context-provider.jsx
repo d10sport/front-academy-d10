@@ -401,6 +401,9 @@ const AppProvider = ({ children }) => {
   const getElementHeader = () => {
     const rute = window.location.hash;
     const header = document.getElementById("header_academy");
+    if (!header) {
+      return;
+    }
     if (header.classList.contains("hidden") && !rute.includes("#/class/")) {
       header.classList.remove("hidden");
     } else if(rute.includes("#/class/") && !header.classList.contains("hidden")) {
