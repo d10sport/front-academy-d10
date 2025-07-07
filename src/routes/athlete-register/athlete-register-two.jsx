@@ -14,6 +14,7 @@ export default function AthleteRegisterTwo() {
   const apiKey = context.apiKey;
   const navigate = useNavigate();
 
+  const [disabledInput, setDisabledInput] = useState(false);
   const [userIntagram, setUserInstagram] = useState("");
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
@@ -116,6 +117,12 @@ export default function AthleteRegisterTwo() {
   };
 
   const handleSuggestionClick = (username) => {
+    if (username === 'none') {
+      handleSocialNetworks({ username: "", name: "" });
+      setUserInstagram("");
+      setSuggestions([]);
+      return;
+    }
     if (username.full_name != "") {
       setUserInstagram(username.full_name);
       handleSocialNetworks({ username: username.username, name: username.full_name });
@@ -201,9 +208,10 @@ export default function AthleteRegisterTwo() {
   function clearUserInstagram() {
     setUserInstagram("");
     setSuggestions([]);
+    setDisabledInput(false);
     context.setRegisterAthlete((prev) => ({
       ...prev,
-      social_networks: { instagram: "" },
+      social_networks: { instagram: "" }
     }));
   }
 
@@ -503,7 +511,7 @@ export default function AthleteRegisterTwo() {
                   className="input__login"
                   placeholder="Usuario Instagram"
                   value={context.registerAthlete.social_networks?.instagram?.name || ""}
-                  disabled
+                  disabled={disabledInput}
                 />
                 <button className="input-btn" onClick={() => clearUserInstagram()}>
                   <svg
@@ -541,6 +549,12 @@ export default function AthleteRegisterTwo() {
                   }
                   onChange={(e) => handleUserInstagram(e)}
                 />
+                <label onClick={() => {
+                  setDisabledInput(true);
+                  handleSuggestionClick('none')
+                }} className="cursor-pointer text-xs hover:underline text-gray-500 absolute -bottom-7 left-0 transform -translate-y-1/2">
+                  No tengo instagram
+                </label>
                 <button className="input-btn" onClick={handleInstagramSearch}>
                   <svg
                     width="24"

@@ -223,7 +223,7 @@ export default function AthleteRegisterOne() {
           <label id="categoria" className="label__login">
             Categoría <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
-          <div className="flex flex-row items-center relative input__login" style={{ padding: '0' }}>
+          <div className="flex flex-row items-center relative input__login" style={{ padding: '0', border: 'transparent' }}>
             {selectedCategories == '' ? (
               <div
                 disabled={true}

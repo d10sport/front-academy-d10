@@ -173,8 +173,8 @@ export default function Header() {
               className="justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background
             transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring
             focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none
-            [&_svg]:size-4 [&_svg]:shrink-0 border h-9 rounded-md px-3 hidden md:flex items-center border-white/20
-            hover:bg-white hover:text-black"
+            [&_svg]:size-4 [&_svg]:shrink-0 border h-9 rounded-md py-0 hidden md:flex items-center border-white/20
+            hover:bg-white hover:text-black relative hover:shadow-lg px-8 "
               onClick={toggleVisibility}
             >
               <div className="w-fit h-full">
@@ -236,7 +236,7 @@ export default function Header() {
                 }}
                 className="button__info-user"
               >
-                Log out
+                Cerrar sesión
               </button>
             </div>
           </div>
