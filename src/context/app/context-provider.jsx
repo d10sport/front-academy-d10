@@ -58,6 +58,8 @@ const AppProvider = ({ children }) => {
     first_names_family: "",
     last_names_family: "",
     contact_family: 0,
+    legal_accept: false,
+    age: 0,
     categories: []
   });
 
@@ -138,6 +140,8 @@ const AppProvider = ({ children }) => {
       first_names_family: "",
       last_names_family: "",
       contact_family: 0,
+      legal_accept: false,
+      age: 0,
       categories: [],
     });
   }
