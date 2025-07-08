@@ -9,7 +9,7 @@ export default function AthleteRegisterOne() {
   const context = useContext(AppContext);
   const urlApi = context.urlApi;
   const apiKey = context.apiKey;
-  const maxDate = `${new Date().getFullYear()}-${new Date().getMonth() + 1 < 10 ? "0" + new Date().getMonth() + 1 : new Date().getMonth() + 1}-${ new Date().getDate() < 10 ? "0" +  new Date().getDate() :  new Date().getDate()}`;
+  const maxDate = `${new Date().getFullYear()}-${new Date().getMonth() + 1 < 10 ? "0" + new Date().getMonth() + 1 : new Date().getMonth() + 1}-${new Date().getDate() < 10 ? "0" + new Date().getDate() : new Date().getDate()}`;
   const navigate = useNavigate();
 
   const [selectedCategories, setSelectedCategories] = useState('');
@@ -114,19 +114,14 @@ export default function AthleteRegisterOne() {
       });
   }, [urlApi, apiKey]);
 
-  function nextStep() {
+  async function nextStep() {
     context.setRegisterAthlete((prev) => ({
       ...prev,
       role: context.typeUser,
     }));
-    if (
-      !context.registerAthlete.first_names ||
-      !context.registerAthlete.last_names ||
-      !context.registerAthlete.gender ||
-      !context.registerAthlete.date_birth ||
-      context.registerAthlete.categories.length == 0
-    ) {
-      toast.error("Por favor, complete todos los campos");
+    const valid = await context.validateEmptyAthlete(1);
+    if (!valid) {
+      toast.error("Por favor, complete todos los campos correctamente");
       return;
     }
     navigate("/register/athlete/step-two");
@@ -223,25 +218,31 @@ export default function AthleteRegisterOne() {
           <label id="categoria" className="label__login">
             Categoría <span className="bg-transparent text-red-600 font-bold">* </span>
           </label>
-          <div className="flex flex-row items-center relative input__login" style={{ padding: '0', border: 'transparent' }}>
-            {selectedCategories == '' ? (
+          <div
+            className={`flex flex-row items-center relative input__login ${selectedCategories ? 'border-transparent' : ''
+              }`}
+            style={{
+              padding: 0,
+              ...(selectedCategories && { border: 'transparent' }),
+            }}
+          >
+            {selectedCategories === '' ? (
               <div
                 disabled={true}
                 className="w-full h-full flex items-center text-start text-black cursor-not-allowed px-3"
               >
                 Selecciona tu edad
               </div>
-            )
-              : (
-                <input
-                  id="categoria"
-                  disabled={true}
-                  type="text"
-                  autoComplete="off"
-                  className="input__login"
-                  value={selectedCategories}
-                />
-              )}
+            ) : (
+              <input
+                id="categoria"
+                disabled={true}
+                type="text"
+                autoComplete="off"
+                className="input__login"
+                value={selectedCategories}
+              />
+            )}
           </div>
 
           <button onClick={() => nextStep()} className="button-three__login">
@@ -249,7 +250,7 @@ export default function AthleteRegisterOne() {
           </button>
           <button
             className="cursor-pointer link__login center-text__login"
-            onClick={() => navigate("/login-user")}
+            onClick={() => { navigate("/login-user"); context.clearRegisterAthlete(); }}
           >
             Cancelar
           </button>

@@ -62,11 +62,6 @@ export default function AthleteRegisterTwo() {
     }));
   }
 
-  const validateEmail = (value) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(value);
-  };
-
   function handleEmail(event) {
     const email = event.target.value;
     context.setRegisterAthlete((prev) => ({
@@ -284,18 +279,13 @@ export default function AthleteRegisterTwo() {
       });
   }
 
-  function nextStep() {
-    if (
-      !context.registerAthlete.country ||
-      !context.registerAthlete.city ||
-      !context.registerAthlete.mail ||
-      !context.registerAthlete.contact ||
-      !context.registerAthlete.academic_level
-    ) {
-      toast.error("Por favor, complete todos los campos");
+  async function nextStep() {
+    const valid = await context.validateEmptyAthlete(2);
+    if (!valid) {
+      toast.error("Por favor, complete todos los campos correctamente");
       return;
     }
-    if (!validateEmail(context.registerAthlete.mail)) {
+    if (!context.validateEmail(context.registerAthlete.mail)) {
       toast.error("Por favor, ingrese un email válido");
       return;
     }

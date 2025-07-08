@@ -96,6 +96,9 @@ export default function LoginUser() {
   }
 
   useEffect(() => {
+    context.clearRegisterAthlete();
+    context.clearRegisterCoach();
+    context.clearRegisterClub();
     context.setIsLoading(true);
     getDataRole();
   }, []);
