@@ -130,9 +130,8 @@ export default function Header() {
         className="fixed top-4 left-0 right-0 z-50 mx-auto w-[95%] max-w-7xl"
       >
         <div
-          className={`mx-auto flex h-15 items-center justify-between rounded-full px-6 shadow-lg backdrop-blur-sm transition-all duration-300 ${
-            scrolled ? "bg-black/40" : "bg-black/80"
-          }`}
+          className={`mx-auto flex h-15 items-center justify-between rounded-full px-6 shadow-lg backdrop-blur-sm transition-all duration-300 ${scrolled ? "bg-black/40" : "bg-black/80"
+            }`}
         >
           <Link className="select-none text-xl font-bold" to={"/"}>
             <LogoHeader />
@@ -177,7 +176,7 @@ export default function Header() {
             hover:bg-white hover:text-black relative hover:shadow-lg px-8 "
               onClick={toggleVisibility}
             >
-              <div className="w-fit h-full">
+              <div className="w-fit left-0 absolute h-full">
                 <img
                   src={Example}
                   alt="img"
@@ -185,7 +184,7 @@ export default function Header() {
                 />
               </div>
               &nbsp;
-              <p>{user?.first_names ?? user?.president}</p>
+              <p className="pl-6" >{user?.first_names ?? user?.president}</p>
             </button>
           )}
 
@@ -219,11 +218,13 @@ export default function Header() {
                 <b>Rol: </b>{" "}
                 {user?.role.charAt(0).toUpperCase() + user?.role.slice(1)}
               </p>
-              <p className="text__info-user">
-                <b>Club: </b> {user?.club?.name_club ?? user?.name_club}
-              </p>
-              <Link to={`/change-pass`} className="text__info-user">
-                Cambiar contraseña
+              {user?.club?.name_club != '' && user?.club?.name_club != undefined && user?.club?.name_club != null(
+                <p className="text__info-user">
+                  <b>Club: </b> {user?.club?.name_club ?? user?.name_club}
+                </p>
+              )}
+              <Link to={`/recover-pass`} className="text__info-user">
+                Recordar contraseña
               </Link>
             </div>
 
