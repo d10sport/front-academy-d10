@@ -58,6 +58,8 @@ const AppProvider = ({ children }) => {
     first_names_family: "",
     last_names_family: "",
     contact_family: 0,
+    legal_accept: false,
+    age: 0,
     categories: []
   });
 
@@ -138,6 +140,8 @@ const AppProvider = ({ children }) => {
       first_names_family: "",
       last_names_family: "",
       contact_family: 0,
+      legal_accept: false,
+      age: 0,
       categories: [],
     });
   }
@@ -186,29 +190,47 @@ const AppProvider = ({ children }) => {
       venues: 0
     });
   }
+  function validateEmail(email) {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  }
 
-  async function validateEmptyAthlete() {
-    if (
-      registerAthlete.first_names != "" &&
-      registerAthlete.last_names != "" &&
-      registerAthlete.mail != "" &&
-      registerAthlete.gender != "" &&
-      registerAthlete.date_birth != "" &&
-      registerAthlete.country != "" &&
-      registerAthlete.countryID != "" &&
-      registerAthlete.city != "" &&
-      registerAthlete.cityID != "" &&
-      registerAthlete.contact != 0 &&
-      registerAthlete.academic_level != "" &&
-      registerAthlete.first_names_family != "" &&
-      registerAthlete.last_names_family != "" &&
-      registerAthlete.contact_family != 0 &&
-      registerAthlete.categories.length > 0
-    ) {
-      return true;
-    } else {
-      return false;
+  async function validateEmptyAthlete(step) {
+    const athlete = registerAthlete;
+    const isMinor = athlete.age < 18;
+
+    if (step === 1) {
+      return (
+        athlete.first_names !== "" &&
+        athlete.last_names !== "" &&
+        athlete.gender !== "" &&
+        athlete.date_birth !== "" &&
+        athlete.categories.length > 0
+      );
     }
+
+    if (step === 2) {
+      return (
+        athlete.country !== "" &&
+        athlete.city !== "" &&
+        athlete.mail !== "" &&
+        athlete.contact > 0 &&
+        athlete.academic_level !== ""
+      );
+    }
+
+    if (step === 3) {
+      if (!isMinor) return true;
+
+      return (
+        athlete.first_names_family !== "" &&
+        athlete.last_names_family !== "" &&
+        athlete.contact_family > 0 &&
+        athlete.legal_accept === true
+      );
+    }
+
+    return false;
   }
 
   async function validateEmptyCoach() {
@@ -401,9 +423,12 @@ const AppProvider = ({ children }) => {
   const getElementHeader = () => {
     const rute = window.location.hash;
     const header = document.getElementById("header_academy");
+    if (!header) {
+      return;
+    }
     if (header.classList.contains("hidden") && !rute.includes("#/class/")) {
       header.classList.remove("hidden");
-    } else if(rute.includes("#/class/") && !header.classList.contains("hidden")) {
+    } else if (rute.includes("#/class/") && !header.classList.contains("hidden")) {
       header.classList.add("hidden");
     }
   }
@@ -461,7 +486,8 @@ const AppProvider = ({ children }) => {
         fetchLoginUsers,
         dataMaintenance,
         setDataMaintenance,
-        getElementHeader
+        getElementHeader,
+        validateEmail
       }}
     >
       {children}

@@ -13,6 +13,7 @@ export default function CoachRegisterTwo() {
   const apiKeyRapidApi = context.apiKeyRapidApi;
   const apiHostRapidIntagram = context.apiHostRapidIntagram;
 
+  const [disabledInput, setDisabledInput] = useState(false);
   const [userIntagram, setUserInstagram] = useState("");
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
@@ -365,6 +366,12 @@ export default function CoachRegisterTwo() {
   };
 
   const handleSuggestionClick = (username) => {
+    if (username === 'none') {
+      handleSocialNetworks({ username: "", name: "" });
+      setUserInstagram("");
+      setSuggestions([]);
+      return;
+    }
     if (username.full_name != "") {
       setUserInstagram(username.full_name);
       handleSocialNetworks({ username: username.username, name: username.full_name });
@@ -628,7 +635,7 @@ export default function CoachRegisterTwo() {
             {isLoading && <p>Cargando...</p>}
             {clubResults.length > 0 && (
               <>
-                <p className="font-black">Resultados:</p>
+                <p className="text-black">Resultados:</p>
                 <select
                   className="select__login input__login"
                   onChange={(e) => handleOnChangeClub(e)}
@@ -745,7 +752,7 @@ export default function CoachRegisterTwo() {
                   className="input__login"
                   placeholder="Usuario Instagram"
                   value={context.registerCoach.social_networks?.instagram?.name || ""}
-                  disabled
+                  disabled={disabledInput}
                 />
                 <button className="input-btn" onClick={() => clearUserInstagram()}>
                   <svg
@@ -783,6 +790,12 @@ export default function CoachRegisterTwo() {
                   }
                   onChange={(e) => handleUserInstagram(e)}
                 />
+                <label onClick={() => {
+                  setDisabledInput(true);
+                  handleSuggestionClick('none')
+                }} className="cursor-pointer text-xs hover:underline text-gray-500 absolute -bottom-7 left-0 transform -translate-y-1/2">
+                  No tengo instagram
+                </label>
                 <button className="input-btn" onClick={handleInstagramSearch}>
                   <svg
                     width="24"

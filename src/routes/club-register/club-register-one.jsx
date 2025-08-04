@@ -173,7 +173,7 @@ export default function ClubRegisterOne() {
           </button>
           <button
             className="cursor-pointer link__login center-text__login"
-            onClick={() => navigate("/login-user")}
+            onClick={() => { navigate("/login-user");  context.clearRegisterClub(); }}
           >
             Cancelar
           </button>
