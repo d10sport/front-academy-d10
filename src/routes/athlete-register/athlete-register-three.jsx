@@ -26,16 +26,15 @@ export default function AthleteRegisterThree() {
   }
 
   function handleCellPhoneFamily(event) {
-    let number = parseInt(event.target.value);
-    if (isNaN(number)) {
-      event.target.value = "";
-      number = 0;
-    }
+    const value = event.target.value;
+    const cleaned = value.replace(/\D/g, "");
+
     context.setRegisterAthlete((prev) => ({
       ...prev,
-      contact_family: number,
+      contact_family: cleaned,
     }));
   }
+
 
   async function saveRegisterAthlete(data) {
     let res = false;
@@ -60,7 +59,7 @@ export default function AthleteRegisterThree() {
   }
 
   async function nextStep() {
-    const validRegister = await context.validateEmptyAthlete();
+    const validRegister = await context.validateEmptyAthlete(3);
     if (!validRegister) {
       toast.error("Por favor, complete todos los campos");
       return;
@@ -139,6 +138,26 @@ export default function AthleteRegisterThree() {
             }
             onChange={(e) => handleCellPhoneFamily(e)}
           />
+
+          <div className="checkbox__container">
+            <input
+              type="checkbox"
+              id="legal_accept"
+              name="legal_accept"
+              className="mr-2"
+              checked={context.registerAthlete.legal_accept || false}
+              onChange={(e) =>
+                context.setRegisterAthlete((prev) => ({
+                  ...prev,
+                  legal_accept: e.target.checked,
+                }))
+              }
+            />
+            <label htmlFor="legal_accept" className="text-sm text-black">
+              Acepto ser el acudiente responsable del jugador y autorizo su registro con esta marca.
+              <span className="bg-transparent text-red-600 font-bold"> *</span>
+            </label>
+          </div>
 
           <button onClick={() => nextStep()} className="button-three__login">
             Registrar

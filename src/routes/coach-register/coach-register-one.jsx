@@ -173,7 +173,7 @@ export default function CoachOne() {
           </button>
           <button
             className="cursor-pointer link__login center-text__login"
-            onClick={() => navigate("/login-user")}
+            onClick={() => { navigate("/login-user"); context.clearRegisterCoach(); }}
           >
             Cancelar
           </button>

@@ -14,7 +14,7 @@ export default function SucessRegister() {
   return (
     <>
       <section className="section__login_academy">
-        <h1 className="title__login">D10+ Academy</h1>
+        <h1 className="text-6xl py-6 w-auto font-bold text-white">D10+ Academy</h1>
         <form action="" className="form__login">
           <h2 className="subtitle__login">
             Solicitud de registro exitosa

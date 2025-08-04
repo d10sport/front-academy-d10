@@ -302,7 +302,7 @@ export default function VideoClass() {
             </Link>
           </div>
           <div
-            className="absolute left-7 bottom-5 cursor-pointer"
+            className="hidden md:block absolute left-7 bottom-5 cursor-pointer"
             onClick={() => unlockBeforeClass()}
           >
             <svg width="40" height="40" viewBox="0 0 24 24" fill="#ffffff">
@@ -313,7 +313,7 @@ export default function VideoClass() {
             </svg>
           </div>
           <div
-            className="absolute right-7 bottom-5 cursor-pointer"
+            className="hidden md:block absolute right-7 bottom-5 cursor-pointer"
             onClick={() => unlockNextClass()}
           >
             <svg width="40" height="40" viewBox="0 0 24 24" fill="#ffffff">
@@ -333,7 +333,30 @@ export default function VideoClass() {
                   muted
                 ></video>
               </div>
-
+              <div className="w-full flex justify-between items-center px-4 py-2 text-white md:hidden">
+                <div
+                  className="relative cursor-pointer"
+                  onClick={() => unlockBeforeClass()}
+                >
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="#ffffff">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M9.586 4l-6.586 6.586a2 2 0 0 0 0 2.828l6.586 6.586a2 2 0 0 0 2.18 .434l.145 -.068a2 2 0 0 0 1.089 -1.78v-2.586h5a1 1 0 0 0 1 -1v-6l-.007 -.117a1 1 0 0 0 -.993 -.883l-5 -.001v-2.585a2 2 0 0 0 -3.414 -1.414z" />
+                    <path d="M4.415 12l6.585 -6.586v3.586l.007 .117a1 1 0 0 0 .993 .883l5 -.001v4l-5 .001a1 1 0 0 0 -1 1v3.586l-6.585 -6.586z" />
+                    <path d="M21 8a1 1 0 0 1 .993 .883l.007 .117v6a1 1 0 0 1 -1.993 .117l-.007 -.117v-6a1 1 0 0 1 1 -1z" />
+                  </svg>
+                </div>
+                <div
+                  className="relative cursor-pointer"
+                  onClick={() => unlockNextClass()}
+                >
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="#ffffff">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M12.089 3.634a2 2 0 0 0 -1.089 1.78l-.001 2.585l-1.999 .001a1 1 0 0 0 -1 1v6l.007 .117a1 1 0 0 0 .993 .883l1.999 -.001l.001 2.587a2 2 0 0 0 3.414 1.414l6.586 -6.586a2 2 0 0 0 0 -2.828l-6.586 -6.586a2 2 0 0 0 -2.18 -.434l-.145 .068z" />
+                    <path d="M3 8a1 1 0 0 1 .993 .883l.007 .117v6a1 1 0 0 1 -1.993 .117l-.007 -.117v-6a1 1 0 0 1 1 -1z" />
+                    <path d="M6 8a1 1 0 0 1 .993 .883l.007 .117v6a1 1 0 0 1 -1.993 .117l-.007 -.117v-6a1 1 0 0 1 1 -1z" />
+                  </svg>
+                </div>
+              </div>
               <div className="description__class py-4 flex flex-col gap-4">
                 <h2 className="subtitle__class">{selectedClass.class_title}</h2>
                 <p className="text__class">{selectedClass.class_description}</p>

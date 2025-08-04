@@ -82,7 +82,7 @@ export default function AddCourse({
               }}
               className="button__info-user"
             >
-              Log out
+              Cerrar sesión
             </button>
           </div>
         </section>
