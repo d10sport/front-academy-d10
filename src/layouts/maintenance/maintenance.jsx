@@ -46,12 +46,12 @@ export default function Maintenance() {
             <div className="w-full h-full sm:h-full relative flex flex-col justify-center gap-4 items-center text-center">
               <div className="absolute top-2 left-2 bg-transparent user-select-none">
                 <img
-                  className="h-20 sm:h-auto md:h-auto lg:h-auto w-auto"
+                  className="h-20 sm:h-auto md:h-auto lg:h-40 w-auto"
                   src={logo}
                   alt="logo D10"
                 />
               </div>
-              <h1 className="text-white text-9xl font-bold">{data.title}</h1>
+              <h1 className="text-white md:text-9xl text-6xl font-bold">{data.title}</h1>
               <h1 className="text-white text-6xl">{data.subtitle}</h1>
               <p className="text_300 text-2xl">{data.description}</p>
             </div>
